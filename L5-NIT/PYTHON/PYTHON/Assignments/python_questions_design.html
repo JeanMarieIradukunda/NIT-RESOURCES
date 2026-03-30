@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Practice — Beginner Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f1724;
+      /* deep navy */
+      --card: #0b1220;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      /* sky blue */
+      --glass: rgba(255, 255, 255, 0.03);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #071022 0%, #071b2d 100%);
+      color: #e6eef8;
+      min-height: 100vh;
+      padding: 36px
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px
+    }
+
+    .logo {
+      width: 73px;
+      height: 120px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), #4ade80);
+      display: grid;
+      place-items: center;
+      color: #022039;
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: 0 8px 30px rgba(96, 165, 250, 0.12)
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px
+    }
+
+    p.lead {
+      margin: 6px 0 0;
+      color: var(--muted)
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 20px
+    }
+
+    .full {
+      grid-column: 1/-1
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 18px;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6)
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px
+    }
+
+    .qnum {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-right: 10px
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+      margin: 14px 0;
+      border-radius: 4px
+    }
+
+    .topic-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .topic-title h2 {
+      margin: 0;
+      font-size: 18px
+    }
+
+    .topic-info {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    /* Responsive */
+    @media (max-width:760px) {
+      .grid {
+        grid-template-columns: 1fr
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    /* small footer */
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center
+    }
+
+    /* subtle code block style */
+    pre {
+      background: var(--glass);
+      padding: 12px;
+      border-radius: 10px;
+      overflow: auto;
+      color: #dff4ff;
+      font-size: 13px
+    }
+
+    .hint small {
+      display: block;
+      margin-top: 6px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Padri Vjeko Centre TSS</div>
+      <div>
+        <h1>Python Practice — Exercises</h1>
+        <p class="lead">LEVEL 5 — NIT</p>
+      </div>
+    </header>
+
+    <!-- CONDITIONALS -->
+    <section class="card full">
+      <div class="topic-title">
+        <h2>🧠 Conditional Statements</h2>
+        <div class="topic-info">(3 exercises — use <code>if / elif / else</code>)</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span class="qnum">Q1</span>Check if a Number is Positive or Negative</h3>
+          <p>Write a Python program that asks the user to enter a number and checks whether it is
+            <strong>positive</strong>, <strong>negative</strong>, or <strong>zero</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Use <code>if</code>, <code>elif</code>, and <code>else</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q2</span>Check for Even or Odd</h3>
+          <p>Write a program that accepts a number from the user and prints whether it is <strong>even</strong> or
+            <strong>odd</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Use the modulus operator <code>%</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q3</span>Find the Largest of Two Numbers</h3>
+          <p>Ask the user to input two numbers and print which one is <strong>greater</strong> or if they are
+            <strong>equal</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Use simple <code>if...elif...else</code> conditions.</div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- LOOPS -->
+    <section class="card full" style="margin-top:18px">
+      <div class="topic-title">
+        <h2>🔁 Loop Statements</h2>
+        <div class="topic-info">(3 exercises — use <code>for</code> and <code>while</code>)</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span class="qnum">Q1</span>Print Numbers from 1 to 10</h3>
+          <p>Use a <code>for</code> loop to print numbers from <strong>1 to 10</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Use <code>range()</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q2</span>Sum of First N Natural Numbers</h3>
+          <p>Write a program that takes a number <code>n</code> from the user and uses a <code>while</code> loop to
+            calculate the <strong>sum of the first n numbers</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Keep adding each number to a variable <code>total</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q3</span>Print Multiplication Table of a Number</h3>
+          <p>Ask the user to enter a number and print its <strong>multiplication table up to 10</strong> using a
+            <code>for</code> loop.</p>
+          <!-- <div class="hint">💡 Hint: Use <code>range(1, 11)</code>.</div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- JUMP STATEMENTS -->
+    <section class="card full" style="margin-top:18px">
+      <div class="topic-title">
+        <h2>🧭 Jump Statements</h2>
+        <div class="topic-info">(3 exercises — <code>break</code>, <code>continue</code>, <code>pass</code>)</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span class="qnum">Q1</span>Stop Printing When 5 is Reached</h3>
+          <p>Use a <code>for</code> loop to print numbers from <strong>1 to 10</strong> but <strong>stop</strong> when
+            the number is 5.</p>
+          <!-- <div class="hint">💡 Hint: Use <code>break</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q2</span>Skip Printing Number 5</h3>
+          <p>Write a <code>for</code> loop that prints numbers from <strong>1 to 10</strong>, but <strong>skips</strong>
+            number 5.</p>
+          <!-- <div class="hint">💡 Hint: Use <code>continue</code>.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q3</span>Use <code>pass</code> in a Loop</h3>
+          <p>Write a loop from <strong>1 to 5</strong>. If the number is 3, use <code>pass</code> and continue to the
+            next iteration, printing all other numbers.</p>
+          <!-- <div class="hint">💡 Hint: <code>pass</code> does nothing but keeps the structure valid.</div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FUNCTIONS -->
+    <section class="card full" style="margin-top:18px">
+      <div class="topic-title">
+        <h2>⚙️ Python Functions</h2>
+        <div class="topic-info">(3 exercises — simple functions with no nesting)</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span class="qnum">Q1</span>Personalized Greeting Function</h3>
+          <p>
+            Create a function named <code>greet_user(name)</code> that takes a person's name as a parameter and prints a
+            personalized greeting like
+            <strong>“Hello, Alice! Welcome to Python Programming.”</strong>
+            <br>Call the function and pass your own name as an argument.
+          </p>
+          <!-- <div class="hint">💡 Hint: Use string concatenation or f-string to include the name.</div> -->
+        </div>
+
+
+        <div class="card">
+          <h3><span class="qnum">Q2</span>Square a Number</h3>
+          <p>Write a a program of function named <code>square()</code> that takes a number as a parameter and
+            <strong>returns its square</strong>.</p>
+          <!-- <div class="hint">💡 Hint: Use the <code>return</code> statement.</div> -->
+        </div>
+
+        <div class="card">
+          <h3><span class="qnum">Q3</span>Find the Average of Two Numbers</h3>
+          <p>Write a program of a function named <code>average()</code> that accepts two numbers and <strong>returns
+              their average</strong>.</p>
+          <!-- <div class="hint">💡 Hint: <code>(a + b) / 2</code></div> -->
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>

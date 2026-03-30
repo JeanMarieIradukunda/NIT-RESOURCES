@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCTV System Configuration Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background: #f9f9f9;
+        color: #1a1a1a;
+    }
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 25px;
+        background: #fff;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        border-radius: 10px;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+        /* margin-top: 0.5em; */
+        margin-bottom: 0.5em;
+    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; border-bottom: 2px solid #2c3e50; padding-bottom: 5px; }
+    h3 { font-size: 1.3em; margin-top: 1em; }
+    p, li {
+        font-size: 1rem;
+        margin: 0.5em 0;
+    }
+    ul, ol {
+        margin-left: 20px;
+        margin-bottom: 1em;
+    }
+    li { margin-bottom: 0.3em; }
+    .highlight { color: #e67e22; font-weight: 600; }
+    .step, .note, .warning, .example {
+        background: #f0f4f8;
+        padding: 10px 15px;
+        border-left: 5px solid #3498db;
+        margin: 10px 0 20px 0;
+        border-radius: 5px;
+    }
+    .warning { border-left-color: #e74c3c; background: #fdecea; }
+    .note { border-left-color: #27ae60; background: #eafaf1; }
+    .example { border-left-color: #8e44ad; background: #f5eaf8; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    table th, table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    table th { background: #2c3e50; color: #fff; }
+    hr { border: 0; border-top: 2px solid #ecf0f1; margin: 30px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Learning outcome 3: Configure CCTV System</h1>
+
+<h2>A. Management of Administration parameters settings</h2>
+<p>A parameter is a specific configurable option within a system that controls how it behaves.<br>
+Think of it as a control point you can adjust to customize the system.</p>
+
+<p>In a CCTV system, parameters are the individual items you can modify inside the configuration menu.</p>
+
+<h3>🔹 Examples of CCTV Parameters</h3>
+<ul>
+<li>Default password</li>
+<li>Recording storage location</li>
+<li>Recording schedule</li>
+<li>Video resolution</li>
+<li>Date and time settings</li>
+<li>Network IP address</li>
+<li>Motion detection sensitivity</li>
+</ul>
+
+<p>A <span class="highlight">setting</span> is the actual value you assign to a parameter.<br>
+If a parameter is the option, the setting is the choice you make for that option.</p>
+
+<!-- Change Default Password Section -->
+<h3>1️⃣ Change Default Password</h3>
+<h4>🔹 What is a Default Password?</h4>
+<p>A default password is the original factory-set password that comes with a device when it is new.</p>
+<p>For Hikvision devices:</p>
+<ul>
+<li>The default username is usually admin</li>
+<li>Older models used 12345</li>
+<li>Newer models require you to create a password during first activation</li>
+</ul>
+<div class="warning">
+<p>⚠ Why this matters:</p>
+<ul>
+<li>Default passwords are publicly known</li>
+<li>Leaving them unchanged makes the system vulnerable to hacking</li>
+<li>It is the first step in securing a CCTV system</li>
+</ul>
+</div>
+
+<h4>🔐 Steps to Change Password on Hikvision Devices</h4>
+<hr>
+<h5>A. On DVR (Digital Video Recorder)</h5>
+<div class="step">
+<p>Using Local Monitor (Mouse + Screen connected to DVR)</p>
+<ol>
+<li>Log in using current admin password</li>
+<li>Go to Menu</li>
+<li>Click Configuration</li>
+<li>Select User Management</li>
+<li>Choose admin</li>
+<li>Click Modify Password</li>
+<li>Enter:
+<ul>
+<li>Old password</li>
+<li>New strong password</li>
+<li>Confirm password</li>
+</ul>
+</li>
+<li>Click Save / OK</li>
+</ol>
+</div>
+
+<h5>B. On NVR (Network Video Recorder)</h5>
+<div class="step">
+<ol>
+<li>Log in</li>
+<li>Go to Menu</li>
+<li>Select Configuration</li>
+<li>Open User or User Management</li>
+<li>Select admin</li>
+<li>Click Edit / Modify Password</li>
+<li>Enter old and new password</li>
+<li>Save</li>
+</ol>
+</div>
+
+<h5>C. On IP Camera (Hikvision) – Method 1: Using Web Browser</h5>
+<div class="step">
+<ol>
+<li>Connect camera to network</li>
+<li>Enter camera IP address in browser</li>
+<li>Log in</li>
+<li>Go to Configuration</li>
+<li>Select User Management</li>
+<li>Click Modify Password</li>
+<li>Enter old password</li>
+<li>Enter new password</li>
+<li>Save</li>
+</ol>
+</div>
+
+<!-- Recording Storage Section -->
+<h3>2️⃣ Set Recording Storage</h3>
+<h4>🔹 What Does “Set Recording Storage” Mean?</h4>
+<p>It means choosing and configuring where video footage will be saved.</p>
+<ul>
+<li>Internal Hard Disk Drive (HDD)</li>
+<li>External HDD</li>
+<li>Network storage</li>
+<li>NAS</li>
+</ul>
+<div class="note">
+<p>✔ Ensures video is saved properly<br>
+✔ Prevents “No Disk” errors<br>
+✔ Avoids data loss<br>
+✔ Allows continuous recording<br>
+✔ Enables playback of recorded footage</p>
+<p>If storage is not configured:<br>
+• Cameras may show live view<br>
+• But recording will NOT happen</p>
+</div>
+
+<h4>📹 Steps to Set Recording Storage on DVR</h4>
+<div class="step">
+<ol>
+<li>Log in</li>
+<li>Go to Menu</li>
+<li>Click Configuration</li>
+<li>Select Storage</li>
+<li>Open HDD Management</li>
+<li>Check HDD status (Normal / Uninitialized)</li>
+<li>If uninitialized:
+<ul>
+<li>Select HDD</li>
+<li>Click Init</li>
+</ul>
+</li>
+<li>Save settings</li>
+<li>Optional: Go to Record Schedule, Enable continuous or motion recording</li>
+</ol>
+</div>
+
+<h4>📹 Steps to Set Recording Storage on NVR</h4>
+<div class="step">
+<ol>
+<li>Log in</li>
+<li>Go to Menu</li>
+<li>Select Configuration → Storage → HDD Management</li>
+<li>Check HDD status</li>
+<li>If new HDD, select and initialize</li>
+<li>Set recording schedule under Record → Schedule</li>
+</ol>
+</div>
+
+<!-- User Accounts Section -->
+<h2>Management of CCTV User Accounts</h2>
+<p>User account management controls who can access the CCTV system and what they are allowed to do.</p>
+<p>Proper management improves:</p>
+<ul>
+<li>Security</li>
+<li>Accountability</li>
+<li>System control</li>
+<li>Data protection</li>
+</ul>
+
+<h3>1️⃣ Identification of User Account</h3>
+<p>It is the process of recognizing and defining different users in the CCTV system. Each user must have:</p>
+<ul>
+<li>A unique username</li>
+<li>A password</li>
+<li>Assigned access rights (permissions)</li>
+</ul>
+
+<h4>🔹 Common User Types in Hikvision Devices</h4>
+<table>
+<tr>
+<th>User Type</th><th>Access Level</th>
+</tr>
+<tr><td>Admin</td><td>Full control of system</td></tr>
+<tr><td>Operator</td><td>Live view + playback</td></tr>
+<tr><td>Guest</td><td>Live view only</td></tr>
+</table>
+
+<div class="note">
+<p>✔ Prevents unauthorized access<br>
+✔ Tracks user activities<br>
+✔ Limits system misuse<br>
+✔ Improves security control</p>
+</div>
+
+<h3>2️⃣ Creation of User Account</h3>
+<p>It is the process of adding a new authorized person to access the CCTV system.</p>
+
+<h4>📹 Steps to Create User Account on DVR / NVR</h4>
+<div class="step">
+<ol>
+<li>Log in as admin</li>
+<li>Go to Menu → Configuration → User Management</li>
+<li>Click Add User</li>
+<li>Enter username and password</li>
+<li>Assign permissions:
+<ul>
+<li>Live view</li>
+<li>Playback</li>
+<li>PTZ control</li>
+<li>Configuration rights</li>
+</ul>
+</li>
+<li>Click Save</li>
+</ol>
+</div>
+
+<h3>ASSIGN PERMISSION EXPLAINED</h3>
+<h4>1️⃣ Live View Permission</h4>
+<p>Allows the user to watch real-time video from connected cameras.</p>
+<ul>
+<li>View live camera footage</li>
+<li>Switch between cameras</li>
+<li>View multiple camera screens</li>
+<li>Monitor activities as they happen</li>
+</ul>
+<p>Cannot: watch recorded footage, change settings, control PTZ (unless granted).</p>
+
+<h4>2️⃣ Playback Permission</h4>
+<p>Allows access to previously recorded video footage.</p>
+<ul>
+<li>Search recordings by date/time</li>
+<li>Replay past events</li>
+<li>Pause, fast-forward, rewind</li>
+<li>Download or back up footage (if allowed)</li>
+</ul>
+
+<h4>3️⃣ PTZ Control Permission</h4>
+<p>Allows control of Pan, Tilt, Zoom cameras.</p>
+<ul>
+<li>Pan, Tilt, Zoom, Set presets, Patrol</li>
+<li>Used for tracking moving objects</li>
+</ul>
+
+<h4>4️⃣ Configuration Rights</h4>
+<p>Allows changing system settings including cameras, storage, schedules, and user accounts.</p>
+<div class="warning">
+<p>⚠ Usually only the Admin should have full configuration rights.</p>
+</div>
+
+<h4>🌐 On IP Camera (Web Interface)</h4>
+<div class="step">
+<ol>
+<li>Enter camera IP in browser</li>
+<li>Log in as admin</li>
+<li>Go to Configuration → User Management</li>
+<li>Click Add, enter details</li>
+<li>Assign permissions and Save</li>
+</ol>
+</div>
+
+<!-- 2FA Section -->
+<h3>3️⃣ Setting of Factor Authentication</h3>
+<p>Authentication means verifying a user's identity before granting access.</p>
+
+<h4>🔐 Knowledge Factor Authentication</h4>
+<p>Something the user knows (password, PIN, security answer). Hikvision: username + password.</p>
+
+<h4>🔐 Two-Factor Authentication (2FA)</h4>
+<p>Requires two types of verification:</p>
+<ul>
+<li>Something you know (password)</li>
+<li>Something you have (phone / verification code)</li>
+</ul>
+<p>In Hikvision: login password + code via Email or Hik-Connect.</p>
+
+<!-- Configure IP Addresses -->
+<h2>Configure CCTV IP Addresses</h2>
+<p>IP addresses allow devices to communicate on a network.</p>
+
+<h3>1️⃣ Static IP Address</h3>
+<p>Manually assigned, does not change. Ensures stable remote access and port forwarding.</p>
+<p>Example: NVR IP: 192.168.1.200, Subnet Mask: 255.255.255.0, Gateway: 192.168.1.1</p>
+
+<h4>Steps to Set Static IP on DVR / NVR</h4>
+<div class="step">
+<ol>
+<li>Log in as admin → Menu → Configuration → Network → General/TCP-IP</li>
+<li>Uncheck DHCP</li>
+<li>Enter IP, Subnet Mask, Gateway, DNS</li>
+<li>Save & restart if required</li>
+</ol>
+</div>
+
+<h3>2️⃣ Dynamic IP Address</h3>
+<p>Assigned automatically via DHCP. May change when device or router restarts. Not recommended for main DVR/NVR.</p>
+
+<h4>Steps to Enable Dynamic IP (DHCP)</h4>
+<div class="step">
+<ol>
+<li>Log in → Configuration → Network → TCP/IP</li>
+<li>Check Enable DHCP</li>
+<li>Save settings</li>
+</ol>
+</div>
+
+<h3>🎯 Best Practice for CCTV Installations</h3>
+<ul>
+<li>Use Static IP for DVR, NVR, main IP cameras</li>
+<li>Use Dynamic IP for temporary or small home systems</li>
+</ul>
+
+<!-- Apply Settings of CCTV Recordings -->
+<h2>Apply Settings of CCTV Recordings</h2>
+
+<h3>1️⃣ Video Format & Data Compression</h3>
+<p>Compression reduces video file size and network bandwidth usage.</p>
+<p>Example: Raw 100GB → Compressed 10–20GB using H.264/H.265.</p>
+
+<h3>2️⃣ Encoding & 3️⃣ Decoding</h3>
+<p>Encoding compresses video for storage; decoding converts back for playback.</p>
+
+<h3>Steps to Set Video Format</h3>
+<div class="step">
+<ol>
+<li>Log in → Menu → Configuration → Video / Encoding</li>
+<li>Select camera channel</li>
+<li>Choose compression type (H.264 / H.265)</li>
+<li>Save</li>
+</ol>
+</div>
+
+<h3>2️⃣ Overwrite Capability</h3>
+<p>Automatically replaces old recordings when storage is full.</p>
+<div class="step">
+<ol>
+<li>Menu → Configuration → Storage → Advanced/HDD settings</li>
+<li>Enable Overwrite</li>
+<li>Save</li>
+</ol>
+</div>
+
+<h3>3️⃣ Backup Frequency</h3>
+<p>How often footage is copied for safekeeping (Daily, Weekly, Monthly, After incident).</p>
+<div class="step">
+<ol>
+<li>Insert USB → Playback → Search → Select video → Export / Backup → Choose format → Start</li>
+</ol>
+</div>
+
+<h3>4️⃣ Set Time and Date</h3>
+<div class="step">
+<ol>
+<li>Menu → Configuration → System → Time Settings</li>
+<li>Set Date, Time, Time zone</li>
+<li>Enable NTP if connected to internet</li>
+<li>Save settings</li>
+</ol>
+</div>
+
+<h3>5️⃣ Set Recording Mode</h3>
+<p>Defines how and when cameras record:</p>
+<ul>
+<li>Continuous Recording – 24/7</li>
+<li>Motion Detection Recording – only when motion detected</li>
+<li>Scheduled Recording – specific times</li>
+</ul>
+<div class="step">
+<ol>
+<li>Menu → Configuration → Record → Schedule</li>
+<li>Select camera channel</li>
+<li>Select recording type (Continuous / Motion / Schedule)</li>
+<li>Set time grid</li>
+<li>Save settings</li>
+</ol>
+</div>
+
+<!-- Documenting CCTV Functionalities -->
+<h2>Documenting CCTV Functionalities</h2>
+<h3>1️⃣ Introduction to Documentation</h3>
+<p>Provides a detailed record of the CCTV system, components, configuration, and usage.</p>
+<ul>
+<li>System overview</li>
+<li>Troubleshooting</li>
+<li>Legal compliance</li>
+<li>Guides upgrades</li>
+</ul>
+
+<h3>2️⃣ CCTV System Requirements</h3>
+<p>Defines what is needed for the CCTV to operate effectively:</p>
+<ul>
+<li>Hardware: DVR/NVR, Cameras, HDD, Power, Network</li>
+<li>Software: CMS, Mobile App, Firmware</li>
+<li>Environment: mounting, lighting, temperature/humidity</li>
+</ul>
+
+<h3>3️⃣ Tools, Materials, and Equipment</h3>
+<table>
+<tr><th>Category</th><th>Examples</th></tr>
+<tr><td>Tools</td><td>Screwdrivers, crimping tools, cable testers</td></tr>
+<tr><td>Materials</td><td>Cables, connectors, brackets</td></tr>
+<tr><td>Equipment</td><td>Cameras, DVR/NVR, monitors, storage, power</td></tr>
+</table>
+
+<h3>4️⃣ CCTV Diagram</h3>
+<p>A CCTV diagram visually represents how the system components are connected. It provides a clear reference for installation, troubleshooting, and future expansion.</p>
+
+<h4>🔹 Key Elements</h4>
+<ul>
+  <li>IP Camera locations</li>
+  <li>NVR position</li>
+  <li>Monitor connected to NVR</li>
+  <li>Mouse connected to NVR</li>
+  <li>HDD inside NVR</li>
+  <li>Network Switch connectivity</li>
+  <li>Computer connected to NVR via Ethernet (with configuration software)</li>
+  <li>Smartphone using Hik-Connect app</li>
+  <li>Power sources for all devices</li>
+</ul>
+
+<h4>🔹 Purpose</h4>
+<ul>
+  <li>Helps technicians understand the complete system layout</li>
+  <li>Assists in installation, maintenance, and troubleshooting</li>
+  <li>Supports future expansion plans</li>
+  <li>Provides a clear reference for configuring remote access (computer & smartphone)</li>
+</ul>
+
+<p>💡 <strong>Visual Representation:</strong> IP Cameras → NVR → Network Switch → Monitor / Mouse, with HDD inside NVR; Computer connected via Ethernet for configuration; Smartphone connected via Hik-Connect app.</p>
+
+<!-- Embedded diagram image -->
+<img src="images/cctv_diagram.png" alt="CCTV System Connection Diagram" style="max-width:100%; height:auto; border:1px solid #ccc; padding:5px; margin-top:10px;">
+<img src="images/inside-cctv_diagram.pngL-O" alt="CCTV System Connection Diagram" style="max-width:100%; height:auto; border:1px solid #ccc; padding:5px; margin-top:10px;">
+
+<h3>5️⃣ Cost Documentation</h3>
+<p><strong>Definition:</strong> Cost documentation is the process of recording and estimating all expenses involved in setting up a CCTV system, including device specifications, unit costs, and total expenditure. It provides a clear reference for budgeting, planning, and accountability.</p>
+
+<p>Cost estimation is made up of three components:</p>
+<ol>
+  <li><strong>Item Specifications</strong> – Description or model of the device.</li>
+  <li><strong>Item Costs</strong> – Price per unit in Rwandan Francs (RWF).</li>
+  <li><strong>Total Cost</strong> – Sum of all item costs.</li>
+</ol>
+
+<h4>📌 1. Item Specifications</h4>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Specifications</th>
+    <th>Quantity</th>
+  </tr>
+  <tr>
+    <td>IP Camera</td>
+    <td>Hikvision DS-2CD2143G0-I, 4MP, IR</td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>NVR</td>
+    <td>Hikvision DS-7204HQHI-K1, 4 Channel</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Hard Drive</td>
+    <td>Western Digital Purple 2TB (inside NVR)</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Network Switch</td>
+    <td>8-Port Gigabit Switch</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Monitor</td>
+    <td>22” LED Monitor</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Mouse</td>
+    <td>USB Mouse for NVR</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Cables & Connectors</td>
+    <td>UTP Cat6 cables + BNC connectors</td>
+    <td>1 set</td>
+  </tr>
+  <tr>
+    <td>Computer</td>
+    <td>Laptop with configuration software</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Smartphone</td>
+    <td>Mobile device with Hik-Connect App</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>Installation / Labor</td>
+    <td>Mounting, setup, configuration</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<h4>📌 2. Item Costs</h4>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Unit Cost (RWF)</th>
+    <th>Total Cost per Item (RWF)</th>
+  </tr>
+  <tr>
+    <td>IP Camera</td>
+    <td>4</td>
+    <td>150,000</td>
+    <td>600,000</td>
+  </tr>
+  <tr>
+    <td>NVR</td>
+    <td>1</td>
+    <td>300,000</td>
+    <td>300,000</td>
+  </tr>
+  <tr>
+    <td>Hard Drive</td>
+    <td>1</td>
+    <td>120,000</td>
+    <td>120,000</td>
+  </tr>
+  <tr>
+    <td>Network Switch</td>
+    <td>1</td>
+    <td>80,000</td>
+    <td>80,000</td>
+  </tr>
+  <tr>
+    <td>Monitor</td>
+    <td>1</td>
+    <td>150,000</td>
+    <td>150,000</td>
+  </tr>
+  <tr>
+    <td>Mouse</td>
+    <td>1</td>
+    <td>15,000</td>
+    <td>15,000</td>
+  </tr>
+  <tr>
+    <td>Cables & Connectors</td>
+    <td>1 set</td>
+    <td>50,000</td>
+    <td>50,000</td>
+  </tr>
+  <tr>
+    <td>Computer</td>
+    <td>1</td>
+    <td>600,000</td>
+    <td>600,000</td>
+  </tr>
+  <tr>
+    <td>Smartphone</td>
+    <td>1</td>
+    <td>400,000</td>
+    <td>400,000</td>
+  </tr>
+  <tr>
+    <td>Installation / Labor</td>
+    <td>1</td>
+    <td>100,000</td>
+    <td>100,000</td>
+  </tr>
+</table>
+
+<h4>📌 3. Total Cost</h4>
+<table>
+  <tr>
+    <th>Grand Total (RWF)</th>
+    <td>2,415,000</td>
+  </tr>
+  <tr>
+    <th>Maintenance / Contingency (RWF)</th>
+    <td>150,000</td>
+  </tr>
+  <tr>
+    <th>Final Total (RWF)</th>
+    <td>2,565,000</td>
+  </tr>
+</table>
+
+<h3>6️⃣ CCTV System Settings</h3>
+<p>Documenting system settings ensures consistency and easier troubleshooting:</p>
+<ul>
+<li>Network Configuration (IP addresses, gateway, subnet)</li>
+<li>Recording Settings (Video format, mode, overwrite, backup)</li>
+<li>User Accounts (permissions, authentication)</li>
+<li>Camera Settings (PTZ, resolution, motion sensitivity)</li>
+<li>Time & Date (timezone, NTP)</li>
+</ul>
+
+</div>
+</body>
+</html>

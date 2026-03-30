@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Decorators – Complete Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#38bdf8;
+  --accent2:#22c55e;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, sans-serif;
+  background:linear-gradient(120deg,#020617,#0f172a);
+  color:var(--text);
+  line-height:1.65;
+}
+
+.header{
+  padding:50px 30px;
+  text-align:center;
+  background:linear-gradient(120deg,#0ea5e9,#22c55e);
+  color:white;
+}
+
+.header h1{
+  margin:0;
+  font-size:42px;
+  font-weight:800;
+}
+
+.header p{
+  margin-top:10px;
+  opacity:.95;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px 60px;
+}
+
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:28px;
+  margin-bottom:26px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  border:1px solid #1f2937;
+}
+
+.section h2{
+  margin-top:0;
+  font-size:22px;
+  color:var(--accent);
+}
+
+.badge{
+  display:inline-block;
+  background:#1e293b;
+  color:var(--accent2);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+h3{
+  color:#7dd3fc;
+  margin-bottom:8px;
+}
+
+ul{
+  margin:8px 0 8px 20px;
+}
+
+code{
+  background:#020617;
+  padding:3px 6px;
+  border-radius:6px;
+  color:#7dd3fc;
+  font-size:14px;
+}
+
+pre{
+  background:#020617;
+  padding:16px;
+  border-radius:12px;
+  overflow:auto;
+  border:1px solid #1f2937;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+
+.table th,.table td{
+  border:1px solid #1f2937;
+  padding:10px;
+  text-align:left;
+}
+
+.table th{
+  background:#020617;
+  color:#7dd3fc;
+}
+
+.note{
+  background:#052e16;
+  border-left:4px solid #22c55e;
+  padding:12px;
+  border-radius:10px;
+  margin:12px 0;
+  color:#bbf7d0;
+}
+
+.warn{
+  background:#3f1d1d;
+  border-left:4px solid #ef4444;
+  padding:12px;
+  border-radius:10px;
+  margin:12px 0;
+  color:#fecaca;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  margin-top:40px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>🧠 Python Decorators</h1>
+  <p>Modern Study Notes — Clean, Structured, Practical</p>
+</div>
+
+<div class="container">
+
+<!-- A -->
+<div class="section">
+<span class="badge">A. Core Meaning</span>
+<h2>Definitions & Core Concepts</h2>
+
+<h3>✅ What is a Python Decorator?</h3>
+<p>A decorator is a function that adds extra behavior to another function <b>without modifying the original function’s code</b>. It wraps the function and extends what it does.</p>
+
+<h3>✅ In Simple Words</h3>
+<ul>
+<li>Add-on feature for a function</li>
+<li>Keeps original function clean</li>
+<li>Adds logging, timing, validation, permissions automatically</li>
+</ul>
+
+<h3>🔹 Functions as Objects</h3>
+<pre><code>def greet():
+    print("Hello")
+
+say_hi = greet
+say_hi()</code></pre>
+
+<h3>🔹 Higher-Order Functions</h3>
+<p>Functions that take or return other functions. Decorators are higher-order functions.</p>
+
+<h3>🔹 Closures Connection</h3>
+<ul>
+<li>Inner wrapper function</li>
+<li>Remembers original function</li>
+<li>Runs it later</li>
+</ul>
+</div>
+
+<!-- B -->
+<div class="section">
+<span class="badge">B. Foundations</span>
+<h2>Basic Concepts Behind Decorators</h2>
+
+<ul>
+<li>Functions returning functions</li>
+<li>Passing functions as arguments</li>
+<li>Nested functions</li>
+<li>Closures</li>
+<li><code>@decorator_name</code> syntax</li>
+</ul>
+
+<h3>✅ Example — Basic Decorator</h3>
+<pre><code>def my_decorator(func):
+    def wrapper():
+        print("Before function runs")
+        func()
+        print("After function runs")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello")
+
+say_hello()</code></pre>
+
+<div class="note">
+Output:<br>
+Before function runs → Hello → After function runs
+</div>
+
+<h3>✅ Decorator with Return Value</h3>
+<pre><code>def double_result(func):
+    def wrapper():
+        return func() * 2
+    return wrapper</code></pre>
+</div>
+
+<!-- C -->
+<div class="section">
+<span class="badge">C. Internal Mechanics</span>
+<h2>How Decorators Work Internally</h2>
+
+<h3>Decorator Translation</h3>
+<pre><code>@decorator
+def f():
+    pass</code></pre>
+
+<p>Equals:</p>
+
+<pre><code>def f():
+    pass
+
+f = decorator(f)</code></pre>
+
+<ul>
+<li>Original function passed to decorator</li>
+<li>Decorator returns wrapper</li>
+<li>Name now points to wrapper</li>
+</ul>
+
+<h3>Passing Arguments Safely</h3>
+<pre><code>def logger(func):
+    def wrapper(*args, **kwargs):
+        print("Calling function...")
+        return func(*args, **kwargs)
+    return wrapper</code></pre>
+</div>
+
+<!-- D -->
+<div class="section">
+<span class="badge">D. Comparison</span>
+<h2>Decorators vs Regular Functions</h2>
+
+<table class="table">
+<tr><th>Method</th><th>Reusable</th><th>Clean</th><th>Scalable</th></tr>
+<tr><td>Regular</td><td>❌</td><td>✅</td><td>❌</td></tr>
+<tr><td>Manual Wrap</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td>Decorator</td><td>✅</td><td>✅</td><td>✅</td></tr>
+</table>
+
+<h3>Decorator Version</h3>
+<pre><code>@my_decorator
+def greet():
+    print("Hello")</code></pre>
+</div>
+
+<!-- E -->
+<div class="section">
+<span class="badge">E. Common Patterns</span>
+<h2>Common Decorator Patterns</h2>
+
+<h3>Logging</h3>
+<pre><code>def log_calls(func):
+    def wrapper(*a, **k):
+        print("Running:", func.__name__)
+        return func(*a, **k)
+    return wrapper</code></pre>
+
+<h3>Timing</h3>
+<pre><code>import time
+def timer(func):
+    def wrapper(*a, **k):
+        start = time.time()
+        result = func(*a, **k)
+        print("Time:", time.time()-start)
+        return result
+    return wrapper</code></pre>
+
+<h3>Decorator with Parameters</h3>
+<pre><code>def repeat(n):
+    def decorator(func):
+        def wrapper():
+            for _ in range(n):
+                func()
+        return wrapper
+    return decorator</code></pre>
+</div>
+
+<!-- F -->
+<div class="section">
+<span class="badge">F. Real Programming Use</span>
+<h2>Common Real-Life Use Cases</h2>
+
+<ul>
+<li>Web routes (framework endpoints)</li>
+<li>Authentication & permissions</li>
+<li>Performance measurement</li>
+<li>Debug logging</li>
+<li>Input validation</li>
+<li>Retry mechanisms</li>
+<li>Caching expensive results</li>
+</ul>
+</div>
+
+<!-- G -->
+<div class="section">
+<span class="badge">G. Student Examples</span>
+<h2>Student-Related Real-Life Examples</h2>
+
+<h3>🎓 Check Registration</h3>
+<pre><code>@must_be_registered
+def submit_assignment(name, registered):
+    print(name, "submitted")</code></pre>
+
+<h3>📝 Log Quiz Attempts</h3>
+<pre><code>@log_attempt
+def take_quiz(student):
+    pass</code></pre>
+
+<h3>📊 Validate Marks</h3>
+<pre><code>@validate_marks
+def save_mark(mark):
+    pass</code></pre>
+</div>
+
+<!-- H -->
+<div class="section">
+<span class="badge">H. Pros & Cons</span>
+<h2>Advantages & Limitations</h2>
+
+<div class="note">
+<b>Benefits</b>
+<ul>
+<li>Reusable logic</li>
+<li>Keeps code clean</li>
+<li>Separates concerns</li>
+<li>Avoids repetition</li>
+<li>Framework power feature</li>
+</ul>
+</div>
+
+<div class="warn">
+<b>Limitations</b>
+<ul>
+<li>Harder for beginners</li>
+<li>Behavior may be hidden</li>
+<li>Debugging complexity</li>
+<li>Too many decorators reduce clarity</li>
+</ul>
+</div>
+
+<h3>❌ Common Beginner Mistakes</h3>
+<ul>
+<li>Forgetting <code>*args, **kwargs</code></li>
+<li>Not returning wrapper result</li>
+<li>Losing metadata → use <code>functools.wraps</code></li>
+<li>Overusing decorators</li>
+</ul>
+</div>
+
+<div class="footer">
+PVC-PYTHON-PROGRAMMING
+</div>
+
+</div>
+</body>
+</html>

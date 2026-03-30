@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User and Group Management in Ubuntu Linux</title>
+<style>
+    body {
+        font-family: "Calisto MT", Roboto, Arial, sans-serif;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        margin: 0;
+        padding: 0;
+        line-height: 1.7;
+    }
+
+    header {
+        background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+        padding: 30px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+        font-size: 1.9rem;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    main {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 25px;
+        background: #1e293b;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    section {
+        margin-bottom: 50px;
+        border-left: 4px solid #3b82f6;
+        padding-left: 18px;
+    }
+
+    h2 {
+        color: #60a5fa;
+        margin-bottom: 10px;
+        margin-top: 25px;
+    }
+
+    h3 {
+        color: #93c5fd;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        border: 1px solid #334155;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #1e3a8a;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #273449;
+    }
+
+    tr:hover {
+        background-color: #334155;
+    }
+
+    .tip {
+        background-color: #0ea5e9;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+        display: inline-block;
+        font-weight: 500;
+    }
+
+    .code, pre {
+        background-color: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 10px;
+        color: #93c5fd;
+        overflow-x: auto;
+        font-family: Consolas, monospace;
+    }
+
+    ul {
+        margin-left: 20px;
+    }
+
+    footer {
+        background: #1e293b;
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        margin-top: 40px;
+    }
+
+    .subsection {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #0f172a;
+        border-left: 3px solid #38bdf8;
+        border-radius: 6px;
+    }
+
+    .highlight {
+        color: #facc15;
+        font-weight: bold;
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🧑💻 User and Group Management in Ubuntu Linux</h1>
+    <p>Understand User Creation, Group Management, Permissions, and File Ownership</p>
+</header>
+
+<main>
+
+<section>
+    <h2>1. User Management in Ubuntu Linux</h2>
+    <p>Ubuntu uses the Linux user management system based on configuration files like <code>/etc/passwd</code>, <code>/etc/shadow</code>, and <code>/etc/group</code>.</p>
+
+    <h3>🧩 User Attributes</h3>
+    <table>
+        <tr><th>Attribute</th><th>Description</th><th>Configuration Location / Command</th></tr>
+        <tr><td>Login Name</td><td>Unique username identifying the user.</td><td><code>sudo adduser username</code><br>Or manually edit <code>/etc/passwd</code>.</td></tr>
+        <tr><td>Encrypted Password</td><td>Stored securely using hash algorithms.</td><td><code>passwd username</code> — updates password in <code>/etc/shadow</code>.</td></tr>
+        <tr><td>UID (User ID)</td><td>Numeric identifier for each user.<br>UID 0 = root; UID ≥1000 = normal users.</td><td>Found in <code>/etc/passwd</code>.</td></tr>
+        <tr><td>GID (Group ID)</td><td>Primary group ID for user.</td><td>Stored in <code>/etc/group</code> and <code>/etc/passwd</code>.</td></tr>
+        <tr><td>User’s Default Shell</td><td>Assigned command-line interface (e.g. <code>/bin/bash</code>).</td><td><code>sudo useradd -s /bin/bash username</code></td></tr>
+        <tr><td>Home Directory</td><td>User’s personal workspace.</td><td><code>/home/username</code>, created using <code>-m</code> flag.</td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>2. Group Management in Ubuntu Linux</h2>
+    <p>Groups help organize users and manage shared permissions. A user can belong to one primary and multiple secondary groups.</p>
+
+    <h3>🧩 Group Attributes</h3>
+    <table>
+        <tr><th>Attribute</th><th>Description</th><th>Command / Location</th></tr>
+        <tr><td>Group Name</td><td>Unique group identifier.</td><td><code>sudo groupadd groupname</code></td></tr>
+        <tr><td>GID (Group ID)</td><td>Numeric identifier for the group.</td><td>Stored in <code>/etc/group</code>.</td></tr>
+        <tr><td>Group Members</td><td>Users within the group.</td><td><code>getent group groupname</code></td></tr>
+        <tr><td>Group Password</td><td>Optional security layer.</td><td><code>gpasswd groupname</code></td></tr>
+        <tr><td>Group Ownership</td><td>File/directory group ownership.</td><td><code>chown :groupname filename</code></td></tr>
+        <tr><td>Group Permissions</td><td>Defines what the group can do (rwx).</td><td>Controlled by <code>ls -l</code> permissions.</td></tr>
+        <tr><td>Group Expiration</td><td>Defines when user/group expires (optional).</td><td><code>chage -E</code> for users.</td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>3. Managing Users and Groups</h2>
+
+    <h3>🧠 User Management Commands</h3>
+    <table>
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Add a new user</td><td><code>sudo adduser username</code></td></tr>
+        <tr><td>Add user without home directory</td><td><code>sudo useradd username</code></td></tr>
+        <tr><td>Delete a user</td><td><code>sudo deluser username</code> or <code>sudo userdel username</code></td></tr>
+        <tr><td>Change password</td><td><code>sudo passwd username</code></td></tr>
+        <tr><td>Modify attributes</td><td><code>sudo usermod -aG groupname username</code></td></tr>
+        <tr><td>Lock/Unlock user</td><td><code>sudo passwd -l username</code> / <code>sudo passwd -u username</code></td></tr>
+        <tr><td>View user info</td><td><code>id username</code> or <code>getent passwd username</code></td></tr>
+    </table>
+
+    <h3>👥 Group Management Commands</h3>
+    <table>
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>Create a new group</td><td><code>sudo groupadd groupname</code></td></tr>
+        <tr><td>Delete a group</td><td><code>sudo groupdel groupname</code></td></tr>
+        <tr><td>Add user to group</td><td><code>sudo usermod -aG groupname username</code></td></tr>
+        <tr><td>Remove user from group</td><td><code>sudo gpasswd -d username groupname</code></td></tr>
+        <tr><td>Change group ownership</td><td><code>sudo chown :groupname filename</code></td></tr>
+        <tr><td>View group details</td><td><code>getent group groupname</code></td></tr>
+    </table>
+
+    <h3>📁 Important System Files</h3>
+    <table>
+        <tr><th>File</th><th>Purpose</th></tr>
+        <tr><td>/etc/passwd</td><td>Stores basic user information.</td></tr>
+        <tr><td>/etc/shadow</td><td>Stores encrypted passwords.</td></tr>
+        <tr><td>/etc/group</td><td>Lists all groups and members.</td></tr>
+        <tr><td>/etc/gshadow</td><td>Stores group passwords (if any).</td></tr>
+    </table>
+
+    <h3>🛠️ Example Scenario</h3>
+<pre class="code">
+sudo groupadd developers
+sudo adduser john
+sudo usermod -aG developers john
+groups john
+sudo chown :developers /var/www/project
+</pre>
+</section>
+
+<section>
+    <h2>4. Understanding File and Directory Permissions</h2>
+    <p>Every file in Ubuntu is protected by permissions defining who can read, write, or execute it. These ensure security and controlled collaboration.</p>
+
+    <h3>👥 Entities (Ownership Classes)</h3>
+    <table>
+        <tr><th>Class</th><th>Description</th></tr>
+        <tr><td>Owner (User)</td><td>Creator or file owner.</td></tr>
+        <tr><td>Group</td><td>Users sharing access rights.</td></tr>
+        <tr><td>Others</td><td>Everyone else on the system.</td></tr>
+    </table>
+
+    <h3>🔐 Types of Permissions</h3>
+    <table>
+        <tr><th>Symbol</th><th>Meaning</th><th>Value</th><th>Description</th></tr>
+        <tr><td>r</td><td>Read</td><td>4</td><td>View content / list directory.</td></tr>
+        <tr><td>w</td><td>Write</td><td>2</td><td>Modify or delete files.</td></tr>
+        <tr><td>x</td><td>Execute</td><td>1</td><td>Run files or enter directories.</td></tr>
+    </table>
+
+    <div class="subsection">
+        <strong>Example Output:</strong><br>
+        <code>-rw-r--r-- 1 john developers 120 Nov 4 13:45 file1.txt</code><br><br>
+        Breakdown:<br>
+        • <strong>-</strong> → Regular file<br>
+        • <strong>rw-</strong> → Owner read/write<br>
+        • <strong>r--</strong> → Group read only<br>
+        • <strong>r--</strong> → Others read only
+    </div>
+</section>
+
+<section>
+    <h2>5. Setting Permissions</h2>
+
+    <h3>🧩 Symbolic Notation</h3>
+    <table>
+        <tr><th>Task</th><th>Command</th><th>Result</th></tr>
+        <tr><td>Add execute to owner</td><td><code>chmod u+x script.sh</code></td><td>Owner can execute.</td></tr>
+        <tr><td>Remove read from group</td><td><code>chmod g-r file.txt</code></td><td>Group cannot read.</td></tr>
+        <tr><td>Give read/write to all</td><td><code>chmod a+rw file.txt</code></td><td>Everyone can modify.</td></tr>
+        <tr><td>Set exact permissions</td><td><code>chmod u=rw,g=r,o= file.txt</code></td><td>Owner rw, group r, others none.</td></tr>
+    </table>
+
+    <h3>🧮 Octal (Numeric) Notation</h3>
+    <table>
+        <tr><th>Octal</th><th>Symbolic</th><th>Description</th></tr>
+        <tr><td>777</td><td>rwxrwxrwx</td><td>Everyone full access.</td></tr>
+        <tr><td>755</td><td>rwxr-xr-x</td><td>Owner full, others read/execute.</td></tr>
+        <tr><td>644</td><td>rw-r--r--</td><td>Owner read/write, others read only.</td></tr>
+        <tr><td>700</td><td>rwx------</td><td>Only owner has access.</td></tr>
+    </table>
+
+    <div class="tip">Use <code>chmod 755 /var/www</code> for typical directory permissions.</div>
+</section>
+
+<section>
+    <h2>6. Permission Testing & Directory Rules</h2>
+
+    <h3>🔧 Viewing and Testing</h3>
+    <table>
+        <tr><th>Task</th><th>Command</th></tr>
+        <tr><td>View permissions</td><td><code>ls -l</code></td></tr>
+        <tr><td>Change ownership</td><td><code>sudo chown username:group file</code></td></tr>
+        <tr><td>Switch user</td><td><code>su - otheruser</code></td></tr>
+        <tr><td>Detailed info</td><td><code>stat filename</code></td></tr>
+    </table>
+
+    <h3>🧱 Directory Permissions</h3>
+    <table>
+        <tr><th>Permission</th><th>Effect</th></tr>
+        <tr><td>r</td><td>List contents with ls.</td></tr>
+        <tr><td>w</td><td>Create, rename, or delete inside directory.</td></tr>
+        <tr><td>x</td><td>Enter directory using cd.</td></tr>
+    </table>
+
+    <h3>🌐 Practical Scenario</h3>
+<pre class="code">
+sudo mkdir /projects
+sudo groupadd devteam
+sudo chown :devteam /projects
+sudo chmod 2775 /projects
+</pre>
+    <p>🧩 The <strong>2</strong> in <code>2775</code> sets the <strong>setgid</strong> bit so new files inherit the group.</p>
+</section>
+
+<section>
+    <h2>🔎 Summary Table</h2>
+    <table>
+        <tr><th>Task</th><th>Command</th><th>Description</th></tr>
+        <tr><td>Check permissions</td><td><code>ls -l</code></td><td>Lists permissions.</td></tr>
+        <tr><td>Change permissions (symbolic)</td><td><code>chmod u+r file</code></td><td>Add read for user.</td></tr>
+        <tr><td>Change permissions (numeric)</td><td><code>chmod 755 file</code></td><td>Owner rwx, others r-x.</td></tr>
+        <tr><td>Change ownership</td><td><code>chown user:group file</code></td><td>Transfer ownership.</td></tr>
+        <tr><td>Test access</td><td><code>su - user</code></td><td>Switch user and verify access.</td></tr>
+        <tr><td>Detailed file info</td><td><code>stat file</code></td><td>Show permissions, owner, timestamps.</td></tr>
+    </table>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 Ubuntu System Administration Notes — Designed by iradukunda jmv</p>
+</footer>
+
+</body>
+</html>

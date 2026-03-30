@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jump Statements in Python - Real-Life Applications</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Berlin Sans FB', sans-serif;
+      background-color: #f9fafb;
+      color: #222;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      font-weight: bold;
+      color: #003366;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: none;
+    }
+    pre {
+      background: #f4f4f4;
+      border-radius: 10px;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+    }
+    .use-case {
+      background: #e8f0fe;
+      border-left: 5px solid #0d6efd;
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+    .section-title {
+      background: linear-gradient(90deg, #0d6efd, #66b3ff);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    table {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .emoji {
+      font-size: 1.4em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1>🐍 Jump Statements in Python</h1>
+      <p class="lead">Understanding <b>when</b> and <b>where</b> to use <code>break</code>, <code>continue</code>, and <code>pass</code> is what makes you a great programmer.</p>
+    </div>
+
+    <!-- BREAK -->
+    <div class="mb-5">
+      <h2 class="section-title"><i class="fa-solid fa-stop-circle"></i> 1. <code>break</code> — Real-Life Applications</h2>
+
+      <div class="card mb-4 p-4">
+        <h5 class="mb-2">🧾 a) Search Operations (Stop When Found)</h5>
+        <pre><code>students = ["Alice", "John", "Peter", "Maria", "David"]
+target = "Maria"
+
+for name in students:
+    if name == target:
+        print(f"{target} found in the list!")
+        break  # Stop searching</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Stop searching after finding a match — e.g., user IDs, barcodes, or names.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>💳 b) ATM PIN Attempts</h5>
+        <pre><code>correct_pin = "1234"
+
+for attempt in range(3):
+    pin = input("Enter PIN: ")
+    if pin == correct_pin:
+        print("Access granted.")
+        break
+    else:
+        print("Wrong PIN, try again.")</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in login or security systems to exit once correct input is received.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>🚗 c) Sensor or Monitoring Systems</h5>
+        <pre><code>temperatures = [80, 85, 89, 105, 110]
+
+for t in temperatures:
+    if t > 100:
+        print("⚠ Warning: System overheated! Stopping check.")
+        break</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in IoT or industrial monitoring to stop when safety thresholds are reached.</div>
+      </div>
+    </div>
+
+    <!-- CONTINUE -->
+    <div class="mb-5">
+      <h2 class="section-title"><i class="fa-solid fa-forward"></i> 2. <code>continue</code> — Real-Life Applications</h2>
+
+      <div class="card mb-4 p-4">
+        <h5>📋 a) Data Cleaning / Skipping Invalid Entries</h5>
+        <pre><code>data = [45, None, 78, "", 23, None, 90]
+
+for item in data:
+    if item is None or item == "":
+        continue
+    print(f"Processing {item}")</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in data preprocessing to ignore corrupt or missing entries.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>🧍 b) Attendance / Presence Checking</h5>
+        <pre><code>students = {"Alice": "present", "John": "absent", "Peter": "present"}
+
+for name, status in students.items():
+    if status == "absent":
+        continue
+    print(f"{name} is attending class.")</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in attendance or HR systems to process only active records.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>💰 c) Payment System Validation</h5>
+        <pre><code>transactions = [
+    {"id": 1, "status": "success"},
+    {"id": 2, "status": "failed"},
+    {"id": 3, "status": "success"},
+]
+
+for tx in transactions:
+    if tx["status"] == "failed":
+        continue
+    print(f"Processing transaction {tx['id']}")</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in finance apps to skip failed transactions safely.</div>
+      </div>
+    </div>
+
+    <!-- PASS -->
+    <div class="mb-5">
+      <h2 class="section-title"><i class="fa-solid fa-pause-circle"></i> 3. <code>pass</code> — Real-Life Applications</h2>
+
+      <div class="card mb-4 p-4">
+        <h5>🧩 a) Function or Class Prototyping</h5>
+        <pre><code>def calculate_salary():
+    pass  # To be implemented later</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in large projects to reserve space before adding full logic.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>🏛 b) Exception Handling (Temporary Ignoring)</h5>
+        <pre><code>try:
+    risky_operation()
+except Exception:
+    pass  # Handle later</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in debugging or testing to continue program flow safely.</div>
+      </div>
+
+      <div class="card mb-4 p-4">
+        <h5>🔒 c) Security or Access Control (Future Logic)</h5>
+        <pre><code>def check_user_permission(user):
+    pass  # Future: Add admin/lecturer/student roles</code></pre>
+        <div class="use-case mt-2">✅ <b>Use Case:</b> Used in API or app design to reserve logic for future development.</div>
+      </div>
+    </div>
+
+    <!-- SUMMARY TABLE -->
+    <div class="mb-5">
+      <h2 class="section-title"><i class="fa-solid fa-table"></i> Summary — Real-World Use Cases</h2>
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Statement</th>
+            <th>Real-Life Example</th>
+            <th>Common Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>break</code></td>
+            <td>Stop PIN attempts after success</td>
+            <td>Login systems, search operations</td>
+          </tr>
+          <tr>
+            <td><code>continue</code></td>
+            <td>Skip missing data entries</td>
+            <td>Data cleaning, analytics</td>
+          </tr>
+          <tr>
+            <td><code>pass</code></td>
+            <td>Placeholder for future logic</td>
+            <td>App development, OOP prototypes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="text-center text-muted">
+      <p>💡 Designed with <b>Bootstrap 5</b> | Font: <b>Berlin Sans FB</b></p>
+    </footer>
+  </div>
+
+</body>
+</html>

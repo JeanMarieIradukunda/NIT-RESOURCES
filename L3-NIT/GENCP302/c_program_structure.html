@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>C Program Structure Notes</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Georgia, serif;
+            background-color: #f4f6f8;
+            color: #1f2a44;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f2a44;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #bfa980;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            width: 85%;
+            margin: 30px auto;
+        }
+
+        section {
+            background-color: #ffffff;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            border-left: 6px solid #1f2a44;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #1f2a44;
+            border-bottom: 2px solid #bfa980;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #3a4a6b;
+            margin-bottom: 5px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+
+        pre {
+            background-color: #f0f2f5;
+            border: 1px solid #ccd2da;
+            padding: 12px;
+            overflow-x: auto;
+            font-family: "Courier New", monospace;
+            color: #2b2b2b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            border: 1px solid #ccd2da;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #1f2a44;
+            color: #ffffff;
+        }
+
+        footer {
+            background-color: #1f2a44;
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>C PROGRAM STRUCTURE – DETAILED NOTES</h1>
+</header>
+
+<div class="container">
+
+    <section>
+        <h2>1. Preprocessor Directives</h2>
+        <p>A preprocessor is a program that processes source code before it's compiled</p>
+        <p>Preprocessor directives tell the computer what to prepare before the program runs, such as including libraries.</p>
+        <p>Directives : Commands / Instructions / Directions</p>
+
+        <h3>Example</h3>
+        <pre>#include &lt;stdio.h&gt;</pre>
+
+        <h3>Explanation</h3>
+        <p>#include adds ready-made code from libraries.</p>
+        <p>&lt;stdio.h&gt; allows input and output like printf() and scanf().</p>
+
+        <h3>Applications</h3>
+        <p>Printing text on the screen</p>
+        <p>Reading user input</p>
+        <p>Using math functions</p>
+
+        <h3>Usage</h3>
+        <p>Used at the top of the program, before main().</p>
+    </section>
+
+    <section>
+        <h2>2. Main Function</h2>
+        <p>The main() function is the starting point of every C program.</p>
+
+        <h3>Example</h3>
+        <pre>int main() {
+    return 0;
+}</pre>
+
+        <h3>Explanation</h3>
+        <p>Program execution starts here.</p>
+        <p>return 0 means the program ended successfully.</p>
+
+        <h3>Applications</h3>
+        <p>Controls the entire program</p>
+        <p>Runs all statements and functions</p>
+
+        <h3>Usage</h3>
+        <p>Every C program must have exactly one main() function.</p>
+    </section>
+
+    <section>
+        <h2>3. Statements and Expressions</h2>
+        <p>Statements are instructions that tell the computer what to do.</p>
+
+        <h3>Example</h3>
+        <pre>printf("Hello\n");</pre>
+
+        <h3>Explanation</h3>
+        <p>Tells the computer to print text.</p>
+        <p>Ends with a semicolon ;.</p>
+
+        <h3>Applications</h3>
+        <p>Calculations</p>
+        <p>Printing messages</p>
+        <p>Assigning values</p>
+
+        <h3>Usage</h3>
+        <p>Written inside functions, mainly inside main().</p>
+    </section>
+
+    <section>
+        <h2>4. Variables and Data Types</h2>
+        <p>Variables store data values in memory.</p>
+
+        <h3>Example</h3>
+        <pre>int age = 20;</pre>
+
+        <h3>Explanation</h3>
+        <p>int → type of data (number)</p>
+        <p>age → variable name</p>
+        <p>20 → value stored</p>
+
+        <h3>Applications</h3>
+        <p>Storing user input</p>
+        <p>Calculating results</p>
+        <p>Holding data for processing</p>
+
+        <h3>Usage</h3>
+        <p>Declared before using them in a program.</p>
+    </section>
+
+    <section>
+        <h2>5. Input and Output Functions</h2>
+        <p>Input/output functions allow the program to communicate with the user.</p>
+
+        <h3>Example</h3>
+        <pre>scanf("%d", &amp;age);
+printf("Age: %d", age);</pre>
+
+        <h3>Explanation</h3>
+        <p>scanf() gets input from the user.</p>
+        <p>printf() shows output on the screen.</p>
+
+        <h3>Applications</h3>
+        <p>Reading names, numbers, marks</p>
+        <p>Displaying results and messages</p>
+
+        <h3>Usage</h3>
+        <p>Requires #include &lt;stdio.h&gt;.</p>
+    </section>
+
+    <section>
+        <h2>6. Control Structures</h2>
+
+        <h3>(a) Conditional Statements</h3>
+        <p>Control structures help the program make decisions.</p>
+
+        <h4>Example</h4>
+        <pre>if (age >= 18) {
+    printf("Adult");
+}</pre>
+
+        <h4>Explanation</h4>
+        <p>Checks a condition.</p>
+        <p>Runs code only if the condition is true.</p>
+
+        <h4>Applications</h4>
+        <p>Checking pass/fail</p>
+        <p>Validating passwords</p>
+        <p>Age verification</p>
+
+        <h4>Usage</h4>
+        <p>Used when decisions are needed.</p>
+
+        <h3>(b) Loops</h3>
+        <p>A loop is a programming construct that allows you to repeat a set of instructions multiple times</p>
+        <p>Loops repeat a block of code multiple times.</p>
+
+        <h4>Example</h4>
+        <pre>for (int i = 0; i < 5; i++) {
+    printf("Hello\n");
+}</pre>
+
+        <h4>Explanation</h4>
+        <p>Runs the same code again and again.</p>
+        <p>Saves time and code space.</p>
+
+        <h4>Applications</h4>
+        <p>Printing lists</p>
+        <p>Counting numbers</p>
+        <p>Repeating tasks</p>
+
+        <h4>Usage</h4>
+        <p>Used when repetition is needed.</p>
+    </section>
+
+    <section>
+        <h2>7. Functions</h2>
+        <p>Functions are small blocks of code that perform a specific task.</p>
+
+        <h3>Example</h3>
+        <pre>void greet() {
+    printf("Hello!");
+}</pre>
+
+        <h3>Explanation</h3>
+        <p>Makes the program organized.</p>
+        <p>Can be reused many times.</p>
+
+        <h3>Applications</h3>
+        <p>Calculations</p>
+        <p>Reusable tasks</p>
+        <p>Large programs</p>
+
+        <h3>Usage</h3>
+        <p>Called inside main() or other functions.</p>
+    </section>
+
+    <section>
+        <h2>8. Comments</h2>
+        <p>Comments explain the code for humans. The computer ignores them.</p>
+
+        <h3>Example</h3>
+        <pre>// This prints a message</pre>
+
+        <h3>Explanation</h3>
+        <p>Helps programmers understand the code.</p>
+        <p>Useful for learning and teamwork.</p>
+
+        <h3>Applications</h3>
+        <p>Code explanation</p>
+        <p>Debugging</p>
+        <p>Documentation</p>
+
+        <h3>Usage</h3>
+        <p>Used anywhere in the program.</p>
+    </section>
+
+    <section>
+        <h2>Complete Example Using All Structures</h2>
+        <pre>#include &lt;stdio.h&gt;
+
+// Main function
+int main() {
+
+    int age;
+
+    printf("Enter your age: ");
+    scanf("%d", &amp;age);
+
+    if (age >= 18) {
+        printf("You are an adult.\n");
+    }
+
+    return 0;
+}</pre>
+    </section>
+
+    <section>
+        <h2>Quick Summary Table</h2>
+        <table>
+            <tr>
+                <th>Structure</th>
+                <th>Purpose</th>
+            </tr>
+            <tr><td>Preprocessor</td><td>Include libraries</td></tr>
+            <tr><td>main()</td><td>Program start</td></tr>
+            <tr><td>Statements</td><td>Instructions</td></tr>
+            <tr><td>Variables</td><td>Store data</td></tr>
+            <tr><td>I/O</td><td>User interaction</td></tr>
+            <tr><td>Control</td><td>Decisions & repetition</td></tr>
+            <tr><td>Functions</td><td>Organize code</td></tr>
+            <tr><td>Comments</td><td>Explain code</td></tr>
+        </table>
+    </section>
+
+</div>
+
+<footer>
+    © C Programming Notes – JMV-IRADUKUNDA | PVC
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Converting Python to .exe Using PyInstaller</title>
+
+<style>
+    :root {
+        --primary: #2563eb;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --card: #ffffff;
+        --accent: #0f172a;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #e0f2fe, #f1f5f9);
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    header {
+        background: var(--primary);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    header p {
+        margin-top: 10px;
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .card {
+        background: var(--card);
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    h2 {
+        color: var(--primary);
+        margin-top: 0;
+    }
+
+    h3 {
+        margin-bottom: 10px;
+        color: var(--accent);
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    code {
+        background: #e2e8f0;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+    }
+
+    .step {
+        border-left: 5px solid var(--primary);
+        padding-left: 15px;
+        margin-bottom: 15px;
+    }
+
+    .warning {
+        background: #fff7ed;
+        border-left: 5px solid #f59e0b;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .success {
+        background: #ecfdf5;
+        border-left: 5px solid #10b981;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: var(--dark);
+        color: white;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📘 Converting a Python Program into a Standalone .exe</h1>
+    <p>Using PyInstaller for Windows Applications</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>✅ Overview</h2>
+        <p>
+            <strong>PyInstaller</strong> is a tool that converts a Python script (<code>.py</code>) 
+            into a standalone executable file (<code>.exe</code>) for Windows.
+        </p>
+        <ul>
+            <li>The user does NOT need to install Python.</li>
+            <li>The program runs like normal software.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🔹 STEP 1 — Save Your Program</h2>
+        <div class="step">
+            <h3>✔ What To Do:</h3>
+            <ul>
+                <li>Open Notepad or VS Code.</li>
+                <li>Paste your Python code.</li>
+                <li>Click <strong>Save As</strong>.</li>
+                <li>Name it: <code>marks_converter.py</code></li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠ Important:</strong>
+            The file must end with <code>.py</code>.
+            Do NOT save it as <code>.txt</code>.
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔹 STEP 2 — Open Command Prompt</h2>
+        <ul>
+            <li>Go to the folder where the file is saved.</li>
+            <li>Hold <strong>Shift</strong>.</li>
+            <li>Right-click inside the folder.</li>
+            <li>Select <strong>"Open PowerShell window here"</strong>.</li>
+        </ul>
+        <p><strong>Why?</strong> The command must run in the same folder as the file.</p>
+    </div>
+
+    <div class="card">
+        <h2>🔹 STEP 3 — Install PyInstaller</h2>
+        <p>Run this command:</p>
+        <code>pip install pyinstaller</code>
+        <p>
+            This installs the tool required to convert the program.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>🔹 STEP 4 — Convert to .exe</h2>
+        <p>Run:</p>
+        <code>pyinstaller --onefile marks_converter.py</code>
+
+        <h3>Explanation:</h3>
+        <ul>
+            <li><code>pyinstaller</code> → Runs the tool</li>
+            <li><code>--onefile</code> → Creates one single executable</li>
+            <li><code>marks_converter.py</code> → Your program</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🔹 STEP 5 — Find the .exe File</h2>
+        <ul>
+            <li>After completion, two folders appear:</li>
+            <li><code>build</code></li>
+            <li><code>dist</code></li>
+        </ul>
+        <p>Open the <strong>dist</strong> folder.</p>
+
+        <div class="success">
+            🎉 Inside you will find:
+            <br><br>
+            <code>marks_converter.exe</code>
+        </div>
+
+        <p>This is your standalone program.</p>
+    </div>
+
+    <div class="card">
+        <h2>📌 What You Can Do Now</h2>
+        <ul>
+            <li>Copy the .exe file to another computer.</li>
+            <li>Run it directly.</li>
+            <li>No Python installation required.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>✅ Optional (Cleaner Version)</h2>
+        <p>Command:</p>
+        <code>pyinstaller --onefile --noconsole marks_converter.py</code>
+
+        <p><strong>What it does:</strong></p>
+        <p>Hides the black command window.</p>
+
+        <div class="warning">
+            ⚠ Your program uses <code>input()</code>, 
+            so do NOT use <code>--noconsole</code> for this program.
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔹 What Happens Internally?</h2>
+        <ol>
+            <li>Bundles the Python interpreter.</li>
+            <li>Includes your script.</li>
+            <li>Adds required libraries.</li>
+            <li>Creates a self-contained executable.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Final Result</h2>
+        <ul>
+            <li>Program runs like normal software.</li>
+            <li>No Python installation required.</li>
+            <li>Works on other Windows computers.</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    © Python Packaging Notes | Standalone Executable Guide
+</footer>
+
+</body>
+</html>

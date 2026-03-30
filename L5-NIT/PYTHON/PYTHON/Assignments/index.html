@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Assignments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f2f2f3, #011331);
+            min-height: 100vh;
+            padding: 50px 20px;
+            color: #fff;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h1 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 50px;
+            transition: 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: #6366f1;
+            transform: translateY(-2px);
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .file-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #100202;
+            transition: 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .file-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, #6366f1, #38bdf8);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.35);
+        }
+
+        .file-card i {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .folder-icon { color: #facc15; }
+        .file-icon { color: #60a5fa; }
+
+        .file-title {
+            font-weight: 600;
+            font-size: 1rem;
+            word-break: break-word;
+        }
+
+        @media(max-width: 576px){
+            body { padding: 30px 15px; }
+            .dashboard-header h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Assignments</h1>
+            <a href="../" class="btn-back">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        </div>
+
+        <div class="file-grid">
+            <a href="Exercises/" class="file-card">
+                <i class="bi bi-folder-fill folder-icon"></i>
+                <div class="file-title">Exercises</div>
+            </a>
+
+            <a href="Dictionary/" class="file-card">
+                <i class="bi bi-folder-fill folder-icon"></i>
+                <div class="file-title">Dictionary</div>
+            </a>
+
+            <a href="Exercises-ind.docx" class="file-card">
+                <i class="bi bi-file-earmark-fill file-icon"></i>
+                <div class="file-title">Exercises-ind</div>
+            </a>
+
+            <a href="For loop.docx" class="file-card">
+                <i class="bi bi-file-earmark-fill file-icon"></i>
+                <div class="file-title">For loop</div>
+            </a>
+
+            <a href="Python Practice — Questions.pdf" class="file-card">
+                <i class="bi bi-file-earmark-fill file-icon"></i>
+                <div class="file-title">Python Practice — Questions</div>
+            </a>
+
+            <a href="python_questions_design.html" class="file-card">
+                <i class="bi bi-file-earmark-fill file-icon"></i>
+                <div class="file-title">python_questions_design</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

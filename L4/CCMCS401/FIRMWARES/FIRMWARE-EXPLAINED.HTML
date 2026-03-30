@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmware and BIOS/UEFI Notes</title>
+    <style>
+        body {
+            font-family: 'Calisto MT', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: #fff;
+        }
+        .note {
+            background-color: #e7f3ff;
+            padding: 10px 15px;
+            border-left: 5px solid #3498db;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .example {
+            background-color: #fef9e7;
+            padding: 10px 15px;
+            border-left: 5px solid #f1c40f;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Firmware, BIOS, and UEFI Notes</h1>
+
+        <section>
+            <h2>What is Firmware?</h2>
+            <p>Firmware is a type of software that is permanently programmed into a hardware device to control how that device operates. It sits between the hardware and regular software (like your operating system) and provides the low-level instructions that allow the hardware to function properly.</p>
+            <p><strong>Think of it as the “brain” built into a device that tells it how to work.</strong></p>
+
+            <h3>Key Points about Firmware:</h3>
+            <ol>
+                <li><strong>Embedded Software</strong> – Stored on non-volatile memory such as ROM, EEPROM, or flash memory.</li>
+                <li><strong>Controls Hardware</strong> – Directly manages and controls hardware components.</li>
+                <li><strong>Low-Level Operation</strong> – Works closer to the hardware than normal software.</li>
+                <li><strong>Updates</strong> – Sometimes firmware can be updated to fix bugs or add features (e.g., router firmware updates, smartphone updates, BIOS updates).</li>
+            </ol>
+
+            <h3>Examples:</h3>
+            <ul class="example">
+                <li>BIOS/UEFI on a computer motherboard.</li>
+                <li>Firmware in a printer that controls printing operations.</li>
+                <li>Router firmware that manages network traffic.</li>
+                <li>Firmware in a smartphone that controls touchscreens and sensors.</li>
+            </ul>
+
+            <div class="note">
+                <strong>In short:</strong> Firmware = permanent software inside hardware that makes it work.
+            </div>
+        </section>
+
+        <section>
+            <h2>Firmware vs Operating System</h2>
+            <p>An Operating System (OS) is not firmware, although they are related in how they interact with hardware. Here's the distinction:</p>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Firmware</th>
+                    <th>Operating System (OS)</th>
+                </tr>
+                <tr>
+                    <td>Definition</td>
+                    <td>Permanent software programmed into hardware to control device functions.</td>
+                    <td>Software that manages hardware resources and provides a platform for applications.</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>Stored in non-volatile memory (ROM, EEPROM, Flash).</td>
+                    <td>Stored on storage devices like HDD, SSD, or installed on a computer.</td>
+                </tr>
+                <tr>
+                    <td>Purpose</td>
+                    <td>Enables hardware to function and perform basic tasks.</td>
+                    <td>Provides an environment for applications to run and manages hardware resources.</td>
+                </tr>
+                <tr>
+                    <td>Upgradability</td>
+                    <td>Rarely updated, though sometimes firmware updates exist.</td>
+                    <td>Regularly updated for features, security, and improvements.</td>
+                </tr>
+                <tr>
+                    <td>Examples</td>
+                    <td>BIOS/UEFI, router firmware, printer firmware.</td>
+                    <td>Windows, Linux, macOS, Android.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>BIOS and UEFI</h2>
+            <p>BIOS and UEFI are both types of firmware that help a computer start up and manage communication between the operating system and the hardware. They are installed directly on the motherboard.</p>
+
+            <h3>1. BIOS (Basic Input/Output System)</h3>
+            <ul>
+                <li>Older technology, used in most PCs before around 2010.</li>
+                <li>Stored in firmware (ROM/flash memory) on the motherboard.</li>
+                <li>Functions:
+                    <ul>
+                        <li>Initializes hardware components (CPU, RAM, storage devices) during boot.</li>
+                        <li>Provides a basic interface for hardware settings.</li>
+                        <li>Loads the operating system from a bootable device.</li>
+                    </ul>
+                </li>
+                <li>Limitations:
+                    <ul>
+                        <li>Only supports drives up to 2.2 TB with MBR partitioning.</li>
+                        <li>Text-based interface.</li>
+                        <li>Slower boot times.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>2. UEFI (Unified Extensible Firmware Interface)</h3>
+            <ul>
+                <li>Modern replacement for BIOS.</li>
+                <li>Functions:
+                    <ul>
+                        <li>All BIOS functions + more advanced features.</li>
+                        <li>Supports large drives (>2.2 TB) with GPT partitioning.</li>
+                        <li>Graphical interface with mouse support.</li>
+                        <li>Faster boot times.</li>
+                        <li>Secure Boot to prevent unauthorized software from loading.</li>
+                    </ul>
+                </li>
+                <li>Advantages over BIOS: More flexible, secure, and capable of handling modern hardware.</li>
+            </ul>
+
+            <div class="note">
+                <strong>In simple terms:</strong>
+                <ul>
+                    <li>BIOS/UEFI = firmware that wakes up your computer and tells it how to start the OS.</li>
+                    <li>Think of it like an “on/off switch with instructions” for your PC.</li>
+                    <li>UEFI is basically a smarter, faster, safer version of BIOS.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

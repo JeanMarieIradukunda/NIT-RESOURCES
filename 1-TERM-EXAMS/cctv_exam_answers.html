@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>School Comprehensive Assessment — CCTV (RTQF 3)</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for sidebar icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-t5CRk6k5Q0aY3e0m9k6N4Z2Z8H1f3k9q7Z8nG2oYv6bE1w6Hq3z6Yq6q2K0y8bGz1aF2V5f3s9x0a5Qp3z0Rg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root{
+      --bg: #f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --accent-600:#1d4ed8;
+      --shadow: 0 6px 18px rgba(20,20,40,0.06);
+      --radius: 10px;
+      --max-width:1200px;
+    }
+    html { scroll-behavior: smooth; }
+    *{box-sizing:border-box}
+    body{
+      font-family: "Calisto MT", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      background:var(--bg);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* LAYOUT */
+    .app {
+      display: flex;
+      min-height:100vh;
+      gap:24px;
+      align-items:flex-start;
+      padding:20px;
+      max-width:var(--max-width);
+      margin:18px auto;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width:260px;
+      background:linear-gradient(180deg,#0f1724,#152034);
+      color:#f8fafc;
+      border-radius:12px;
+      padding:18px;
+      flex:0 0 260px;
+      position:sticky;
+      top:20px;
+      height:calc(100vh - 40px);
+      overflow:auto;
+      box-shadow: var(--shadow);
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:14px;
+    }
+    .brand .logo{
+      width:50px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-600));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:10px;
+    }
+    .brand h3{margin:0;font-size:15px;font-weight:600;}
+    nav.nav a{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:rgba(255,255,255,0.92);
+      text-decoration:none;
+      padding:10px 10px;
+      border-radius:8px;
+      margin:6px 0;
+      font-size:14px;
+      transition:all .18s ease;
+    }
+    nav.nav a i{width:18px;text-align:center;}
+    nav.nav a:hover{background:rgba(255,255,255,0.04);transform:translateX(4px)}
+    nav.nav a.active{background:rgba(255,255,255,0.08);box-shadow:inset 0 -2px 0 rgba(255,255,255,0.03)}
+    .sidebar .section-title{color:rgba(255,255,255,0.72);margin:12px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:0.9px}
+
+    /* CONTENT */
+    .content{
+      flex:1 1 auto;
+      min-width:0;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+    .menu-toggle{
+      display:none;
+      background:transparent;
+      border:1px solid rgba(17,24,39,0.06);
+      padding:10px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+    header.card{
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(10, 25, 47, 0.03);
+      margin-bottom:12px;
+    }
+    header.card h1{margin:0;font-size:20px}
+    header.card p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    /* section card */
+    .section{
+      margin-bottom:18px;
+      display:block;
+    }
+    .section .card{
+      background:var(--card);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(16,24,40,0.04);
+      margin-top:10px;
+      animation:fadeUp .28s ease both;
+    }
+    .section h2{margin:0;font-size:16px}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* tables & lists */
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:14px;
+    }
+    table th, table td{
+      padding:10px 12px;
+      border:1px solid #e6eef8;
+      text-align:left;
+      vertical-align:middle;
+    }
+    table th {background:#f3f6ff;font-weight:600;color:#0f1724}
+    .qa-list{display:grid;gap:10px}
+    .qa-list .item{background:#fff;padding:12px;border-radius:8px;border:1px solid rgba(13,17,23,0.04)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* responsive grid for mcq and tf side-by-side on wide screens */
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media(max-width:980px){ .grid-2{grid-template-columns:1fr} }
+
+    /* print tweaks */
+    @media print{
+      body{background:white}
+      .sidebar, .menu-toggle{display:none}
+      .app{max-width:100%;padding:0;margin:0}
+      .card, header.card{box-shadow:none;border:none}
+    }
+
+    /* mobile */
+    @media(max-width:900px){
+      .app{padding:12px}
+      .sidebar{position:fixed;left:-320px;z-index:999;transition:all .22s ease;width:280px}
+      .sidebar.open{left:10px}
+      .menu-toggle{display:inline-flex}
+      .content{margin-left:0}
+    }
+
+    /* small helpers */
+    .badge{display:inline-block;background:var(--accent);color:#fff;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px}
+    .muted-2{color:#475569}
+    .section-sub{margin-top:8px;color:var(--muted);font-size:13px}
+    pre{background:#0b1220;color:#e6eef8;padding:10px;border-radius:8px;overflow:auto;font-size:13px}
+    code{background:#f3f4f6;padding:2px 6px;border-radius:6px;font-family:monospace;font-size:13px}
+    .icon-right{float:right;color:var(--muted);font-size:13px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar navigation">
+      <div class="brand" style="margin-bottom:12px">
+        <div class="logo">CCTV</div>
+        <div>
+          <h3>Assessment (Level 3)</h3>
+          <div class="small">Networking & Internet Technology</div>
+        </div>
+      </div>
+
+      <div class="section-title">Navigation</div>
+      <nav class="nav" id="navlinks" aria-label="Main">
+        <a href="#instructions"><i class="fas fa-info-circle"></i> Instructions</a>
+
+        <div class="section-title" style="margin-top:10px">SECTION A</div>
+        <a href="#mcq"><i class="fas fa-check-square"></i> A. Multiple Choice</a>
+        <a href="#tf"><i class="fas fa-toggle-on"></i> B. True / False</a>
+        <a href="#match"><i class="fas fa-link"></i> C. Matching</a>
+        <a href="#open"><i class="fas fa-pen"></i> D. Open Questions</a>
+
+        <div class="section-title">Open Questions</div>
+        <a href="#open1"><i class="fas fa-book-open"></i> 1. CCTV terms</a>
+        <a href="#open2"><i class="fas fa-map"></i> 2. Site Survey</a>
+        <a href="#open3"><i class="fas fa-tools"></i> 3. Tools Used</a>
+        <a href="#open4"><i class="fas fa-exchange-alt"></i> 4. Analog vs IP</a>
+        <a href="#open5"><i class="fas fa-draw-polygon"></i> 5. Diagram Importance</a>
+        <a href="#open6"><i class="fas fa-boxes-stacked"></i> 6. Trunking Types</a>
+        <a href="#open7"><i class="fas fa-calculator"></i> 7. Cost Estimation</a>
+
+        <div class="section-title">SECTION B</div>
+        <a href="#q1"><i class="fas fa-building"></i> Question 1</a>
+        <a href="#q2"><i class="fas fa-camera"></i> Question 2</a>
+      </nav>
+
+      <div style="height:18px"></div>
+      <div class="small muted-2">Tip: Tap an item to jump to the question. Use the menu icon on small screens.</div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content" id="main">
+
+      <div class="topbar">
+        <button class="menu-toggle" aria-label="Open menu" id="menuToggle" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div style="display:flex;gap:12px;flex:1;align-items:center;">
+          <header class="card" style="flex:1">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+              <div>
+                <h1>SCHOOL COMPREHENSIVE ASSESSMENT</h1>
+                <div class="muted-2">Sector: ICT & Multimedia • RTQF Level: 3 • Trades: Networking & Internet Technology</div>
+              </div>
+              <div style="text-align:right">
+                <div class="badge">Duration: 3 Hours</div>
+                <div class="bg-success small muted" style="margin-top:6px">Marks: 80</div>
+              </div>
+            </div>
+          </header>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <section id="instructions" class="section" aria-labelledby="instructions">
+        <div class="card">
+          <h2>Instructions to Candidates</h2>
+          <p class="section-sub">Answer all questions in Section A and Section B. Read each question carefully and write your answers in the space provided.</p>
+        </div>
+      </section>
+
+      <!-- SECTION A -->
+      <section id="mcq" class="section" aria-labelledby="mcq">
+        <h2>A. MULTIPLE CHOICE QUESTIONS — <span class="small">10 Marks (1 mark each)</span></h2>
+        <div class="card">
+          <div class="qa-list">
+            <div class="item"><strong>1.</strong> c) Monitor and secure an area</div>
+            <div class="item"><strong>2.</strong> a) IP/Digital camera</div>
+            <div class="item"><strong>3.</strong> d) DVR/NVR</div>
+            <div class="item"><strong>4.</strong> b) Determine installation requirements</div>
+            <div class="item"><strong>5.</strong> c) ConceptDraw Diagram</div>
+            <div class="item"><strong>6.</strong> c) Accessories/materials</div>
+            <div class="item"><strong>7.</strong> c) Exposed on the wall surface</div>
+            <div class="item"><strong>8.</strong> b) Drill machine</div>
+            <div class="item"><strong>9.</strong> b) Supplies electricity to cameras</div>
+            <div class="item"><strong>10.</strong> d) Outdoor environments</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tf" class="section" aria-labelledby="tf">
+        <h2>B. TRUE / FALSE — <span class="small">10 Marks</span></h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Q#</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>T (Analog cameras use coaxial cables.)</td></tr>
+              <tr><td>2</td><td>T (Site survey helps determine camera position.)</td></tr>
+              <tr><td>3</td><td>F (NVR is mainly for IP systems.)</td></tr>
+              <tr><td>4</td><td>F (CCTV diagrams are necessary.)</td></tr>
+              <tr><td>5</td><td>T (Pipes and trunks protect cables.)</td></tr>
+              <tr><td>6</td><td>F (Testing tools are required.)</td></tr>
+              <tr><td>7</td><td>T (IP cameras require network connectivity.)</td></tr>
+              <tr><td>8</td><td>F (Visible trunking is not most aesthetic.)</td></tr>
+              <tr><td>9</td><td>T (Material estimation helps cost.)</td></tr>
+              <tr><td>10</td><td>T (Storage devices include HDDs in DVR/NVR.)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="match" class="section" aria-labelledby="match">
+        <h2>C. MATCHING QUESTIONS — <span class="small">10 Marks</span></h2>
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Column A (Concept)</th><th>Column B (Description)</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1. DVR</td><td>d. Designed for analog systems</td><td>1 → D</td></tr>
+              <tr><td>2. IP Camera</td><td>a. Digital camera system using network</td><td>2 → A</td></tr>
+              <tr><td>3. Site Survey</td><td>c. Conducted to gather installation requirements</td><td>3 → C</td></tr>
+              <tr><td>4. Drill Machine</td><td>b. Device that stores CCTV recordings</td><td>4 → B</td></tr>
+              <tr><td>5. Trunking</td><td>e. Cable protection method</td><td>5 → E</td></tr>
+              <tr><td>6. Power Supply Box</td><td>f. Provides power to multiple cameras</td><td>6 → F</td></tr>
+              <tr><td>7. Cable ties</td><td>g. Used for securing cables</td><td>7 → G</td></tr>
+              <tr><td>8. Switch</td><td>h. Connects multiple network devices</td><td>8 → H</td></tr>
+              <tr><td>9. Diagram Design</td><td>i. Helps plan system layout before installation</td><td>9 → I</td></tr>
+              <tr><td>10. Camera Mount</td><td>j. Supports camera on the wall</td><td>10 → J</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- OPEN QUESTIONS -->
+      <section id="open" class="section" aria-labelledby="open">
+        <h2>D. OPEN QUESTIONS — <span class="small">35 Marks</span></h2>
+
+        <div id="open1" class="card">
+          <h3>1. CCTV Terms (5 Marks)</h3>
+          <ol class="small">
+            <li><strong>CCTV System:</strong> A closed-circuit monitoring system used for surveillance and security.</li>
+            <li><strong>IP Camera:</strong> A digital camera that transmits video over a network using an IP address.</li>
+            <li><strong>DVR:</strong> A recording device used for analog CCTV systems using coaxial cables.</li>
+            <li><strong>NVR:</strong> A digital recorder for IP cameras that receives video over Ethernet networks.</li>
+            <li><strong>Site Survey:</strong> A physical inspection of a location to determine installation requirements.</li>
+          </ol>
+        </div>
+
+        <div id="open2" class="card">
+          <h3>2. Key activities during a physical site survey (6 Marks)</h3>
+          <ul class="small">
+            <li>Assess building layout</li>
+            <li>Identify camera positions</li>
+            <li>Determine field of view</li>
+            <li>Identify cable routes</li>
+            <li>Assess lighting conditions</li>
+            <li>Determine mounting surfaces / equipment placement</li>
+          </ul>
+        </div>
+
+        <div id="open3" class="card">
+          <h3>3. Five tools used in CCTV installation (5 Marks)</h3>
+          <p class="small">Any five of the following (½ mark tool + ½ mark use):</p>
+          <ul class="small">
+            <li>Drill – drilling holes for mounts</li>
+            <li>Screwdriver – tightening screws</li>
+            <li>Crimping tool – making network cable ends</li>
+            <li>Cable tester – testing connectivity</li>
+            <li>Hammer – fixing mounts or trunking</li>
+            <li>Pliers – cutting or bending wires</li>
+            <li>Measuring tape – measuring distances</li>
+          </ul>
+        </div>
+
+        <div id="open4" class="card">
+          <h3>4. Differentiate Analog CCTV and IP CCTV (4 Marks)</h3>
+          <div class="grid-2">
+            <div>
+              <h4 class="small">Analog CCTV</h4>
+              <ul class="small">
+                <li>Uses coaxial cable</li>
+                <li>Uses DVR for recording</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="small">IP CCTV</h4>
+              <ul class="small">
+                <li>Uses network cables (Ethernet)</li>
+                <li>Uses NVR and network switches</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div id="open5" class="card">
+          <h3>5. Importance of designing a CCTV system diagram (5 Marks)</h3>
+          <ul class="small">
+            <li>Helps plan camera locations</li>
+            <li>Determines cable routes</li>
+            <li>Avoids installation mistakes</li>
+            <li>Helps estimate materials</li>
+            <li>Serves as reference for maintenance</li>
+          </ul>
+        </div>
+
+        <div id="open6" class="card">
+          <h3>6. Trunking types & underground usage (4 Marks)</h3>
+          <p class="small"><strong>a)</strong> Two types (any two): Visible trunking, Built-in, Semi-built-in, Waterproof, Underground</p>
+          <p class="small"><strong>b)</strong> Why underground trunking? Protects cables from weather and prevents vandalism/theft.</p>
+        </div>
+
+        <div id="open7" class="card">
+          <h3>7. Cost estimation components (4 Marks)</h3>
+          <ul class="small">
+            <li>Item/specification list</li>
+            <li>Item unit cost</li>
+            <li>Total project cost (quantity × cost)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>8. Why labeling is important (2 Marks)</h3>
+          <ul class="small">
+            <li>Helps identify cables and cameras easily</li>
+            <li>Makes troubleshooting faster</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>9. Difference: equipment, materials, tools (2 Marks)</h3>
+          <p class="small"><strong>Equipment:</strong> electronic devices used in the system (cameras, NVR, switch).<br>
+            <strong>Materials:</strong> installation accessories (cable ties, pipes, trunks).<br>
+            <strong>Tools:</strong> instruments used to perform installation (drill, screwdriver).</p>
+        </div>
+      </section>
+
+      <!-- SECTION B -->
+      <section id="q1" class="section" aria-labelledby="q1">
+        <h2>SECTION B — Answer only ONE question (15 Marks)</h2>
+
+        <!-- Question 1 -->
+        <div class="card" id="question1">
+          <h3>QUESTION 1 — Site installation (15 Marks)</h3>
+
+          <h4 class="small">a) Site survey steps (3 Marks)</h4>
+          <ul class="small">
+            <li>Inspect the building layout</li>
+            <li>Identify suitable camera positions and angles</li>
+            <li>Identify cable routes and equipment locations</li>
+          </ul>
+
+          <h4 class="small">b) Design CCTV system diagram (3 Marks)</h4>
+          <ul class="small">
+            <li>Draw building layout or import plan</li>
+            <li>Place camera icons with labels</li>
+            <li>Add cable paths, recorder, switch, and power supply locations</li>
+          </ul>
+
+          <h4 class="small">c) Materials & tools for trunking (3 Marks)</h4>
+          <ul class="small">
+            <li><strong>Materials:</strong> cable ties, trunking pipes, screws</li>
+            <li><strong>Tools:</strong> drill, screwdriver, measuring tape</li>
+          </ul>
+
+          <h4 class="small">d) Install cameras & connect to DVR/NVR (3 Marks)</h4>
+          <ul class="small">
+            <li>Mount cameras on walls/ceilings</li>
+            <li>Run cables through trunking</li>
+            <li>Connect cables to DVR/NVR and power system</li>
+          </ul>
+
+          <h4 class="small">e) Test CCTV system (3 Marks)</h4>
+          <ul class="small">
+            <li>Check video feed from each camera</li>
+            <li>Verify recording on DVR/NVR</li>
+            <li>Test night vision and camera angles</li>
+          </ul>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="card" id="question2">
+          <h3>QUESTION 2 — 12 IP cameras to NVR (15 Marks)</h3>
+
+          <h4 class="small">a) Plan & estimate cost (3 Marks)</h4>
+          <ul class="small">
+            <li>List all required items (NVR, 12 IP cameras, cables, POE switch)</li>
+            <li>Check item specifications (resolution, storage)</li>
+            <li>Calculate total cost (quantity × price)</li>
+          </ul>
+
+          <h4 class="small">b) Select equipment (3 Marks)</h4>
+          <ul class="small">
+            <li>Choose cameras with required resolution and night vision</li>
+            <li>Select NVR compatible with 12+ channels and storage</li>
+            <li>Choose POE switch based on power budget and port count</li>
+          </ul>
+
+          <h4 class="small">c) Waterproof trunking steps (3 Marks)</h4>
+          <ul class="small">
+            <li>Use waterproof piping and conduit</li>
+            <li>Seal joints with waterproof tape or silicone</li>
+            <li>Route trunking to protect cables from rain</li>
+          </ul>
+
+          <h4 class="small">d) Connect IP cameras via switch (3 Marks)</h4>
+          <ul class="small">
+            <li>Connect all cameras to POE switch ports</li>
+            <li>Connect the switch to the NVR</li>
+            <li>Ensure NVR and cameras are on same network/VLAN</li>
+          </ul>
+
+          <h4 class="small">e) Configure & test NVR (3 Marks)</h4>
+          <ul class="small">
+            <li>Assign IP addresses to cameras (static or DHCP reservations)</li>
+            <li>Add cameras to NVR using ONVIF or manufacturer method</li>
+            <li>Check live view and recording for all 12 cameras</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <footer style="margin-top:18px;text-align:center" aria-hidden="false">
+        <div class="small muted-2">Prepared by: JMV IRADUKUNDA — Good luck!</div>
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar toggle for mobile
+    const sidebar = document.getElementById('sidebar');
+    function toggleSidebar(){
+      sidebar.classList.toggle('open');
+    }
+
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('#navlinks a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        if(window.innerWidth <= 900){
+          sidebar.classList.remove('open');
+        }
+      })
+    });
+
+    // Active link highlighting based on scroll
+    const links = Array.from(document.querySelectorAll('#navlinks a'));
+    const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+    function onScroll(){
+      const pos = window.scrollY + 120; // small offset
+      let current = links[0];
+      for(let i=0;i<sections.length;i++){
+        const s = sections[i];
+        if(!s) continue;
+        if(s.offsetTop <= pos) current = links[i];
+      }
+      links.forEach(l => l.classList.remove('active'));
+      current.classList.add('active');
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  </script>
+</body>
+</html>

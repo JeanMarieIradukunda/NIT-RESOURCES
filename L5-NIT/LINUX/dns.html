@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Configuration – Padri Vjeko Centre TSS Notes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Calisto MT", serif;
+            background: #f8fbff;
+            color: #222;
+            line-height: 1.7;
+            padding-bottom: 50px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #004b8d;
+            font-weight: 700;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #0077b6, #00b4d8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: white;
+            border-left: 6px solid #0077b6;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            border: 1px solid #dee2e6;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+        }
+
+        th {
+            background-color: #e9f4ff;
+        }
+
+        code {
+            background: #f1f1f1;
+            border-radius: 4px;
+            padding: 2px 5px;
+            color: #c7254e;
+        }
+
+        .checklist span {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🌐 DNS Configuration – Padri Vjeko Centre TSS</h1>
+
+    <div class="container">
+
+        <div class="section">
+            <h2>1️⃣ What Is DNS — and Why Does It Matter in Your School?</h2>
+            <p><b>DNS (Domain Name System)</b> is like the phonebook of the internet. It translates names (like
+                <code>student.padri-vjeko.tss</code>) into IP addresses (like <code>192.168.10.15</code>) that computers
+                understand.
+            </p>
+            <p><b>In your school setting:</b></p>
+            <ul>
+                <li>Instead of remembering IPs like <code>192.168.10.10</code>, you can just type
+                    <code>server.nit.local</code> or <code>portal.padri-vjeko.tss</code>.</li>
+                <li>It helps organize internal networks for different departments (<b>NIT, FAD, WOT, BDC</b>).</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>2️⃣ Things an Administrator Should Know Before Configuring DNS</h2>
+
+            <h4>(a) Network Plan</h4>
+            <ul>
+                <li>Know your server and computer IP addresses.</li>
+                <li>Subnet example: <code>192.168.10.0/24</code></li>
+                <li>Decide which machine acts as the DNS server (Ubuntu).</li>
+                <li>Decide if DNS is local only or public.</li>
+            </ul>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>IP Range / Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DNS Server (Ubuntu)</td>
+                        <td>192.168.10.1</td>
+                    </tr>
+                    <tr>
+                        <td>NIT Lab PCs</td>
+                        <td>192.168.10.20 – 192.168.10.40</td>
+                    </tr>
+                    <tr>
+                        <td>FAD Lab PCs</td>
+                        <td>192.168.10.41 – 192.168.10.60</td>
+                    </tr>
+                    <tr>
+                        <td>WOT Lab PCs</td>
+                        <td>192.168.10.61 – 192.168.10.80</td>
+                    </tr>
+                    <tr>
+                        <td>BDC Office PCs</td>
+                        <td>192.168.10.81 – 192.168.10.100</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>(b) Domain Naming Plan</h4>
+            <p>Internal domain: <code>padri-vjeko.tss</code></p>
+            <ul>
+                <li><code>nit.padri-vjeko.tss</code></li>
+                <li><code>fad.padri-vjeko.tss</code></li>
+                <li><code>wot.padri-vjeko.tss</code></li>
+                <li><code>bdc.padri-vjeko.tss</code></li>
+            </ul>
+
+            <h4>(c) DNS Roles</h4>
+            <ul>
+                <li><b>Master DNS:</b> main server with all records.</li>
+                <li><b>Slave DNS:</b> backup server.</li>
+                <li><b>Caching DNS:</b> stores previous lookups.</li>
+                <li><b>Forwarding DNS:</b> forwards unknown queries (e.g., to 8.8.8.8).</li>
+            </ul>
+            <p><i>Example:</i> Ubuntu server acts as Master DNS and forwards unknown domains to Google DNS.</p>
+
+            <h4 class="mt-4 text-primary fw-bold">(d) DNS Records — Complete & Friendly Guide</h4>
+
+            <p>
+                Below are the common (and some advanced) DNS record types you’ll meet while administering DNS at
+                <strong>Padri Vjeko Centre TSS</strong>.
+                Each entry includes a plain-language description, an example, and a short note on why it matters.
+            </p>
+
+            <!-- SOA Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-dark">
+                <h5 class="fw-bold">🛠️ SOA (Start of Authority)</h5>
+                <p>
+                    The SOA record appears once per zone and defines the zone’s authoritative information:
+                    the primary name server for the zone, the admin email, and important timing values (serial, refresh,
+                    retry, expire, negative TTL).
+                </p>
+                <p><strong>Example (zone header):</strong></p>
+                <pre><code>$TTL 604800
+@   IN  SOA  server.padri-vjeko.tss. admin.padri-vjeko.tss. (
+        2025110301 ; Serial (YYYYMMDDnn)
+        604800     ; Refresh
+        86400      ; Retry
+        2419200    ; Expire
+        604800 )   ; Negative TTL
+</code></pre>
+                <p>
+                    🔎 <em>Why it matters:</em> The <strong>serial</strong> informs secondary (slave) servers when the
+                    zone has changed; increment it when you update records.
+                </p>
+            </div>
+
+            <!-- NS Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-indigo">
+                <h5 class="fw-bold">📡 NS (Name Server)</h5>
+                <p>
+                    Defines which DNS servers are authoritative for the zone. You typically have at least one NS record
+                    (often more for redundancy).
+                </p>
+                <p><strong>Example:</strong> <code>padri-vjeko.tss. IN NS server.padri-vjeko.tss.</code></p>
+                <p><em>Note:</em> For internet-visible domains you add multiple NS records (distributed across
+                    networks); for internal setups a single reliable NS may suffice.
+                </p>
+            </div>
+
+            <!-- A Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-primary">
+                <h5 class="fw-bold">🌐 A (Address)</h5>
+                <p>
+                    Maps a hostname to an IPv4 address — the bread-and-butter record for hosting services on IPv4.
+                </p>
+                <p><strong>Example:</strong> <code>server.padri-vjeko.tss → 192.168.10.1</code></p>
+                <p><em>Use:</em> Point the school’s web or file server hostname to its IPv4 address.</p>
+            </div>
+
+            <!-- AAAA Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-secondary">
+                <h5 class="fw-bold">🔷 AAAA (IPv6 Address)</h5>
+                <p>
+                    Same as A but for IPv6 addresses. Use this if parts of your network or services use IPv6.
+                </p>
+                <p><strong>Example:</strong> <code>server.padri-vjeko.tss → 2001:db8:abcd:001::1</code></p>
+                <p><em>Note:</em> Not required for purely IPv4 networks, but useful if you plan IPv6 readiness.</p>
+            </div>
+
+            <!-- CNAME Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-success">
+                <h5 class="fw-bold">🔗 CNAME (Canonical Name / Alias)</h5>
+                <p>
+                    Creates an alias name that points to a canonical name. Don’t use CNAME at the zone apex (root) — use
+                    A/AAAA there.
+                </p>
+                <p><strong>Example:</strong> <code>www.padri-vjeko.tss → server.padri-vjeko.tss</code></p>
+                <p><em>Use:</em> Friendly aliases like <code>www</code> or <code>portal</code> that reuse the same
+                    server records.</p>
+            </div>
+
+            <!-- MX Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-danger">
+                <h5 class="fw-bold">✉️ MX (Mail Exchange)</h5>
+                <p>
+                    Directs email for a domain to a mail server. MX records include a priority; lower numbers = higher
+                    priority.
+                </p>
+                <p><strong>Example:</strong> <code>padri-vjeko.tss. IN MX 10 mail.padri-vjeko.tss.</code></p>
+                <p><em>Tip:</em> Use a PTR (reverse) for the mail server IP and proper SPF/TXT to reduce email delivery
+                    problems.</p>
+            </div>
+
+            <!-- PTR Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-warning">
+                <h5 class="fw-bold">🔁 PTR (Pointer / Reverse Lookup)</h5>
+                <p>
+                    Maps an IP address back to a hostname. Typically stored in a reverse zone (in-addr.arpa for IPv4).
+                </p>
+                <p><strong>Example:</strong> <code>192.168.10.1 → server.padri-vjeko.tss</code></p>
+                <p><em>Why:</em> Useful for logging, diagnostics, and mail server reputation checks.</p>
+            </div>
+
+            <!-- TXT Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-info">
+                <h5 class="fw-bold">📝 TXT (Text Record)</h5>
+                <p>
+                    Free-form text attached to a name. Widely used for domain verification, notes, and security policy
+                    records like SPF and DKIM.
+                </p>
+                <p><strong>Examples:</strong></p>
+                <pre><code>padri-vjeko.tss. IN TXT "v=spf1 ip4:192.168.10.0/24 -all"
+padri-vjeko.tss. IN TXT "google-site-verification=XYZ123"</code></pre>
+                <p><em>Note:</em> SPF is usually stored as a TXT record (legacy practice). For stricter DMARC/DKIM, add
+                    those TXT records too.</p>
+            </div>
+
+            <!-- SPF (as TXT) -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-muted">
+                <h5 class="fw-bold">📛 SPF (Sender Policy Framework) — stored in TXT</h5>
+                <p>
+                    Declares which hosts/IPs are allowed to send email for your domain. Usually a TXT record that begins
+                    with <code>v=spf1</code>.
+                </p>
+                <p><strong>Example:</strong> <code>padri-vjeko.tss. IN TXT "v=spf1 ip4:192.168.10.0/24 -all"</code></p>
+                <p><em>Tip:</em> Keep SPF rules simple and test after publishing (too-strict SPF can block legitimate
+                    mail).</p>
+            </div>
+
+            <!-- SRV Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-purple">
+                <h5 class="fw-bold">⚙️ SRV (Service Record)</h5>
+                <p>
+                    Used to locate services (like SIP, XMPP, Active Directory) by specifying target host and port. SRV
+                    records are common in service discovery.
+                </p>
+                <p><strong>Example:</strong>
+                    <code>_sip._tcp.padri-vjeko.tss. IN SRV 10 5 5060 sipserver.padri-vjeko.tss.</code></p>
+                <p><em>Use:</em> If you run VoIP, chat servers, or AD services that need service discovery, configure
+                    SRV entries.</p>
+            </div>
+
+            <!-- CAA Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-olive">
+                <h5 class="fw-bold">🔒 CAA (Certificate Authority Authorization)</h5>
+                <p>
+                    Specifies which Certificate Authorities (CAs) are allowed to issue TLS/SSL certificates for your
+                    domain — a security control.
+                </p>
+                <p><strong>Example:</strong> <code>padri-vjeko.tss. IN CAA 0 issue "letsencrypt.org"</code></p>
+                <p><em>Why:</em> Helps prevent unauthorized certificate issuance for your internal or external services.
+                </p>
+            </div>
+
+            <!-- Short wrap-up -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-white border-start border-4 border-black">
+                <h5 class="fw-bold">🧾 Quick Notes & Best Practices</h5>
+                <ul>
+                    <li><strong>TTL (Time To Live):</strong> Controls how long records are cached by clients and
+                        resolvers. Lower during changes (e.g., 300) and higher for stable records.</li>
+                    <li><strong>Serial numbers:</strong> Increment the SOA serial whenever you change zone files so
+                        secondaries pick up updates.</li>
+                    <li><strong>Zone apex caution:</strong> Don’t put a CNAME record at the zone apex (e.g.,
+                        <code>padri-vjeko.tss</code>). Use A/AAAA instead.</li>
+                    <li><strong>Security:</strong> Use PTR for mail servers, SPF/DKIM/DMARC to protect email, and CAA
+                        for certificate control.</li>
+                    <li><strong>Documentation:</strong> Keep a small change-log in your /etc/bind/ directory or a
+                        separate admin doc for each update.</li>
+                </ul>
+            </div>
+
+            <h4 class="mt-4 text-primary fw-bold">(d) DNS Records Explained</h4>
+
+            <p>
+                In DNS (Domain Name System), different types of records define how names are translated into IP
+                addresses, how mail is delivered, and how reverse lookups are performed.
+                Below are the main record types you’ll configure at <strong>Padri Vjeko Centre TSS</strong>.
+            </p>
+
+            <!-- A Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-primary">
+                <h5 class="text-primary fw-bold">🔹 A Record (Address Record)</h5>
+                <p>
+                    This record maps a <strong>domain name</strong> to an <strong>IPv4 address</strong>.
+                    It’s like a phonebook entry linking a person’s name to their phone number.
+                </p>
+                <p><strong>Example:</strong> <code>server.padri-vjeko.tss → 192.168.10.1</code></p>
+                <p>
+                    🏫 <em>At Padri Vjeko Centre TSS:</em> The school’s main file server named
+                    <strong>server.padri-vjeko.tss</strong> can be accessed internally using the IP
+                    <strong>192.168.10.1</strong>.
+                </p>
+            </div>
+
+            <!-- CNAME Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-success">
+                <h5 class="text-success fw-bold">🔹 CNAME Record (Canonical Name)</h5>
+                <p>
+                    This record creates an <strong>alias</strong> for another domain name. It helps when you want
+                    multiple names to point to the same server.
+                </p>
+                <p><strong>Example:</strong> <code>www.padri-vjeko.tss → server.padri-vjeko.tss</code></p>
+                <p>
+                    🖥️ <em>In the school’s case:</em> When students type <strong>www.padri-vjeko.tss</strong> in a
+                    browser,
+                    it automatically connects them to the same server as <strong>server.padri-vjeko.tss</strong>.
+                </p>
+            </div>
+
+            <!-- MX Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-danger">
+                <h5 class="text-danger fw-bold">🔹 MX Record (Mail Exchange)</h5>
+                <p>
+                    Defines which server handles <strong>email delivery</strong> for your domain.
+                    It tells other mail systems where to send messages.
+                </p>
+                <p><strong>Example:</strong> <code>mail.padri-vjeko.tss → 192.168.10.2</code></p>
+                <p>
+                    📧 <em>In our school setup:</em> The mail server <strong>mail.padri-vjeko.tss</strong> receives
+                    emails
+                    for teachers and students using addresses like <code>teacher@padri-vjeko.tss</code>.
+                </p>
+            </div>
+
+            <!-- PTR Record -->
+            <div class="p-3 my-3 rounded-4 shadow-sm bg-light border-start border-4 border-warning">
+                <h5 class="text-warning fw-bold">🔹 PTR Record (Pointer Record)</h5>
+                <p>
+                    Used for <strong>reverse DNS lookup</strong> — it maps an <strong>IP address</strong> back to a
+                    <strong>domain name</strong>.
+                    This is often used for verifying mail servers and improving network trust.
+                </p>
+                <p><strong>Example:</strong> <code>192.168.10.1 → server.padri-vjeko.tss</code></p>
+                <p>
+                    🔁 <em>At Padri Vjeko Centre TSS:</em> When checking logs or receiving emails,
+                    the server at <strong>192.168.10.1</strong> can be identified as
+                    <strong>server.padri-vjeko.tss</strong>.
+                </p>
+            </div>
+
+            <h4>(e) Software &amp; Tools</h4>
+            <ul>
+                <li>Main package: <b>BIND9</b> (Berkeley Internet Name Domain)</li>
+                <li>Key files:
+                    <ul>
+                        <li><code>/etc/bind/named.conf.local</code></li>
+                        <li><code>/etc/bind/db.padri-vjeko.tss</code></li>
+                        <li><code>/etc/bind/db.192.168.10</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>(f) DNS Testing Tools</h4>
+            <ul>
+                <li><code>ping server.padri-vjeko.tss</code></li>
+                <li><code>nslookup nit.padri-vjeko.tss</code></li>
+                <li><code>dig</code> for detailed lookup.</li>
+            </ul>
+
+            <h4>(g) Backup & Security</h4>
+            <ul>
+                <li>Backup <code>/etc/bind/</code> before changes.</li>
+                <li>Restrict file access.</li>
+                <li>Do not expose internal DNS publicly.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>3️⃣ Real-Life Example — Padri Vjeko Centre TSS</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Website</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NIT</td>
+                        <td>nit.padri-vjeko.tss</td>
+                        <td>192.168.10.20</td>
+                    </tr>
+                    <tr>
+                        <td>FAD</td>
+                        <td>fad.padri-vjeko.tss</td>
+                        <td>192.168.10.40</td>
+                    </tr>
+                    <tr>
+                        <td>WOT</td>
+                        <td>wot.padri-vjeko.tss</td>
+                        <td>192.168.10.60</td>
+                    </tr>
+                    <tr>
+                        <td>BDC</td>
+                        <td>bdc.padri-vjeko.tss</td>
+                        <td>192.168.10.80</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Typing <code>http://nit.padri-vjeko.tss</code> opens the NIT portal by resolving to
+                <code>192.168.10.20</code>.</p>
+        </div>
+
+        <div class="section checklist">
+            <h2>4️⃣ Steps Summary — Before Configuring DNS</h2>
+            <ul>
+                <li><span>✅</span> Know your network IP structure</li>
+                <li><span>✅</span> Plan domain (e.g., padri-vjeko.tss)</li>
+                <li><span>✅</span> Decide DNS roles</li>
+                <li><span>✅</span> Learn record types</li>
+                <li><span>✅</span> Install BIND9</li>
+                <li><span>✅</span> Plan subdomains per department</li>
+                <li><span>✅</span> Backup files</li>
+                <li><span>✅</span> Test with ping/nslookup/dig</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📁 Main BIND9 Configuration Files</h2>
+            <p>Located in <code>/etc/bind/</code> after installation.</p>
+
+            <h4>1. named.conf – Main Configuration</h4>
+            <p>Acts as the “control center” and includes other files.</p>
+
+            <h4>2. named.conf.options – Global Options</h4>
+            <p>Sets forwarders, listen-on IPs, recursion rules. Example: 8.8.8.8</p>
+
+            <h4>3. named.conf.local – Local Zones</h4>
+            <pre><code>zone "padri-vjeko.tss" {
+    type master;
+    file "/etc/bind/db.padri-vjeko.tss";
+};
+zone "10.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.10";
+};
+</code></pre>
+
+            <h4>4. Zone Files (db.*)</h4>
+            <p><b>a) Forward Lookup Zone</b> – Maps names to IPs</p>
+            <pre><code>nit IN A 192.168.10.20
+fad IN A 192.168.10.40
+wot IN A 192.168.10.60
+bdc IN A 192.168.10.80</code></pre>
+            <p><b>b) Reverse Lookup Zone</b> – Maps IPs to names</p>
+            <pre><code>20 IN PTR nit.padri-vjeko.tss.
+40 IN PTR fad.padri-vjeko.tss.
+60 IN PTR wot.padri-vjeko.tss.
+80 IN PTR bdc.padri-vjeko.tss.</code></pre>
+
+            <h4>5. rndc.key</h4>
+            <p>Used for secure remote DNS control.</p>
+
+            <h4>6. /var/cache/bind/</h4>
+            <p>Stores cached lookups for faster responses.</p>
+
+            <h4>7. named.conf.default-zones</h4>
+            <p>Contains default localhost zones.</p>
+
+            <h4>✅ Summary Table</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Purpose</th>
+                        <th>Example Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>named.conf</td>
+                        <td>Main Config</td>
+                        <td>Controls entire DNS Server</td>
+                    </tr>
+                    <tr>
+                        <td>named.conf.options</td>
+                        <td>Global Options</td>
+                        <td>Forwarders / Listen IPs</td>
+                    </tr>
+                    <tr>
+                        <td>named.conf.local</td>
+                        <td>Zone Definitions</td>
+                        <td>padri-vjeko.tss zone</td>
+                    </tr>
+                    <tr>
+                        <td>db.padri-vjeko.tss</td>
+                        <td>Forward Lookup</td>
+                        <td>nit → 192.168.10.20</td>
+                    </tr>
+                    <tr>
+                        <td>db.192.168.10</td>
+                        <td>Reverse Lookup</td>
+                        <td>192.168.10.20 → nit</td>
+                    </tr>
+                    <tr>
+                        <td>rndc.key</td>
+                        <td>Remote Control Key</td>
+                        <td>Secure restarts</td>
+                    </tr>
+                    <tr>
+                        <td>/var/cache/bind/</td>
+                        <td>Cache</td>
+                        <td>Faster lookups</td>
+                    </tr>
+                    <tr>
+                        <td>named.conf.default-zones</td>
+                        <td>Default Zones</td>
+                        <td>localhost / 127.0.0.1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🌐 DNS Server Zones — Complete Explanation</h2>
+
+            <h4>🧱 What Is a DNS Zone?</h4>
+            <p>A zone is a portion of the DNS database that stores records for a domain or subdomain.</p>
+
+            <h4>🧭 Main Types of DNS Zones</h4>
+
+            <h5>🟩 A. Forward Lookup Zone</h5>
+            <p>Resolves names → IP addresses. File: <code>/etc/bind/db.padri-vjeko.tss</code></p>
+
+            <h5>🟨 B. Reverse Lookup Zone</h5>
+            <p>Resolves IP → name. File: <code>/etc/bind/db.192.168.10</code></p>
+
+            <h5>🟦 C. Primary (Master) Zone</h5>
+            <p>Main copy of zone data maintained on the Ubuntu DNS server.</p>
+
+            <h5>🟪 D. Secondary (Slave) Zone</h5>
+            <p>Read-only backup copy of primary zone.</p>
+
+            <h5>🟧 E. Stub Zone</h5>
+            <p>Holds only basic records (NS, SOA) of another zone for linking networks.</p>
+
+            <h5>🟫 F. Forward Zone (Forwarder)</h5>
+            <pre><code>forwarders {
+    8.8.8.8;
+    1.1.1.1;
+};</code></pre>
+            <p>Used to forward queries to external DNS servers.</p>
+
+            <h4>🧩 Summary Table</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Zone Type</th>
+                        <th>Function</th>
+                        <th>Example</th>
+                        <th>Analogy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Forward Lookup</td>
+                        <td>Name → IP</td>
+                        <td>nit.padri-vjeko.tss → 192.168.10.20</td>
+                        <td>Student Name → Reg No.</td>
+                    </tr>
+                    <tr>
+                        <td>Reverse Lookup</td>
+                        <td>IP → Name</td>
+                        <td>192.168.10.20 → nit.padri-vjeko.tss</td>
+                        <td>Reg No. → Student Name</td>
+                    </tr>
+                    <tr>
+                        <td>Primary (Master)</td>
+                        <td>Main Zone DB</td>
+                        <td>padri-vjeko.tss</td>
+                        <td>Main Register</td>
+                    </tr>
+                    <tr>
+                        <td>Secondary (Slave)</td>
+                        <td>Backup</td>
+                        <td>BDC Backup DNS</td>
+                        <td>Photocopy of Register</td>
+                    </tr>
+                    <tr>
+                        <td>Stub</td>
+                        <td>Minimal Info</td>
+                        <td>Link to Sister School</td>
+                        <td>Shortcut Contact List</td>
+                    </tr>
+                    <tr>
+                        <td>Forwarder</td>
+                        <td>External Queries</td>
+                        <td>→ Google DNS (8.8.8.8)</td>
+                        <td>Ask Another Library</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>🧠 Real-Life DNS Example (File Snippets)</h4>
+            <pre><code>zone "padri-vjeko.tss" {
+    type master;
+    file "/etc/bind/db.padri-vjeko.tss";
+};
+zone "10.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.10";
+};</code></pre>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

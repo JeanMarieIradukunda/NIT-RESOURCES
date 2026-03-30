@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet">
+
+    <title>Ubuntu Linux Server OS - Web Server Notes</title>
+
+    <style>
+:root {
+  --bg: #f6f8fc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
+  --accent2: #06b6d4;
+  --border: #e2e8f0;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --card: #111827;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #60a5fa;
+  --accent2: #22d3ee;
+  --border: #1f2937;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Cambria', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* LAYOUT */
+.container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: linear-gradient(180deg, var(--card), rgba(0,0,0,0.02));
+  border-right: 1px solid var(--border);
+  padding: 22px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+}
+
+.sidebar h2 {
+  margin: 0 0 18px 0;
+  font-weight: 800;
+  font-size: 20px;
+  background: linear-gradient(90deg,var(--accent),var(--accent2));
+  /* -webkit-background-clip: text; */
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: .25s;
+}
+
+.nav-link:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* CONTENT */
+.content {
+  padding: 30px 34px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  padding: 22px;
+  border-radius: 18px;
+  background: linear-gradient(120deg,var(--accent),var(--accent2));
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  background: white;
+  color: #0f172a;
+  transition: .25s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.2);
+}
+
+/* SEARCH */
+.search {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 26px;
+}
+
+.search input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  font-size: 15px;
+  font-family: Inter;
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 26px rgba(0,0,0,.06);
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.12);
+}
+
+.section-title {
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+
+/* ACCORDION */
+.accordion {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.accordion button {
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  background: linear-gradient(90deg,#f1f5f9,#e2e8f0);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+[data-theme="dark"] .accordion button {
+  background: #1f2937;
+  color: var(--text);
+}
+
+.highlight {
+  background: var(--accent);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+/* ACCORDION CONTENT */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .45s ease;
+  background: linear-gradient(135deg,#020617,#0f172a);
+  position: relative;
+}
+
+.accordion.open .accordion-content {
+  max-height: 5000px;
+}
+
+.accordion-content::before {
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:6px;
+  background: linear-gradient(var(--accent),var(--accent2));
+}
+
+.accordion-content pre {
+  margin: 0;
+  padding: 22px;
+  white-space: pre-wrap;
+  font-family: 'Cambria', monospace;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #e5e7eb;
+}
+
+/* COPY BUTTON */
+.copy-btn {
+  margin: 14px;
+  background: linear-gradient(90deg,var(--accent),var(--accent2));
+  color: white;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 26px;
+  color: var(--muted);
+  font-weight: 600;
+}
+</style>
+  </head>
+
+  <body data-theme="light">
+
+    <div class="container">
+
+      <div class="sidebar">
+        <h2>Web Server Notes</h2>
+        <a class="nav-link" href="#definition">1. Definition of a Web Server</a>
+        <a class="nav-link" href="#types">2. Types of Web Servers</a>
+        <a class="nav-link" href="#config">3. Web Server Configuration Files</a>
+        <a class="nav-link" href="#apache">4. Installation of Apache</a>
+        <a class="nav-link" href="#nginx">5. Installation of Nginx</a>
+        <a class="nav-link" href="#firewall">6. Firewall Configuration</a>
+        <a class="nav-link" href="#verify">7. Verify Installation</a>
+        <a class="nav-link" href="#security">Security</a>
+      </div>
+
+      <div class="content">
+
+        <div class="header">
+          <h1>Ubuntu Linux Server OS<br>Configuration of a Web Server</h1>
+          <button class="btn" id="themeBtn">Toggle Dark Mode</button>
+        </div>
+
+        <div class="search">
+          <input type="text" id="searchBox"
+            placeholder="Search inside notes...">
+          <button class="btn" id="clearSearch">Clear</button>
+        </div>
+
+        <!-- Definition Section -->
+        <div class="card" id="definition">
+          <h3 class="section-title">1. Definition of a Web Server</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Ubuntu Linux Server OS
+Configuration of a Web Server
+________________________________________
+1. Definition of a Web Server
+A web server is software (and the hardware it runs on) that stores, processes, and delivers web content (HTML pages, images, APIs, etc.) to clients (browsers) over the internet or a local network using protocols such as HTTP and HTTPS.
+Client
+A client is the user or device (usually a web browser) that requests web content from a server.
+Server
+A server is a computer or system that stores web files and provides services to clients over a network.
+Web Server
+A web server is software (and sometimes hardware) that receives requests from clients and sends back web pages using HTTP or HTTPS.
+Apache HTTP Server
+Apache is a process-based web server that is highly configurable and widely used for hosting websites.
+Nginx
+Nginx is an event-driven web server designed for high performance and handling many users at the same time.
+HTTP
+HTTP (HyperText Transfer Protocol) is the communication rule used to transfer web pages between client and server.
+HTTPS
+HTTPS is the secure version of HTTP that encrypts data using SSL/TLS certificates.
+Web Page
+A web page is a document (HTML) that is displayed in a web browser.
+Website
+A website is a collection of related web pages hosted on a web server.
+Port
+A port is a number used by a web server to listen for client requests (e.g., port 80 for HTTP, 443 for HTTPS).
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Types Section -->
+        <div class="card" id="types">
+          <h3 class="section-title">2. Types of Web Servers for Linux</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+2.1 Apache HTTP Server
+Apache HTTP Server (often just called Apache) is a free, open-source web server software used to deliver websites and web applications over the internet.
+
+Apache runs on the server and sits between the client (user’s browser) and the server’s resources.
+Simple flow:
+Apache HTTP Server is a program that runs on a server and responds to requests from web browsers by sending web pages using the HTTP/HTTPS protocols.
+
+Key features:
+•	🌍 Most widely used web server in the world
+•	🔓 Open source and free
+•	🧩 Modular design – features can be added or removed using modules
+•	🖥️ Runs on Linux, Windows, and macOS
+•	🔐 Supports SSL/TLS (HTTPS) for secure communication
+How Apache works:
+1.	A user types a website address in a browser
+2.	The browser sends an HTTP request to the server
+3.	Apache processes the request
+4.	Apache sends back the requested web page
+Common uses:
+•	Hosting websites
+•	Running web applications (PHP, Python, etc.)
+•	Shared hosting environments
+•	Internal company servers
+Advantages:
+•	Very stable and reliable
+•	Easy to configure
+•	Large community and documentation
+
+2.2 Nginx (Engine-X)
+A Nginx server (pronounced “engine-x”) is a high-performance web server software used to deliver websites and web applications to users over the internet.
+Simple definition:
+Nginx is a web server that handles client requests and serves web content using HTTP and HTTPS, optimized for speed and scalability.
+What Nginx does:
+•	Receives requests from clients (browsers)
+•	Serves static files (HTML, CSS, images)
+•	Passes dynamic requests to application servers
+•	Sends responses back to clients
+Key features:
+•	⚡ Very fast and efficient
+•	🔁 Handles many simultaneous connections
+•	🧠 Uses an event-driven architecture (low memory usage)
+•	🔐 Supports SSL/TLS (HTTPS)
+•	🔄 Works as a reverse proxy, load balancer, and cache
+Common uses:
+•	Hosting high-traffic websites
+•	Reverse proxy in front of Apache
+•	Load balancing multiple servers
+•	Serving static content efficiently
+Where Nginx stands:
+Client (Browser)
+        ↓
+Nginx Server
+        ↓
+Web files / Application servers
+Comparison (quick):
+•	Apache → flexible, module-based
+•	Nginx → fast, scalable, lightweight
+Main difference 
+Apache uses a process/thread-based model, while Nginx uses an event-driven model.
+👉 This means:
+•	Apache creates a new process or thread for each request (uses more memory)
+•	Nginx handles many requests with fewer resources (more efficient)
+Which is better to use? (single line):
+Nginx is better for high-traffic and performance, while Apache is better for flexibility and ease of configuration.
+
+2.3 Lighttpd
+•	Lightweight and fast
+•	Designed for low resource usage
+•	Suitable for embedded systems
+2.4 Caddy
+•	Modern web server written in Go
+•	Automatic HTTPS by default
+•	Simple configuration
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Config Section -->
+        <div class="card" id="config">
+          <h3 class="section-title">3. Web Server Configuration Files</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Apache Configuration Files
+•	Main configuration: /etc/apache2/apache2.conf
+•	Virtual hosts: /etc/apache2/sites-available/
+•	Enabled sites: /etc/apache2/sites-enabled/
+•	Ports: /etc/apache2/ports.conf
+/etc/apache2/apache2.conf
+This is the main Apache configuration file.
+It controls the overall behavior of the Apache server, such as security settings, default directories, and global options. Other configuration files are included from here.
+________________________________________
+/etc/apache2/sites-available/
+This directory contains all virtual host configuration files.
+Each file defines how Apache should serve a specific website (domain name, document root, ports, etc.).
+Sites placed here are not active by default.
+________________________________________
+/etc/apache2/sites-enabled/
+This directory contains enabled (active) websites.
+Apache only reads and serves sites that appear here.
+Files in this folder are usually symbolic links pointing to files in sites-available.
+________________________________________
+/etc/apache2/ports.conf
+This file defines the ports Apache listens on, such as:
+•	Port 80 for HTTP
+•	Port 443 for HTTPS
+It tells Apache where to accept incoming connections.
+
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apache Install -->
+        <div class="card" id="apache">
+          <h3 class="section-title">4. Installation of Apache HTTP Server</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Step 1: Update the system
+sudo apt update && sudo apt upgrade -y
+Step 2: Install Apache
+sudo apt install apache2 -y
+Step 3: Start and enable Apache
+sudo systemctl start apache2
+sudo systemctl enable apache2
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nginx Install -->
+        <div class="card" id="nginx">
+          <h3 class="section-title">5. Installation of Nginx</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Step 1: Install Nginx
+sudo apt install nginx -y
+Step 2: Start and enable Nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Firewall -->
+        <div class="card" id="firewall">
+          <h3 class="section-title">6. Firewall Configuration (UFW)</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Allow Apache or Nginx traffic
+For Apache
+sudo ufw allow 'Apache Full'
+For Nginx
+sudo ufw allow 'Nginx Full'
+Enable firewall
+sudo ufw enable
+sudo ufw status
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verify -->
+        <div class="card" id="verify">
+          <h3 class="section-title">7. Verify the Installation</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+Check service status
+sudo systemctl status apache2
+sudo systemctl status nginx
+Test in browser
+•	Open browser and visit:
+o	http://localhost
+o	or http://server_ip_address
+You should see the default Apache or Nginx welcome page.
+________________________________________
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="card" id="security">
+          <h3 class="section-title">✅ Perform Security on Web Server</h3>
+          <div class="accordion">
+            <button>
+              <span>Show Notes</span>
+              <span class="highlight">Click</span>
+            </button>
+            <div class="accordion-content">
+              <pre>
+1. Permissions
+Permissions control who can read, write, or execute web files.
+For Apache web files, the recommended settings are:
+sudo chown -R www-data:www-data /var/www/html
+sudo chmod -R 755 /var/www/html
+•	chown → sets ownership to the Apache user (www-data)
+•	chmod 755 → allows:
+o	Owner to read/write/execute
+o	Others to read and execute only
+This prevents unauthorized users from changing website files.
+________________________________________
+2. Encryption
+Encryption ensures data between the client and server is protected.
+Without encryption:
+•	Data travels in plain text
+•	Can be intercepted by hackers
+With encryption (HTTPS):
+•	Data is encrypted using SSL/TLS
+•	Protects login details, forms, and sensitive information
+________________________________________
+3. SSL Certificate
+An SSL certificate allows your website to use HTTPS.
+SSL/TLS is the technology that makes HTTPS secure.
+________________________________________
+✅ Meaning:
+•	SSL = Secure Sockets Layer
+•	TLS = Transport Layer Security
+👉 TLS is the newer and more secure version of SSL, but people often still call it SSL.
+________________________________________
+🔒 What SSL/TLS does in HTTPS:
+1.	Encrypts data between the user and the web server
+2.	Prevents hackers from reading sensitive information (like passwords or credit card details)
+3.	Verifies the identity of the website using an SSL certificate
+________________________________________
+🔁 How it works (simple steps):
+1.	Browser connects to website using HTTPS
+2.	Server sends its SSL/TLS certificate
+3.	Browser checks the certificate is valid
+4.	A secure connection is created
+5.	Data is encrypted and transferred safely
+________________________________________
+🚦 Result:
+HTTPS = HTTP + SSL/TLS
+This is why the website shows:
+•	🔒 Padlock icon
+•	https:// in the address bar
+
+To install SSL using Let’s Encrypt:
+For Apache:
+sudo apt install certbot python3-certbot-apache -y
+sudo certbot --apache
+For Nginx:
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx
+________________________________________
+🔁 Auto-renew SSL
+SSL certificates renew automatically every 90 days. Test renewal:
+sudo certbot renew --dry-run
+End of Document
+          </pre>
+              <button class="btn copy-btn"
+                onclick="copyText(this)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">NIT-PVC</div>
+      </div>
+    </div>
+
+    <script>
+// Theme toggle
+themeBtn.onclick = () => {
+document.body.dataset.theme =
+document.body.dataset.theme === "dark" ? "light" : "dark";
+};
+
+// Accordion
+document.querySelectorAll(".accordion button").forEach(btn=>{
+btn.onclick=()=>{
+btn.parentElement.classList.toggle("open");
+};
+});
+
+// Copy
+function copyText(btn){
+const t = btn.previousElementSibling.innerText;
+navigator.clipboard.writeText(t);
+btn.innerText="Copied!";
+setTimeout(()=>btn.innerText="Copy",1200);
+}
+
+// Search
+searchBox.oninput = () => {
+const q = searchBox.value.toLowerCase();
+document.querySelectorAll(".card").forEach(card=>{
+card.style.display =
+card.innerText.toLowerCase().includes(q) ? "block":"none";
+});
+};
+
+clearSearch.onclick = ()=>{
+searchBox.value="";
+document.querySelectorAll(".card").forEach(c=>c.style.display="block");
+};
+</script>
+
+  </body>
+</html>

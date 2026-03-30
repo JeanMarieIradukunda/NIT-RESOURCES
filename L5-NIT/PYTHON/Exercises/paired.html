@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Exercises – Requirements Checklist</title>
+
+    <style>
+        body {
+            font-family: "Calito MT", Tahoma, sans-serif;
+            background: linear-gradient(120deg, #eef2f7, #f9fbfd);
+            margin: 0;
+            padding: 30px;
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.4rem;
+            color: #1f3c88;
+        }
+
+        h2 {
+            color: #1a5276;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 0;
+            color: #555;
+            max-width: 900px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #1f3c88, #2c6dd5);
+            color: #fff;
+            padding: 14px;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        th.checkbox {
+            text-align: center;
+            width: 80px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e8ee;
+            background-color: #fafafa;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f4f7fb;
+        }
+
+        tr:hover td {
+            background-color: #eef4ff;
+            transition: background 0.2s ease-in-out;
+        }
+
+        td.checkbox {
+            text-align: center;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #2c6dd5;
+            cursor: pointer;
+        }
+
+        /* Small screen support */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🐍 Python Programming Exercises</h1>
+
+<!-- ================= EXERCISE 1 ================= -->
+<div class="container">
+    <h2>Exercise 1: Student Marks Analyzer</h2>
+    <p>Write a Python program that manages and analyzes student marks.</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th class="checkbox">Done</th>
+        </tr>
+        <tr><td>Declare variables for student name, age, and marks using correct data types</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use comments to explain major parts of the code</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store marks in a list and student details in a dictionary</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Create a user-defined function with a default pass mark (50)</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Return the average score from the function</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use conditional statements to determine pass or fail</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use loop with <strong>continue</strong> for negative marks</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>break</strong> if a mark is greater than 100</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use at least one built-in function</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Demonstrate use of <strong>pass</strong> for future feature</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Call the function and display results</td><td class="checkbox"><input type="checkbox"></td></tr>
+    </table>
+</div>
+
+<!-- ================= EXERCISE 2 ================= -->
+<div class="container">
+    <h2>Exercise 2: Shopping Cart System</h2>
+    <p>Create a simple shopping cart program.</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th class="checkbox">Done</th>
+        </tr>
+        <tr><td>Use variables and data types for items, prices, and quantities</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store items in a list of tuples and customer details in a dictionary</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Create a function with a default discount value</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Calculate total cost using operators</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>continue</strong> to skip items with zero quantity</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>break</strong> if total exceeds a set limit</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Apply conditional statements for discounts</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use built-in functions like <code>len()</code> or <code>sum()</code></td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use comments properly</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Call the function and display the final bill</td><td class="checkbox"><input type="checkbox"></td></tr>
+    </table>
+</div>
+
+<!-- ================= EXERCISE 3 ================= -->
+<div class="container">
+    <h2>Exercise 3: Employee Attendance Tracker</h2>
+    <p>Develop a program to track employee attendance.</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th class="checkbox">Done</th>
+        </tr>
+        <tr><td>Store employee information using appropriate data types</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use dictionary for employee IDs and attendance records</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store daily attendance in a list</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Create a function with default required attendance days</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use conditional statements to evaluate attendance</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>continue</strong> to skip holidays</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>break</strong> for invalid attendance data</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use at least one built-in function</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>pass</strong> for future attendance rules</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Call the function and print results</td><td class="checkbox"><input type="checkbox"></td></tr>
+    </table>
+</div>
+
+<!-- ================= EXERCISE 4 ================= -->
+<div class="container">
+    <h2>Exercise 4: Library Book Management System</h2>
+    <p>Write a Python program to manage library books.</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th class="checkbox">Done</th>
+        </tr>
+        <tr><td>Declare variables for book title, author, and availability</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store books in a list of dictionaries</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use comments to describe the code</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Create function with default maximum borrow days</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Return available books count</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>continue</strong> for unavailable books</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>break</strong> for corrupted book data</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use built-in functions like <code>len()</code></td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>pass</strong> for future search functionality</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Call the function and display results</td><td class="checkbox"><input type="checkbox"></td></tr>
+    </table>
+</div>
+
+<!-- ================= EXERCISE 5 ================= -->
+<div class="container">
+    <h2>Exercise 5: Online Exam Result Processing</h2>
+    <p>Design a program to process online exam results.</p>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th class="checkbox">Done</th>
+        </tr>
+        <tr><td>Use variables, data types, and operators for scores</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store student answers in a tuple and correct answers in a list</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Store student details in a dictionary</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Create function with default pass percentage</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>continue</strong> for unanswered questions</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>break</strong> for invalid scores</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use conditional statements to determine grades</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use built-in functions like <code>max()</code> or <code>min()</code></td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Use <strong>pass</strong> for future grading policies</td><td class="checkbox"><input type="checkbox"></td></tr>
+        <tr><td>Call the function and display final result</td><td class="checkbox"><input type="checkbox"></td></tr>
+    </table>
+</div>
+
+</body>
+</html>

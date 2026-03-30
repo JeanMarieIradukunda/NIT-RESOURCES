@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Linux Server Exam — Answers (Bootstrap 5)</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <style>
+    :root{--accent:#0d6efd}
+    body{
+      font-family: Cambria, Cochin, Georgia, Times, 'Calisto MT', serif;
+      background:#f8f9fa;color:#212529}
+    .hero{background:linear-gradient(90deg, rgba(13,110,253,.08), rgba(13,110,253,.02));border-left:4px solid var(--accent)}
+    pre.code-block{background:#0b1220;color:#e6eef8;padding:1rem;border-radius:.5rem;overflow:auto}
+    .toc a{display:block;padding:.25rem 0}
+    .badge-mark{background:#198754}
+    footer{font-size:.9rem;color:#6c757d}
+    .card-code{background:#0b1220;color:#e6eef8}
+    @media print{.no-print{display:none}}
+        </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Linux Server Exam — Answers</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#nav"
+          aria-controls="nav"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#section-a">
+                SECTION
+                A
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#section-b">
+                SECTION
+                B
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#section-c">
+                SECTION
+                C
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="container mb-5">
+      <header class="p-4 rounded hero mb-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h1 class="h3 mb-1">Exam Answers — Linux Server</h1>
+            <p class="mb-0 text-muted">
+              Well-formatted, Bootstrap 5 HTML file
+              containing answers for Sections A, B and C. Use this as a study or
+              printing resource.
+            </p>
+          </div>
+          <div class="text-end no-print">
+            <span class="badge badge-mark text-white px-3 py-2">
+              Total: 85
+              Marks
+            </span>
+          </div>
+        </div>
+      </header>
+      <div class="row">
+        <aside class="col-lg-3 mb-4">
+          <div class="card sticky-top" style="top:1rem">
+            <div class="card-body">
+              <h5 class="card-title">Contents</h5>
+              <nav class="toc">
+                <a href="#section-a">✅ SECTION A (40 Marks)</a>
+                <a href="#section-a-8">8. TRUE/FALSE</a>
+                <a href="#section-a-9">9. Copy / Move / Rename</a>
+                <a href="#section-a-10">10. chmod</a>
+                <a href="#section-a-11">11. TRUE/FALSE</a>
+                <a href="#section-a-12">12. Use cases</a>
+                <a href="#section-a-13">13. mkdir</a>
+                <a href="#section-a-14">14. Script perms</a>
+                <a href="#section-a-15">15. pwd / cd</a>
+                <a href="#section-a-16">16. Group permissions</a>
+                <a href="#section-a-17">17. Processes</a>
+                <hr>
+                <a href="#section-b">✅ SECTION B (30 Marks)</a>
+                <a href="#section-b-18">18. File perms</a>
+                <a href="#section-b-19">19. Prepare USB</a>
+                <a href="#section-b-20">20. No bootable device</a>
+                <a href="#section-b-21">21. Permission breakdown</a>
+                <a href="#section-b-22">22. Matching</a>
+                <hr>
+                <a href="#section-c">✅ SECTION C (15 Marks)</a>
+                <a href="#section-c-23">23. DNS Deployment</a>
+                <a href="#section-c-24">24. Users & groups</a>
+              </nav>
+            </div>
+          </div>
+        </aside>
+        <section class="col-lg-9">
+          <article id="section-a" class="mb-5">
+            <h2 class="h4 mb-3">✅ SECTION A (40 Marks)</h2>
+            <div id="section-a-8" class="mb-4">
+              <h3 class="h5">8. TRUE/FALSE (5 marks)</h3>
+              <ul class="list-group">
+                <li class="list-group-item">A.
+                  <strong>True</strong>
+                  –
+                  <code>sudo apt install package_name</code>
+                  installs
+                  software.
+                </li>
+                <li class="list-group-item">B.
+                  <strong>True</strong>
+                  –
+                  <code>sudo apt update</code> refreshes package lists.
+                </li>
+                <li class="list-group-item">C.
+                  <strong>False</strong>
+                  –
+                  <code>sudo apt remove</code>
+                  removes the package but
+                  <em>keeps</em> config files; use
+                  <code>sudo apt purge</code>
+                  to remove configs.
+                </li>
+                <li class="list-group-item">D.
+                  <strong>False</strong>
+                  – correct
+                  command is
+                  <code>sudo apt upgrade</code> (no hyphen).
+                </li>
+                <li class="list-group-item">E.
+                  <strong>False</strong>
+                  –
+                  <code>apt-cache search</code>
+                  is used to search, not remove
+                  software.
+                </li>
+              </ul>
+            </div>
+            <div id="section-a-9" class="mb-4">
+              <h3 class="h5">
+                9. Copy, move, rename to
+                <code>final_report.txt</code> (3 marks)
+              </h3>
+              <p class="mb-1">
+                Assuming starting file:
+                <code>/home/user/documents/report.txt</code>
+              </p>
+              <div class="card card-code mb-2 p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        cp /home/user/documents/report.txt /home/user/reports/
+
+mv /home/user/reports/report.txt /home/user/reports/final_report.txt
+                                    </code>
+                                </pre>
+              </div>
+            </div>
+            <div id="section-a-10" class="mb-4">
+              <h3 class="h5">10. chmod permissions (2 marks)</h3>
+              <p class="mb-1">Owner: execute, Group: read, Others: no access</p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+<code>chmod 740 deploy.sh     # Numeric notation
+chmod u=rwx,g=r--,o=--- deploy.sh   # Symbolic notation</code>
+  </pre>
+              </div>
+
+            </div>
+            <div id="section-a-11" class="mb-4">
+              <h3 class="h5">11. TRUE/FALSE (4 marks)</h3>
+              <ul class="list-group">
+                <li class="list-group-item">A.
+                  <strong>True</strong>
+                  –
+                  <code>rm</code> deletes permanently.
+                </li>
+                <li class="list-group-item">B.
+                  <strong>True</strong> –
+                  <code>
+                    rm
+                    -r
+                  </code> removes directories recursively.
+                </li>
+                <li class="list-group-item">C.
+                  <strong>False</strong> –
+                  <code>
+                    rm
+                    -rf /
+                  </code> would destroy the system.
+                </li>
+                <li class="list-group-item">D.
+                  <strong>False</strong>
+                  –
+                  <code>rmdir</code> only removes empty directories.
+                </li>
+              </ul>
+            </div>
+            <div id="section-a-12" class="mb-4">
+              <h3 class="h5">
+                12. Common use cases of Linux servers (5
+                marks)
+              </h3>
+              <ol>
+                <li>Web hosting (Apache, Nginx)</li>
+                <li>Database servers (MySQL/PostgreSQL)</li>
+                <li>File servers (Samba, NFS)</li>
+                <li>DNS/DHCP servers</li>
+                <li>Virtualization/containers (Docker, KVM)</li>
+              </ol>
+              <p class="text-muted small">
+                (Any five of the above are
+                acceptable.)
+              </p>
+            </div>
+            <div id="section-a-13" class="mb-4">
+              <h3 class="h5">
+                13. Create project folder with 3 subfolders (3
+                marks)
+              </h3>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>mkdir -p project/{docs,src,tests}</code>
+                                </pre>
+              </div>
+            </div>
+            <div id="section-a-14" class="mb-4">
+              <h3 class="h5">
+                14. Script not running due to permissions (4
+                marks)
+              </h3>
+              <p>Given permissions:
+                <code>-rw-r--r--</code>
+                — the owner lacks
+                execute permission.
+              </p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>chmod u+x script.sh</code>
+                                </pre>
+              </div>
+            </div>
+            <div id="section-a-15" class="mb-4">
+              <h3 class="h5">15. Find location & move home (3 marks)</h3>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        pwd
+
+cd ~
+                                    </code>
+                                </pre>
+              </div>
+            </div>
+            <div id="section-a-16" class="mb-4">
+              <h3 class="h5">16. Group write access to
+                <code>/projects</code>
+                (6
+                marks)
+              </h3>
+              <ol>
+                <li>
+                  Set group owner:
+                  <div class="card card-code p-2 mt-2">
+                    <pre class="mb-0 code-block">
+                                            <code>sudo chgrp developers /projects</code>
+                                        </pre>
+                  </div>
+                </li>
+                <li>
+                  Give group write and setgid:
+                  <div class="card card-code p-2 mt-2">
+                    <pre class="mb-0 code-block">
+                                            <code>sudo chmod 2775 /projects</code>
+                                        </pre>
+                  </div>
+                </li>
+              </ol>
+              <p class="small text-muted">
+                (Setgid ensures new files inherit the
+                <code>developers</code> group.)
+              </p>
+            </div>
+            <div id="section-a-17" class="mb-4">
+              <h3 class="h5">17. View processes & kill (5 marks)</h3>
+              <p>View:</p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        ps aux
+
+# or
+
+top
+                                    </code>
+                                </pre>
+              </div>
+              <p class="mt-2">Terminate:</p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        kill PID
+
+# force
+kill -9 PID
+                                    </code>
+                                </pre>
+              </div>
+            </div>
+          </article>
+          <article id="section-b" class="mb-5">
+            <h2 class="h4 mb-3">✅ SECTION B (30 Marks)</h2>
+            <div id="section-b-18" class="mb-4">
+              <h3 class="h5">18. File permissions question</h3>
+              <h4 class="h6 mt-3">a) Permissions (3 marks)</h4>
+              <p>
+                <code>-rw-r-----</code>
+              </p>
+              <ul>
+                <li>
+                  <strong>Owner (alice):</strong> rw- (read, write)
+                </li>
+                <li>
+                  <strong>Group (managers):</strong> r-- (read)
+                </li>
+                <li>
+                  <strong>Others:</strong> --- (no access)
+                </li>
+              </ul>
+              <h4 class="h6 mt-3">b) Removing write from owner (2 marks)</h4>
+              <p>Owner will not be able to edit or save changes to the file.</p>
+              <h4 class="h6 mt-3">c) Give bob read-only access (2 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>chmod o+r report.txt</code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">d) Security advantage & risk (3 marks)</h4>
+              <p>
+                <strong>Advantage:</strong>
+                Limits access to authorized users
+                only.
+                <br>
+                <strong>Risk:</strong>
+                May block legitimate users and reduce
+                collaboration.
+              </p>
+            </div>
+            <div id="section-b-19" class="mb-4">
+              <h3 class="h5">
+                19. Prepare computer for Ubuntu installation (10
+                marks)
+              </h3>
+              <ol>
+                <li>Download Ubuntu ISO from ubuntu.com</li>
+                <li>Insert a USB drive (≥4GB)</li>
+                <li>
+                  Use Rufus (Windows) or balenaEtcher (cross-platform) to
+                  write the ISO
+                </li>
+                <li>Backup important data</li>
+                <li>Reboot and enter BIOS/UEFI</li>
+                <li>Enable USB boot and set USB as first boot device</li>
+                <li>Save changes and reboot to the installer</li>
+                <li>Follow on-screen installation steps</li>
+              </ol>
+            </div>
+            <div id="section-b-20" class="mb-4">
+              <h3 class="h5">20. Fix “No bootable device found” (10 marks)</h3>
+              <ul>
+                <li>Check BIOS/UEFI boot order</li>
+                <li>Ensure correct disk mode (UEFI vs Legacy)</li>
+                <li>
+                  Repair GRUB from live USB:
+                  <div class="card card-code p-2 mt-2">
+                    <pre class="mb-0 code-block">
+                                            <code>
+                                                sudo grub-install /dev/sda
+sudo update-grub
+                                            </code>
+                                        </pre>
+                  </div>
+                </li>
+                <li>Verify the disk is detected and Ubuntu installed</li>
+                <li>Use Boot Repair tool if necessary</li>
+              </ul>
+            </div>
+            <div id="section-b-21" class="mb-4">
+              <h3 class="h5">21. Permission breakdown (7 marks)</h3>
+              <h4 class="h6">a) Owner / Group / Others (2 marks)</h4>
+              <p>Owner:
+                <strong>sam</strong> → rwx
+                <br>
+                Group:
+                <strong>devteam</strong> → r--
+                <br>Others: r--
+              </p>
+              <h4 class="h6">b) Explain
+                <code>-rwxr--r--</code> (3 marks)
+              </h4>
+              <p>`-` = regular file; `rwx` owner; `r--` group; `r--` others.</p>
+              <h4 class="h6">c) Can john execute the file? (2 marks)</h4>
+              <p>No — john is in
+                <code>devteam</code>
+                and group perms are
+                <code>r--</code>, so no execute.
+              </p>
+              <h4 class="h6">d) Security implications of
+                <code>
+                  chmod a+x
+                  deploy.sh
+                </code> (3 marks)
+              </h4>
+              <p>
+                Allows anyone to run the script — increased risk if the script
+                is sensitive or destructive.
+              </p>
+            </div>
+            <div id="section-b-22" class="mb-4">
+              <h3 class="h5">22. Matching (10 marks)</h3>
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Term</th>
+                    <th>Description</th>
+                    <th>Answer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1. Disk Partitioning</td>
+                    <td>
+                      A process that divides a
+                      disk into separate, isolated regions.
+                    </td>
+                    <td>
+                      1 →
+                      A
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2. File System</td>
+                    <td>
+                      Used for organizing and storing
+                      files on disk.
+                    </td>
+                    <td>2 → B</td>
+                  </tr>
+                  <tr>
+                    <td>3. LVM</td>
+                    <td>
+                      A virtualized partitioning system
+                      allowing dynamic disk management.
+                    </td>
+                    <td>3 → C</td>
+                  </tr>
+                  <tr>
+                    <td>4. Network Interface Configuration</td>
+                    <td>
+                      Process of
+                      configuring IP addresses and gateways.
+                    </td>
+                    <td>
+                      4 →
+                      D
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>5. SSH</td>
+                    <td>
+                      Command-line tool for secure remote
+                      access to a server.
+                    </td>
+                    <td>5 → E</td>
+                  </tr>
+                  <tr>
+                    <td>6. Package Manager</td>
+                    <td>
+                      System used to install,
+                      update, and remove software packages.
+                    </td>
+                    <td>
+                      6 →
+                      F
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>7. Firewall Configuration</td>
+                    <td>
+                      Software used for
+                      configuring and managing firewall rules.
+                    </td>
+                    <td>
+                      7 →
+                      G
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>8. Daemon</td>
+                    <td>
+                      A background process that runs
+                      continuously to provide services.
+                    </td>
+                    <td>8 → H</td>
+                  </tr>
+                  <tr>
+                    <td>9. named.conf</td>
+                    <td>
+                      The main configuration file for
+                      the BIND DNS server.
+                    </td>
+                    <td>9 → I</td>
+                  </tr>
+                  <tr>
+                    <td>10. named.conf.local</td>
+                    <td>
+                      File used in BIND to
+                      define local DNS zones and domain mappings.
+                    </td>
+                    <td>
+                      10 →
+                      J
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article id="section-c" class="mb-5">
+            <h2 class="h4 mb-3">✅ SECTION C (15 Marks)</h2>
+            <div id="section-c-23" class="mb-4">
+              <h3 class="h5">23. DNS Server Deployment</h3>
+              <h4 class="h6 mt-3">a) Hostname Configuration (3 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        sudo hostnamectl set-hostname dns.training.local
+
+# /etc/hostname
+# dns.training.local
+
+# /etc/hosts
+127.0.0.1   dns.training.local
+
+# verify
+hostnamectl
+                                    </code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">b) BIND9 Installation & Setup (3 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        sudo apt update
+sudo apt install bind9 bind9utils bind9-doc
+
+# in /etc/bind/named.conf.options add:
+forwarders {
+  8.8.8.8;
+  8.8.4.4;
+};
+                                    </code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">c) DNS Zone Configuration (4 marks)</h4>
+              <p>
+                <strong>named.conf.local</strong>
+              </p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        zone "training.local" {
+  type master;
+  file "/etc/bind/training.local.db";
+};
+
+zone "50.168.192.in-addr.arpa" {
+  type master;
+  file "/etc/bind/rev.50.168.192.db";
+};
+                                    </code>
+                                </pre>
+              </div>
+              <p class="mt-2">
+                <strong>Forward zone file (sample)</strong>
+              </p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        $TTL 604800
+@ IN SOA dns.training.local. admin.training.local. (
+  2 ; Serial
+  604800 ; Refresh
+  86400 ; Retry
+  2419200 ; Expire
+  604800 ) ; Negative Cache TTL
+
+@ IN NS dns.training.local.
+dns IN A 192.168.50.10
+                                    </code>
+                                </pre>
+              </div>
+              <p class="mt-2">
+                <strong>Reverse zone (sample PTR)</strong>
+              </p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>10 IN PTR dns.training.local.</code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">d) Validation and Testing (3 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        sudo named-checkconf
+sudo named-checkzone training.local /etc/bind/training.local.db
+sudo systemctl restart bind9
+
+# test
+dig dns.training.local
+dig -x 192.168.50.10
+                                    </code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">e) Documentation summary (2 marks)</h4>
+              <p>
+                Correct hostname, accurate zone files, and thorough testing
+                ensure reliable name resolution, avoid client failures, and make
+                maintenance predictable — essential before handing the server to
+                the IT manager.
+              </p>
+            </div>
+            <div id="section-c-24" class="mb-4">
+              <h3 class="h5">
+                24. User/Group/Permission Configuration (10
+                marks)
+              </h3>
+              <h4 class="h6 mt-3">a) Create users & group (3 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        sudo useradd maria
+sudo useradd kevin
+sudo useradd josh
+
+sudo groupadd alpha
+
+sudo usermod -aG alpha maria
+sudo usermod -aG alpha kevin
+sudo usermod -aG alpha josh
+                                    </code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">b) Directory setup (3 marks)</h4>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>
+                                        sudo mkdir -p /projects/alpha/
+sudo chgrp alpha /projects/alpha/
+sudo chmod 770 /projects/alpha/
+                                    </code>
+                                </pre>
+              </div>
+              <h4 class="h6 mt-3">c) Permissions (3 marks)</h4>
+              <p>I. Directory (symbolic):</p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>chmod ug+rwx,o--- /projects/alpha/</code>
+                                </pre>
+              </div>
+              <p class="mt-2">II. Script files (octal):</p>
+              <div class="card card-code p-3">
+                <pre class="mb-0 code-block">
+                                    <code>chmod 740 script.sh</code>
+                                </pre>
+              </div>
+              <p class="mt-2">
+                III. Meaning: Read = view, Write =
+                modify/create/delete, Execute = run file/enter directory.
+              </p>
+              <h4 class="h6 mt-3">d) Testing configuration (4 marks)</h4>
+              <ol>
+                <li>Users run:
+                  <code>
+                    cd /projects/alpha/ && touch
+                    testfile
+                  </code>
+                </li>
+                <li>Check:
+                  <code>ls -l /projects/alpha/</code>
+                </li>
+                <li>Non-member test:
+                  <code>
+                    sudo -u outsider ls
+                    /projects/alpha/
+                  </code> (should fail)
+                </li>
+                <li>Script exec test: owner can run
+                  <code>./script.sh</code>
+                  ;
+                  group/others cannot.
+                </li>
+              </ol>
+            </div>
+          </article>
+          <footer class="border-top pt-3 mt-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <small class="text-muted">
+                  Prepared by: JMV IRADUKUNDA
+                </small>
+              </div>
+              <div class="no-print">
+                <a class="btn btn-sm btn-outline-primary" href="#"
+                  onclick="window.print();return false">Print</a>
+              </div>
+            </div>
+          </footer>
+        </section>
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LO2: Connection of VoIP Devices</title>
+        <style>
+body {
+    font-family: 'Calisto MT', sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+h1, h2, h3, h4, h5 {
+    color: #1e3a8a;
+}
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.note {
+    background: #eef2ff;
+    padding: 10px;
+    border-left: 5px solid #1e3a8a;
+    margin: 10px 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background: #e0e7ff;
+}
+ul, ol {
+    margin: 5px 0 15px 20px;
+}
+</style>
+    </head>
+    <body>
+
+        <h1>LO2: Connection of VoIP Devices</h1>
+
+        <div class="card">
+            <h2>Deployment of VoIP Devices</h2>
+            <p>Deployment means installing and configuring VoIP devices in a
+                network environment.</p>
+
+            <h3>Steps for Deployment:</h3>
+
+            <h4>Step 1 – Network Preparation</h4>
+            <p>Ensure the network supports VoIP requirements:</p>
+            <ul>
+                <li>High bandwidth</li>
+                <li>Low latency</li>
+                <li>Quality of Service (QoS)</li>
+            </ul>
+
+            <h4>Step 2 – Install VoIP Server</h4>
+            <p>Install and configure the IP PBX server. Configuration
+                includes:</p>
+            <ul>
+                <li>User accounts</li>
+                <li>Extensions</li>
+                <li>Call routing</li>
+            </ul>
+
+            <h4>Step 3 – Connect Network Devices</h4>
+            <p>Connect devices such as:</p>
+            <ul>
+                <li>IP Phones</li>
+                <li>Switches</li>
+                <li>Routers</li>
+                <li>VoIP gateways</li>
+            </ul>
+
+            <h4>Step 4 – Configure Devices</h4>
+            <p>Configure each device with:</p>
+            <ul>
+                <li>IP address</li>
+                <li>SIP account</li>
+                <li>Extension number</li>
+                <li>Authentication credentials</li>
+            </ul>
+            <p><strong>Full meaning:</strong> SIP – Session Initiation Protocol
+                (protocol used to establish and manage VoIP calls)</p>
+
+            <h4>Step 5 – Test the System</h4>
+            <p>Test communication between devices.</p>
+            <ul>
+                <li>Call from extension 101 to 102</li>
+                <li>Check voice quality</li>
+                <li>Verify connectivity</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Connection of Connectors</h2>
+            <p>Connectors are used to join network cables to devices. Different
+                cables use different connectors.</p>
+
+            <h3>Main Types:</h3>
+            <ol>
+                <li>Fiber connectors</li>
+                <li>Coaxial connectors</li>
+                <li>Twisted pair connectors</li>
+            </ol>
+
+            <h3>Fiber Connectors</h3>
+            <p>Used in fiber optic cables which transmit data using light
+                signals.</p>
+            <ul>
+                <li>Advantages: Very high speed, long distance transmission, low
+                    signal loss</li>
+            </ul>
+
+            <h4>Common Fiber Connectors</h4>
+            <ol>
+                <li>SC Connector (Subscriber Connector) – Square shape,
+                    push-pull locking, telecom networks</li>
+                <li>LC Connector (Lucent Connector) – Small size, high-density
+                    networks, data centers</li>
+                <li>ST Connector (Straight Tip Connector) – Round shape,
+                    twist-lock, older fiber installations</li>
+                <li>FC Connector (Ferrule Connector) – Threaded connection, high
+                    precision, laboratory networks</li>
+            </ol>
+
+            <h3>Coaxial Connectors</h3>
+            <p>Used for radio frequency signals and cable TV networks.</p>
+            <ul>
+                <li>Structure: Central conductor, insulation, metal shield,
+                    outer jacket</li>
+            </ul>
+            <p>Common Connectors:</p>
+            <ol>
+                <li>BNC Connector (Bayonet Neill-Concelman) – Twist locking,
+                    CCTV and networking</li>
+                <li>F Connector (F-Type) – Cable TV, satellite systems</li>
+                <li>N Connector (N-Type) – RF systems, wireless
+                    communication</li>
+            </ol>
+
+            <h3>Twisted Pair Connectors</h3>
+            <p>Most common in LAN networks. Pairs of twisted copper wires.</p>
+            <ul>
+                <li>UTP – Unshielded Twisted Pair</li>
+                <li>STP – Shielded Twisted Pair</li>
+            </ul>
+            <p><strong>RJ45 Connector</strong> – Standard Ethernet connector for
+                Cat5e, Cat6, Cat6a cables. Used to connect computers, switches,
+                routers, IP phones.</p>
+        </div>
+
+        <div class="card">
+            <h2>Selection of Patching / Tagging Components</h2>
+            <p><strong>Patching:</strong> Connecting network devices using patch
+                cords.</p>
+            <p>Example:</p>
+            <ul>
+                <li>Port 1 of Patch Panel → Switch Port 5 using patch cord</li>
+                <li>IP phone → Wall Outlet → Switch via patch cord</li>
+            </ul>
+            <p>Purpose:</p>
+            <ul>
+                <li>Connect switches, patch panels, and devices</li>
+                <li>Route network signals where needed</li>
+                <li>Allow easy changes without touching permanent cables</li>
+            </ul>
+
+            <p><strong>Tagging:</strong> Labeling cables, ports, or devices for
+                identification.</p>
+            <p>Purpose:</p>
+            <ul>
+                <li>Quick identification during
+                    installation/troubleshooting</li>
+                <li>Prevent mistakes when reconnecting/moving cables</li>
+                <li>Document network for maintenance and expansion</li>
+            </ul>
+            <p>Example: “Office 101 → Patch Panel Port 12”</p>
+        </div>
+
+        <div class="card">
+            <h2>Patch Panel Types</h2>
+            <ol>
+                <li><strong>Twisted Pair Ethernet Patch Panel:</strong> For
+                    Ethernet cables (Cat5e, Cat6, Cat6a) with RJ45 ports.</li>
+                <li><strong>Fiber Optic Patch Panel:</strong> Manages fiber
+                    cables (SC, LC, ST connectors)</li>
+                <li><strong>Coaxial Patch Panel:</strong> Supports BNC, F-Type
+                    connectors</li>
+                <li><strong>Voice Patch Panel:</strong> For telephone lines
+                    (RJ11, RJ45)</li>
+                <li><strong>Modular Patch Panel (Unloaded):</strong> Uses
+                    keystone jacks for flexible installation</li>
+                <li><strong>Loaded Patch Panel:</strong> Connectors
+                    pre-installed, faster installation</li>
+                <li><strong>Shielded Patch Panel:</strong> Works with STP/FTP,
+                    reduces EMI, improves signal quality</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Patch Cord Types</h2>
+            <p>Short cables connecting devices.</p>
+            <ul>
+                <li>Straight-Through: Computer → Switch, IP Phone → Switch</li>
+                <li>Crossover: Computer → Computer, Switch → Switch</li>
+            </ul>
+
+            <h2>Jumper Cable Types</h2>
+            <p>Short cables connecting patch panel ports or devices.</p>
+            <ul>
+                <li>Fiber Jumper Cable – for fiber networks</li>
+                <li>Ethernet Jumper Cable – for LAN connections</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Patch Panel Management Techniques</h2>
+            <p>Helps maintain a clean and organized network.</p>
+            <ol>
+                <li>Cable Labeling – Example: Room 204 → Port 12</li>
+                <li>Color Coding – Blue = Data, Yellow = VoIP, Red =
+                    Critical</li>
+                <li>Cable Management Bars – prevent tangling/bending</li>
+                <li>Documentation – Network diagram & patch panel map (Port 1 →
+                    Office 101)</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Testing of System Connectivity</h2>
+            <p>Ensures the VoIP network works correctly.</p>
+
+            <h3>Types of Testing:</h3>
+
+            <h4>1. Cable Testing</h4>
+            <p>Tools: Cable tester, Network analyzer</p>
+            <p>Checks: Wire continuity, cable faults, signal quality</p>
+
+            <h4>2. Ping Test</h4>
+            <p>Used to check network connectivity.</p>
+            <p>Command example: <code>ping 192.168.1.10</code></p>
+            <p>If the device responds, the connection is working.</p>
+
+            <h4>3. VoIP Call Test</h4>
+            <p>Test call between two extensions:</p>
+            <ul>
+                <li>Audio clarity</li>
+                <li>Call delay</li>
+                <li>Packet loss</li>
+            </ul>
+
+            <h4>4. Network Performance Test</h4>
+            <p>Important parameters:</p>
+            <ul>
+                <li>Latency – delay in communication</li>
+                <li>Jitter – variation in packet delay</li>
+                <li>Packet loss – missing voice packets</li>
+            </ul>
+        </div>
+
+    </body>
+</html>

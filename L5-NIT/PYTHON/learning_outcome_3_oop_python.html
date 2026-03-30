@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Learning Outcome 3 - OOP in Python</title>
+
+        <style>
+    body{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin:0;
+        background: linear-gradient(to right, #f5f7fa, #e4ecf7);
+        color:#222;
+        line-height:1.7;
+    }
+
+    header{
+        background:#1e3a8a;
+        color:white;
+        padding:30px;
+        text-align:center;
+    }
+
+    header h1{
+        margin:0;
+        font-size:28px;
+        letter-spacing:1px;
+    }
+
+    header p{
+        margin-top:8px;
+        font-weight:300;
+    }
+
+    .container{
+        width:90%;
+        max-width:1100px;
+        margin:30px auto;
+    }
+
+    section{
+        background:white;
+        padding:25px;
+        margin-bottom:25px;
+        border-radius:10px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    h2{
+        color:#1e3a8a;
+        border-bottom:3px solid #1e3a8a;
+        padding-bottom:5px;
+    }
+
+    h3{
+        color:#0f766e;
+        margin-top:20px;
+    }
+
+    ul{
+        margin-left:20px;
+    }
+
+    code{
+        background:#f1f5f9;
+        padding:3px 6px;
+        border-radius:5px;
+        color:#c026d3;
+        font-weight:500;
+    }
+
+    pre{
+        background:#0f172a;
+        color:#f8fafc;
+        padding:15px;
+        overflow-x:auto;
+        border-radius:8px;
+    }
+
+    .highlight{
+        background:#e0f2fe;
+        padding:10px;
+        border-left:5px solid #0284c7;
+        margin:15px 0;
+    }
+
+    footer{
+        text-align:center;
+        padding:20px;
+        background:#1e3a8a;
+        color:white;
+        margin-top:40px;
+    }
+</style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>LEARNING OUTCOME 3: APPLY OBJECT-DRIVEN IN PYTHON</h1>
+            <p>Learning Hours: 40</p>
+
+        </header>
+
+        <div class="container">
+
+            <h3>📌 Practical Example</h3>
+
+            <p>
+                Click below to open the OOP program examples:
+            </p>
+
+            <div style="display:flex; gap:15px; flex-wrap:wrap;">
+
+                <a href="Marks_Recordning_OOP.html"
+                    style="display:inline-block;
+        background:#1e3a8a;
+        color:white;
+        padding:10px 18px;
+        border-radius:6px;
+        text-decoration:none;
+        font-weight:500;">
+                    Marks Recording OOP
+                </a>
+
+                <a href="three_oop_terms.html"
+                    style="display:inline-block;
+        background:#1e3a8a;
+        color:white;
+        padding:10px 18px;
+        border-radius:6px;
+        text-decoration:none;
+        font-weight:500;">
+                    Three OOP Terms
+                </a>
+
+                <a href="constructor_getter_setter.html"
+                    style="display:inline-block;
+        background:#1e3a8a;
+        color:white;
+        padding:10px 18px;
+        border-radius:6px;
+        text-decoration:none;
+        font-weight:500;">
+                    Constructor, Getter & Setter
+                </a>
+
+            </div>
+
+            <section>
+                <h2>1. APPLYING OOP CONCEPTS</h2>
+
+                <p>Object-Oriented Programming (OOP) is a programming style
+                    where software is designed using objects that represent
+                    real-world things.</p>
+
+                <p>Instead of writing a long list of instructions, you organize
+                    your program into classes and objects.</p>
+
+                <p>OOP is a way of writing programs by creating blueprints
+                    (classes) and building real things (objects) from them.</p>
+
+                <h3>🔹 Key Ideas in OOP</h3>
+
+                <h3>1️⃣ Class</h3>
+
+                <p>A class is a blueprint/Design/Drawing/Proposal or template
+                    used to create objects.</p>
+
+                <p>It defines:</p>
+                <ul>
+                    <li>The data (attributes) an object will have</li>
+                    <li>The actions (methods) an object can perform</li>
+                </ul>
+
+                <p>A class does not represent one real thing — it represents the
+                    design of many similar things.</p>
+
+                <div class="highlight">
+                    If OOP was like building something:<br>
+                    • Class → the design plan<br>
+                    • Object → the real item built from that plan
+                </div>
+
+                <p>You can create many objects from one class.</p>
+
+                <h3>🎓 Real-Life Examples</h3>
+
+                <p><strong>Class: Student</strong></p>
+                <p>It defines:</p>
+                <ul>
+                    <li>name</li>
+                    <li>age</li>
+                    <li>grade</li>
+                    <li>study()</li>
+                    <li>take_exam()</li>
+                </ul>
+
+                <p>Now in real life:</p>
+                <ul>
+                    <li>John → Student object</li>
+                    <li>Mary → Student object</li>
+                    <li>Eric → Student object</li>
+                </ul>
+
+                <p>All are created from the Student class, but each has
+                    different data.</p>
+
+                <hr>
+
+                <h3>2️⃣ Course Example</h3>
+
+                <p><strong>Class: Course</strong></p>
+                <p>It defines:</p>
+                <ul>
+                    <li>course_name</li>
+                    <li>course_code</li>
+                    <li>duration</li>
+                    <li>start_course()</li>
+                </ul>
+
+                <p>Real-life objects:</p>
+                <ul>
+                    <li>Mathematics Course</li>
+                    <li>ICT Course</li>
+                    <li>Physics Course</li>
+                </ul>
+
+                <p>Each course is an object created from the Course class.</p>
+
+                <h3>🧠 Why Classes Are Important</h3>
+
+                <ul>
+                    <li>Organize code clearly</li>
+                    <li>Avoid repeating code</li>
+                    <li>Create structured systems like school management
+                        systems</li>
+                    <li>Build reusable designs</li>
+                </ul>
+
+                <hr>
+
+                <h3>2️⃣ Object</h3>
+
+                <p>An object is a real instance created from a class.</p>
+
+                <p>It represents a specific thing that contains:</p>
+
+                <ul>
+                    <li>Attributes (data) → what it has</li>
+                    <li>Methods (actions) → what it can do</li>
+                </ul>
+
+                <p>A class is the blueprint. An object is the actual thing built
+                    from that blueprint.</p>
+
+                <h3>🔹 Real-Life Example</h3>
+
+                <p>If a class is a Student template, then an object is a real
+                    student like John or Mary.</p>
+
+                <p>You can create many objects from one class.</p>
+
+                <h3>1️⃣ Student Example</h3>
+
+                <p><strong>Class: Student</strong></p>
+                <p>Defines:</p>
+                <ul>
+                    <li>name</li>
+                    <li>age</li>
+                    <li>grade</li>
+                    <li>study()</li>
+                </ul>
+
+                <p>Objects:</p>
+                <ul>
+                    <li>John → name: John, age: 18</li>
+                    <li>Mary → name: Mary, age: 17</li>
+                    <li>Eric → name: Eric, age: 19</li>
+                </ul>
+
+                <hr>
+
+                <h3>2️⃣ Course Example</h3>
+
+                <p><strong>Class: Course</strong></p>
+
+                <p>Objects:</p>
+                <ul>
+                    <li>Mathematics</li>
+                    <li>ICT</li>
+                    <li>Physics</li>
+                </ul>
+
+                <p>Each course is an object created from the Course class.</p>
+
+                <h3>🔍 Important Points About Objects</h3>
+
+                <ul>
+                    <li>✔ Objects store real data</li>
+                    <li>✔ Objects can perform actions</li>
+                    <li>✔ Multiple objects can be created from one class</li>
+                    <li>✔ Each object can have different values</li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h2>Inheritance</h2>
+
+                <p>Inheritance is a feature in OOP that allows one class to
+                    reuse the properties and methods of another class.</p>
+
+                <p>It helps avoid repeating code and makes programs
+                    organized.</p>
+
+                <p>A child class can inherit (receive) features from a parent
+                    class.</p>
+
+                <div class="highlight">
+                    Parent Class → gives common features<br>
+                    Child Class → adds its own special features
+                </div>
+
+                <h3>Real-Life Situation</h3>
+
+                <p>In a school:</p>
+                <p>All people have:</p>
+                <ul>
+                    <li>name</li>
+                    <li>age</li>
+                </ul>
+
+                <p>So we create a Person class.</p>
+
+                <p>Then:</p>
+                <ul>
+                    <li>Student inherits from Person</li>
+                    <li>Teacher inherits from Person</li>
+                </ul>
+
+                <p>Both Student and Teacher automatically have name and age.</p>
+
+                <p>But:</p>
+                <ul>
+                    <li>Student can study()</li>
+                    <li>Teacher can teach()</li>
+                </ul>
+
+                <h3>💻 Simple Python Example</h3>
+
+                <pre>
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+class Student(Person):   # Inheriting from Person
+    def study(self):
+        print(self.name, "is studying")
+
+student1 = Student("John")
+student1.study()
+</pre>
+
+                <p>Student inherits name from Person.</p>
+
+            </section>
+
+            <section>
+
+                <h2>Polymorphism</h2>
+
+                <p>Polymorphism means one method name can behave differently in
+                    different classes.</p>
+
+                <p>“Poly” means many</p>
+                <p>“Morph” means forms</p>
+                <p>So it means many forms.</p>
+
+                <p>Same method → different results.</p>
+
+                <p>In school:</p>
+                <ul>
+                    <li>Student → attends class</li>
+                    <li>Teacher → teaches lesson</li>
+                    <li>Principal → manages school</li>
+                </ul>
+
+                <p>Same method name, different behavior.</p>
+
+                <pre>
+class Student:
+    def role(self):
+        print("I attend classes")
+
+class Teacher:
+    def role(self):
+        print("I teach students")
+
+def describe(person):
+    person.role()
+
+describe(Student())
+describe(Teacher())
+</pre>
+
+                <p>Same method name → different output.</p>
+
+            </section>
+
+            <section>
+
+                <h2>Encapsulation</h2>
+
+                <p>Encapsulation means protecting data inside a class and
+                    controlling how it is accessed or changed.</p>
+
+                <p>It prevents unauthorized modification of important data.</p>
+
+                <p>Hide sensitive information and allow access only through safe
+                    methods.</p>
+
+                <p>In a school system:</p>
+
+                <p>Student marks should:</p>
+                <ul>
+                    <li>Not be changed directly by everyone</li>
+                    <li>Only be updated by authorized system</li>
+                </ul>
+
+                <p>So marks are protected inside the class.</p>
+
+                <pre>
+class Student:
+    def __init__(self):
+        self.__marks = 0   # Private variable
+
+    def set_marks(self, marks):
+        if marks >= 0:
+            self.__marks = marks
+
+    def get_marks(self):
+        return self.__marks
+
+student1 = Student()
+student1.set_marks(85)
+print(student1.get_marks())
+</pre>
+
+            </section>
+
+            <section>
+
+                <h2>📘 Syntax of Python OOP</h2>
+                <p>(Classes, Objects, Attributes, and Methods)</p>
+
+                <h3>✔ 1️⃣ Syntax of a Python Class</h3>
+
+                <pre>
+class ClassName:
+    # attributes and methods go here
+</pre>
+
+                <p>Explanation:</p>
+                <ul>
+                    <li>class → keyword used to define a class</li>
+                    <li>ClassName → name of the class (usually starts with
+                        Capital letter)</li>
+                    <li>Colon : → starts the class body</li>
+                    <li>Indentation → defines what belongs inside the class</li>
+                </ul>
+
+                <pre>
+class Student:
+    pass
+</pre>
+
+                <p>pass means the class is empty for now.</p>
+
+                <h3>✔ 2️⃣ Syntax of Attributes</h3>
+
+                <p>Attributes are variables inside a class. They store data
+                    about the object.</p>
+
+                <pre>
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+</pre>
+
+                <p>Explanation:</p>
+                <ul>
+                    <li>__init__ → special method (constructor)</li>
+                    <li>Runs automatically when object is created</li>
+                    <li>self → refers to the current object</li>
+                    <li>self.name and self.age → attributes</li>
+                </ul>
+
+                <h3>✔ 3️⃣ Syntax of Methods</h3>
+
+                <pre>
+class Student:
+    def study(self):
+        print("Student is studying")
+</pre>
+
+                <p>Methods must include self as first parameter.</p>
+
+                <h3>✔ 4️⃣ Syntax of Creating Objects</h3>
+
+                <pre>
+student1 = Student("John")
+print(student1.name)
+student1.study()
+</pre>
+
+                <h3>✔ Complete Example</h3>
+
+                <pre>
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def introduce(self):
+        print("My name is", self.name, "and I am", self.age, "years old.")
+
+student1 = Student("John", 18)
+student2 = Student("Mary", 17)
+
+print(student1.name)
+student1.introduce()
+</pre>
+
+            </section>
+
+        </div>
+
+        <footer>
+            © Learning Outcome 3 - Object-Oriented Programming in Python
+        </footer>
+
+    </body>
+</html>

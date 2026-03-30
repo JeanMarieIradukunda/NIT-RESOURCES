@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Handling in Python Notes</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background: #111827;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #38bdf8;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #334155;
+            margin: 30px 0;
+        }
+
+        pre {
+            background: #0b1220;
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            color: #f1f5f9;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📘 ● File Handling in Python</h1>
+
+        <div class="section">
+           
+            <p>
+                File handling in Python is the process of working with files to store, read, write, update, or delete
+                data permanently on a computer.<br>
+                It allows programs to save information even after the program stops running.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>🔹 Why File Handling is Important</h2>
+            <ul>
+                <li>Stores data permanently</li>
+                <li>Saves program output</li>
+                <li>Reads stored information</li>
+                <li>Manages large amounts of data</li>
+                <li>Used in real-world applications (databases, reports, logs, etc.)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🔹 Main Operations in File Handling</h2>
+            <ol>
+                <li>Open a file</li>
+                <li>Read from a file</li>
+                <li>Write to a file</li>
+                <li>Append data</li>
+                <li>Delete a file</li>
+                <li>Close a file</li>
+            </ol>
+        </div>
+
+        <hr>
+
+        <h2>📂 ✔ File Handling Libraries</h2>
+
+        <div class="section">
+            <h3>🔹 1. os Module</h3>
+            <p>
+                The os module is a built-in Python library that provides functions to interact with the operating
+                system.
+            </p>
+
+            <p>It allows Python programs to work with:</p>
+            <ul>
+                <li>Files</li>
+                <li>Folders (directories)</li>
+                <li>Paths</li>
+                <li>System information</li>
+            </ul>
+
+            <p>Example:</p>
+            <pre><code>import os
+
+print(os.getcwd())   # Current working directory</code></pre>
+
+            <p><strong>How to Use It</strong></p>
+            <pre><code>import os</code></pre>
+
+            <p><strong>Common os Functions</strong></p>
+
+            <p>1️⃣ Get Current Working Directory</p>
+            <pre><code>import os
+
+print(os.getcwd())</code></pre>
+
+            <p>2️⃣ Change Directory</p>
+            <pre><code>os.chdir("folder_name")</code></pre>
+
+            <p>3️⃣ List Files in a Folder</p>
+            <pre><code>print(os.listdir())</code></pre>
+
+            <p>4️⃣ Create a Folder</p>
+            <pre><code>os.mkdir("new_folder")</code></pre>
+
+            <p>5️⃣ Remove a File</p>
+            <pre><code>os.remove("file.txt")</code></pre>
+
+            <p>6️⃣ Remove an Empty Folder</p>
+            <pre><code>os.rmdir("folder_name")</code></pre>
+
+            <p>7️⃣ Check if File Exists</p>
+            <pre><code>if os.path.exists("file.txt"):
+    print("File exists")</code></pre>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h3>🔹 2. pathlib Module</h3>
+            <p>
+                Pathlib is a built-in Python module that provides a modern and easy way to work with file and directory
+                paths.
+                It allows you to handle file paths using objects instead of simple strings.
+                It was introduced in Python 3.4.
+            </p>
+
+            <p><strong>Why Use pathlib?</strong></p>
+            <ul>
+                <li>Easier to read and write</li>
+                <li>More organized code</li>
+                <li>Works across different operating systems (Windows, Linux, macOS)</li>
+                <li>Replaces many os.path functions</li>
+            </ul>
+
+            <p><strong>How to Use It</strong></p>
+            <pre><code>from pathlib import Path</code></pre>
+
+            <p><strong>Basic Example</strong></p>
+            <pre><code>from pathlib import Path
+
+file = Path("example.txt")
+print(file)</code></pre>
+
+            <p><strong>Common pathlib Operations</strong></p>
+
+            <p>1️⃣ Check if File Exists</p>
+            <pre><code>from pathlib import Path
+
+file = Path("example.txt")
+
+print(file.exists())</code></pre>
+
+            <p>2️⃣ Create a File</p>
+            <pre><code>from pathlib import Path
+
+file = Path("newfile.txt")
+file.touch()</code></pre>
+
+            <p>3️⃣ Read a File</p>
+            <pre><code>from pathlib import Path
+
+file = Path("example.txt")
+content = file.read_text()
+print(content)</code></pre>
+
+            <p>4️⃣ Write to a File</p>
+            <pre><code>from pathlib import Path
+
+file = Path("example.txt")
+file.write_text("Hello World")</code></pre>
+
+            <p>5️⃣ Get Current Directory</p>
+            <pre><code>from pathlib import Path
+
+print(Path.cwd())</code></pre>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h3>🔹 3. shutil Module</h3>
+            <p>
+                shutil (short for shell utilities) is a built-in Python module used for high-level file and folder
+                operations.
+                It helps you copy, move, and delete files or directories easily.
+            </p>
+
+            <p><strong>Why Use shutil?</strong></p>
+            <ul>
+                <li>Copy files</li>
+                <li>Move files</li>
+                <li>Delete folders with content</li>
+                <li>Perform advanced file management tasks</li>
+            </ul>
+
+            <p><strong>How to Use It</strong></p>
+            <pre><code>import shutil</code></pre>
+
+            <p>1️⃣ Copy a File</p>
+            <pre><code>import shutil
+
+shutil.copy("file1.txt", "file2.txt")</code></pre>
+
+            <p>2️⃣ Move a File</p>
+            <pre><code>import shutil
+
+shutil.move("file1.txt", "folder/")</code></pre>
+
+            <p>3️⃣ Delete a Folder with Content</p>
+            <pre><code>import shutil
+
+shutil.rmtree("folder_name")</code></pre>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h3>🔹 4. pandas Library</h3>
+            <p>
+                Pandas is a powerful open-source Python library used for data analysis and data manipulation.
+                It is mainly used to work with structured data such as tables, CSV files, and Excel files.
+            </p>
+
+            <p><strong>Why Use Pandas?</strong></p>
+            <ul>
+                <li>Read and write data files (CSV, Excel, etc.)</li>
+                <li>Analyze data</li>
+                <li>Clean data</li>
+                <li>Filter and sort data</li>
+                <li>Work with large datasets</li>
+                <li>Perform statistical operations</li>
+            </ul>
+
+            <p><strong>How to Use Pandas</strong></p>
+            <pre><code>pip install pandas</code></pre>
+
+            <pre><code>import pandas as pd</code></pre>
+
+            <p><strong>Main Data Structure in Pandas</strong></p>
+
+            <p>📌 1. Series</p>
+            <pre><code>import pandas as pd
+
+data = pd.Series([10, 20, 30])
+print(data)</code></pre>
+
+            <p>📌 2. DataFrame</p>
+            <pre><code>import pandas as pd
+
+data = {
+    "Name": ["John", "Mary"],
+    "Age": [20, 22]
+}
+
+df = pd.DataFrame(data)
+print(df)</code></pre>
+
+            <p><strong>Common Pandas Operations</strong></p>
+
+            <p>1️⃣ Read CSV File</p>
+            <pre><code>import pandas as pd
+
+df = pd.read_csv("data.csv")
+print(df)</code></pre>
+
+            <p>2️⃣ View First Rows</p>
+            <pre><code>df.head()</code></pre>
+
+            <p>3️⃣ Select a Column</p>
+            <pre><code>df["Name"]</code></pre>
+
+            <p>4️⃣ Filter Data</p>
+            <pre><code>df[df["Age"] > 20]</code></pre>
+
+            <p><strong>In Simple Words</strong></p>
+            Pandas is a Python library used to work with data in table format.
+            </p>
+        </div>
+
+        <!-- The rest of the content continues exactly as provided, preserving all text, formatting, and symbols. -->
+
+        <hr>
+
+        <div class="section">
+            <h3>🔹 In Simple Words</h3>
+            <p>
+                Pandas is a Python library used to work with data in table format.
+                It makes it easy to:
+            </p>
+            <ul>
+                <li>Read files</li>
+                <li>Analyze data</li>
+                <li>Clean and organize information</li>
+                <li>Perform calculations</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>File Modes in Python?</h2>
+            <p>
+                File modes tell Python how to open a file — whether to read, write, create, or append data.
+                When using open(), you must specify a mode.
+            </p>
+
+            <h3>🔹 1️⃣ "r" — Read Mode</h3>
+            <p><strong>Meaning:</strong><br>
+                Opens a file for reading only.</p>
+            <p><strong>Important:</strong></p>
+            <ul>
+                <li>File must already exist.</li>
+                <li>Cannot modify the file.</li>
+            </ul>
+
+            <pre><code>file = open("example.txt", "r")
+print(file.read())
+file.close()</code></pre>
+
+            <h3>🔹 2️⃣ "w" — Write Mode</h3>
+            <p><strong>Meaning:</strong><br>
+                Opens a file for writing.</p>
+            <p><strong>Important:</strong></p>
+            <ul>
+                <li>Creates the file if it does not exist.</li>
+                <li>If the file exists, it overwrites (deletes old content).</li>
+            </ul>
+
+            <pre><code>file = open("example.txt", "w")
+file.write("Hello")
+file.close()</code></pre>
+
+            <h3>🔹 3️⃣ "x" — Create Mode</h3>
+            <p><strong>Meaning:</strong><br>
+                Creates a new file.</p>
+            <p><strong>Important:</strong></p>
+            <ul>
+                <li>Gives an error if the file already exists.</li>
+                <li>Used when you want to ensure a new file.</li>
+            </ul>
+
+            <pre><code>file = open("newfile.txt", "x")
+file.close()</code></pre>
+
+            <h3>🔹 4️⃣ "a" — Append Mode</h3>
+            <p><strong>Meaning:</strong><br>
+                Opens a file for adding data at the end.</p>
+            <p><strong>Important:</strong></p>
+            <ul>
+                <li>Creates the file if it does not exist.</li>
+                <li>Does NOT delete existing content.</li>
+            </ul>
+
+            <pre><code>file = open("example.txt", "a")
+file.write("\nNew Line")
+file.close()</code></pre>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>📘 ✔ Practice to Read File</h2>
+
+            <h3>🔹 1. Open File</h3>
+            <p><strong>Basic Syntax:</strong></p>
+            <pre><code>file = open("example.txt", "r")</code></pre>
+            <ul>
+                <li>"r" = read mode</li>
+                <li>File must exist</li>
+            </ul>
+
+            <h3>🔹 2. Read File</h3>
+            <p><strong>Read Entire File:</strong></p>
+            <pre><code>file = open("example.txt", "r")
+content = file.read()
+print(content)
+file.close()</code></pre>
+
+            <p><strong>Read Line by Line:</strong></p>
+            <pre><code>file = open("example.txt", "r")
+for line in file:
+    print(line)
+file.close()</code></pre>
+
+            <h3>🔹 3. Read File Permission</h3>
+            <ul>
+                <li>The file must exist.</li>
+                <li>You must use "r" mode.</li>
+                <li>You must have permission to access it.</li>
+            </ul>
+            <p>If the file does not exist → Python gives an error.</p>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>📘 ✔ Perform Write/Create File</h2>
+
+            <h3>🔹 1. Create a New File</h3>
+            <p>Using "x" mode:</p>
+            <pre><code>file = open("newfile.txt", "x")
+file.close()</code></pre>
+            <ul>
+                <li>Creates a new file.</li>
+                <li>Gives error if file already exists.</li>
+            </ul>
+
+            <h3>🔹 2. Write to Existing File</h3>
+            <p>Using "w" mode:</p>
+            <pre><code>file = open("example.txt", "w")
+file.write("Hello World")
+file.close()</code></pre>
+
+            <p><strong>⚠ Important:</strong></p>
+            <ul>
+                <li>"w" deletes old content.</li>
+                <li>It overwrites the file.</li>
+            </ul>
+
+            <h3>🔹 3. Append to Existing File</h3>
+            <p>Using "a" mode:</p>
+            <pre><code>file = open("example.txt", "a")
+file.write("\nNew Line")
+file.close()</code></pre>
+            <ul>
+                <li>Adds data without deleting old content.</li>
+            </ul>
+
+            <h3>🔹 Best Practice (Recommended)</h3>
+            <p>Use with statement:</p>
+            <pre><code>with open("example.txt", "r") as file:
+    print(file.read())</code></pre>
+            <ul>
+                <li>Automatically closes the file.</li>
+                <li>Safer method.</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>📘 ✔ Perform Delete File</h2>
+
+            <h3>🔹 1. Remove File</h3>
+            <pre><code>import os
+
+os.remove("example.txt")</code></pre>
+
+            <h3>🔹 Check Before Deleting:</h3>
+            <pre><code>import os
+
+if os.path.exists("example.txt"):
+    os.remove("example.txt")</code></pre>
+
+            <h3>🔹 2. Delete Folder</h3>
+
+            <p><strong>Delete Empty Folder:</strong></p>
+            <pre><code>import os
+
+os.rmdir("myfolder")</code></pre>
+
+            <p><strong>Delete Folder With Files:</strong></p>
+            <pre><code>import shutil
+
+shutil.rmtree("myfolder")</code></pre>
+
+            <p><strong>⚠ This permanently deletes everything inside the folder.</strong></p>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>📊 Summary</h2>
+
+            <h3>✔ Reading Files</h3>
+            <ul>
+                <li>Use "r" mode</li>
+                <li>Use read() or loop</li>
+            </ul>
+
+            <h3>✔ Writing Files</h3>
+            <ul>
+                <li>"w" → Create/Overwrite</li>
+                <li>"a" → Append</li>
+                <li>"x" → Create new file</li>
+            </ul>
+
+            <h3>✔ Deleting</h3>
+            <ul>
+                <li>os.remove() → Delete file</li>
+                <li>os.rmdir() → Delete empty folder</li>
+                <li>shutil.rmtree() → Delete folder with content</li>
+            </ul>
+        </div>
+
+        <p style="text-align:center; margin-top:40px; color:#94a3b8;">
+            End of Notes
+        </p>
+
+    </div>
+</body>
+
+</html>

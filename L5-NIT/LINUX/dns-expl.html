@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux and DNS Notes</title>
+    <style>
+        body {
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, Cochin, Georgia, Times, 'Cambria', serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        hr {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            overflow-x: auto;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        .tip {
+            background-color: #eafaf1;
+            border-left: 4px solid #2ecc71;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .example {
+            background-color: #fef3e0;
+            border-left: 4px solid #e67e22;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Linux and DNS Notes</h1>
+
+<hr>
+<h2>1. Linux File System Hierarchy</h2>
+<p>The Linux file system hierarchy is like the “map” of all files and directories in Linux. Everything starts from the root directory, represented by <code>/</code>. All files and directories branch out from this root.</p>
+<p>Here’s a simple description of the most important directories:</p>
+<table>
+    <tr><th>Directory</th><th>Description (Human-friendly)</th></tr>
+    <tr><td>/</td><td>Root directory. Everything starts here.</td></tr>
+    <tr><td>/bin</td><td>Essential binaries (programs) for all users, like ls, cp.</td></tr>
+    <tr><td>/sbin</td><td>System binaries used by administrators (root), like ifconfig.</td></tr>
+    <tr><td>/etc</td><td>Configuration files for system and services, like network configs.</td></tr>
+    <tr><td>/home</td><td>Users’ personal directories. Each user gets /home/username.</td></tr>
+    <tr><td>/root</td><td>Home directory for the root (administrator) user.</td></tr>
+    <tr><td>/var</td><td>Variable data, like logs (/var/log) or databases.</td></tr>
+    <tr><td>/tmp</td><td>Temporary files that get deleted on reboot.</td></tr>
+    <tr><td>/usr</td><td>Applications and utilities for users. /usr/bin for programs, /usr/lib for libraries.</td></tr>
+    <tr><td>/lib</td><td>Shared libraries required for programs to run.</td></tr>
+    <tr><td>/opt</td><td>Optional software packages (like third-party apps).</td></tr>
+    <tr><td>/media</td><td>Mount points for removable media like USB drives.</td></tr>
+    <tr><td>/mnt</td><td>Temporary mount points for disks or other file systems.</td></tr>
+</table>
+<div class="tip">💡 Tip: Think of <code>/</code> as the “root of a tree,” and all directories are branches.</div>
+
+<hr>
+<h2>2. Linux File System Types / Categories</h2>
+<p>Linux supports multiple file system types. A file system is the method Linux uses to store and organize files on a disk.</p>
+<h3>Common Linux File System Types:</h3>
+<ol>
+    <li>Ext4 (Fourth Extended Filesystem)
+        <ul>
+            <li><strong>Definition:</strong> Ext4 is the default Linux filesystem used in Ubuntu. It is reliable, fast, and supports modern features like journaling.</li>
+            <li><strong>Key Features:</strong>
+                <ul>
+                    <li>Supports large files (up to 16 TB) and large volumes (up to 1 EB).</li>
+                    <li>Journaling keeps track of changes to prevent data loss during crashes.</li>
+                    <li>Backward compatible with Ext3.</li>
+                    <li>Delayed allocation for better performance.</li>
+                </ul>
+            </li>
+            <li><strong>Pros:</strong>
+                <ul>
+                    <li>Fast and stable for most workloads.</li>
+                    <li>Supports very large files and partitions.</li>
+                    <li>Widely supported on Linux.</li>
+                </ul>
+            </li>
+            <li><strong>Cons:</strong>
+                <ul>
+                    <li>Lacks some advanced features of newer filesystems like snapshots.</li>
+                    <li>Not ideal for extremely high-performance enterprise storage.</li>
+                </ul>
+            </li>
+            <li><strong>Use Cases:</strong>
+                <ul>
+                    <li>Default filesystem for Ubuntu installations.</li>
+                    <li>General-purpose servers and desktops.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li>Ext3 (Third Extended Filesystem)
+        <ul>
+            <li><strong>Definition:</strong> Ext3 is an older version of Ext4 with journaling. It was the default filesystem for Linux before Ext4.</li>
+            <li><strong>Key Features:</strong>
+                <ul>
+                    <li>Supports journaling to protect against data corruption.</li>
+                    <li>Compatible with Ext2 and Ext4.</li>
+                    <li>Supports large volumes up to 16 TB.</li>
+                </ul>
+            </li>
+            <li><strong>Pros:</strong>
+                <ul>
+                    <li>Simple and reliable.</li>
+                    <li>Easy to upgrade to Ext4.</li>
+                    <li>Well-tested and stable.</li>
+                </ul>
+            </li>
+            <li><strong>Cons:</strong>
+                <ul>
+                    <li>Slower than Ext4 for large files.</li>
+                    <li>Limited performance optimizations.</li>
+                </ul>
+            </li>
+            <li><strong>Use Cases:</strong>
+                <ul>
+                    <li>Legacy Linux systems.</li>
+                    <li>Systems that require high stability over performance.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li>XFS
+        <ul>
+            <li><strong>Definition:</strong> XFS is a high-performance, journaling filesystem optimized for large files and scalable systems.</li>
+            <li><strong>Key Features:</strong>
+                <ul>
+                    <li>Supports extremely large files and volumes.</li>
+                    <li>Uses journaling to maintain data integrity.</li>
+                    <li>Excellent performance for parallel I/O and multi-threaded workloads.</li>
+                </ul>
+            </li>
+            <li><strong>Pros:</strong>
+                <ul>
+                    <li>Very fast for large files and high-performance servers.</li>
+                    <li>Scales well for enterprise storage solutions.</li>
+                </ul>
+            </li>
+            <li><strong>Cons:</strong>
+                <ul>
+                    <li>Slightly more complex to manage.</li>
+                    <li>Not ideal for small, low-capacity drives.</li>
+                </ul>
+            </li>
+            <li><strong>Use Cases:</strong>
+                <ul>
+                    <li>File servers and database servers.</li>
+                    <li>Systems handling large multimedia files.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li>Btrfs (B-tree Filesystem)
+        <ul>
+            <li><strong>Definition:</strong> Btrfs is a modern Linux filesystem designed for advanced storage features like snapshots, compression, and error detection.</li>
+            <li><strong>Key Features:</strong>
+                <ul>
+                    <li>Supports snapshots and rollbacks.</li>
+                    <li>Built-in data integrity checks and repair.</li>
+                    <li>Supports compression and subvolumes.</li>
+                    <li>Scales to large volumes.</li>
+                </ul>
+            </li>
+            <li><strong>Pros:</strong>
+                <ul>
+                    <li>Advanced features for storage management.</li>
+                    <li>Protects data against corruption.</li>
+                    <li>Flexible and scalable.</li>
+                </ul>
+            </li>
+            <li><strong>Cons:</strong>
+                <ul>
+                    <li>Slightly less mature than Ext4 in some distributions.</li>
+                    <li>Performance can vary with heavy workloads.</li>
+                </ul>
+            </li>
+            <li><strong>Use Cases:</strong>
+                <ul>
+                    <li>Advanced storage systems.</li>
+                    <li>Backup and recovery setups.</li>
+                    <li>Systems needing snapshots and versioning.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+
+    <li>FAT32 / NTFS
+        <ul>
+            <li><strong>FAT32:</strong>File Allocation Table 32</li>
+            <li><strong>NTFS:</strong>New Technology File System</li>
+            <li><strong>Definition:</strong> FAT32 is an older, simple filesystem for smaller drives and cross-platform use. NTFS is a modern Windows filesystem with support for large files and advanced features.</li>
+            <li><strong>Key Features:</strong>
+                <ul>
+                    <li>FAT32: Maximum file size 4 GB, compatible across almost all systems.</li>
+                    <li>NTFS: Supports very large files, permissions, encryption, and journaling.</li>
+                </ul>
+            </li>
+            <li><strong>Pros:</strong>
+                <ul>
+                    <li>FAT32: High compatibility, simple to use.</li>
+                    <li>NTFS: Secure, supports large files, journaling protects against crashes.</li>
+                </ul>
+            </li>
+            <li><strong>Cons:</strong>
+                <ul>
+                    <li>FAT32: Cannot store files larger than 4 GB, no permissions.</li>
+                    <li>NTFS: Less compatible with Linux/macOS without extra drivers.</li>
+                </ul>
+            </li>
+            <li><strong>Use Cases:</strong>
+                <ul>
+                    <li>FAT32: USB drives, SD cards, external drives shared across OS.</li>
+                    <li>NTFS: Windows system drives, external drives needing security and large file support.</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<p>Categories of Linux file systems:</p>
+<ul>
+    <li>Local file systems: Stored on your own disks (e.g., Ext4, XFS).</li>
+    <li>Network file systems: Stored on remote servers (e.g., NFS, SMB/CIFS).</li>
+    <li>Special file systems: For devices or kernel info (e.g., /proc, /sys).</li>
+</ul>
+<div class="tip">💡 Tip: If you are just using Ubuntu for a server, most internal drives use Ext4.</div>
+
+<hr>
+<h2>3. Creating and Managing Directories and Files</h2>
+<h3>Creating Directories</h3>
+<pre><code># Create a single directory
+mkdir my_directory
+
+# Create nested directories (parent/child)
+mkdir -p projects/python
+</code></pre>
+
+<h3>Listing Directories and Files</h3>
+<pre><code># Show files and directories in current folder
+ls
+
+# Show detailed info with permissions, size, date
+ls -l
+
+# Show hidden files (starting with .)
+ls -a
+</code></pre>
+
+<h3>Creating Files</h3>
+<pre><code># Create an empty file
+touch myfile.txt
+
+# Create a file and add content
+echo "Hello Ubuntu Server" > hello.txt
+
+# Create a file using a text editor
+nano myfile.txt   # Opens nano editor
+</code></pre>
+
+<h3>Managing Files and Directories</h3>
+<pre><code># Rename or move a file/directory
+mv oldname.txt newname.txt
+mv file.txt /home/user/Documents/
+
+# Copy files/directories
+cp file.txt backup_file.txt
+cp -r my_directory /home/user/backup/   # -r for recursive (directories)
+
+# Delete files/directories
+rm file.txt
+rm -r my_directory   # -r for directories
+</code></pre>
+
+<h3>Checking File Information</h3>
+<pre><code># Check file type
+file myfile.txt
+
+# Show file size
+du -h myfile.txt
+
+# Show disk usage of a directory
+du -sh my_directory
+</code></pre>
+
+<div class="tip">💡 Tip: Linux is case-sensitive. <code>File.txt</code> and <code>file.txt</code> are different.</div>
+
+<hr>
+<h2>4. Users in Linux</h2>
+<p>A user is an account that can log into the system. Each user has certain attributes:</p>
+<ul>
+    <li><strong>Login Name:</strong> The username used to log in, e.g., iradukunda.</li>
+    <li><strong>Encrypted Password:</strong> Linux stores passwords in an encrypted form in /etc/shadow.</li>
+    <li><strong>UID (User ID):</strong> Unique number assigned to each user.
+        <ul>
+            <li>System users usually have UIDs &lt; 1000.</li>
+            <li>Normal users have UIDs ≥ 1000.</li>
+        </ul>
+    </li>
+    <li><strong>GID (Primary Group ID):</strong> Each user belongs to a primary group, stored as a GID.</li>
+    <li><strong>User’s Default Shell:</strong> The command-line shell assigned to the user, e.g., /bin/bash.</li>
+</ul>
+
+<h3>Creating a User</h3>
+<pre><code># Create a new user with home directory and default shell
+sudo useradd -m -s /bin/bash username
+
+# Set a password for the user
+sudo passwd username
+</code></pre>
+<p>Options Explained:</p>
+<ul>
+    <li><code>-m</code> → Create a home directory /home/username</li>
+    <li><code>-s /bin/bash</code> → Set default shell as Bash</li>
+</ul>
+
+<h3>Viewing User Information</h3>
+<pre><code># Show user info from /etc/passwd
+grep username /etc/passwd
+
+# Show encrypted password from /etc/shadow (requires root)
+sudo grep username /etc/shadow
+</code></pre>
+
+<hr>
+<h2>5. Groups in Linux</h2>
+<p>A group is a collection of users, used to manage permissions. Each group has:</p>
+<ul>
+    <li>Group Name</li>
+    <li>GID (Group ID)</li>
+    <li>Group Members</li>
+    <li>Group Password (optional)</li>
+    <li>Group Ownership</li>
+    <li>Group Permissions</li>
+    <li>Group Expiration Date (optional)</li>
+</ul>
+
+<h3>Creating a Group</h3>
+<pre><code># Create a new group
+sudo groupadd groupname
+
+# Create a group with a specific GID
+sudo groupadd -g 2000 mygroup
+</code></pre>
+
+<h3>Managing Users in Groups</h3>
+<pre><code># Add a user to a group
+sudo usermod -aG groupname username
+
+# Check group membership
+groups username
+
+# Example:
+sudo usermod -aG sudo iradukunda
+groups iradukunda
+# Output: iradukunda : iradukunda sudo
+</code></pre>
+
+<h3>Removing a User from a Group</h3>
+<pre><code>sudo gpasswd -d username groupname</code></pre>
+
+<h3>Viewing Group Information</h3>
+<pre><code># List all groups
+cat /etc/group
+
+# Show specific group info
+grep groupname /etc/group
+</code></pre>
+
+<h3>Deleting Users and Groups</h3>
+<pre><code># Delete a user and their home directory
+sudo userdel -r username
+
+# Delete a group
+sudo groupdel groupname
+</code></pre>
+
+<h3>Advanced: User Expiration and Password Policies</h3>
+<pre><code># Set account expiration date
+sudo chage -E 2025-12-31 username
+
+# Lock a user account
+sudo usermod -L username
+
+# Unlock a user account
+sudo usermod -U username
+</code></pre>
+
+<div class="tip">💡 Tip: Always use groups to manage permissions efficiently instead of assigning file access to individual users.</div>
+
+<hr>
+<h2>6. Linux File and Directory Permissions</h2>
+
+<h3>Permission Types</h3>
+<table>
+    <tr><th>Permission</th><th>Symbol</th><th>Meaning</th></tr>
+    <tr><td>Read</td><td>r</td><td>Can view the contents of the file or list the files in a directory.</td></tr>
+    <tr><td>Write</td><td>w</td><td>Can modify or delete the file; can create/delete files in a directory.</td></tr>
+    <tr><td>Execute</td><td>x</td><td>Can run the file as a program; can enter (cd) into a directory.</td></tr>
+</table>
+
+<h3>User Categories</h3>
+<table>
+    <tr><th>Category</th><th>Symbol</th><th>Who it applies to</th></tr>
+    <tr><td>Owner</td><td>u</td><td>The user who owns the file.</td></tr>
+    <tr><td>Group</td><td>g</td><td>Users belonging to the file’s group.</td></tr>
+    <tr><td>Others</td><td>o</td><td>Everyone else on the system.</td></tr>
+</table>
+
+<h3>Viewing Permissions</h3>
+<pre><code>ls -l filename</code></pre>
+<p>Example Output:</p>
+<pre><code>-rwxr--r-- 1 iradukunda staff 123 Nov 10 13:00 file.txt</code></pre>
+
+<p>Explanation:</p>
+<ul>
+    <li>- → File type (d for directory, - for regular file)</li>
+    <li>rwx → Owner permissions: read, write, execute</li>
+    <li>r-- → Group permissions: read only</li>
+    <li>r-- → Others permissions: read only</li>
+    <li>1 → Number of links</li>
+    <li>iradukunda → Owner</li>
+    <li>staff → Group</li>
+    <li>123 → File size in bytes</li>
+    <li>Nov 10 13:00 → Last modified date</li>
+    <li>file.txt → File name</li>
+</ul>
+
+<hr>
+<h3>Setting Permissions</h3>
+
+<h4>A. Symbolic Notation</h4>
+<p>Format: <code>chmod [who][operation][permissions] filename</code></p>
+<table>
+    <tr><th>Operation</th><th>Symbol</th><th>Meaning</th></tr>
+    <tr><td>Add</td><td>+</td><td>Add a permission</td></tr>
+    <tr><td>Remove</td><td>-</td><td>Remove a permission</td></tr>
+    <tr><td>Set</td><td>=</td><td>Set exact permission</td></tr>
+</table>
+<pre><code># Add execute permission for owner
+chmod u+x file.txt
+
+# Remove write permission for group
+chmod g-w file.txt
+
+# Set read and write for owner, read for group and others
+chmod u=rw,g=r,o=r file.txt
+</code></pre>
+
+<h4>B. Octal Notation</h4>
+<p>Permissions can also be represented as a 3-digit number, each digit representing owner, group, others.</p>
+<table>
+    <tr><th>Symbolic</th><th>Octal</th></tr>
+    <tr><td>---</td><td>0</td></tr>
+    <tr><td>--x</td><td>1</td></tr>
+    <tr><td>-w-</td><td>2</td></tr>
+    <tr><td>-wx</td><td>3</td></tr>
+    <tr><td>r--</td><td>4</td></tr>
+    <tr><td>r-x</td><td>5</td></tr>
+    <tr><td>rw-</td><td>6</td></tr>
+    <tr><td>rwx</td><td>7</td></tr>
+</table>
+<pre><code># Owner rwx, group r-x, others r--
+chmod 754 file.txt</code></pre>
+
+<h3>Changing Ownership</h3>
+<pre><code># Change file owner
+sudo chown newowner file.txt
+
+# Change file group
+sudo chgrp newgroup file.txt
+
+# Change owner and group at once
+sudo chown newowner:newgroup file.txt</code></pre>
+
+<h3>Testing Permissions</h3>
+<pre><code># Switch to another user
+su - testuser
+
+# Try reading, writing, executing a file
+cat file.txt        # Test read
+echo "hello" >> file.txt   # Test write
+./file.sh           # Test execute
+</code></pre>
+
+<div class="tip">💡 Tip: Directories need execute permission (x) to allow users to enter (cd) them. Files need execute permission (x) to run scripts or programs.</div>
+
+<hr>
+<h2>7. Installation of DNS Server Package</h2>
+<pre><code># Update package index
+sudo apt update
+
+# Install BIND9 and related utilities
+sudo apt install bind9 bind9utils bind9-doc -y
+
+# Enable and start the BIND9 service
+sudo systemctl enable bind9
+sudo systemctl start bind9
+
+# Check status
+sudo systemctl status bind9
+</code></pre>
+<div class="tip">💡 Tip: bind9utils includes helpful tools like dig and nslookup. bind9-doc contains documentation.</div>
+
+<hr>
+<h2>8. File Configuration</h2>
+<p>BIND9 uses several configuration files, mainly stored in /etc/bind/:</p>
+<table>
+    <tr><th>File</th><th>Purpose</th></tr>
+    <tr><td>/etc/bind/named.conf</td><td>Main configuration file, includes other files.</td></tr>
+    <tr><td>/etc/bind/named.conf.options</td><td>Global server options, e.g., forwarders.</td></tr>
+    <tr><td>/etc/bind/named.conf.local</td><td>Local zone definitions.</td></tr>
+    <tr><td>/etc/bind/named.conf.default-zones</td><td>Default system zones like localhost.</td></tr>
+    <tr><td>/var/cache/bind/</td><td>DNS cache (temporary files).</td></tr>
+    <tr><td>/var/lib/bind/</td><td>Optional storage for dynamic zones.</td></tr>
+</table>
+
+<h3>Example: Configuring Forwarders</h3>
+<pre><code>sudo nano /etc/bind/named.conf.options
+options {
+    directory "/var/cache/bind";
+
+    recursion yes;
+    allow-query { any; };
+
+    forwarders {
+        8.8.8.8;    # Google DNS
+        8.8.4.4;
+    };
+
+    dnssec-validation auto;
+    auth-nxdomain no;
+};</code></pre>
+
+<div class="tip">💡 Tip: Recursion allows the server to query other servers on behalf of clients. Forwarders are DNS servers to query if this server doesn’t know the answer.</div>
+
+<hr>
+<h2>9. DNS Zones Configuration</h2>
+<h3>Step 1: Define Zone in named.conf.local</h3>
+<pre><code>sudo nano /etc/bind/named.conf.local
+zone "padri-vjeko.tss" {
+    type master;
+    file "/etc/bind/zones/db.padri-vjeko.tss";
+};
+
+zone "0.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/zones/db.192.168.0";
+};</code></pre>
+<p>Forward zone maps domain names to IPs, reverse zone maps IPs to domain names.</p>
+
+<h3>Step 2: Create Zone Files</h3>
+<p>NS zone files are the files that a DNS server uses to store information about a domain.</p>
+
+<h4>Example of a Human-Friendly Zone File</h4>
+<pre><code>$TTL 86400
+@       IN  SOA   ns1.padri-vjeko.tss. admin.padri-vjeko.tss. (
+                 2025111001 ; serial
+                 604800     ; refresh
+                 86400      ; retry
+                 2419200    ; expire
+                 604800 )   ; negative cache
+
+; Name servers
+@       IN  NS    ns1.padri-vjeko.tss.
+
+; A records
+ns1     IN  A     192.168.0.10
+www     IN  A     192.168.0.20
+mail    IN  A     192.168.0.30
+
+; MX record
+@       IN  MX    10 mail.padri-vjeko.tss
+</code></pre>
+
+<div class="tip">💡 Think of a zone file like a phonebook: Each domain/subdomain is like a person’s name. Each record is like their phone number, email, or address. The DNS server is the phone operator, using the zone file to connect people to the right addresses.</div>
+
+<h3>Forward Zone File Example: db.padri-vjeko.tss</h3>
+<pre><code>$TTL    604800
+@       IN      SOA     ns1.padri-vjeko.tss. admin.padri-vjeko.tss. (
+                        2025111001 ; Serial
+                        604800     ; Refresh
+                        86400      ; Retry
+                        2419200    ; Expire
+                        604800 )   ; Negative Cache TTL
+;
+@       IN      NS      ns1.padri-vjeko.tss.
+ns1     IN      A       192.168.0.10
+www     IN      A       192.168.0.20
+mail    IN      A       192.168.0.30
+</code></pre>
+
+<h3>Reverse Zone File Example: db.192.168.0</h3>
+<pre><code>$TTL    604800
+@       IN      SOA     ns1.padri-vjeko.tss. admin.padri-vjeko.tss. (
+                        2025111001 ; Serial
+                        604800     ; Refresh
+                        86400      ; Retry
+                        2419200    ; Expire
+                        604800 )   ; Negative Cache TTL
+;
+@       IN      NS      ns1.padri-vjeko.tss.
+10      IN      PTR     ns1.padri-vjeko.tss.
+20      IN      PTR     www.padri-vjeko.tss.
+30      IN      PTR     mail.padri-vjeko.tss.
+</code></pre>
+
+<h3>Set Permissions for Zone Files</h3>
+<pre><code>sudo chown root:bind /etc/bind/zones/db.*
+sudo chmod 640 /etc/bind/zones/db.*</code></pre>
+
+<h3>Test DNS Configuration</h3>
+<pre><code># Check BIND Syntax
+sudo named-checkconf
+sudo named-checkzone padri-vjeko.tss /etc/bind/zones/db.padri-vjeko.tss
+sudo named-checkzone 0.168.192.in-addr.arpa /etc/bind/zones/db.192.168.0
+
+# Restart BIND
+sudo systemctl restart bind9
+sudo systemctl status bind9
+
+# Test DNS Queries using dig
+dig @localhost www.padri-vjeko.tss
+dig @localhost mail.padri-vjeko.tss
+dig -x 192.168.0.20
+
+# Test DNS Queries using nslookup
+nslookup www.padri-vjeko.tss 127.0.0.1
+</code></pre>
+
+<div class="tip">💡 Tip: Always increment the Serial number in zone files after changes. Forwarders help your DNS resolve external domains like google.com. Use <code>dig +trace domain.com</code> to debug DNS resolution step by step.</div>
+
+</body>
+</html>

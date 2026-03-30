@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python OOP Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            margin-top: 15px;
+            color: #1e3c72;
+        }
+
+        p, li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: #2a5298;
+            color: white;
+            padding: 10px;
+        }
+
+        table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: #2a5298;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Python OOP Complete Notes</h1>
+
+<div class="container">
+
+    <div class="card">
+        <div class="section-title">1️⃣ Class, Object, Method, and Attribute (Using Students and Modules)</div>
+        <p>🎯 Scenario:</p>
+        <p>We want to model Students who register for Modules (Courses).</p>
+        <p>✅ Example Code with Clear Comments</p>
+        <pre><code># CLASS
+# A class is a blueprint/template used to create objects.
+class Student:
+    
+    # CONSTRUCTOR
+    # This runs automatically when we create an object.
+    # It initializes the attributes.
+    def __init__(self, name, student_id, module):
+        
+        # ATTRIBUTES (Variables that belong to the object)
+        self.name = name              # Student name
+        self.student_id = student_id  # Student ID
+        self.module = module          # Module (Course) name
+    
+    # METHOD
+    # A method is a function that belongs to a class.
+    def display_info(self):
+        print("Name:", self.name)
+        print("Student ID:", self.student_id)
+        print("Module:", self.module)
+
+
+# OBJECT
+# An object is an instance (real example) created from a class.
+student1 = Student("Alice", "S101", "Mathematics")
+student2 = Student("Bob", "S102", "Physics")
+
+# Calling a METHOD using objects
+student1.display_info()
+print("-----------")
+student2.display_info()</code></pre>
+
+        <p>🔎 Clear Differentiation</p>
+        <table>
+            <tr>
+                <th>Concept</th>
+                <th>Meaning</th>
+                <th>Example From Code</th>
+            </tr>
+            <tr>
+                <td>Class</td>
+                <td>Blueprint/template</td>
+                <td>class Student:</td>
+            </tr>
+            <tr>
+                <td>Object</td>
+                <td>Real instance created from class</td>
+                <td>student1, student2</td>
+            </tr>
+            <tr>
+                <td>Attribute</td>
+                <td>Data/variables inside object</td>
+                <td>name, student_id, module</td>
+            </tr>
+            <tr>
+                <td>Method</td>
+                <td>Function inside class</td>
+                <td>display_info()</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Remaining content preserved exactly as provided -->
+
+    <div class="card">
+<pre><code>2️⃣ Differentiate: Constructor, Getter, and Setter
+A. Constructor
+✔ What it is:
+
+A special method that runs automatically when an object is created.
+
+✔ In Python:
+
+It is written as:
+
+def __init__(self):
+✔ Purpose:
+
+Initialize attributes
+
+Set starting values
+
+B. Getter
+✔ What it is:
+
+A method used to access (get/read) private attributes safely.
+
+C. Setter
+✔ What it is:
+
+A method used to modify (set/update) private attributes safely.
+
+✅ Example Showing Constructor, Getter, and Setter
+class Student:
+    
+    def __init__(self, name, student_id):
+        # Private attribute (Encapsulation)
+        self.__name = name
+        self.__student_id = student_id
+    
+    # GETTER (Read data)
+    def get_name(self):
+        return self.__name
+    
+    # SETTER (Update data)
+    def set_name(self, new_name):
+        self.__name = new_name
+
+
+student1 = Student("Alice", "S101")
+
+print(student1.get_name())  # Using getter
+
+student1.set_name("Grace")  # Using setter
+print(student1.get_name())
+🔎 Differences Table
+Feature	Constructor	Getter	Setter
+When it runs	Automatically when object is created	When called	When called
+Purpose	Initialize data	Read data	Modify data
+Special name?	__init__()	No	No
+3️⃣ Encapsulation, Inheritance, and Polymorphism in Python
+🔐 A. ENCAPSULATION
+✔ Meaning:
+
+Hiding internal data and controlling access to it.
+
+✔ Why?
+
+Protect data
+
+Prevent direct modification
+
+Improve security
+
+✔ Steps to Create Encapsulation
+
+Make attributes private using __
+
+Create getter to read data
+
+Create setter to update data
+
+✅ Example
+class Student:
+    
+    def __init__(self, name, grade):
+        self.__grade = grade   # Private attribute
+        self.name = name
+    
+    def get_grade(self):       # Getter
+        return self.__grade
+    
+    def set_grade(self, grade): # Setter
+        if grade >= 0 and grade <= 100:
+            self.__grade = grade
+        else:
+            print("Invalid grade")
+✔ Guidelines for Encapsulation
+
+Use __attribute for private variables
+
+Always validate data inside setter
+
+Never access private attributes directly outside class
+
+Use getters for reading
+
+👨‍👦 B. INHERITANCE
+✔ Meaning:
+
+One class (child) inherits properties and methods from another class (parent).
+
+✔ Why?
+
+Code reuse
+
+Avoid repetition
+
+Extend functionality
+
+✔ Steps to Create Inheritance
+
+Create a parent class
+
+Create a child class using:
+
+class ChildClass(ParentClass):
+
+Use super() to call parent constructor
+
+✅ Example
+# Parent class
+class Person:
+    
+    def __init__(self, name):
+        self.name = name
+    
+    def display(self):
+        print("Name:", self.name)
+
+
+# Child class inheriting from Person
+class Student(Person):
+    
+    def __init__(self, name, module):
+        super().__init__(name)   # Call parent constructor
+        self.module = module
+    
+    def show_module(self):
+        print("Module:", self.module)
+
+
+student1 = Student("Alice", "Mathematics")
+student1.display()       # Inherited method
+student1.show_module()   # Child method
+✔ Guidelines for Inheritance
+
+Use inheritance when classes have "is-a" relationship
+
+Student is a Person
+
+Use super() to reuse parent constructor
+
+Do not duplicate code from parent class
+
+🔄 C. POLYMORPHISM
+✔ Meaning:
+
+Same method name behaves differently in different classes.
+
+✔ Why?
+
+Flexibility
+
+Clean code
+
+Easier extension
+
+✔ Types in Python
+
+Method Overriding (most common)
+
+Same method name in different classes
+
+✅ Example (Method Overriding)
+class Person:
+    
+    def role(self):
+        print("I am a person")
+
+
+class Student(Person):
+    
+    def role(self):   # Overriding parent method
+        print("I am a student")
+
+
+class Teacher(Person):
+    
+    def role(self):
+        print("I am a teacher")
+
+
+# Polymorphism in action
+people = [Student(), Teacher(), Person()]
+
+for p in people:
+    p.role()
+✔ Output:
+
+Each object responds differently to the same method role().
+
+✔ Guidelines for Polymorphism
+
+Use same method name across related classes
+
+Override parent method in child class
+
+Keep method purpose similar
+
+Use loops to apply polymorphism
+
+🔥 FINAL SUMMARY
+Concept	Purpose	Key Symbol
+Class	Blueprint	class
+Object	Instance	object = Class()
+Constructor	Initialize	__init__()
+Getter	Read data	get_
+Setter	Modify data	set_
+Encapsulation	Hide data	__variable
+Inheritance	Reuse code	class Child(Parent)
+Polymorphism	Same method, different behavior	Method overriding</code></pre>
+    </div>
+
+</div>
+
+<footer>
+    <!-- CREATING FOOTER OF @ THIS YEAR WITH PADRI VJEKO CENTRE TSS SCHOOL-->   
+    &copy; 2024 Padri Vjeko Centre TSS School. All rights reserved.
+</footer>
+
+</body>
+</html>

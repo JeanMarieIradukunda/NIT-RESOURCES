@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Smart Notes – Control Structures</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: white;
+      border-radius: 0 0 20px 20px;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+    }
+
+    .card-header {
+      font-weight: 600;
+      background-color: #185a9d;
+      color: white;
+      border-radius: 15px 15px 0 0 !important;
+    }
+
+    code {
+      background: #f1f1f1;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+
+    pre {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>📘 Python Smart Notes</h1>
+    <p>Applying Python Control Structures</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Conditional Statements -->
+    <div class="card">
+      <div class="card-header">1️⃣ Conditional Statements</div>
+      <div class="card-body">
+        <p><b>Definition:</b> Conditional statements allow a program to make decisions by executing certain blocks of
+          code only when specific conditions are true.</p>
+        <p><b>Role:</b> Control program flow, enable decision-making, and automate choices.</p>
+        <p><b>Types (with real-life student examples):</b></p>
+        <ul>
+
+          <!-- if statement -->
+          <li><b>✅ if statement:</b> Runs code if the condition is true.<br>
+            💡 <i>Example: Checking if a student is old enough to register for college.</i>
+            <pre><code>age = 20
+
+if age >= 18:
+    print("✅ You are eligible to register for college.")</code></pre>
+            <p><b>Output:</b><br>✅ You are eligible to register for college.</p>
+          </li>
+
+          <!-- if-else statement -->
+          <li><b>🔁 if-else statement:</b> Runs one block if true, another if false.<br>
+            💡 <i>Example: Checking if a student passed or failed an exam.</i>
+            <pre><code>marks = 48
+
+if marks >= 50:
+    print("🎉 You passed the exam!")
+else:
+    print("😢 You failed. Please try again.")</code></pre>
+            <p><b>Output:</b><br>😢 You failed. Please try again.</p>
+          </li>
+
+          <!-- if-elif-else statement -->
+          <li><b>📊 if-elif-else statement:</b> Handles multiple conditions.<br>
+            💡 <i>Example: Determining a student’s grade.</i>
+            <pre><code>marks = 75
+
+if marks >= 90:
+    print("🏆 Grade A - Excellent!")
+elif marks >= 75:
+    print("👏 Grade B - Good job!")
+elif marks >= 60:
+    print("🙂 Grade C - Keep improving!")
+else:
+    print("❌ Grade F - Needs improvement.")</code></pre>
+            <p><b>Output:</b><br>👏 Grade B - Good job!</p>
+          </li>
+
+          <!-- Nested if -->
+          <li><b>🪜 Nested if:</b> One if inside another.<br>
+            💡 <i>Example: Checking a student’s eligibility for a scholarship.</i>
+            <pre><code>age = 19
+marks = 92
+
+if age >= 18:
+    if marks >= 90:
+        print("🎓 You are eligible for the scholarship!")
+    else:
+        print("👍 You meet the age requirement, but need higher marks.")
+else:
+    print("❌ You are too young to apply for the scholarship.")</code></pre>
+            <p><b>Output:</b><br>🎓 You are eligible for the scholarship!</p>
+          </li>
+        </ul>
+
+        <hr>
+        <h5>📘 Summary Table</h5>
+        <table border="1" cellpadding="6" style="border-collapse: collapse; width:100%; text-align:left;">
+          <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Example Scenario</th>
+          </tr>
+          <tr>
+            <td><b>if</b></td>
+            <td>Runs code when condition is true</td>
+            <td>Check if student is old enough</td>
+          </tr>
+          <tr>
+            <td><b>if-else</b></td>
+            <td>One block if true, another if false</td>
+            <td>Pass/Fail result</td>
+          </tr>
+          <tr>
+            <td><b>if-elif-else</b></td>
+            <td>Multiple conditions handled</td>
+            <td>Grading system</td>
+          </tr>
+          <tr>
+            <td><b>Nested if</b></td>
+            <td>Condition inside another condition</td>
+            <td>Scholarship eligibility</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Looping Statements -->
+    <div class="card">
+      <div class="card-header">2️⃣ Looping Statements</div>
+      <div class="card-body">
+        <p><b>🧠 Definition:</b> Loops are used to <b>repeat a block of code</b> multiple times until a certain
+          condition is met. They help us <b>avoid writing the same code again and again.</b></p>
+
+        <p><b>🎯 Role:</b> Automate repetitive tasks, reduce code duplication, and handle large data efficiently.</p>
+
+        <h4>🌀 Types of Loops with Real-Life Student Examples</h4>
+
+        <ul>
+          <li>
+            <b>1️⃣ for loop:</b> Iterates over a sequence such as a list, string, or range.
+            <p><b>📘 Example: Displaying a Student’s Exam Numbers</b></p>
+            <pre><code>for i in range(1, 6):
+    print("Exam paper number:", i)</code></pre>
+            <p>🧩 <b>Explanation:</b> A student has 5 exam papers. Instead of printing 1–5 manually, the
+              <code>for</code> loop prints all numbers automatically.
+            </p>
+            <p>👩‍🎓 <i>Real-life scenario:</i> You are checking your assignments from Week 1 to Week 5 — the loop helps
+              you repeat the task for each week.</p>
+          </li>
+
+          <li>
+            <b>2️⃣ while loop:</b> Repeats as long as a condition is true.
+            <p><b>📘 Example: Counting Study Hours</b></p>
+            <pre><code>hours = 1
+while hours <= 5:
+    print("Hour", hours, "- Keep studying! 📚")
+    hours += 1</code></pre>
+            <p>🧩 <b>Explanation:</b> The loop continues until you’ve studied for 5 hours.</p>
+            <p>👨‍🎓 <i>Real-life scenario:</i> You keep studying until your study hours reach your goal (e.g., 5
+              hours).</p>
+          </li>
+
+          <li>
+            <b>3️⃣ Nested loops:</b> A loop inside another loop.
+            <p><b>📘 Example: Generating a Timetable (Days × Subjects)</b></p>
+            <pre><code>days = ["Monday", "Tuesday"]
+subjects = ["Math", "Science"]
+
+for day in days:
+    for subject in subjects:
+        print(day, "→", subject)</code></pre>
+            <p>🧩 <b>Output:</b></p>
+            <pre><code>Monday → Math
+Monday → Science
+Tuesday → Math
+Tuesday → Science</code></pre>
+            <p>👩‍🏫 <i>Real-life scenario:</i> For each school day, you attend multiple subjects — a nested loop helps
+              organize this timetable.</p>
+          </li>
+        </ul>
+
+        <h4>🏁 Summary Table</h4>
+        <table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%; text-align: left;">
+          <thead style="background-color: #e8f4fa;">
+            <tr>
+              <th>Loop Type</th>
+              <th>Purpose</th>
+              <th>Example Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>for loop</b></td>
+              <td>Repeat a block a specific number of times</td>
+              <td>Printing exam papers, attendance list</td>
+            </tr>
+            <tr>
+              <td><b>while loop</b></td>
+              <td>Repeat while a condition is true</td>
+              <td>Studying until done, typing until correct</td>
+            </tr>
+            <tr>
+              <td><b>Nested loops</b></td>
+              <td>Repeat within another repeat</td>
+              <td>Creating timetable, seat arrangement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Jump Statements -->
+    <div class="card">
+      <div class="card-header">3️⃣ Jump Statements</div>
+      <div class="card-body">
+        <p><b>Definition:</b> Jump statements control how loops behave — they can stop a loop early, skip certain steps,
+          or act as placeholders for future code.</p>
+        <ul>
+          <li><b>Break:</b> Stops the loop completely when a specific condition is met.<br>
+            <i>🎓 Example: Stop checking students once an absent student is found.</i>
+            <pre><code>students = ["Alice", "Brian", "Cathy", "Absent", "David"]
+
+for student in students:
+    if student == "Absent":
+        print("⚠️ Attendance stopped! Found an absent student.")
+        break
+    print(f"✅ {student} is present.")
+# Loop ends immediately after finding "Absent"
+</code></pre>
+          </li>
+
+          <li><b>Continue:</b> Skips one loop cycle and continues with the next iteration.<br>
+            <i>📚 Example: Skip subjects that have already been graded.</i>
+            <pre><code>subjects = ["Math", "Science", "English", "Done", "ICT"]
+
+for subject in subjects:
+    if subject == "Done":
+        continue  # Skip this subject
+    print(f"📖 Grading {subject}...")
+# "Done" subject is skipped
+</code></pre>
+          </li>
+
+          <li><b>Pass:</b> Does nothing — used as a placeholder where code will be added later.<br>
+            <i>🧠 Example: A student project not yet implemented but needs to stay valid.</i>
+            <pre><code>projects = ["AI", "Web Design", "Data Science"]
+
+for project in projects:
+    if project == "Web Design":
+        pass  # will add project details later
+    print(f"📘 Project: {project}")
+# Loop runs normally; 'pass' just keeps code structure valid
+</code></pre>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PADRI VJEKO CENTRE TSS - Secure Exam</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Aptos, "Segoe UI", Arial;
+            background: #f4f6f9;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        header {
+            background: #1c3d6e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: #d10000;
+            color: white;
+            padding: 10px 20px;
+            font-size: 24px;
+            border-radius: 6px;
+        }
+
+        #login {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1c3d6e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 1000;
+        }
+
+        #login input {
+            padding: 12px;
+            font-size: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #login button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #exam {
+            display: none;
+            padding: 30px;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .options label {
+            display: block;
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .nav {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #lockScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: white;
+            font-size: 40px;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="login">
+        <h2>PADRI VJEKO CENTRE TSS</h2>
+        <p>Enter Exam Password</p>
+        <input type="password" id="pass">
+        <button onclick="startExam()">Start Exam</button>
+    </div>
+
+    <div id="lockScreen">EXAM FINISHED</div>
+
+    <div class="timer" id="timer">40:00</div>
+
+    <header>
+        <strong>PADRI VJEKO CENTRE TSS</strong><br>
+        CCMCS401 – COMPUTER SKILLS<br>
+        Class: L4-BDC
+    </header>
+
+    <div id="exam">
+
+        <div class="question" id="questionBox"></div>
+
+        <div class="nav">
+            <button onclick="prevQuestion()">Previous</button>
+            <button onclick="nextQuestion()">Next</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        /* PASSWORD START */
+        function startExam() {
+            let p = document.getElementById("pass").value;
+            if (p !== "ICT-2026!") { alert("Wrong password"); return; }
+            document.getElementById("login").style.display = "none";
+            document.getElementById("exam").style.display = "block";
+            document.documentElement.requestFullscreen();
+            shuffleQuestions();
+            startTimer();
+            showQuestion();
+        }
+
+        /* ALL QUESTIONS */
+
+        const questions = [
+            { type: "mcq", question: "Which folder stores files downloaded from the internet?", options: ["Documents", "Downloads", "Pictures", "Desktop"] },
+            { type: "mcq", question: "Which folder is used to store images and photos?", options: ["Music", "Videos", "Pictures", "OneDrive"] },
+            { type: "mcq", question: "What is the main purpose of file and folder management?", options: ["Playing games", "Organizing data", "Printing documents", "Creating hardware"] },
+            { type: "mcq", question: "Which action makes a duplicate of a file while keeping the original?", options: ["Move", "Delete", "Copy", "Edit"] },
+            { type: "mcq", question: "If you want to run a software program (.exe), which permission is required?", options: ["Read", "Write", "Execute", "Delete"] },
+            { type: "mcq", question: "Which operating system type processes jobs without user interaction?", options: ["Time-sharing", "Batch", "Mobile", "Embedded"] },
+            { type: "mcq", question: "Which OS type is used when many users share CPU time?", options: ["Real-Time OS", "Time-Sharing OS", "Embedded OS", "Batch OS"] },
+            { type: "mcq", question: "Which file system is commonly used for Windows system drives?", options: ["FAT32", "NTFS", "ext4", "APFS"] },
+            { type: "mcq", question: "Which file system is best for large USB drives used across Windows and Mac?", options: ["FAT12", "NTFS", "exFAT", "HFS+"] },
+            { type: "mcq", question: "Which factor should be considered when choosing an operating system?", options: ["Computer color", "Budget", "Wallpaper", "Keyboard brand"] },
+
+            { type: "truefalse", question: "The Desktop folder stores shortcuts and files for quick access." },
+            { type: "truefalse", question: "The Documents folder is used mainly for music files." },
+            { type: "truefalse", question: "Deleted files go directly and permanently to the Recycle Bin." },
+            { type: "truefalse", question: "The Write permission allows editing a file." },
+            { type: "truefalse", question: "A Hard Real-Time OS can miss deadlines safely." },
+            { type: "truefalse", question: "A Network Operating System allows resource sharing over a network." },
+            { type: "truefalse", question: "Android is an example of a Mobile Operating System." },
+            { type: "truefalse", question: "APFS is optimized for macOS and SSD storage." },
+            { type: "truefalse", question: "exFAT is commonly used for large removable storage devices." },
+            { type: "truefalse", question: "Windows, Linux, and macOS are types of operating systems." },
+
+            { type: "open", question: "Explain the roles of a file system in an operating system." },
+            { type: "open", question: "A company wants to share files between computers on a network. Which file system or service would you recommend? Explain why." },
+            { type: "open", question: "Give a real-life example of when you would use the Delete function." },
+            { type: "open", question: "List any five default Windows directories." }
+        ];
+
+        /* RANDOMIZE QUESTIONS */
+        function shuffleQuestions() { questions.sort(() => Math.random() - 0.5); }
+        function shuffleArray(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+        /* EXAM LOGIC */
+        let index = 0;
+        let responses = {};
+
+        function showQuestion() {
+            let q = questions[index];
+            let html = "<h3>" + (index + 1) + ". " + q.question + "</h3>";
+
+            if (q.type === "mcq") {
+                let options = shuffleArray([...q.options]);
+                options.forEach(o => {
+                    let checked = (responses[index] === o) ? "checked" : "";
+                    html += `<div class="options"><label><input type="radio" name="q" value="${o}" ${checked}> ${o}</label></div>`;
+                });
+            } else if (q.type === "truefalse") {
+                let val = responses[index] || "";
+                html += `
+<label><input type="radio" name="q" value="True" ${val === "True" ? "checked" : ""}> True</label>
+<label><input type="radio" name="q" value="False" ${val === "False" ? "checked" : ""}> False</label>
+`;
+            } else {
+                let text = responses[index] || "";
+            }
+
+            document.getElementById("questionBox").innerHTML = html;
+        }
+
+        /* SAVE ANSWER */
+        function saveAnswer() {
+            let q = questions[index];
+            if (q.type === "open") {
+                let txt = document.getElementById("openAnswer");
+                if (txt) responses[index] = txt.value;
+            } else {
+                let selected = document.querySelector('input[name="q"]:checked');
+                if (selected) responses[index] = selected.value;
+            }
+        }
+
+        /* NAVIGATION */
+        function nextQuestion() { saveAnswer(); if (index < questions.length - 1) { index++; showQuestion(); } }
+        function prevQuestion() { saveAnswer(); if (index > 0) { index--; showQuestion(); } }
+
+        /* TIMER */
+        let time = 40 * 60;
+        let timer;
+        function startTimer() {
+            timer = setInterval(() => {
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+                document.getElementById("timer").innerText = m + ":" + (s < 10 ? "0" : "") + s;
+                time--;
+                if (time <= 0) { clearInterval(timer); lockExam(); }
+            }, 1000);
+        }
+
+        /* LOCK SCREEN */
+        function lockExam() { document.getElementById("lockScreen").style.display = "flex"; }
+
+        /* FULLSCREEN TRAP */
+        document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) { alert("Fullscreen required"); document.documentElement.requestFullscreen(); } });
+
+        /* DEVTOOLS DETECTION */
+        setInterval(() => { let start = new Date(); debugger; let end = new Date(); if (end - start > 100) { alert("Developer tools detected"); lockExam(); } }, 1000);
+
+        /* TAB SWITCH */
+        document.addEventListener("visibilitychange", () => { if (document.hidden) { alert("Tab switching detected"); } });
+
+        /* BLOCK KEYS */
+        document.onkeydown = function (e) { if (e.keyCode == 123) return false; if (e.ctrlKey && (e.key == "c" || e.key == "v" || e.key == "u" || e.key == "p" || e.key == "s" || e.key == "r")) return false; };
+
+        /* BLOCK RIGHT CLICK */
+        document.addEventListener("contextmenu", e => e.preventDefault());
+
+    </script>
+
+</body>
+
+</html>

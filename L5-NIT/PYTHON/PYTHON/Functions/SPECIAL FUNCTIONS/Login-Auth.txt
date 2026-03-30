@@ -1,0 +1,36 @@
+print("=================")
+print("WELCOME TO PYTHON")
+print("=================\n")
+
+# predefined usernames and passwords
+correct_uname = ["admin", "admin1", "guest"]
+correct_pwd = ["admin123", "123", "345"]
+
+# user-defined function for authentication
+def auth(username, password):
+    if username in correct_uname and password in correct_pwd:
+        return True
+    else:
+        return False
+
+# --- Main Program Logic ---
+attempts = 3  # total login attempts
+
+while attempts > 0:
+    username = input("Enter username: ")
+    password = input("Enter paskey: ")
+    
+    if auth(username, password):
+        print("\n✅ Logged in Successfully!")
+        print("==========================")
+        print(f"Welcome, {username}! Enjoy learning Python 🐍")
+        print("==========================")
+        break
+    else:
+        attempts -= 1
+        print("\n❌ Invalid credentials.")
+        if attempts > 0:
+            print(f"You have {attempts} attempt(s) left.\n")
+        else:
+            print("\n🚫 Too many failed attempts. Access denied.")
+            print("==========================")

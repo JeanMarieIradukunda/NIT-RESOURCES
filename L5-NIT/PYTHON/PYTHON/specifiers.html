@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Format Specifiers</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #1a73e8;
+    }
+    h2 {
+      margin-top: 40px;
+    }
+    pre {
+      background: #eef2f7;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #1a73e8;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f4f6fa;
+    }
+    .example-title {
+      color: #ff5722;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Python Format Specifiers</h1>
+
+    <p><b>Definition:</b> A <b>specifier</b> tells Python how to display or format a value in output. It controls <b>type, precision, and alignment</b>.</p>
+
+    <h2>Common Format Specifiers</h2>
+    <table>
+      <tr>
+        <th>Specifier</th>
+        <th>Meaning</th>
+        <th>Example</th>
+        <th>Output</th>
+      </tr>
+      <tr>
+        <td>%d</td>
+        <td>Integer</td>
+        <td>"%d" % 5</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>%f</td>
+        <td>Floating-point number</td>
+        <td>"%.2f" % 5.678</td>
+        <td>5.68</td>
+      </tr>
+      <tr>
+        <td>%s</td>
+        <td>String</td>
+        <td>"%s" % "Hello"</td>
+        <td>Hello</td>
+      </tr>
+      <tr>
+        <td>:.2f</td>
+        <td>2 decimal places (f-strings)</td>
+        <td>f"{3.14159:.2f}"</td>
+        <td>3.14</td>
+      </tr>
+      <tr>
+        <td>:>5</td>
+        <td>Right align, width 5</td>
+        <td>f"{7:>5}"</td>
+        <td>"    7"</td>
+      </tr>
+      <tr>
+        <td>:<5</td>
+        <td>Left align, width 5</td>
+        <td>f"{7:<5}"</td>
+        <td>"7    "</td>
+      </tr>
+    </table>
+
+    <h2>School Example: Student Marks</h2>
+    <p class="example-title">Python Code:</p>
+    <pre>
+# Student information
+name = "John"
+math = 78.567
+english = 85.4
+science = 92.125
+
+# Using f-strings with specifiers
+print(f"Student Name: {name}")
+print(f"Math Score: {math:.1f}")       # 1 decimal place
+print(f"English Score: {english:.0f}") # Rounded to nearest integer
+print(f"Science Score: {science:.2f}") # 2 decimal places
+
+# Table format
+print("\n{:<10} {:>10} {:>10} {:>10}".format("Name", "Math", "English", "Science"))
+print("{:<10} {:>10.1f} {:>10.0f} {:>10.2f}".format(name, math, english, science))
+    </pre>
+
+    <p class="example-title">Output:</p>
+    <pre>
+Student Name: John
+Math Score: 78.6
+English Score: 85
+Science Score: 92.13
+
+Name           Math    English    Science
+John           78.6         85      92.13
+    </pre>
+  </div>
+</body>
+</html>

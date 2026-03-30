@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functions in C Programming | GENCP302</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0a3d62;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #1e3799;
+            border-bottom: 2px solid #1e3799;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #3c6382;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        ul {
+            margin-left: 25px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            background-color: #eef3ff;
+            padding: 10px;
+            border-left: 5px solid #1e3799;
+            margin: 15px 0;
+        }
+
+        pre {
+            background: #2d3436;
+            color: #f1f2f6;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 15px;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 5px solid #38ada9;
+            margin: 15px 0;
+        }
+
+        .summary, .assessment {
+            background: #f1f8ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>FUNCTIONS IN C PROGRAMMING</h1>
+    <p style="text-align:center;"><strong>L3-NIT | Module: GENCP302</strong></p>
+
+    <h2>Introduction</h2>
+    <p>
+        In C programming, programs can become very long and difficult to understand.
+        To make programs simple, clear, and easy to manage, we use functions.
+        A function helps us divide a big program into small parts.
+    </p>
+
+    <h2>1. Application of Functions</h2>
+    <div class="highlight">
+        <strong>Definition:</strong><br>
+        A function in C programming is a block of code that performs a specific task.
+    </div>
+
+    <p>
+        Instead of writing the same code again and again, we put it inside a function
+        and call it whenever we need it.
+    </p>
+
+    <ul>
+        <li>To avoid writing the same code many times</li>
+        <li>To make programs easy to read and understand</li>
+        <li>To make programs easy to test and correct errors</li>
+        <li>To divide a big problem into small parts</li>
+    </ul>
+
+    <div class="example">
+        <strong>Real-life Example:</strong><br>
+        Think of a calculator. Each button (add, subtract, multiply) does one job.
+        Each button is like a function.
+    </div>
+
+    <h2>2. Types of Functions</h2>
+    <p>There are two main types of functions in C:</p>
+
+    <h3>1) Library (Built-in) Functions</h3>
+    <p>These are functions already provided by C.</p>
+    <p><strong>Examples:</strong> printf(), scanf()</p>
+
+    <pre><code>printf("Hello World");</code></pre>
+
+    <h3>2) User-Defined Functions</h3>
+    <p>These are functions written by the programmer.</p>
+
+    <pre><code>void greet() {
+    printf("Hello Student");
+}</code></pre>
+
+    <h2>3. Defining a Function</h2>
+    <p>
+        Defining a function means writing the function code and telling what the
+        function will do.
+    </p>
+
+    <ul>
+        <li><strong>Return type</strong> – type of value returned</li>
+        <li><strong>Function name</strong> – name of the function</li>
+        <li><strong>Parameters</strong> – values passed to the function</li>
+        <li><strong>Function body</strong> – statements inside the function</li>
+    </ul>
+
+    <pre><code>int add(int a, int b) {
+    return a + b;
+}</code></pre>
+
+    <h2>4. Function Declaration (Function Prototype)</h2>
+    <p>
+        A function declaration tells the compiler about the function name, return
+        type, and parameters before it is used.
+    </p>
+
+    <ul>
+        <li>C needs to know about a function before calling it</li>
+        <li>Helps avoid errors</li>
+    </ul>
+
+    <pre><code>int add(int, int);</code></pre>
+
+    <h2>5. Function Arguments</h2>
+    <p>
+        Arguments are values passed to a function when it is called.
+    </p>
+
+    <ul>
+        <li>Parameters → variables in function definition</li>
+        <li>Arguments → values passed during function call</li>
+    </ul>
+
+    <pre><code>add(5, 3);</code></pre>
+
+    <h2>6. Calling a Function</h2>
+    <p>
+        Calling a function means using the function to perform its task.
+    </p>
+
+    <pre><code>int result = add(5, 3);</code></pre>
+
+    <h2>Complete Example Program</h2>
+    <pre><code>#include &lt;stdio.h&gt;
+
+int add(int, int);   // function declaration
+
+int add(int a, int b) {  // function definition
+    return a + b;
+}
+
+int main() {
+    int sum;
+    sum = add(5, 3);   // function call
+    printf("Sum = %d", sum);
+    return 0;
+}</code></pre>
+
+    <div class="summary">
+        <h2>Summary</h2>
+        <ul>
+            <li>A function is a block of code that does a specific job</li>
+            <li>Functions make programs simple and reusable</li>
+            <li>Main steps:
+                <ol>
+                    <li>Declare a function</li>
+                    <li>Define a function</li>
+                    <li>Call a function</li>
+                </ol>
+            </li>
+        </ul>
+    </div>
+
+    <div class="assessment">
+        <h2>Assessment</h2>
+        <ol>
+            <li>What is a function in C programming?</li>
+            <li>Give two reasons why functions are used in C programs.</li>
+            <li>Name the two main types of functions in C programming.</li>
+            <li>What is meant by function declaration?</li>
+            <li>
+                Look at the function call below:<br>
+                <code>add(5, 3);</code>
+                <ul>
+                    <li>a) What is the name of the function?</li>
+                    <li>b) What are the arguments passed to the function?</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <footer>
+        © L3-NIT | GENCP302 – C Programming Notes
+    </footer>
+</div>
+
+</body>
+</html>

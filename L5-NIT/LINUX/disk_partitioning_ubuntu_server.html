@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Disk Partitioning in Linux — Ubuntu Server (Notes)</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#38bdf8; --glass: rgba(255,255,255,0.03);
+      --radius:14px; --mono: "SFMono-Regular", "Roboto Mono", monospace;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: Inter, Roboto, system-ui, -apple-system, sans-serif; background:linear-gradient(180deg,#071026 0%, #071122 60%); color:#e6eef6; -webkit-font-smoothing:antialiased; padding:28px;
+    }
+    .container{max-width:1000px; margin:0 auto;}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:20px}
+    .logo{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:flex;align-items:center;justify-content:center;color:#032; font-weight:700;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(2,6,23,0.7);}
+
+    .section{margin-bottom:18px}
+    h2{margin:0 0 8px 0;font-size:16px}
+    .muted{color:var(--muted);font-size:13px}
+
+    pre{background:var(--glass);padding:12px;border-radius:10px;overflow:auto;font-family:var(--mono);font-size:13px;color:#dff6ff}
+    code.k{color:#ffd580}
+
+    .list{padding-left:16px;margin-top:10px}
+    .list li{margin:6px 0}
+
+    .example{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px;padding:12px;margin-top:10px}
+
+    .sidebar .card{position:sticky; top:28px}
+    .btn{display:inline-block;padding:8px 11px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-size:13px}
+
+    .kbd{background:#081424;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.03);font-family:var(--mono);font-size:13px}
+
+    .icon{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--accent);margin-right:8px}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media (max-width:900px){
+      .grid{grid-template-columns:1fr;}
+      .sidebar .card{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">DP</div>
+      <div>
+        <h1>Disk Partitioning in Linux — Ubuntu Server</h1>
+        <p class="lead">Clear, practical notes with examples and command breakdowns.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card">
+        <section class="section">
+          <h2>What is Disk Partitioning?</h2>
+          <p class="muted">Disk Partitioning is the process of dividing a physical hard disk into logical sections, called partitions, so each partition can be managed separately. Think of it as slicing a cake — each slice holds a different purpose.</p>
+        </section>
+
+        <section class="section">
+          <h2>Why Partition a Disk?</h2>
+          <ul class="list">
+            <li>Organize data — separate system files, user files, and backups.</li>
+            <li>Security and stability — one partition filling won't affect the others.</li>
+            <li>Multiple OS installations — each OS can live on its own partition.</li>
+            <li>Performance — reduces fragmentation and can improve efficiency.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>Common Workflow (Ubuntu Server)</h2>
+          <p class="muted">Ubuntu Server typically uses the command line for partitioning. Main steps shown below with commands and explanations.</p>
+        </section>
+
+        <section class="section">
+          <h2>1. <span class="muted">lsblk</span> — List Block Devices</h2>
+          <p class="muted">Purpose: View disks and partitions connected to the server.</p>
+          <div class="example">
+            <pre><code>lsblk
+
+# Output example:
+# NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+# sda      8:0    0  100G  0 disk
+# ├─sda1   8:1    0   50G  0 part /
+# ├─sda2   8:2    0   30G  0 part /home
+# └─sda3   8:3    0   20G  0 part [SWAP]
+</code></pre>
+            <p class="muted">Breakdown:</p>
+            <ul class="list">
+              <li><strong>NAME</strong> — Disk or partition name</li>
+              <li><strong>SIZE</strong> — Size of disk/partition</li>
+              <li><strong>TYPE</strong> — <em>disk</em> or <em>part</em></li>
+              <li><strong>MOUNTPOINT</strong> — Where the partition is mounted</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>2. <span class="muted">fdisk</span> — Partition a Disk</h2>
+          <p class="muted">Purpose: Create, delete, or modify partitions on a disk.</p>
+          <div class="example">
+            <pre><code class="mono">sudo fdisk /dev/sdb</code></pre>
+            <p class="muted">Interactive commands inside <code class="kbd">fdisk</code>:</p>
+            <ul class="list">
+              <li><strong>m</strong> — show help</li>
+              <li><strong>p</strong> — print partition table</li>
+              <li><strong>n</strong> — create new partition</li>
+              <li><strong>d</strong> — delete partition</li>
+              <li><strong>t</strong> — change partition type (e.g., 82 for swap)</li>
+              <li><strong>w</strong> — write changes to disk and exit</li>
+              <li><strong>q</strong> — quit without saving</li>
+            </ul>
+            <p class="muted">Example steps:</p>
+            <ol class="list">
+              <li><code class="kbd">sudo fdisk /dev/sdb</code> → enter fdisk.</li>
+              <li>Press <code class="kbd">n</code> → create new partition.</li>
+              <li>Choose primary (<code class="kbd">p</code>) or extended (<code class="kbd">e</code>).</li>
+              <li>Enter partition number, first sector, and last sector (or size).</li>
+              <li>Use <code class="kbd">t</code> to change type if needed (e.g., <code class="kbd">82</code> for swap).</li>
+              <li>Use <code class="kbd">w</code> to save changes.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>3. <span class="muted">mkfs</span> — Format the Partition</h2>
+          <p class="muted">Purpose: Create a filesystem on the partition so it can store files.</p>
+          <div class="example">
+            <pre><code>sudo mkfs.ext4 /dev/sdb1</code></pre>
+            <p class="muted">Breakdown:</p>
+            <ul class="list">
+              <li><strong>mkfs</strong> — make filesystem</li>
+              <li><strong>ext4</strong> — filesystem type (default, fast, reliable)</li>
+              <li><strong>/dev/sdb1</strong> — the partition to format</li>
+            </ul>
+            <p class="muted">Other filesystem options: <code class="kbd">ext3</code>, <code class="kbd">xfs</code>, <code class="kbd">vfat</code>.</p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>4. <span class="muted">mkswap</span> — Create Swap Partition</h2>
+          <p class="muted">Purpose: Format a partition as swap space (virtual memory).</p>
+          <div class="example">
+            <pre><code>sudo mkswap /dev/sdb2
+sudo swapon /dev/sdb2</code></pre>
+            <p class="muted">Breakdown:</p>
+            <ul class="list">
+              <li><strong>mkswap</strong> — initialize partition for swap</li>
+              <li><strong>swapon</strong> — enable the swap immediately</li>
+            </ul>
+          </div>
+
+          <h3 class="muted">What is <code class="kbd">/dev/sdb2</code>?</h3>
+          <p class="muted">It is the name of a partition on the system. Breakdown:</p>
+          <ul class="list">
+            <li><strong>/dev/</strong> — device directory (hardware represented as files).</li>
+            <li><strong>sd</strong> — SCSI disk naming (used for SATA/SSD/USB too).</li>
+            <li><strong>b</strong> — second disk detected (a = first, b = second).</li>
+            <li><strong>2</strong> — second partition on that disk.</li>
+          </ul>
+
+          <div class="example">
+            <pre><code># So 
+sudo mkswap /dev/sdb2   # make it a swap area
+sudo swapon /dev/sdb2   # enable it so the system uses the swap
+</code></pre>
+          </div>
+
+          <div class="example">
+            <p class="muted">💡 Example scenario (100GB disk <code class="kbd">/dev/sdb</code>):</p>
+            <ul class="list">
+              <li><code class="kbd">/dev/sdb1</code> → 80GB for data (ext4)</li>
+              <li><code class="kbd">/dev/sdb2</code> → 20GB for swap</li>
+            </ul>
+          </div>
+
+        </section>
+
+        <section class="section">
+          <h2>Check Active Swap</h2>
+          <pre><code>sudo swapon --show
+# or
+free -h</code></pre>
+        </section>
+
+        <section class="section">
+          <h2>5. <span class="muted">mount</span> — Mount a Partition</h2>
+          <p class="muted">Purpose: Attach the partition to the filesystem so it becomes accessible.</p>
+          <div class="example">
+            <pre><code>sudo mount /dev/sdb1 /mnt</code></pre>
+            <p class="muted">To make permanent, add to <code class="kbd">/etc/fstab</code>:</p>
+            <pre><code>/dev/sdb1   /mnt   ext4   defaults   0   2</code></pre>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>6. <span class="muted">parted</span> — Advanced Partitioning</h2>
+          <p class="muted">Purpose: Modern tool with GPT support; useful for large disks and scripting.</p>
+          <div class="example">
+            <pre><code>sudo parted /dev/sdb
+(parted) mklabel gpt
+(parted) mkpart primary ext4 1MiB 100%
+(parted) quit</code></pre>
+            <p class="muted">Breakdown:</p>
+            <ul class="list">
+              <li><strong>mklabel gpt</strong> — create GPT partition table</li>
+              <li><strong>mkpart</strong> — create a partition (start to end)</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Summary — Quick Steps</h2>
+          <ol class="list">
+            <li>Check disks: <code class="kbd">lsblk</code></li>
+            <li>Create partitions: <code class="kbd">fdisk</code> or <code class="kbd">parted</code></li>
+            <li>Format partitions: <code class="kbd">mkfs.ext4</code></li>
+            <li>Setup swap (if needed): <code class="kbd">mkswap</code> + <code class="kbd">swapon</code></li>
+            <li>Mount partitions: <code class="kbd">mount /dev/sdX /mount_point</code></li>
+            <li>Make mounts permanent: edit <code class="kbd">/etc/fstab</code></li>
+          </ol>
+
+          <p class="muted">💡 Typical partitions for a new Ubuntu Server:</p>
+          <ul class="list">
+            <li><code class="kbd">/</code> — root filesystem</li>
+            <li><code class="kbd">/home</code> — user data</li>
+            <li><code class="kbd">swap</code> — virtual memory</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3 style="margin-top:0">Quick Commands</h3>
+          <pre><code>lsblk
+sudo fdisk /dev/sdb
+sudo mkfs.ext4 /dev/sdb1
+sudo mkswap /dev/sdb2
+sudo swapon /dev/sdb2
+sudo mount /dev/sdb1 /mnt
+sudo parted /dev/sdb</code></pre>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn" onclick="copyAll()">Copy all commands</button>
+            <button class="btn" onclick="printPage()">Print</button>
+          </div>
+
+          <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:12px 0">
+          <p class="muted">Pro tip: Use <span class="kbd">lsblk -f</span> to show filesystem types and UUIDs for /etc/fstab entries.</p>
+        </div>
+      </aside>
+
+    </div>
+
+    <footer>
+      <small>Prepared notes — Disk Partitioning for Ubuntu Server • Friendly & practical</small>
+    </footer>
+  </div>
+
+  <script>
+    function copyAll(){
+      const cmds = `lsblk\nsudo fdisk /dev/sdb\nsudo mkfs.ext4 /dev/sdb1\nsudo mkswap /dev/sdb2\nsudo swapon /dev/sdb2\nsudo mount /dev/sdb1 /mnt\nsudo parted /dev/sdb`;
+      navigator.clipboard.writeText(cmds).then(()=>{alert('Commands copied to clipboard')},()=>{alert('Clipboard failed — select and copy manually')})
+    }
+    function printPage(){window.print()}
+  </script>
+</body>
+</html>

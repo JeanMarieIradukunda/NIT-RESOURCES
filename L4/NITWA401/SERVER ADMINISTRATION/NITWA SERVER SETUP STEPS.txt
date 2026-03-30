@@ -1,0 +1,50 @@
+Considerations:
+-----------------
+1. Criterias
+2. All requirements to setup server environment(Required Materials)
+
+Hardware and software
+Hardware : Server, USB/CD/DVD, Rack enclosures, UPS. etc...
+software:  OS
+	PowerISO
+
+Steps:
+1.  Steps to prepare Installation Media
+	i. Download PowerISO & OS from official websites
+	ii. Install PowerISO
+	iii. Run PowerISO as Administrator
+	iv. Click on Tools
+	v. Choose USB Tools > Create Bootable USB Drive
+	vi. Select Source File of OS Image Location by Browsing
+	vii. Select Destination USB Drive
+	viii. Select Booting Mode
+	ix. Click on Start Button
+2. Steps to create a virtual Machine
+	i. Download Virtualization software Manager like 						VMWare workstations from official websites
+	ii. Install VMWare workstation
+	iii. Open VMWare workstation
+	iv. Go to File/ Click on Create new virtual machine from 					Home tab	 Menu Button
+	vi. On New Virtual Machine Wizard, Choose 						configuration Type (Typical, Customize) > Next
+	vii. Choose the virtual machine Hardware 
+		Compatibility > Next
+	viii. Choose the Guest OS Installation
+		a. Installer Disc
+		b. Installer Disc Image File -> Browse
+		c. I will install the os latter 
+			> Next
+	ix.  Select the Guest OS type and Version > Next
+	x. Name( Write the name) the Virtual Machine and choose the location to store 		your new created virtual Machine > Next
+	xi. Choose VMWare type > next
+	xii. Configure the processor > next
+	xiii. Configure Memory size > next
+	xiv. Choose the network type > next
+	xv. Select the I/O controller types > next
+	xvi. Select the Disk Type > next
+	xvii. Specify the disk capacity (size) > next
+	x.viii. specify where to locate your virtual disk> next
+	xix. Finish
+	
+
+
+
+

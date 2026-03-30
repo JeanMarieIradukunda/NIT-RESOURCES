@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NITLS501 – Linux Server Administrations</title>
+
+        <style>
+:root{
+    --bg-main:#0b1220;
+    --bg-card:rgba(255,255,255,0.04);
+    --bg-hover:rgba(255,255,255,0.07);
+    --accent:#4f8cff;
+    --accent-soft:#3a6fd8;
+    --text-main:#f1f5f9;
+    --text-muted:#cbd5e1;
+    --border:rgba(255,255,255,0.08);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:0;
+    font-family:"Segoe UI", system-ui, -apple-system, sans-serif;
+    background:linear-gradient(160deg, #0b1220, #0f1a33);
+    color:var(--text-main);
+    line-height:1.6;
+}
+
+.container{
+    width:94%;
+    max-width:1200px;
+    margin:50px auto;
+    padding:40px;
+    background:var(--bg-card);
+    backdrop-filter:blur(12px);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 15px 50px rgba(0,0,0,0.4);
+}
+
+h1, h2, h3{
+    text-align:center;
+    font-weight:600;
+    margin:12px 0;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:20px;
+    color:var(--text-muted);
+    font-weight:500;
+}
+
+.section{
+    margin-top:50px;
+}
+
+.question{
+    margin-bottom:18px;
+    padding:18px 20px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-left:5px solid var(--accent);
+    border-radius:12px;
+    transition:all 0.25s ease;
+}
+
+.question:hover{
+    background:var(--bg-hover);
+    transform:translateY(-3px);
+    border-left-color:var(--accent-soft);
+}
+
+.answer{
+    margin-top:10px;
+    margin-left:18px;
+    color:var(--text-muted);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+    overflow:hidden;
+    border-radius:12px;
+}
+
+th{
+    background:linear-gradient(135deg, var(--accent), var(--accent-soft));
+    color:white;
+    padding:14px;
+    text-align:left;
+    font-weight:600;
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    color:var(--text-muted);
+}
+
+tr:hover{
+    background:var(--bg-hover);
+}
+
+.footer{
+    margin-top:60px;
+    text-align:center;
+    font-size:14px;
+    color:var(--text-muted);
+    border-top:1px solid var(--border);
+    padding-top:25px;
+}
+
+/* Responsive Design */
+@media (max-width:768px){
+    .container{
+        padding:25px;
+    }
+
+    .info{
+        flex-direction:column;
+        text-align:center;
+    }
+}
+</style>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <div class="header">
+                <table
+                    style="width:100%; border-collapse:collapse; text-align:center;">
+
+                    <!-- Row 1 -->
+                    <tr>
+                        <td colspan="2"
+                            style="padding:10px; font-weight:600; font-size:20px;">
+                            PADRI VJEKO CENTRE TSS
+                        </td>
+                    </tr>
+
+                    <!-- Row 2 -->
+                    <tr>
+                        <td colspan="2"
+                            style="padding:8px; font-size:15px; line-height:1.6;">
+                            <strong>NITLS501 – LINUX SERVER
+                                ADMINISTRATIONS</strong><br>
+                            Learning Outcome 3 &nbsp; | &nbsp; Formative
+                            Assessment &nbsp; | &nbsp;
+                            <strong>LEVEL 5 NIT</strong>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <!-- SECTION A -->
+            <div class="section">
+                <h3>A. Respond to the Following Questions (5 marks each)</h3>
+
+                <div class="question">
+                    1. In a school computer lab, the IT technician is testing
+                    network connectivity to check whether a student PC can reach
+                    the school server and also wants to verify DNS name
+                    resolution. Which tools should be used and how do they
+                    differ?
+                    <div class="answer">
+                         Use ping (connectivity test) and<br>
+                         nslookup/dig (DNS resolution).<br>
+                         Ping checks reachability; nslookup/dig checks
+                        name-to-IP translation.
+                    </div>
+                </div>
+
+                <div class="question">
+                    2. How to test if a web server is accessible locally?
+                    <div class="answer">
+                         Access http://localhost in browser or<br>
+                         use curl http://localhost.<br>
+                         Also check service with systemctl status apache2.
+                    </div>
+                </div>
+
+                <div class="question">
+                    3. At a company office, the network administrator needs very
+                    detailed DNS records, including authority and additional
+                    sections, for troubleshooting a website issue. Which command
+                    should be used?
+                    <div class="answer">
+                        Use dig command for full DNS details including authority
+                        and additional sections.
+                    </div>
+                </div>
+
+                <div class="question">
+                    4. In a training center, the IT department wants to confirm
+                    that reverse DNS is properly configured for the school mail
+                    server’s IP address. What command can be used to verify
+                    this?
+                    <div class="answer">
+                         Use nslookup -type=PTR or<br>
+                         dig -x to check PTR record.
+                    </div>
+                </div>
+
+                <div class="question">
+                    5. At PADRI VJEKO TSS, a student cannot open
+                    nit.padri-vjeko.tss in the browser, but when typing
+                    192.168.10.20, the website loads successfully. As the school
+                    IT officer, what is the most likely problem?
+                    <div class="answer">
+                        Most likely DNS misconfiguration (wrong or missing A
+                        record / DNS server issue).
+                    </div>
+                </div>
+
+                <div class="question">
+                    6. How does encryption improve web security?
+                    <div class="answer">
+                        Encryption (HTTPS/SSL/TLS) protects data by converting
+                        it into unreadable format during transmission.
+                    </div>
+                </div>
+
+                <div class="question">
+                    7. What is a DNS Zone, and what are its different types?
+                    <div class="answer">
+                        A DNS Zone is a portion of DNS database managed by an
+                        authoritative server.<br>
+                        Types:<br>
+                         Forward<br>
+                         Reverse<br>
+                         Primary (Master)<br>
+                         Secondary (Slave)<br>
+                         Stub.
+                    </div>
+                </div>
+
+                <div class="question">
+                    8. A user cannot access the website but the server is
+                    running. What could be the problem?
+                    <div class="answer">
+                         firewall blocking ports,<br>
+                         wrong configuration,<br>
+                         service not running,<br>
+                         incorrect permissions.
+                    </div>
+                </div>
+
+                <div class="question">
+                    9. After installing Apache, the website does not open in the
+                    browser. What should you check first?
+                    <div class="answer">
+                        First check if Apache service is running using systemctl
+                        status apache2.
+                    </div>
+                </div>
+
+                <div class="question">
+                    10. A school wants only teachers to upload files to the FTP
+                    server, but students should only be allowed to download
+                    files. How can the administrator configure access control to
+                    achieve this?
+                    <div class="answer">
+                         Configure user accounts,<br>
+                         set file permissions (chmod/chown),<br>
+                         Disable anonymous upload in vsftpd.conf.
+                    </div>
+                </div>
+
+            </div>
+            <!-- SECTION B -->
+            <div class="section">
+                <h3>B. Choose the Correct Answer (2 marks each)</h3>
+
+                <div class="question">
+                    1. What is DNS and why is it important in a school network?
+                    <div class="answer">
+                        a. It assigns MAC addresses to devices<br>
+                        b. <strong>✔ It translates domain names into IP
+                            addresses</strong><br>
+                        c. It blocks viruses<br>
+                        d. It manages printers
+                    </div>
+                </div>
+
+                <div class="question">
+                    2. The DHCP handshake process follows which correct order?
+                    <div class="answer">
+                        a. Offer, Discover, Request, Acknowledge<br>
+                        b. Discover, Request, Offer,Acknowledge<br>
+                        c. Request, Discover, Offer, Acknowledge<br>
+                        d. <strong>✔ Discover, Offer, Request, Acknowledge</strong>
+                    </div>
+                </div>
+
+                <div class="question">
+                    3. If DNS is not configured, users must:
+                    <div class="answer">
+                        a. Use MAC addresses<br>
+                        b. Restart the network daily<br>
+                        c. <strong>✔ Use IP addresses manually</strong><br>
+                        d. Use Bluetooth
+                    </div>
+                </div>
+
+                <div class="question">
+                    4. Which DHCP option specifies the default gateway for
+                    clients?
+                    <div class="answer">
+                        a. <strong>✔ option routers</strong><br>
+                        b. option dns-server<br>
+                        c. option subnet<br>
+                        d. option broadcast
+                    </div>
+                </div>
+
+                <div class="question">
+                    5. DNS is similar to a phonebook because it:
+                    <div class="answer">
+                        a. Stores phone numbers only<br>
+                        b. Connects cables<br>
+                        c. <strong>✔ Matches names to numbers</strong><br>
+                        d. Encrypts data
+                    </div>
+                </div>
+
+                <div class="question">
+                    6. The main DHCP configuration file in Ubuntu is:
+                    <div class="answer">
+                        a. <strong>✔ /etc/dhcp/dhcpd.conf</strong><br>
+                        b. /etc/dhcpd.conf<br>
+                        c. /etc/network/interfaces<br>
+                        d. /etc/bind/named.conf
+                    </div>
+                </div>
+
+                <div class="question">
+                    7. Why must an administrator know the subnet before
+                    configuring DNS?
+                    <div class="answer">
+                        a. <strong>✔ To understand the network
+                            structure</strong><br>
+                        b. To format the server<br>
+                        c. To block websites<br>
+                        d. To install antivirus
+                    </div>
+                </div>
+
+                <div class="question">
+                    8. On Ubuntu, the DHCP server package is installed using:
+                    <div class="answer">
+                        a. sudo apt install bind9<br>
+                        b. sudo apt install dns-server<br>
+                        c. <strong>✔ sudo apt install
+                            isc-dhcp-server</strong><br>
+                        d. sudo apt install net-tools
+                    </div>
+                </div>
+
+                <div class="question">
+                    9. A Master DNS server:
+                    <div class="answer">
+                        a. Is read-only<br>
+                        b. <strong>✔ Stores the main zone database</strong><br>
+                        c. Blocks internet<br>
+                        d. Is optional
+                    </div>
+                </div>
+
+                <div class="question">
+                    10. The DHCP server responds to a Discover message with:
+                    <div class="answer">
+                        a. DHCP Request<br>
+                        b. <strong>✔ DHCP Offer</strong><br>
+                        c. DHCP Release<br>
+                        d. DHCP Decline
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECTION C -->
+            <div class="section">
+                <h3>C. Fill in the Blank (1 point each)</h3>
+
+                <div class="question">
+                    1. The __________ protocol is mainly used for file sharing
+                    between Linux and Windows systems.
+                    <div class="answer"><strong>✔ SMB/CIFS</strong></div>
+                </div>
+
+                <div class="question">
+                    2. The default port used by HTTP is __________.
+                    <div class="answer"><strong>✔ 80</strong></div>
+                </div>
+
+                <div class="question">
+                    3. To allow HTTP traffic through firewall, you use
+                    __________ command.
+                    <div class="answer"><strong>✔ ufw allow 80</strong></div>
+                </div>
+
+                <div class="question">
+                    4. The protocol commonly used for file sharing between Linux
+                    systems is __________.
+                    <div class="answer"><strong>✔ NFS</strong></div>
+                </div>
+
+                <div class="question">
+                    5. FTP stands for __________.
+                    <div class="answer"><strong>✔ File Transfer
+                            Protocol</strong></div>
+                </div>
+
+                <div class="question">
+                    6. The Ubuntu package used to install SMB service is
+                    __________.
+                    <div class="answer"><strong>✔ samba</strong></div>
+                </div>
+
+                <div class="question">
+                    7. Encryption of web traffic is done using __________
+                    protocol.
+                    <div class="answer"><strong>✔ HTTPS</strong></div>
+                </div>
+
+                <div class="question">
+                    8. Anonymous FTP access can be controlled in __________
+                    configuration file.
+                    <div class="answer"><strong>✔
+                            /etc/vsftpd.conf</strong></div>
+                </div>
+
+                <div class="question">
+                    9. The package used to install NFS server in Ubuntu is
+                    __________.
+                    <div class="answer"><strong>✔
+                            nfs-kernel-server</strong></div>
+                </div>
+
+                <div class="question">
+                    10. The FTP server package commonly installed in Ubuntu is
+                    __________.
+                    <div class="answer"><strong>✔ vsftpd</strong></div>
+                </div>
+
+                <div class="question">
+                    11. The main configuration file for vsftpd is located in
+                    __________.
+                    <div class="answer"><strong>✔
+                            /etc/vsftpd.conf</strong></div>
+                </div>
+
+                <div class="question">
+                    12. File permissions in Linux are controlled using the
+                    __________ command.
+                    <div class="answer"><strong>✔ chmod</strong></div>
+                </div>
+
+                <div class="question">
+                    13. Another lightweight web server for Linux is __________.
+                    <div class="answer"><strong>✔ Nginx</strong></div>
+                </div>
+
+                <div class="question">
+                    14. The directory where Apache stores website files by
+                    default is __________.
+                    <div class="answer"><strong>✔ /var/www/html</strong></div>
+                </div>
+
+                <div class="question">
+                    15. The numeric permission 755 gives full permissions to the
+                    __________.
+                    <div class="answer"><strong>✔ owner</strong></div>
+                </div>
+
+            </div>
+            <!-- SECTION D -->
+            <div class="section">
+                <h3>D. Match the items in Column A with the correct answers in
+                    Column B. Write the correct letter in the Answers column (1
+                    point per each)</h3>
+
+                <table>
+                    <tr>
+                        <th>Column A</th>
+                        <th>Column B</th>
+                        <th>Answers</th>
+                    </tr>
+
+                    <tr>
+                        <td>1. Testing basic network connectivity between
+                            devices</td>
+                        <td>A. Use dig for detailed DNS records including
+                            authority and additional sections</td>
+                        <td>B</td>
+                    </tr>
+
+                    <tr>
+                        <td>2. Verifying if a web server is working on the local
+                            machine</td>
+                        <td>B. Use ping to test connectivity, nslookup to test
+                            name resolution, and dig for advanced DNS
+                            analysis</td>
+                        <td>H</td>
+                    </tr>
+
+                    <tr>
+                        <td>3. Checking detailed DNS troubleshooting
+                            information</td>
+                        <td>C. DNS name resolves to IP correctly, but the web
+                            service is not properly configured</td>
+                        <td>A</td>
+                    </tr>
+
+                    <tr>
+                        <td>4. Confirming reverse DNS configuration for a mail
+                            server</td>
+                        <td>D. Use nslookup or dig -x to verify reverse DNS (PTR
+                            record)</td>
+                        <td>D</td>
+                    </tr>
+
+                    <tr>
+                        <td>5. Website opens using IP but not using domain
+                            name</td>
+                        <td>E. Encryption protects data by converting it into
+                            unreadable format during transmission</td>
+                        <td>C</td>
+                    </tr>
+
+                    <tr>
+                        <td>6. Improving web communication security</td>
+                        <td>F. It organizes domain records into zones (forward
+                            and reverse) managed by authoritative servers</td>
+                        <td>E</td>
+                    </tr>
+
+                    <tr>
+                        <td>7. Structure of DNS records in a domain</td>
+                        <td>G. Check if the Apache service is running and verify
+                            firewall settings</td>
+                        <td>F</td>
+                    </tr>
+
+                    <tr>
+                        <td>8. Website not accessible although server is
+                            running</td>
+                        <td>H. Use a browser to access http://localhost or test
+                            with curl command</td>
+                        <td>G</td>
+                    </tr>
+
+                    <tr>
+                        <td>9. After installing Apache, site does not open</td>
+                        <td>I. Configure user permissions and restrict access in
+                            FTP configuration file (vsftpd.conf)</td>
+                        <td>J</td>
+                    </tr>
+
+                    <tr>
+                        <td>10. Allowing only teachers to upload files in FTP
+                            server</td>
+                        <td>J. Install required package and restart the web
+                            service after configuration</td>
+                        <td>I</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="footer">
+                NITLS501 – Linux Server Administrations | Level 5 NIT<br>
+                PADRI VJEKO CENTRE TSS
+            </div>
+
+        </div>
+
+    </body>
+</html>

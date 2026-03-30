@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Linux Server Administration Exam</title>
+
+        <style>
+        body {
+            margin: 0;
+            font-family: Segoe UI, Arial;
+            background: #f4f6f9;
+            user-select: none;
+            overflow: auto;
+        }
+
+        header {
+            background: #1c3d6e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 22px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: #d10000;
+            color: white;
+            padding: 10px 20px;
+            font-size: 24px;
+            border-radius: 6px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            margin: 25px auto;
+            max-width: 950px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .options label {
+            display: block;
+            margin: 6px 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        #login {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #1c3d6e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 1000;
+        }
+
+        #login input {
+            padding: 12px;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        #login button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        #exam {
+            display: none;
+        }
+
+        #lockScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: white;
+            font-size: 40px;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div id="login">
+            <h2>PADRI VJEKO CENTRE TSS</h2>
+            <p>Enter Exam Password</p>
+            <input type="password" id="pass">
+            <button onclick="startExam()">Start Exam</button>
+        </div>
+
+        <div id="lockScreen">EXAM FINISHED</div>
+
+        <div class="timer" id="timer">120:00</div>
+
+        <header>
+
+            <b>PADRI VJEKO CENTRE TSS</b><br>
+            Level 5 – Networking and Internet Technology<br>
+            Module: Linux Server Administration<br>
+            Total Marks: 100
+
+        </header>
+
+<div id="exam">
+
+    <!-- SECTION A -->
+
+    <div class="section">
+
+        <h2>SECTION A: Objective Questions (Compulsory)</h2>
+
+        <h3>Part I: Multiple Choice</h3>
+
+        <div class="question">
+            1. What is a Linux server mainly used for?
+            <div class="options">
+                <label><input type="radio" name="q1"> Playing games</label>
+                <label><input type="radio" name="q1"> <b>Managing network services and resources</b></label>
+                <label><input type="radio" name="q1"> Designing graphics</label>
+                <label><input type="radio" name="q1"> Watching videos</label>
+            </div>
+        </div>
+
+        <div class="question">
+            2. Which of the following is a feature of Linux servers?
+            <div class="options">
+                <label><input type="radio" name="q2"> Closed source</label>
+                <label><input type="radio" name="q2"> Proprietary license</label>
+                <label><input type="radio" name="q2"> <b>Open source</b></label>
+                <label><input type="radio" name="q2"> Limited networking capability</label>
+            </div>
+        </div>
+
+        <div class="question">
+            3. Which hardware component is most important for server performance?
+            <div class="options">
+                <label><input type="radio" name="q3"> <b>CPU</b></label>
+                <label><input type="radio" name="q3"> Mouse</label>
+                <label><input type="radio" name="q3"> Printer</label>
+                <label><input type="radio" name="q3"> Scanner</label>
+            </div>
+        </div>
+
+        <div class="question">
+            4. Which tool is used to create bootable installation media for Linux?
+            <div class="options">
+                <label><input type="radio" name="q4"> LibreOffice</label>
+                <label><input type="radio" name="q4"> <b>Rufus</b></label>
+                <label><input type="radio" name="q4"> VLC Player</label>
+                <label><input type="radio" name="q4"> Paint</label>
+            </div>
+        </div>
+
+        <div class="question">
+            5. Which command is used to create a directory in Linux?
+            <div class="options">
+                <label><input type="radio" name="q5"> <b>mkdir</b></label>
+                <label><input type="radio" name="q5"> cd</label>
+                <label><input type="radio" name="q5"> rm</label>
+                <label><input type="radio" name="q5"> pwd</label>
+            </div>
+        </div>
+
+        <h3>Part II: True / False</h3>
+
+        <div class="question">
+            6. Linux servers are commonly used for hosting websites.<br>
+            <label><input type="radio" name="q6"> <b>True</b></label>
+            <label><input type="radio" name="q6"> False</label>
+        </div>
+
+        <div class="question">
+            7. DNS servers are used to assign IP addresses automatically to computers.<br>
+            <label><input type="radio" name="q7"> True</label>
+            <label><input type="radio" name="q7"> <b>False</b></label>
+        </div>
+
+        <div class="question">
+            8. A bootable USB is required to install Linux on a new machine.<br>
+            <label><input type="radio" name="q8"> <b>True</b></label>
+            <label><input type="radio" name="q8"> False</label>
+        </div>
+
+        <div class="question">
+            9. The root file system is the main directory in Linux.<br>
+            <label><input type="radio" name="q9"> <b>True</b></label>
+            <label><input type="radio" name="q9"> False</label>
+        </div>
+
+        <h3>Part III: Fill in the Blanks</h3>
+
+        <div class="question">
+            10. The Linux command used to list files and directories is <b>ls</b>.
+            <input type="text">
+        </div>
+
+        <div class="question">
+            11. The permission that allows a user to run a file as a program is called <b>execute</b> permission.
+            <input type="text">
+        </div>
+
+        <div class="question">
+            12. The protocol commonly used for web servers is <b>HTTP</b>.
+            <input type="text">
+        </div>
+
+        <div class="question">
+            13. The Linux service responsible for translating domain names to IP addresses is <b>DNS</b>.
+            <input type="text">
+        </div>
+
+        <h3>Part IV: Matching</h3>
+
+        <div class="question">
+            <b>14. Match the Linux service with its function.</b><br><br>
+
+            <b>Column B Options</b><br>
+            A. File sharing<br>
+            B. Domain name resolution<br>
+            C. Automatic IP assignment<br><br>
+
+            <table class="match-table">
+                <tr>
+                    <th>Column A (Service)</th>
+                    <th>Select Answer</th>
+                </tr>
+                <tr>
+                    <td>DNS</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option value="A">A</option>
+                            <option value="B" selected><b>B</b></option>
+                            <option value="C">C</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>DHCP</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C" selected><b>C</b></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>FTP</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option value="A" selected><b>A</b></option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="question">
+            <b>15. Match the Linux command with its function.</b><br><br>
+
+            <b>Column B Options</b><br>
+            A. Create directory<br>
+            B. Change directory<br>
+            C. List files<br><br>
+
+            <table class="match-table">
+                <tr>
+                    <th>Column A (Command)</th>
+                    <th>Select Answer</th>
+                </tr>
+                <tr>
+                    <td>cd</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option>B" selected><b>B</b></option>
+                            <option>A">A</option>
+                            <option>C">C</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>mkdir</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option>A" selected><b>A</b></option>
+                            <option>B">B</option>
+                            <option>C">C</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ls</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option>C" selected><b>C</b></option>
+                            <option>A">A</option>
+                            <option>B">B</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="question">
+            <b>16. Match the permission type with its symbol.</b><br><br>
+
+            <b>Column B Options</b><br>
+            A. r<br>
+            B. w<br>
+            C. x<br><br>
+
+            <table class="match-table">
+                <tr>
+                    <th>Column A (Permission)</th>
+                    <th>Select Answer</th>
+                </tr>
+                <tr>
+                    <td>Read</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option selected><b>A</b></option>
+                            <option>B">B</option>
+                            <option>C">C</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Write</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option>B" selected><b>B</b></option>
+                            <option>A">A</option>
+                            <option>C">C</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Execute</td>
+                    <td>
+                        <select>
+                            <option value>Select</option>
+                            <option>C" selected><b>C</b></option>
+                            <option>A">A</option>
+                            <option>B">B</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>Part V: Short Identification</h3>
+
+        <div class="question">
+            17. Name two types of Linux web servers.<br>
+            <b>Apache, Nginx</b>
+        </div>
+
+    </div>
+
+    <!-- SECTION B -->
+
+    <div class="section">
+
+        <h2>SECTION B: Short Answer (Answer ANY 3)</h2>
+
+        <div class="question">
+            1. Explain the features and advantages of Linux servers.<br>
+            <b>Open source, stable, secure, supports networking and server applications, flexible configuration.</b>
+        </div>
+
+        <div class="question">
+            2. Describe the steps involved in installing a Linux operating system.<br>
+            <b>Download ISO, create bootable media, boot from media, follow installation prompts, configure partitions, set user and passwords, install additional packages.</b>
+        </div>
+
+        <div class="question">
+            3. Explain the Linux file system hierarchy and give examples of important directories.<br>
+            <b>/ (root), /home, /etc, /var, /usr, /bin, /sbin, /tmp</b>
+        </div>
+
+        <div class="question">
+            4. Describe user and group management in Linux including UID and GID.<br>
+            <b>Users are assigned UIDs, groups have GIDs; users can belong to groups; manage with useradd, groupadd, passwd, and other commands.</b>
+        </div>
+
+        <div class="question">
+            5. Explain the three types of file permissions in Linux and how they are set.<br>
+            <b>Read (r), Write (w), Execute (x); set using chmod or numeric codes (e.g., 755).</b>
+        </div>
+
+    </div>
+
+    <!-- SECTION C -->
+
+    <div class="section">
+
+        <h2>SECTION C: Long Answer (Answer ONE)</h2>
+
+        <div class="question">
+            1. Explain the process of configuring a web server in Linux including installation, configuration files, firewall configuration and security considerations.<br>
+            <b>Install Apache/Nginx, edit configuration files in /etc, enable firewall ports (80/443), set proper permissions, enable SSL, test server, monitor logs, apply security best practices.</b>
+        </div>
+
+        <div class="question">
+            2. Explain how to configure and manage a DNS server in Linux including installation, configuration files, DNS records and testing.<br>
+            <b>Install BIND, configure named.conf, set zone files, define A, CNAME, MX records, start service, test with dig/nslookup, monitor logs.</b>
+        </div>
+
+    </div>
+
+</div>
+
+        <script>
+
+        function startExam() {
+
+            let p = document.getElementById("pass").value;
+
+            if (p !== "LINUX2026") {
+                alert("Wrong Password");
+                return;
+            }
+
+            document.getElementById("login").style.display = "none";
+            document.getElementById("exam").style.display = "block";
+
+            document.documentElement.requestFullscreen();
+
+            startTimer();
+
+        }
+
+        let time = 120 * 60;
+
+        function startTimer() {
+
+            setInterval(() => {
+
+                let m = Math.floor(time / 60);
+                let s = time % 60;
+
+                document.getElementById("timer").innerText = m + ":" + (s < 10 ? "0" : "") + s;
+
+                time--;
+
+                if (time <= 0) {
+                    document.getElementById("lockScreen").style.display = "flex";
+                }
+
+            }, 1000);
+
+        }
+
+        document.onkeydown = function (e) {
+
+            if (e.keyCode == 123) return false;
+
+            if (e.ctrlKey && ["c", "v", "u", "p", "s"].includes(e.key)) return false;
+
+        };
+
+        document.addEventListener("contextmenu", e => e.preventDefault());
+
+        document.addEventListener("visibilitychange", () => {
+
+            if (document.hidden) {
+                alert("Tab switching detected");
+            }
+
+        });
+
+    </script>
+
+    </body>
+
+</html>

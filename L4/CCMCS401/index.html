@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>CCMCS401</title>
+
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css' rel='stylesheet'>
+
+<style>
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    min-height: 100vh;
+    padding: 40px;
+}
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+.dashboard-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+.folder-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+.folder-card {
+    text-decoration: none;
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    transition: all 0.25s ease;
+    color: #111827;
+}
+.folder-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
+.folder-card i {
+    font-size: 52px;
+    margin-bottom: 12px;
+}
+.folder-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+.folder-meta {
+    font-size: 0.85rem;
+    color: #374151;
+}
+
+/* COLORS */
+.exams { background:#fde68a; }
+.courses { background:#bfdbfe; }
+.classes { background:#bbf7d0; }
+.resources { background:#e9d5ff; }
+
+.exams i { color:#92400e; }
+.courses i { color:#1e40af; }
+.classes i { color:#065f46; }
+.resources i { color:#6b21a8; }
+
+@media (max-width: 992px) {
+    .folder-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 576px) {
+    .folder-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class='dashboard-card'>
+    <div class='dashboard-header'>
+        <h1>CCMCS401</h1>
+        <a href='../' class='btn btn-primary btn-sm mb-3'>
+    <i class='bi bi-arrow-left-circle'></i> Parent Directory
+</a>
+    </div>
+
+    <div class='parent-header mb-3 p-3 rounded' style='background:#f0f9ff; display:flex; align-items:center; gap:12px;'>
+    <a href='../' style='text-decoration:none; color:#1e40af; font-weight:600; display:flex; align-items:center; gap:6px;'>
+        <i class='bi bi-arrow-left-circle-fill' style='font-size:1.5rem;'></i> Parent Directory
+    </a>
+</div><div class='folder-row'>
+        <a href='FIRMWARES/' class='folder-card courses'>
+    <i class='bi bi-folder-fill'></i>
+    <div class='folder-title'>FIRMWARES</div>
+    <div class='folder-meta'>Files: 3</div>
+</a><a href='Assignment.docx' class='folder-card resources'>
+    <i class='bi bi-file-earmark-fill'></i>
+    <div class='folder-title'>Assignment</div>
+    <div class='folder-meta'>DOCX Â· 49 KB</div>
+</a><a href='Assignment.pdf' class='folder-card resources'>
+    <i class='bi bi-file-earmark-fill'></i>
+    <div class='folder-title'>Assignment</div>
+    <div class='folder-meta'>PDF Â· 104 KB</div>
+</a><a href='Kernel and File system Types.docx' class='folder-card resources'>
+    <i class='bi bi-file-earmark-fill'></i>
+    <div class='folder-title'>Kernel and File system Types</div>
+    <div class='folder-meta'>DOCX Â· 23 KB</div>
+</a>
+</a><a href='OS-FILE-SYSTEMS.HTML' class='folder-card resources'>
+    <i class='bi bi-file-earmark-fill'></i>
+    <div class='folder-title'>OS-FILE-SYSTEMS</div>
+    <!-- <div class='folder-meta'>DOCX Â· 23 KB</div> -->
+</a>
+</a><a href='LO-2.HTML' class='folder-card resources'>
+    <i class='bi bi-file-earmark-fill'></i>
+    <div class='folder-title'>LEARNING OUTCOME 2</div>
+    <!-- <div class='folder-meta'>DOCX Â· 23 KB</div> -->
+</a>
+    </div>
+</div>
+
+</body>
+</html>
+

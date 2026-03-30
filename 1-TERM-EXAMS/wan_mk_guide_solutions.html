@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MK-Guide — TheOnly Solutions (ICT & Multimedia)</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --glass: rgba(255,255,255,0.03);
+      --radius:12px; --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; margin-left:24px; font-family:"Cambria", "Calisto MT", serif; background:linear-gradient(180deg,#071023 0%, #071a2a 100%); color:#e6eef6}
+    .wrap{max-width:var(--maxw); margin:36px auto; display:flex; gap:22px; padding:18px 18px 18px 0}
+    /* Sidebar */
+    .sidebar{margin-left:0;width:300px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:18px; box-shadow: 0 6px 24px rgba(2,6,23,0.6); position:sticky; top:28px; height:calc(100vh - 56px); overflow:auto}
+    .brand{display:flex; gap:12px; align-items:center; margin-bottom:12px}
+    .logo{width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#7c3aed); display:flex; align-items:center; justify-content:center; font-weight:700}
+    h1{font-size:16px;margin:0}
+    p.small{margin:4px 0 12px;color:var(--muted); font-size:13px}
+    .nav{display:flex; flex-direction:column; gap:6px}
+    .nav a{display:flex; gap:10px; padding:8px 10px; color:inherit; text-decoration:none; border-radius:10px; align-items:center; font-size:14px}
+    .nav a:hover{background:var(--glass)}
+    .nav .sec{font-weight:600; font-size:13px; color:#cfe8ee}
+    .sub{padding-left:8px; font-size:13px; color:var(--muted)}
+    /* Main content */
+    .main{flex:1; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015)); padding:22px; border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,0.6); overflow:auto}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px; border-radius:10px; margin-bottom:16px}
+    h2{margin:0 0 8px 0; font-size:18px}
+    table{width:100%; border-collapse:collapse; margin-top:8px}
+    th,td{padding:8px 10px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.03)}
+    th{color:var(--muted); font-size:13px}
+    .badge{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(6,182,212,0.12); color:var(--accent); font-weight:600; font-size:12px}
+    /* responsive */
+    @media (max-width:980px){.wrap{flex-direction:column;padding:12px} .sidebar{width:100%; height:auto; position:relative} }
+    /* highlight active link */
+    .nav a.active{background:linear-gradient(90deg, rgba(6,182,212,0.08), rgba(124,58,237,0.04)); box-shadow: inset 0 0 0 1px rgba(124,58,237,0.04)}
+    /* code block */
+    pre{background:#021025; padding:12px; border-radius:8px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">MK</div>
+        <div>
+          <h1>MK-Guide — TheOnly Solutions</h1>
+          <p class="small">ICT & Multimedia — Networking & Internet Technology (RTQF Level 4)</p>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <a href="#section-a" class="sec">Section A — Multiple Choice & True/False</a>
+        <div class="sub">
+          <a href="#q1">Q1: True / False (A–J)</a>
+          <a href="#mc">Q1–12: Multiple choice answers</a>
+        </div>
+
+        <a href="#section-b" class="sec">Section B — Short / Long Answers</a>
+        <div class="sub">
+          <a href="#b1">B1: VLAN Matching</a>
+          <a href="#b2">B2: WAN site visit steps</a>
+          <a href="#b3">B3: WAN technologies</a>
+          <a href="#b4">B4: WAN installation requirements</a>
+          <a href="#b5">B5: Truth table & Boolean</a>
+        </div>
+
+        <a href="#section-c" class="sec">Section C — Modulation & Switch Config</a>
+        <div class="sub">
+          <a href="#c1">C1: Modulation & types</a>
+          <a href="#c2">C2: Switch & VLAN config</a>
+        </div>
+
+        <div style="margin-top:18px; border-top:1px dashed rgba(255,255,255,0.02); padding-top:12px;">
+          <span class="badge">Marks: 100</span>
+          <p class="small">Duration: 3 hours</p>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main" id="content">
+
+      <section id="section-a" class="card">
+        <h2>Section A — Answers (All questions)</h2>
+        <p class="small">Circle the correct answer — converted into a clear answer table below.</p>
+
+        <table>
+          <thead><tr><th>Item</th><th>Answer</th></tr></thead>
+          <tbody>
+            <tr id="q1"><td>Q1.A</td><td>False</td></tr>
+            <tr><td>Q1.B</td><td>False</td></tr>
+            <tr><td>Q1.C</td><td>True</td></tr>
+            <tr><td>Q1.D</td><td>True</td></tr>
+            <tr><td>Q1.E</td><td>True</td></tr>
+            <tr><td>Q1.F</td><td>True</td></tr>
+            <tr><td>Q1.G</td><td>True</td></tr>
+            <tr><td>Q1.H</td><td>False</td></tr>
+            <tr><td>Q1.I</td><td>False</td></tr>
+            <tr><td>Q1.J</td><td>True</td></tr>
+            <tr id="mc"><td>1</td><td>e) Only b) and d) is correct.</td></tr>
+            <tr><td>2</td><td>c) Routers</td></tr>
+            <tr><td>3</td><td>b) Rack Mount</td></tr>
+            <tr><td>4</td><td>c) Amplitude Modulation (AM)</td></tr>
+            <tr><td>5</td><td>b) Frequency</td></tr>
+            <tr><td>6</td><td>b) Amplitude</td></tr>
+            <tr><td>7</td><td>b) Guided</td></tr>
+            <tr><td>8</td><td>b) to manage and propagate VLAN information across switches</td></tr>
+            <tr><td>9</td><td>c) A virtual network that segments traffic within a physical network</td></tr>
+            <tr><td>10</td><td>d) 1-1005</td></tr>
+            <tr><td>11</td><td>d) All of the above</td></tr>
+            <tr><td>12</td><td>b) The broadcast is sent to all devices in the network</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="section-b" class="card">
+        <h2>Section B — Answers</h2>
+
+        <article id="b1" style="margin-bottom:12px">
+          <h3>B1 — VLAN Matching</h3>
+          <table>
+            <thead><tr><th>Column A</th><th>Column B</th><th>Answer</th></tr></thead>
+            <tbody>
+              <tr><td>VLAN that carries control traffic (e.g., STP, CDP).</td><td>c. Trunk VLAN</td><td>Trunk VLAN</td></tr>
+              <tr><td>VLAN range used for VLANs 1-1005.</td><td>d. Normal Range VLANs</td><td>Normal Range VLANs</td></tr>
+              <tr><td>VLAN range used for VLANs 1006-4094.</td><td>e. Extended Range VLANs</td><td>Extended Range VLANs</td></tr>
+              <tr><td>VLAN type for carrying multiple VLAN traffic across switches.</td><td>c. Trunk VLAN</td><td>Trunk VLAN</td></tr>
+              <tr><td>VLAN used for separating voice traffic from data traffic.</td><td>b. Voice VLAN</td><td>Voice VLAN</td></tr>
+              <tr><td>The default VLAN that carries untagged traffic on a trunk link.</td><td>f. Native VLAN</td><td>Native VLAN</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="b2" style="margin-bottom:12px">
+          <h3>B2 — Steps when conducting a WAN site visit</h3>
+          <table>
+            <thead><tr><th>Step No.</th><th>Step</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Plan and schedule the visit with relevant stakeholders.</td></tr>
+              <tr><td>2</td><td>Identify and survey the physical location of network devices.</td></tr>
+              <tr><td>3</td><td>Record existing network topology and cabling.</td></tr>
+              <tr><td>4</td><td>Check for availability of power, cooling, and rack space.</td></tr>
+              <tr><td>5</td><td>Verify WAN connectivity options (leased line, fiber, DSL, wireless).</td></tr>
+              <tr><td>6</td><td>Assess security and environmental risks.</td></tr>
+              <tr><td>7</td><td>Document findings and report back to the network team.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="b3" style="margin-bottom:12px">
+          <h3>B3 — Four WAN technologies & applicability</h3>
+          <table>
+            <thead><tr><th>WAN Technology</th><th>Where applicable / Typical use</th></tr></thead>
+            <tbody>
+              <tr><td>Leased Line (Point-to-Point)</td><td>Dedicated site-to-site links for enterprises requiring stable, guaranteed bandwidth.</td></tr>
+              <tr><td>MPLS (Multiprotocol Label Switching)</td><td>Large multi-site networks needing scalable VPNs and traffic engineering (enterprise/VPN services).</td></tr>
+              <tr><td>DSL (Digital Subscriber Line)</td><td>Cost-effective Internet for small offices or branch sites using existing telephone copper lines.</td></tr>
+              <tr><td>Fiber Optic WAN</td><td>High-capacity, long-distance links for ISPs, data centers and large organizations requiring high throughput.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="b4" style="margin-bottom:12px">
+          <h3>B4 — WAN installation requirements: Tools, Materials & Equipment</h3>
+          <table>
+            <thead><tr><th>Category</th><th>Items</th></tr></thead>
+            <tbody>
+              <tr><td>Tools</td><td>Crimping tools, cable tester, punch-down tools, wire cutters, screwdrivers</td></tr>
+              <tr><td>Materials</td><td>Copper cables (CAT5e/CAT6), fiber optic cable, connectors (RJ45, SC/LC), patch panels</td></tr>
+              <tr><td>Equipment</td><td>Routers, switches, modems, firewalls, UPS, racks</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="b5">
+          <h3>B5 — Truth table and Boolean equation for Y</h3>
+          <table>
+            <thead><tr><th>A</th><th>B</th><th>C</th><th>Y = (A · B) + C</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+              <tr><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:8px"><strong>Boolean equation:</strong> Y = (A · B) + C</p>
+        </article>
+
+      </section>
+
+      <section id="section-c" class="card">
+        <h2>Section C — Modulation & Switch Configuration</h2>
+
+        <article id="c1" style="margin-bottom:12px">
+          <h3>C1.A — What is modulation and demodulation</h3>
+          <table>
+            <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+            <tbody>
+              <tr><td>Modulation</td><td>Process of varying a carrier signal’s property (amplitude, frequency or phase) to encode and transmit information.</td></tr>
+              <tr><td>Demodulation</td><td>Reverse process of extracting the original information signal from the modulated carrier.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="c1b" style="margin-bottom:12px">
+          <h3>C1.B — Three types of analog modulation</h3>
+          <table>
+            <thead><tr><th>No.</th><th>Type</th><th>Short description</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Amplitude Modulation (AM)</td><td>Information is encoded by varying the amplitude of the carrier wave.</td></tr>
+              <tr><td>2</td><td>Frequency Modulation (FM)</td><td>Information is encoded by varying the frequency of the carrier wave.</td></tr>
+              <tr><td>3</td><td>Phase Modulation (PM)</td><td>Information is encoded by varying the phase of the carrier wave.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="c2">
+          <h3>C2 — Basic switch & VLAN configuration (concise commands)</h3>
+          <p class="small">Example commands for switch <strong>S1</strong> (adapt for S3 as needed):</p>
+          <pre>
+enable
+configure terminal
+hostname S1
+
+!-- EXEC (enable) password
+S1(config)# enable password class
+
+!-- Console password
+S1(config)# line console 0
+S1(config-line)# password cisco
+S1(config-line)# login
+
+!-- VTY password
+S1(config)# line vty 0 4
+S1(config-line)# password cisco
+S1(config-line)# login
+
+!-- Disable DNS lookup
+S1(config)# no ip domain-lookup
+
+!-- Create VLANs
+S1(config)# vlan 10
+S1(config-vlan)# name HR
+S1(config)# vlan 20
+S1(config-vlan)# name Sales
+S1(config)# vlan 30
+S1(config-vlan)# name Manager
+
+!-- Assign ports to VLANs
+S1(config)# interface range fa0/1-5
+S1(config-if-range)# switchport mode access
+S1(config-if-range)# switchport access vlan 10
+
+!-- Configure trunking
+S1(config)# interface fa0/24
+S1(config-if)# switchport mode trunk
+
+!-- Verify
+S1# show vlan brief
+          </pre>
+        </article>
+
+      </section>
+
+      <footer style="margin-top:18px; color:var(--muted); font-size:13px">Generated: TheOnly Solutions — formatted for printing and quick navigation.</footer>
+
+    </main>
+  </div>
+
+  <script>
+    // Smooth scrolling and active status for nav
+    document.querySelectorAll('.nav a').forEach(a=>{
+      a.addEventListener('click', e=>{
+        document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));
+        a.classList.add('active');
+      });
+    });
+    // Set first as active
+    const first = document.querySelector('.nav a.sec'); if(first) first.classList.add('active');
+  </script>
+</body>
+</html>

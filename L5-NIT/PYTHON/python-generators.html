@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Generators — Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#38bdf8;
+  --accent2:#a78bfa;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --good:#22c55e;
+  --warn:#f59e0b;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, sans-serif;
+  background:linear-gradient(135deg,#0f172a,#020617);
+  color:var(--text);
+  line-height:1.6;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+.header{
+  text-align:center;
+  padding:40px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1e293b,#020617);
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  margin-bottom:30px;
+}
+
+.header h1{
+  margin:0;
+  font-size:34px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.header p{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:28px;
+  margin-bottom:22px;
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+
+.section h2{
+  margin-top:0;
+  color:var(--accent);
+  font-size:22px;
+}
+
+.section h3{
+  color:var(--accent2);
+  margin-bottom:6px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#1f2937;
+  color:var(--accent);
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+ul{
+  padding-left:18px;
+}
+
+li{ margin-bottom:6px; }
+
+code{
+  background:#020617;
+  padding:2px 6px;
+  border-radius:6px;
+  color:#7dd3fc;
+}
+
+pre{
+  background:#020617;
+  padding:14px;
+  border-radius:12px;
+  overflow:auto;
+  border:1px solid #1f2937;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+.table th,.table td{
+  border:1px solid #1f2937;
+  padding:10px;
+}
+
+.table th{
+  background:#020617;
+  color:var(--accent);
+}
+
+.note{
+  background:#052e16;
+  border-left:4px solid var(--good);
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.warn{
+  background:#3f2a05;
+  border-left:4px solid var(--warn);
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  margin-top:30px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🧠 Python Generators — A Special Type of Function</h1>
+  <p>Clear, structured study notes with examples and comparisons</p>
+</div>
+
+<!-- A -->
+<div class="section">
+<h2>A. Definitions & Explanations</h2>
+
+<h3>✅ What is a Generator?</h3>
+<ul>
+<li>Special type of function using <code>yield</code> instead of return</li>
+<li>Produces values one at a time</li>
+<li>Remembers where it stopped</li>
+<li>Does not store all results in memory</li>
+</ul>
+
+<div class="note">Think of a generator as a smart data producer that gives results only when requested.</div>
+
+<h3>✅ What is an Iterator?</h3>
+<ul>
+<li>Produces values one at a time</li>
+<li>Keeps track of position</li>
+<li>Supports <code>__next__()</code> and <code>__iter__()</code></li>
+</ul>
+
+<pre>
+students = ["Ana", "Ben", "Chris"]
+it = iter(students)
+
+print(next(it))
+print(next(it))
+</pre>
+
+<h3>✅ Generator = Iterator Creator</h3>
+<p>A generator function automatically creates an iterator object.</p>
+
+<pre>
+def gen():
+    yield 1
+</pre>
+
+<h3>✅ Generator Object</h3>
+<ul>
+<li>Iterable</li>
+<li>Lazy value production</li>
+<li>Works with <code>for</code> and <code>next()</code></li>
+</ul>
+
+<pre>
+g = gen()
+print(type(g))
+</pre>
+</div>
+
+<!-- B -->
+<div class="section">
+<h2>B. Key Ideas Behind Generators</h2>
+
+<h3>⭐ Core Principles</h3>
+
+<ul>
+<li><strong>Uses yield</strong> → pauses function</li>
+<li><strong>Execution resumes</strong> after each yield</li>
+<li><strong>Lazy evaluation</strong> saves memory</li>
+<li><strong>State remembered</strong> between yields</li>
+</ul>
+
+<pre>
+def counter():
+    x = 1
+    yield x
+    x += 1
+    yield x
+</pre>
+</div>
+
+<!-- C -->
+<div class="section">
+<h2>C. Return Behavior</h2>
+
+<h3>✅ What Does a Generator Return?</h3>
+<p>Calling a generator function returns a <strong>generator object</strong>, not values.</p>
+
+<pre>
+def student_ids():
+    yield 101
+    yield 102
+
+g = student_ids()
+print(g)
+</pre>
+
+<h3>✅ Output Behavior</h3>
+<ul>
+<li>Values produced one by one</li>
+<li>Only when requested</li>
+<li>Ends with StopIteration</li>
+</ul>
+
+<pre>
+print(next(g))
+print(next(g))
+</pre>
+
+<h3>Preferred Loop Usage</h3>
+<pre>
+for sid in student_ids():
+    print(sid)
+</pre>
+
+<h3>Different Data Types</h3>
+<pre>
+def student_data():
+    yield {"name":"Ana","grade":85}
+    yield {"name":"Ben","grade":90}
+</pre>
+</div>
+
+<!-- D -->
+<div class="section">
+<h2>D. Comparison with Regular Functions</h2>
+
+<h3>🎓 Regular Function</h3>
+<pre>
+def get_grades():
+    grades = []
+    for g in [70,80,90]:
+        grades.append(g)
+    return grades
+</pre>
+
+<h3>⚡ Generator Version</h3>
+<pre>
+def get_grades():
+    for g in [70,80,90]:
+        yield g
+</pre>
+
+<table class="table">
+<tr><th>Regular Function</th><th>Generator</th></tr>
+<tr><td>uses return</td><td>uses yield</td></tr>
+<tr><td>builds list</td><td>no list</td></tr>
+<tr><td>returns once</td><td>returns many times</td></tr>
+<tr><td>high memory</td><td>low memory</td></tr>
+<tr><td>runs fully</td><td>pauses</td></tr>
+</table>
+
+<h3>🎓 Attendance Example</h3>
+<pre>
+def attendance():
+    yield "Ana"
+    yield "Ben"
+    yield "Chris"
+</pre>
+</div>
+
+<!-- E -->
+<div class="section">
+<h2>E. Main Use Cases</h2>
+
+<ul>
+<li>✅ Large datasets</li>
+<li>✅ File processing</li>
+<li>✅ Streaming data</li>
+<li>✅ Data pipelines</li>
+<li>✅ Infinite sequences</li>
+</ul>
+
+<pre>
+def read_lines(file):
+    for line in file:
+        yield line
+</pre>
+
+<pre>
+passed = (s for s in students if s["grade"] >= 50)
+</pre>
+
+<pre>
+def roll_numbers():
+    n = 1
+    while True:
+        yield n
+        n += 1
+</pre>
+</div>
+
+<!-- F -->
+<div class="section">
+<h2>F. Common Generator Methods</h2>
+
+<h3>✅ next()</h3>
+<pre>
+g = attendance()
+next(g)
+</pre>
+
+<h3>✅ list()</h3>
+<div class="warn">Converts to list — loses memory advantage.</div>
+
+<pre>
+list(attendance())
+</pre>
+
+<h3>✅ Generator Expressions</h3>
+<pre>
+grades = (g for g in range(5))
+</pre>
+
+<h3>✅ send()</h3>
+<pre>
+def student():
+    name = yield
+    print(name)
+</pre>
+
+<h3>✅ close() & throw()</h3>
+<pre>
+g.close()
+g.throw(ValueError)
+</pre>
+</div>
+
+<!-- Summary -->
+<div class="section">
+<h2>🎯 Quick Summary</h2>
+<ul>
+<li>✅ Use <code>yield</code></li>
+<li>✅ Memory efficient</li>
+<li>✅ Lazy evaluation</li>
+<li>✅ Automatically iterators</li>
+<li>✅ Ideal for large/streaming data</li>
+<li>✅ Pause & resume execution</li>
+<li>✅ Return generator objects</li>
+</ul>
+</div>
+
+<div class="footer">
+PVC-PYTHON-PROGRAMMING
+</div>
+
+</div>
+</body>
+</html>

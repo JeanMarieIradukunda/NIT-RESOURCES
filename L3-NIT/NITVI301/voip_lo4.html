@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoIP System Notes</title>
+<style>
+  /* Global Styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1, h2, h3 {
+    color: #1a73e8;
+    margin-top: 1.2em;
+  }
+
+  h1 {
+    font-size: 2em;
+    border-bottom: 3px solid #1a73e8;
+    padding-bottom: 5px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    border-left: 5px solid #1a73e8;
+    padding-left: 10px;
+    margin-top: 1em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+    margin-top: 0.8em;
+  }
+
+  p, li {
+    font-size: 1rem;
+  }
+
+  ul, ol {
+    margin: 10px 0 20px 20px;
+  }
+
+  /* Collapsible Sections */
+  details {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+
+  summary {
+    font-weight: bold;
+    font-size: 1.1em;
+    outline: none;
+  }
+
+  summary:hover {
+    color: #0b5ed7;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #1a73e8;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f4f6f8;
+  }
+
+  code {
+    background-color: #e8e8e8;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.5em;
+    }
+    h2 {
+      font-size: 1.2em;
+    }
+    h3 {
+      font-size: 1em;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>LEARNING OUTCOME 4: OPERATE VOIP SYSTEM</h1>
+
+<!-- DESCRIPTION OF VOIP SYSTEM INFORMATION -->
+<details open>
+  <summary>DESCRIPTION OF VOIP SYSTEM INFORMATION</summary>
+
+  <!-- Types of Information -->
+  <details>
+    <summary>1. Types of Information in a VoIP System</summary>
+    <ul>
+      <li><strong>Voice</strong>
+        <ul>
+          <li>The primary type of information in VoIP.</li>
+          <li>Human speech is converted into digital signals and transmitted through the internet.</li>
+          <li>Used for phone calls between users on computers, IP phones, or smartphones.</li>
+        </ul>
+      </li>
+      <li><strong>Video</strong>
+        <ul>
+          <li>Allows video calls or video conferencing between users.</li>
+          <li>Voice and moving images are transmitted together in real time.</li>
+          <li>Commonly used in online meetings and remote communication.</li>
+        </ul>
+      </li>
+      <li><strong>Picture (Images)</strong>
+        <ul>
+          <li>Users can send or share still images during communication.</li>
+          <li>Useful for presentations, demonstrations, or sharing visual information.</li>
+        </ul>
+      </li>
+      <li><strong>Text</strong>
+        <ul>
+          <li>Includes instant messaging, chat, and written communication during calls.</li>
+          <li>Often integrated with VoIP platforms to allow users to send messages while talking.</li>
+        </ul>
+      </li>
+      <li><strong>Email</strong>
+        <ul>
+          <li>VoIP systems may integrate with email services.</li>
+          <li>Examples include voicemail sent to email or sending files and messages through email connected to the VoIP platform.</li>
+        </ul>
+      </li>
+    </ul>
+  </details>
+
+  <!-- Backup Types -->
+  <details>
+    <summary>2. Description of backup types</summary>
+    <p>Backup types refer to different methods used to copy and store data so it can be restored if the original data is lost, damaged, or deleted.</p>
+    <ol>
+      <li><strong>Full Backup</strong>
+        <ul>
+          <li>A full backup copies all data and files from a system.</li>
+          <li>Advantages: Easy and fast to restore.</li>
+          <li>Disadvantages: Takes more storage space and more time to create.</li>
+        </ul>
+      </li>
+      <li><strong>Incremental Backup</strong>
+        <ul>
+          <li>Copies only data changed since the last backup (full or incremental).</li>
+          <li>Advantages: Faster and uses less storage space.</li>
+          <li>Disadvantages: Restoration can take longer because multiple backups may be needed.</li>
+        </ul>
+      </li>
+      <li><strong>Differential Backup</strong>
+        <ul>
+          <li>Copies all data that has changed since the last full backup.</li>
+          <li>Advantages: Faster restoration than incremental backups.</li>
+          <li>Disadvantages: Requires more storage space than incremental backups.</li>
+        </ul>
+      </li>
+      <li><strong>Mirror Backup</strong>
+        <ul>
+          <li>Creates an exact copy of the source data.</li>
+          <li>If a file is deleted in the original location, it is also deleted in the mirror backup.</li>
+          <li>Advantages: Provides a real-time duplicate of data.</li>
+          <li>Disadvantages: Does not keep previous versions of files.</li>
+        </ul>
+      </li>
+      <li><strong>Cloud Backup</strong>
+        <ul>
+          <li>Data is backed up to online cloud storage servers through the internet.</li>
+          <li>Advantages: Accessible from anywhere and protects against local hardware failure.</li>
+          <li>Disadvantages: Requires internet access and may involve subscription costs.</li>
+        </ul>
+      </li>
+    </ol>
+  </details>
+
+  <!-- Data Backup Techniques -->
+  <details>
+    <summary>3. Use of Data backup Techniques/Technologies</summary>
+    <ul>
+      <li><strong>Removable Media</strong>
+        <ul>
+          <li>Devices such as USB flash drives, CDs, DVDs, or memory cards used to store backup copies of data.</li>
+        </ul>
+      </li>
+      <li><strong>Redundancy</strong>
+        <ul>
+          <li>Keeping duplicate copies of data or systems.</li>
+        </ul>
+      </li>
+      <li><strong>External Hard Drive</strong>
+        <ul>
+          <li>External hard disk for large backups.</li>
+        </ul>
+      </li>
+      <li><strong>Backup Software</strong>
+        <ul>
+          <li>Programs to automatically copy and manage backups.</li>
+        </ul>
+      </li>
+      <li><strong>Cloud Backup</strong>
+        <ul>
+          <li>Data stored on remote servers via the internet.</li>
+        </ul>
+      </li>
+    </ul>
+  </details>
+
+</details>
+
+<!-- MONITORING OF VOIP SYSTEM -->
+<details>
+  <summary>MONITORING OF VOIP SYSTEM</summary>
+
+  <!-- Monitoring Metrics -->
+  <details>
+    <summary>1. Description of Monitoring Metrics (VoIP Network Performance)</summary>
+    <ul>
+      <li><strong>Jitter</strong> – Variation in the time delay between voice packets.</li>
+      <li><strong>Latency</strong> – Delay for voice packets to travel from sender to receiver.</li>
+      <li><strong>Packet Loss</strong> – Missing data packets during transmission.</li>
+      <li><strong>Quality of Service (QoS) for Voice</strong> – Techniques to prioritize voice traffic.</li>
+    </ul>
+  </details>
+
+  <!-- Monitoring Methodology -->
+  <details>
+    <summary>2. Description of Monitoring Methodology</summary>
+    <ul>
+      <li><strong>Data Collection</strong> – Gathering raw information from devices and networks.</li>
+      <li><strong>Data Aggregation</strong> – Organizing and summarizing data for analysis.</li>
+      <li><strong>Data Analysis</strong> – Examining aggregated data to identify patterns and issues.</li>
+    </ul>
+  </details>
+
+  <!-- Monitoring Tools -->
+  <details>
+    <summary>3. Use of VoIP System Monitoring Tools/Software</summary>
+    <ul>
+      <li><strong>Real-Time Performance Monitoring</strong> – Track latency, jitter, packet loss, call quality.</li>
+      <li><strong>Quality of Service (QoS) Assurance</strong> – Ensure voice traffic priority.</li>
+      <li><strong>Troubleshooting and Diagnostics</strong> – Logs and reports for call issues.</li>
+      <li><strong>Historical Data and Trend Analysis</strong> – Store performance data over time.</li>
+      <li><strong>Alerts and Notifications</strong> – Automatic alerts for thresholds.</li>
+      <li><strong>Reporting and Compliance</strong> – Reports for audits, billing, and regulatory compliance.</li>
+    </ul>
+  </details>
+
+</details>
+
+<!-- INTERPRETATION OF VOIP CALL LOGS -->
+<details>
+  <summary>INTERPRETATION OF VOIP CALL LOGS</summary>
+  <p>VoIP call logs provide detailed records of telephone activity within a VoIP system.</p>
+
+  <details>
+    <summary>Description of VoIP Call Log Metrics</summary>
+    <ul>
+      <li><strong>Date and Time of a Telephone Call</strong> – Shows when a call was initiated.</li>
+      <li><strong>Call Duration (in minutes)</strong> – Indicates how long the call lasted.</li>
+      <li><strong>Information on Source and Destination Telephone Numbers</strong> – Identifies caller and receiver.</li>
+      <li><strong>Type of Phone Call</strong> – Toll-free, inbound, or outbound.</li>
+      <li><strong>Cost of a Call (Per Minute Rate)</strong> – Associated per-minute cost.</li>
+      <li><strong>Picked Calls</strong> – Successfully answered calls.</li>
+      <li><strong>Holded Calls</strong> – Calls placed on hold.</li>
+      <li><strong>Routed Calls</strong> – Redirected to another line, extension, or department.</li>
+      <li><strong>Recorded Calls</strong> – Calls recorded for quality or compliance.</li>
+    </ul>
+  </details>
+</details>
+
+<!-- VOIP CALL ANALYTICS TOOLS -->
+<details>
+  <summary>USE OF VOIP CALL ANALYTICS TOOLS/SOFTWARE</summary>
+  <ul>
+    <li><strong>Call Performance Monitoring</strong> – Tracks duration, quality, dropped calls, volume.</li>
+    <li><strong>Quality of Service (QoS) Assessment</strong> – Monitors clarity, latency, jitter, packet loss.</li>
+    <li><strong>Cost Management and Billing</strong> – Analyzes call costs.</li>
+    <li><strong>User and Department Analytics</strong> – Insights into user or department call activity.</li>
+    <li><strong>Call Routing and Handling Insights</strong> – Shows call routing and holding details.</li>
+    <li><strong>Historical Data and Trend Analysis</strong> – Maintains records over time.</li>
+    <li><strong>Alerts and Notifications</strong> – Real-time alerts for call quality or performance drops.</li>
+    <li><strong>Compliance and Recording Management</strong> – Tracks recorded calls for legal or regulatory purposes.</li>
+  </ul>
+</details>
+
+<!-- REPORTING OF VOIP INCIDENTS -->
+<details>
+  <summary>REPORTING OF VOIP INCIDENTS</summary>
+
+  <details>
+    <summary>Description of VoIP Incident Categories</summary>
+    <ul>
+      <li><strong>Poor Call Quality</strong> – Unclear, choppy, delayed, or distorted voice communication.</li>
+      <li><strong>Sign-On Issues</strong> – Problems logging in or registering VoIP devices/accounts.</li>
+      <li><strong>Slow Load Time</strong> – Application or interface responds slowly.</li>
+      <li><strong>Batch Job Errors</strong> – Errors during automated processes.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Use of VoIP Incident Reporting Tools/Software</summary>
+    <ul>
+      <li><strong>Real-Time Incident Logging</strong> – Record incidents as they occur.</li>
+      <li><strong>Categorization and Prioritization</strong> – Classify incidents by type and priority.</li>
+      <li><strong>Automated Alerts and Notifications</strong> – Notify admins when incidents occur.</li>
+      <li><strong>Tracking and Status Management</strong> – Monitor incident resolution progress.</li>
+      <li><strong>Analysis and Reporting</strong> – Reports to identify trends and recurring issues.</li>
+      <li><strong>Integration with Other Tools</strong> – Combine with VoIP monitoring or ITSM systems.</li>
+    </ul>
+  </details>
+
+</details>
+
+</body>
+</html>

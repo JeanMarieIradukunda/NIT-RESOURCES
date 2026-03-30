@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python `in` & Infinite Loops — Cheat‑Sheet</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Use Calisto MT if available, fall back to serif */
+    body {
+      font-family: "Calisto MT", Georgia, "Times New Roman", serif;
+      background: #f6f8fb;
+    }
+
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(36, 50, 90, 0.06);
+    }
+
+    pre.code-block {
+      background: #0b1220;
+      color: #e6eef6;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow: auto;
+    }
+
+    .badge-key {
+      background: #0d6efd;
+      color: #fff;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .copy-btn {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+    }
+
+    .code-wrapper {
+      position: relative;
+    }
+
+    .section-title {
+      color: #0d6efd;
+    }
+
+    .example-tag {
+      font-weight: 600;
+      color: #0b5ed7;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+    <div class="text-center mb-4">
+      <h1 class="fw-bold">Python: <span class="text-primary">`in`</span> & Infinite Loops</h1>
+      <!-- <p class="small-note">Readable notes, quick references and real‑world examples — Bootstrap styled.</p> -->
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <h4 class="section-title">`in` Keyword — Quick Facts</h4>
+          <ul>
+            <li><strong>Membership test:</strong> <code>x in y</code> returns <code>True</code>/<code>False</code>.</li>
+            <li><strong>Iteration:</strong> used in <code>for item in iterable:</code> loops.</li>
+            <li>Works on <em>lists, tuples, sets, strings, ranges, dicts</em> (dicts check keys).</li>
+            <li>Use <code>not in</code> for negation.</li>
+            <li>Prefer <code>set</code> for many membership checks (O(1) average).</li>
+          </ul>
+
+          <h6 class="mt-3">Examples</h6>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code1">Copy</button>
+            <pre id="code1" class="code-block"># List membership
+fruits = ["apple","banana","cherry"]
+if "banana" in fruits:
+    print("Found banana")
+
+# String substring
+if "py" in "python":
+    print("Substring found")
+
+# Dictionary (checks keys)
+student = {"name":"Alice","age":20}
+if "age" in student:
+    print("Key 'age' exists")</pre>
+          </div>
+
+          <h6 class="mt-2">Notes & Pitfalls</h6>
+          <ul>
+            <li>Dict: <code>in</code> checks keys. Use <code>.values()</code> or <code>.items()</code> if needed.</li>
+            <li>Large lists are O(n). Convert to <code>set()</code> for repeated checks.</li>
+            <li>Strings: <code>"a" in "ab"</code> works only for substrings, not list elements.</li>
+          </ul>
+
+          <h6 class="mt-3">Quick tip</h6>
+          <p class="small-note">Readable code beats clever code — use <code>in</code> for clear membership tests instead
+            of manual loops.</p>
+        </div>
+        <div class="card p-4 mt-4">
+          <h4 class="section-title">Real‑World Example: Search a Name</h4>
+          <p class="small-note">A very simple example for beginners: checking if a student's name exists in a list.</p>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code2">Copy</button>
+            <pre id="code2" class="code-block">students = ["Alice", "Brian", "Clara"]
+search_name = input("Enter a name to search: ")
+
+if search_name in students:
+    print(search_name, "is in the list!")
+else:
+    print(search_name, "is not in the list.")</pre>
+          </div>
+
+          <p class="small-note">Here we use <code>in</code> to see if the input matches any name in the list. Very
+            beginner-friendly!</p>
+        </div>
+
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <h4 class="section-title">Infinite Loops — Quick Facts</h4>
+          <ul>
+            <li><strong>Use cases:</strong> servers, listeners, background tasks, sensors.</li>
+            <li><strong>Safety:</strong> always provide a graceful stop (signal, command, keyboard interrupt).</li>
+            <li><strong>Avoid busy‑wait:</strong> use <code>time.sleep()</code> or blocking I/O.</li>
+          </ul>
+
+          <h6 class="mt-3">Basic patterns</h6>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code3">Copy</button>
+            <pre id="code3" class="code-block"># Simple infinite loop (stop with Ctrl+C)
+while True:
+    print("Running...")
+
+# Safer: allow user exit
+while True:
+    cmd = input("type 'exit' to stop: ")
+    if cmd.strip().lower() == 'exit':
+        break</pre>
+          </div>
+
+          <h6 class="mt-3">Best practice: sleep + exception handling</h6>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code4">Copy</button>
+            <pre id="code4" class="code-block">import time
+try:
+    while True:
+        do_work()
+        time.sleep(1)   # avoid 100% CPU
+except KeyboardInterrupt:
+    print("shutting down gracefully")</pre>
+          </div>
+
+        </div>
+
+        <div class="card p-4 mt-4">
+          <h4 class="section-title">Real‑World Examples</h4>
+
+          <h6 class="example-tag">1) Simple HTTP server loop (concept)</h6>
+          <p class="small-note">A server accepts connections and processes them in a loop. Real servers use frameworks
+            or async IO.</p>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code5">Copy</button>
+            <pre id="code5" class="code-block">import socket
+s = socket.socket()
+s.bind(('0.0.0.0', 8000))
+s.listen()
+try:
+    while True:
+        client, addr = s.accept()   # blocking call
+        handle(client)
+except KeyboardInterrupt:
+    s.close()</pre>
+          </div>
+
+          <h6 class="example-tag">2) Sensor/IoT read loop</h6>
+          <p class="small-note">Poll a sensor every second and send readings to a server.</p>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code6">Copy</button>
+            <pre id="code6" class="code-block">import time
+
+while True:
+    reading = read_sensor()
+    send(reading)
+    time.sleep(1)</pre>
+          </div>
+
+          <h6 class="example-tag">3) Log-watching tool (stream)</h6>
+          <p class="small-note">Follow a file for new lines; blocking I/O avoids busy-wait.</p>
+          <div class="code-wrapper mb-3">
+            <button class="btn btn-sm btn-outline-light copy-btn" data-target="code7">Copy</button>
+            <pre id="code7" class="code-block">with open('app.log') as f:
+    f.seek(0, 2)  # go to end
+    while True:
+        line = f.readline()
+        if not line:
+            time.sleep(0.5)
+            continue
+        process(line)</pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercises -->
+    <div class="card p-4 mt-4">
+      <h4 class="section-title">Exercises</h4>
+      <ol>
+        <li>Check membership: write <code>if "admin" in roles:</code></li>
+        <li>Count names with letter 'a' using <code>in</code>.</li>
+        <li>Write a safe loop that prints timestamp every 2s and stops on Ctrl+C.</li>
+      </ol>
+      <p class="small-note">Answers are included in the cheat-sheet source; try solving before peeking.</p>
+    </div>
+
+    <footer class="mt-4 text-center">
+      <p>Made for easy reference — modify code examples for your projects. <span class="text-muted">(Use Ctrl+C to stop
+          loops during testing.)</span></p>
+    </footer>
+  </div>
+
+  <script>
+    // Copy buttons
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-target');
+        const el = document.getElementById(id);
+        try {
+          await navigator.clipboard.writeText(el.innerText);
+          btn.classList.remove('btn-outline-light');
+          btn.classList.add('btn-success');
+          btn.innerText = 'Copied';
+          setTimeout(() => { btn.classList.remove('btn-success'); btn.classList.add('btn-outline-light'); btn.innerText = 'Copy'; }, 1200);
+        } catch (e) {
+          alert('Copy failed — select and copy manually.');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

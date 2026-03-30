@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive ADDC Installation Guide</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Berlin Sans FD font -->
+  <link href="https://fonts.cdnfonts.com/css/berlin-sans-fb-demi" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Berlin Sans FB Demi', sans-serif;
+      background-color: #f4f6f9;
+    }
+    .step-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    .card-header {
+      background-color: #0d6efd;
+      color: white;
+      font-size: 1.2rem;
+    }
+    .tip {
+      background-color: #e9f7ef;
+      border-left: 5px solid #28a745;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .example {
+      background-color: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .accordion-button:not(.collapsed) {
+      color: white;
+      background-color: #0d6efd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+  <h1 class="text-center mb-4">Interactive Active Directory Installation & Configuration</h1>
+
+  <div class="accordion" id="adGuideAccordion">
+
+    <!-- Step 1 -->
+    <div class="accordion-item mb-3">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <i class="bi bi-gear-fill me-2"></i>Step 1: Prepare Your Server
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#adGuideAccordion">
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Set a Static IP:</strong>
+              <ul>
+                <li>Control Panel → Network and Sharing Center → Change adapter settings.</li>
+                <li>Right-click network adapter → Properties → IPv4 → Properties.</li>
+                <li>Set static IP, subnet mask, default gateway, and preferred DNS.</li>
+              </ul>
+            </li>
+            <li><strong>Rename the Server (Optional but Recommended):</strong>
+              <ul>
+                <li>Right-click This PC → Properties → Rename this PC → Restart.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tip"><i class="bi bi-lightbulb-fill me-2"></i>Always set a static IP before promoting the server to DC.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="accordion-item mb-3">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <i class="bi bi-box-seam me-2"></i>Step 2: Add AD DS Role
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#adGuideAccordion">
+        <div class="accordion-body">
+          <ol>
+            <li>Open Server Manager.</li>
+            <li>Manage → Add Roles and Features.</li>
+            <li>Role-based or feature-based installation → Select server → Next.</li>
+            <li>Check <strong>Active Directory Domain Services</strong> → Add Features → Next → Install.</li>
+          </ol>
+          <div class="tip"><i class="bi bi-lightbulb-fill me-2"></i>Do not close Server Manager during installation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="accordion-item mb-3">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <i class="bi bi-person-badge-fill me-2"></i>Step 3: Promote Server to Domain Controller
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#adGuideAccordion">
+        <div class="accordion-body">
+          <ol>
+            <li>Click the flag icon in Server Manager → Promote this server to a domain controller.</li>
+            <li>Choose deployment operation:
+              <ul>
+                <li>Add a new forest (first DC)</li>
+                <li>Add a domain controller to an existing domain</li>
+                <li>Add a new domain to an existing forest</li>
+              </ul>
+            </li>
+            <li>Enter domain name (e.g., <strong>school.local</strong>) → Next.</li>
+            <li>Select Forest & Domain functional levels → Windows Server 2016.</li>
+            <li>Set <strong>DSRM password</strong> → Next.</li>
+            <li>Keep DNS server checked → Next.</li>
+            <li>Review NetBIOS name → Next.</li>
+            <li>AD database, log files, SYSVOL paths → Next.</li>
+            <li>Review → Install → Server restarts automatically.</li>
+          </ol>
+          <div class="example"><i class="bi bi-exclamation-triangle-fill me-2"></i>Example: Creating a new forest for a school domain: <strong>school.local</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="accordion-item mb-3">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          <i class="bi bi-check2-circle me-2"></i>Step 4: Verify AD Installation
+        </button>
+      </h2>
+      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#adGuideAccordion">
+        <div class="accordion-body">
+          <ul>
+            <li>Log in after restart.</li>
+            <li>Server Manager → Tools → Active Directory Users and Computers → Verify domain appears.</li>
+            <li>Test DNS: <code>nslookup school.local</code> → Resolves to DC IP.</li>
+          </ul>
+          <div class="tip">
+            Tips:
+            <ul>
+              <li>DSRM password is critical for recovery.</li>
+              <li>First DC auto-configures DNS.</li>
+              <li>For lab setups, you may skip advanced GPOs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuration of AD -->
+    <div class="accordion-item mb-3">
+      <h2 class="accordion-header" id="headingFive">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          <i class="bi bi-gear-wide-connected me-2"></i>Configuration of Active Directory
+        </button>
+      </h2>
+      <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#adGuideAccordion">
+        <div class="accordion-body">
+          <h5 class="step-title">1. Description of AD</h5>
+          <p>AD stores information about network objects and centralizes authentication/authorization.</p>
+          <ul>
+            <li><strong>Forest:</strong> Top-level container of domains.</li>
+            <li><strong>Domain:</strong> Logical group of objects.</li>
+            <li><strong>OUs:</strong> Organizational Units for object organization.</li>
+          </ul>
+          <div class="example">Analogy: Forest → School district, Domain → School (NIT, FAD, BDC), OUs → Classrooms.</div>
+
+          <h5 class="step-title mt-3">2. Domain Deployment Operations</h5>
+          <ul>
+            <li>Add DC to existing domain: Redundancy & fault tolerance.</li>
+            <li>Add new domain to existing forest: Create subdomain (e.g., FAD.school.local).</li>
+            <li>Add new forest: New AD environment (first DC in forest).</li>
+          </ul>
+
+          <h5 class="step-title mt-3">3. Promote Server to DC</h5>
+          <ol>
+            <li>Install AD DS role.</li>
+            <li>Promote server → Choose deployment → Enter domain → Set DSRM → Configure DNS/paths → Install.</li>
+            <li>Verify AD installation → Open ADUC → Test DNS → Optionally create OUs, users, groups.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

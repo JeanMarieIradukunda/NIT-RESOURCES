@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Notes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Calistoga', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .section {
+            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        .tip {
+            background-color: #d1e7dd;
+            border-left: 5px solid #0f5132;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .example {
+            background-color: #cff4fc;
+            border-left: 5px solid #055160;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        hr {
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <h1 class="text-center mb-5">C Programming Notes</h1>
+
+    <!-- Constants -->
+    <div class="section">
+        <h2>Constants in C</h2>
+        <p>In C programming, a <strong>constant</strong> is a value that cannot be changed during the execution of the program. Once you assign a value to a constant, it stays the same throughout the program. Constants are useful for fixed values like mathematical constants or configuration values.</p>
+        <h3>Types of Constants</h3>
+        <ul>
+            <li><strong>Integer Constants</strong> – Whole numbers (e.g., 10, -5, 0)</li>
+            <li><strong>Floating-point Constants</strong> – Decimal numbers (e.g., 3.14, 0.001)</li>
+            <li><strong>Character Constants</strong> – Single characters in single quotes (e.g., 'A', '7')</li>
+            <li><strong>String Constants</strong> – Sequence of characters in double quotes (e.g., "Hello")</li>
+            <li><strong>Symbolic Constants</strong> – Defined using <code>#define</code> or <code>const</code> keyword (e.g., <code>#define PI 3.14</code> or <code>const int DAYS = 7;</code>)</li>
+        </ul>
+    </div>
+
+    <!-- Assignment Operators -->
+    <div class="section">
+        <h2>Assignment Operators</h2>
+        <p>An <strong>assignment operator</strong> in C is used to store a value into a variable. It takes a value on the right side and assigns it to a variable on the left. The most basic operator is <code>=</code>.</p>
+
+        <h3>1️⃣ Simple Assignment Operator</h3>
+        <pre><code>int x;
+x = 5;   // assigns 5 to x
+printf("%d", x); // Output: 5</code></pre>
+
+        <h3>2️⃣ Compound Assignment Operators</h3>
+        <pre><code>int x = 5;
+x += 3;  // x = x + 3
+x -= 3;  // x = x - 3
+x *= 3;  // x = x * 3
+x /= 3;  // x = x / 3
+x %= 3;  // x = x % 3</code></pre>
+
+        <h3>3️⃣ Bitwise Compound Assignment Operators</h3>
+        <pre><code>int x = 5;
+x &= 3;  // AND
+x |= 3;  // OR
+x ^= 3;  // XOR
+x >>= 2; // Right shift
+x <<= 1; // Left shift</code></pre>
+
+        <div class="tip">
+            <strong>Tip:</strong> Before shifting, understand the binary representation. Left shift multiplies by 2 per shift; right shift divides by 2 per shift.
+        </div>
+    </div>
+
+    <!-- Comparison Operators -->
+    <div class="section">
+        <h2>Comparison Operators</h2>
+        <p>Comparison operators compare two values. The result is either <code>1</code> (true) or <code>0</code> (false).</p>
+        <pre><code>int x = 5;
+int y = 3;
+printf("%d", x > y); // Output: 1 (true)</code></pre>
+        <h3>List of Comparison Operators</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Operator</th>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>==</td><td>Equal to</td><td>x == y</td><td>Returns 1 if values are equal</td></tr>
+                <tr><td>!=</td><td>Not equal</td><td>x != y</td><td>Returns 1 if values are not equal</td></tr>
+                <tr><td>></td><td>Greater than</td><td>x > y</td><td>Returns 1 if first value is greater</td></tr>
+                <tr><td><</td><td>Less than</td><td>x < y</td><td>Returns 1 if first value is smaller</td></tr>
+                <tr><td>>=</td><td>Greater than or equal</td><td>x >= y</td><td>Returns 1 if first value is greater or equal</td></tr>
+                <tr><td><=</td><td>Less than or equal</td><td>x <= y</td><td>Returns 1 if first value is smaller or equal</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Conditional Statements -->
+    <div class="section">
+        <h2>Conditional Statements in C</h2>
+        <p>Conditional statements allow the program to make decisions based on a condition.</p>
+
+        <h3>1️⃣ if statement</h3>
+        <pre><code>int marks = 75;
+if (marks >= 50) {
+    printf("You passed the exam.\n");
+}</code></pre>
+
+        <h3>2️⃣ if-else statement</h3>
+        <pre><code>int marks = 40;
+if (marks >= 50) {
+    printf("You passed the exam.\n");
+} else {
+    printf("You failed the exam.\n");
+}</code></pre>
+
+        <h3>3️⃣ else-if ladder</h3>
+        <pre><code>int marks = 65;
+if (marks >= 80) {
+    printf("Grade: A\n");
+} else if (marks >= 60) {
+    printf("Grade: B\n");
+} else {
+    printf("Grade: C\n");
+}</code></pre>
+
+        <h3>4️⃣ switch statement</h3>
+        <pre><code>int day = 3;
+switch(day) {
+    case 1: printf("Monday\n"); break;
+    case 2: printf("Tuesday\n"); break;
+    case 3: printf("Wednesday\n"); break;
+    default: printf("Another day\n");
+}</code></pre>
+    </div>
+
+    <div class="text-center mt-5 mb-3">
+        <small>&copy; 2025 C Programming Notes</small>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

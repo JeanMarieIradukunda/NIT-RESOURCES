@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python Lambda Functions Notes</title>
+        <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 1.5rem;
+        }
+
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .example {
+            background-color: #e8f5e9;
+            padding: 1rem;
+            border-left: 5px solid #4CAF50;
+            margin: 1rem 0;
+        }
+
+        code {
+            background-color: #95b6ee;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+            background-color: #f1f1f1;
+            color: #555;
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <h1>Python Lambda Functions Notes</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>a. Definition & Explanation</h2>
+                <p>A <strong>lambda function</strong> in Python is a small,
+                    anonymous function defined without a name using the
+                    <code>lambda</code> keyword. Unlike regular functions
+                    created with <code>def</code>, lambda functions are limited
+                    to a single expression and implicitly return the result of
+                    that expression.</p>
+                <p><strong>Syntax:</strong></p>
+                <pre><code>lambda arguments: expression</code></pre>
+                <ul>
+                    <li><strong>lambda:</strong> Keyword that creates the
+                        function.</li>
+                    <li><strong>arguments:</strong> Inputs to the function,
+                        separated by commas.</li>
+                    <li><strong>expression:</strong> Single expression executed
+                        and returned automatically.</li>
+                </ul>
+
+                <div class="example">
+                    <pre><code># Normal function
+def square(x):
+    return x * x
+
+# Lambda function
+square_lambda = lambda x: x * x
+
+print(square(5))         # Output: 25
+print(square_lambda(5))  # Output: 25</code></pre>
+                </div>
+
+                <h3>Breakdown of <code>square_lambda = lambda x: x *
+                        x</code>:</h3>
+                <ul>
+                    <li><strong>lambda:</strong> Keyword for creating an
+                        anonymous function.</li>
+                    <li><strong>x (Arguments):</strong> Input to the lambda
+                        function. Multiple arguments possible: <code>lambda x,
+                            y: x + y</code>.</li>
+                    <li><strong>x * x (Expression):</strong> Expression that is
+                        evaluated and returned.</li>
+                </ul>
+
+                <h3>Key Differences Between <code>def</code> and
+                    <code>lambda</code>:</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>def Function</th>
+                        <th>lambda Function</th>
+                    </tr>
+                    <tr>
+                        <td>Syntax</td>
+                        <td>def func(args): ...</td>
+                        <td>lambda args: expression</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>Has a name</td>
+                        <td>Usually anonymous</td>
+                    </tr>
+                    <tr>
+                        <td>Body</td>
+                        <td>Can have multiple statements</td>
+                        <td>Only a single expression</td>
+                    </tr>
+                    <tr>
+                        <td>Return</td>
+                        <td>Explicit return</td>
+                        <td>Implicitly returns expression</td>
+                    </tr>
+                    <tr>
+                        <td>Use Cases</td>
+                        <td>General-purpose, complex logic</td>
+                        <td>Short, quick operations</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2>b. Uses and Applications (When to Use)</h2>
+                <p>Lambda functions are useful for:</p>
+                <ul>
+                    <li><strong>Anonymous Functions:</strong> Avoid writing full
+                        <code>def</code> functions for simple tasks.</li>
+                    <li><strong>Short Operations:</strong> Ideal for one-liners
+                        and simple calculations.</li>
+                    <li><strong>Functional Programming Tools:</strong> Used with
+                        <code>map()</code>, <code>filter()</code>,
+                        <code>reduce()</code>.</li>
+                </ul>
+
+                <div class="example">
+                    <pre><code># map() with lambda
+nums = [1, 2, 3, 4]
+squared = list(map(lambda x: x**2, nums))
+print(squared)  # Output: [1, 4, 9, 16]
+
+# filter() with lambda
+even_nums = list(filter(lambda x: x % 2 == 0, nums))
+print(even_nums)  # Output: [2, 4]
+
+# reduce() with lambda
+from functools import reduce
+sum_all = reduce(lambda a, b: a + b, nums)
+print(sum_all)  # Output: 10</code></pre>
+                </div>
+            </section>
+
+            <section>
+                <h2>c. Real-Life Examples</h2>
+
+                <h3>1. Sorting Student Records by Marks</h3>
+                <div class="example">
+                    <pre><code>students = [
+    {"name": "Alice", "marks": 85},
+    {"name": "Bob", "marks": 92},
+    {"name": "Charlie", "marks": 78}
+]
+
+# Sort by marks using lambda
+sorted_students = sorted(students, key=lambda s: s['marks'], reverse=True)
+print(sorted_students)
+# Output: [{'name': 'Bob', 'marks': 92}, {'name': 'Alice', 'marks': 85}, {'name': 'Charlie', 'marks': 78}]</code></pre>
+                </div>
+
+                <h3>2. Calculating Discounts in an Online Shop</h3>
+                <div class="example">
+                    <pre><code># Original prices
+prices = [100, 250, 400]
+
+# Apply 10% discount using lambda
+discounted_prices = list(map(lambda p: p * 0.9, prices))
+print(discounted_prices)  # Output: [90.0, 225.0, 360.0]</code></pre>
+                </div>
+
+                <h3>3. Filtering Even/Odd Numbers in Financial Data</h3>
+                <div class="example">
+                    <pre><code>transactions = [101, 202, 303, 404, 505]
+
+# Filter even transactions
+even_transactions = list(filter(lambda x: x % 2 == 0, transactions))
+print(even_transactions)  # Output: [202, 404]
+
+# Filter odd transactions
+odd_transactions = list(filter(lambda x: x % 2 != 0, transactions))
+print(odd_transactions)  # Output: [101, 303, 505]</code></pre>
+                </div>
+            </section>
+
+            <!-- NEW SECTION -->
+            <section>
+                <h2>d. Common Lambda Tools (Student-Based Examples)</h2>
+                <p>
+                    Lambda functions are most powerful when combined with
+                    Python’s built-in functional tools.
+                    These tools help process student data efficiently using
+                    lists and dictionaries.
+                </p>
+
+                <!-- map -->
+                <h3>1. map() – Transform Data</h3>
+                <p><strong>Purpose:</strong> Applies a function to each item in
+                    a list.</p>
+                <div class="example">
+                    <pre><code>marks = [70, 82, 65, 90]
+
+new_marks = list(map(lambda m: m + 5, marks))
+print(new_marks)
+# Output: [75, 87, 70, 95]</code></pre>
+                </div>
+
+                <!-- filter -->
+                <h3>2. filter() – Select Data</h3>
+                <p><strong>Purpose:</strong> Filters items based on a
+                    condition.</p>
+                <div class="example">
+                    <pre><code>marks = [35, 60, 45, 80, 90]
+
+passed = list(filter(lambda m: m >= 50, marks))
+print(passed)
+# Output: [60, 80, 90]</code></pre>
+                </div>
+
+                <!-- reduce -->
+                <h3>3. reduce() – Combine Data</h3>
+                <p><strong>Purpose:</strong> Reduces a list to a single
+                    value.</p>
+                <div class="example">
+                    <pre><code>from functools import reduce
+
+marks = [70, 80, 65, 85]
+total = reduce(lambda a, b: a + b, marks)
+print(total)
+# Output: 300</code></pre>
+                </div>
+
+                <!-- sorted -->
+                <h3>4. sorted() with lambda – Custom Sorting</h3>
+                <div class="example">
+                    <pre><code>students = [
+    {"name": "Alice", "marks": 78},
+    {"name": "Bob", "marks": 92},
+    {"name": "John", "marks": 65}
+]
+
+sorted_students = sorted(students, key=lambda s: s["marks"])
+print(sorted_students)</code></pre>
+                </div>
+
+                <!-- max min -->
+                <h3>5. max() / min() with lambda</h3>
+                <div class="example">
+                    <pre><code>top_student = max(students, key=lambda s: s["marks"])
+print(top_student)
+# Output: {'name': 'Bob', 'marks': 92}</code></pre>
+                </div>
+
+                <!-- any all -->
+                <h3>6. any() and all() with lambda</h3>
+                <div class="example">
+                    <pre><code>marks = [60, 75, 40, 80]
+
+failed = any(map(lambda m: m < 50, marks))
+print(failed)  # True
+
+all_passed = all(map(lambda m: m >= 50, marks))
+print(all_passed)  # False</code></pre>
+                </div>
+
+                <!-- dict -->
+                <h3>7. dict() + lambda – Dictionary Transformation</h3>
+                <div class="example">
+                    <pre><code>students = {"alice": 78, "bob": 85, "john": 67}
+
+updated = dict(map(lambda s: (s[0].upper(), s[1]), students.items()))
+print(updated)</code></pre>
+                </div>
+
+                <!-- Summary Table -->
+                <h3>📌 Summary Table</h3>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Purpose</th>
+                        <th>Student Example</th>
+                    </tr>
+                    <tr>
+                        <td>map()</td>
+                        <td>Transform data</td>
+                        <td>Add bonus marks</td>
+                    </tr>
+                    <tr>
+                        <td>filter()</td>
+                        <td>Select data</td>
+                        <td>Passed students</td>
+                    </tr>
+                    <tr>
+                        <td>reduce()</td>
+                        <td>Combine values</td>
+                        <td>Total marks</td>
+                    </tr>
+                    <tr>
+                        <td>sorted()</td>
+                        <td>Custom sorting</td>
+                        <td>Rank students</td>
+                    </tr>
+                    <tr>
+                        <td>max()/min()</td>
+                        <td>Best/Worst</td>
+                        <td>Top student</td>
+                    </tr>
+                    <tr>
+                        <td>any()/all()</td>
+                        <td>Validation</td>
+                        <td>Pass/fail checks</td>
+                    </tr>
+                    <tr>
+                        <td>dict() + lambda</td>
+                        <td>Transform dictionary</td>
+                        <td>Format student data</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Final Rule -->
+            <section>
+                <h2>🔑 Key Rule to Remember</h2>
+                <p>
+                    Use <strong>lambda functions</strong> for short and simple
+                    logic.
+                    If the logic becomes complex or hard to read, always prefer
+                    a normal
+                    <code>def</code> function.
+                </p>
+            </section>
+
+            <section>
+                <h2>Summary</h2>
+                <p>Lambda functions are lightweight, one-line functions ideal
+                    for simple transformations, filtering, or sorting. They are
+                    particularly useful in functional programming patterns where
+                    functions are passed as arguments.</p>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 Python Notes
+        </footer>
+    </body>
+</html>

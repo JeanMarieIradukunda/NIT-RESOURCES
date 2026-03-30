@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Python Practical Assessment — Secure Auto-Grading</title>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+
+<style>
+body {font-family:Inter,Arial;background:#eef1f5;margin:0;user-select:none;}
+.container {max-width:1000px;margin:auto;background:white;padding:20px;}
+#loginBox {text-align:center;padding:40px;}
+input,button,textarea {font-size:16px;padding:10px;margin:8px 0;width:100%;}
+button {background:#1e3a5f;color:white;border:none;cursor:pointer;}
+button:hover {background:#2c5282;}
+#examBox {display:none;}
+#violations {color:red;font-weight:bold;}
+#rules {background:#fff3cd;padding:12px;border-radius:6px;margin-bottom:10px;}
+#questionArea {background:#f0f4ff;padding:15px;border-radius:6px;white-space:pre-wrap;}
+textarea {user-select:text;}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div id="loginBox">
+<h1>Python Practical Assessment — Secure Auto-Grading</h1>
+<input id="studentName" placeholder="Student Name">
+<input id="pass" placeholder="Question Password">
+<button onclick="startExam()">Start Exam</button>
+</div>
+
+<div id="examBox">
+
+<div id="rules">
+<b>ONLINE EXAM RULES</b><br>
+• Fullscreen only — exit = termination<br>
+• No ESC, right click, copy/paste<br>
+• No DevTools keys<br>
+• No tab switching<br>
+• No reload/back<br>
+• Max 3 violations<br>
+• Submit = exam closes
+</div>
+
+<h2 id="welcome"></h2>
+<div id="timer"></div>
+<div id="violations">Violations: 0 / 3</div>
+
+<div id="questionArea"></div>
+<textarea id="answer" rows="18" placeholder="Write your Python code here..."></textarea>
+
+<button onclick="saveAnswer()">Save</button>
+<button onclick="submitExam()">Submit</button>
+
+</div>
+</div>
+
+<script>
+
+let pyodideReady = false;
+let pyodide;
+
+// Load Pyodide
+async function loadPyodideAndPackages() {
+  pyodide = await loadPyodide();
+  pyodideReady = true;
+}
+loadPyodideAndPackages();
+
+// ================= CONFIG =================
+const MAX_VIOLATIONS = 3;
+const EXAM_MINUTES = 30;
+
+// ================= QUESTIONS =================
+
+// ================= QUESTIONS =================
+
+const QUESTIONS = {
+Q1:`Create a variable x = 10 and y = 5. Print the sum, difference, and product.`,
+Q2:`Create a list of numbers [2,4,6,8,10]. Print each number using a loop.`,
+Q3:`Write an if-else statement to check if number 7 is even or odd and print the result.`,
+Q4:`Create a list [1,2,3,4,5]. Use a loop to print only numbers greater than 3 (use continue).`,
+Q5:`Create a dictionary with keys as names and values as ages. Print names of people older than 20.`,
+Q6:`Write a function greet(name) that prints "Hello, name". Call it with your name.`,
+Q7:`Write a function add_bonus(marks, bonus=5) that adds bonus to each mark in list [50,60,70] and print the result.`,
+Q8:`Use a lambda function to multiply each number in list [1,2,3,4] by 2 and print the new list.`,
+Q9:`Create a generator that yields even numbers from 2 to 10. Print all numbers from generator.`,
+Q10:`Write a decorator that prints "Start" before and "End" after a function that prints "Inside Function". Call the decorated function.`
+};
+
+// ================= PASSWORDS =================
+
+const PASSWORDS = {
+PY101:"Q1",
+PY102:"Q2",
+PY103:"Q3",
+PY104:"Q4",
+PY105:"Q5",
+PY106:"Q6",
+PY107:"Q7",
+PY108:"Q8",
+PY109:"Q9",
+PY110:"Q10"
+};
+
+// ================= EXPECTED OUTPUTS =================
+
+const EXPECTED_OUTPUTS = {
+Q1: "15\n5\n50", 
+Q2: "2\n4\n6\n8\n10",
+Q3: "odd",
+Q4: "4\n5",
+Q5: "Alice\nBob",
+Q6: "Hello, Juaen-Marie", // replace with student name during grading
+Q7: "[55, 65, 75]",
+Q8: "[2, 4, 6, 8]",
+Q9: "2\n4\n6\n8\n10",
+Q10: "Start\nInside Function\nEnd"
+};
+
+// ================= STATE =================
+
+let violations = 0;
+let timeLeft = EXAM_MINUTES * 60;
+let currentQ = "";
+let examActive = false;
+
+// ================= START =================
+
+function startExam(){
+
+ if(studentName.value.trim()==="") { alert("Enter name"); return; }
+
+ let pass = passInput();
+ if(!PASSWORDS[pass]) return alert("Invalid password");
+
+ currentQ = PASSWORDS[pass];
+ examActive = true;
+
+ loginBox.style.display="none";
+ examBox.style.display="block";
+
+ welcome.innerText =
+ `Student: ${studentName.value} | ${currentQ}`;
+
+ questionArea.innerText = QUESTIONS[currentQ];
+
+ answer.value = localStorage.getItem("ans_"+pass)||"";
+
+ enterFullscreen();
+ lockNavigation();
+ startTimer();
+}
+
+// ================= TIMER =================
+
+function startTimer(){
+ setInterval(()=>{
+  if(!examActive) return;
+  timeLeft--;
+  timer.innerText =
+   "Time Left: "+Math.floor(timeLeft/60)+"m "+timeLeft%60+"s";
+  if(timeLeft<=0) terminateExam("Time expired");
+ },1000);
+}
+
+// ================= NAV LOCK =================
+
+function lockNavigation(){
+ history.pushState(null,null,location.href);
+ window.onpopstate = ()=> terminateExam("Back blocked");
+ window.onbeforeunload = ()=>"Exam active";
+}
+
+// ================= VIOLATIONS =================
+
+function addViolation(reason){
+ if(!examActive) return;
+ violations++;
+ document.getElementById("violations").innerText =
+ "Violations: "+violations+" / "+MAX_VIOLATIONS;
+ if(violations>=MAX_VIOLATIONS){
+   terminateExam("Too many violations");
+ }
+}
+
+// ================= TERMINATE =================
+
+function terminateExam(reason){
+ alert("Exam terminated: "+reason);
+ submitExam();
+}
+
+// ================= FULLSCREEN =================
+
+function enterFullscreen(){
+ document.documentElement.requestFullscreen();
+}
+
+document.addEventListener("fullscreenchange", ()=>{
+ if(examActive && !document.fullscreenElement){
+   terminateExam("Exited fullscreen");
+ }
+});
+
+// ================= BLOCK ACTIONS =================
+
+// right click
+document.addEventListener("contextmenu", e=>{
+ e.preventDefault(); addViolation("Right click");
+});
+
+// copy paste cut
+["copy","paste","cut"].forEach(ev=>{
+ document.addEventListener(ev,e=>{
+  e.preventDefault(); addViolation(ev);
+ });
+});
+
+// tab switch
+window.addEventListener("blur", ()=>{
+ addViolation("Tab switch");
+});
+
+// key blocking
+document.addEventListener("keydown", e=>{
+ if(!examActive) return;
+ if(
+  e.key==="Escape" ||
+  e.key==="F12" ||
+  (e.ctrlKey && ["c","v","x","u","s",,"r"].includes(e.key.toLowerCase())) ||
+  (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(e.key.toLowerCase()))
+ ){
+  e.preventDefault();
+  addViolation("Blocked key");
+ }
+});
+
+// block selection except textarea
+document.addEventListener("selectstart", e=>{
+ if(examActive && e.target.id!=="answer")
+  e.preventDefault();
+});
+
+// ================= STORAGE =================
+
+function passInput(){ return document.getElementById("pass").value.trim(); }
+function saveAnswer(){ localStorage.setItem("ans_"+passInput(), answer.value); }
+
+// ================= PYTHON EXECUTION & GRADING =================
+
+async function autoGradePython(){
+ if(!pyodideReady) { alert("Python engine loading..."); return 0; }
+
+ try{
+   let code = answer.value;
+   let output = await pyodide.runPythonAsync(`
+import sys
+from io import StringIO
+sys.stdout = StringIO()
+try:
+${code.split("\n").map(l=>"    "+l).join("\n")}
+except Exception as e:
+    print(e)
+sys.stdout.getvalue()
+   `);
+   let expected = EXPECTED_OUTPUTS[currentQ];
+   output = output.trim().replace(/\n/g,'');
+   return output==expected ? 100 : 0;
+ } catch(err){
+   console.log(err);
+   return 0;
+ }
+}
+
+// ================= CLOSE SCREEN =================
+
+function closeExamScreen(){
+ examActive=false;
+ document.exitFullscreen?.();
+ document.body.innerHTML = `
+ <div style="text-align:center;margin-top:120px;font-family:Arial">
+   <h1>✅ Exam Submitted</h1>
+   <p>This assessment window is now closed.</p>
+   <p>Contact the trainer.</p>
+ </div>`;
+ setTimeout(()=>{ window.open('','_self'); window.close(); },1500);
+}
+
+// ================= SUBMIT =================
+
+async function submitExam(){
+ if(!examActive) return;
+
+ saveAnswer();
+ examActive=false;
+
+ let score = await autoGradePython();
+
+ let w = window.open();
+ w.document.write(`
+ <h2>Submission</h2>
+ Student: ${studentName.value}<br>
+ Question: ${currentQ}<br>
+ Score: ${score}%<br>
+ Violations: ${violations}<br>
+ <pre>${answer.value}</pre>
+ `);
+ w.print();
+
+ closeExamScreen();
+}
+
+</script>
+
+</body>
+</html>

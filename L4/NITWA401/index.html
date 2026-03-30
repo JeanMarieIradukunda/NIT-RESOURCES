@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NITWA401 – Windows Server Administration</title>
+
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+        <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f3f6fb;
+            padding: 40px 20px;
+        }
+
+        /* HEADER */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .back-btn i {
+            font-size: 1.4rem;
+        }
+
+        /* SEARCH BAR */
+        #searchInput {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+        }
+
+        /* CENTRAL CARD */
+        .list-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* BULLET LIST AS GRID */
+        .list-card ul {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 20px;
+            /* row-gap column-gap */
+        }
+
+        .list-card li {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .list-card li:hover {
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+
+        .list-card li i {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .list-card a {
+            color: #111827;
+            text-decoration: none;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .list-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ICON COLORS */
+        .folder i {
+            color: #919e08;
+        }
+
+        .pdf i {
+            color: #dc2626;
+        }
+
+        .html i {
+            color: #ea580c;
+        }
+
+        .txt i {
+            color: #16a34a;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:576px) {
+            .list-card ul {
+                grid-template-columns: 1fr;
+                /* single column on small screens */
+            }
+
+            .list-card li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div class="dashboard-header">
+            <!-- BACK BUTTON -->
+            <a href="../" class="back-btn"><i
+                    class="bi bi-arrow-left-circle-fill"></i> Parent
+                Directory</a>
+
+            <!-- TOPIC TITLE -->
+            <h1>NITWA401 – Windows Server Administration</h1>
+
+            <!-- SEARCH BAR -->
+            <input type="text" id="searchInput"
+                placeholder="Search files or folders...">
+        </div>
+
+        <div class="list-card">
+            <ul id="fileList">
+                <!-- Folders -->
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="INSTALLATION STEPS/">INSTALLATION STEPS</a>
+                </li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-2-ADDS/">L-O-2-ADDS</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-3-MAIL-SERVER-EXCHANGE/">L-O-3-MAIL-SERVER-EXCHANGE</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-4-DHCP-SERVER-DEPLOYMENT/">L-O-4-DHCP-SERVER</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="LO-5-DNS-SERVER-DEPLOYMENT/">LO-5-DNS-SERVER</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-6/">L-O-6</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-7/">L-O-7</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="L-O-8/">L-O-8</a></li>
+                <li class="folder"><i class="bi bi-folder-fill"></i><a
+                        href="SERVER ADMINISTRATION/">SERVER
+                        ADMINISTRATION</a></li>
+                <li class="folder">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <a href="DNS-GROUP-DISCUSSION.HTML">DNS</a>
+                </li>
+                <li class="folder">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <a href="Modal-questions.html">Modal-Questions</a>
+                </li>
+            </ul>
+        </div>
+
+        <script>
+        // SEARCH FILTER
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.toLowerCase();
+            const items = document.querySelectorAll('#fileList li');
+
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    </body>
+
+</html>

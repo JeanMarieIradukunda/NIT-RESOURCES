@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>C Programming Formative Assessment</title>
+
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --light: #f5f7fb;
+            --border: #d9dee7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background: #fff;
+            margin: 0;
+            padding: 16px;
+            color: #111;
+            line-height: 1.25;
+            font-size: 15px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        img,
+        pre {
+            pointer-events: none;
+        }
+
+        /* Hide exam content initially */
+        #examContent {
+            display: none;
+        }
+
+        /* PAGE */
+        .page {
+            max-width: 920px;
+            margin: auto;
+            padding: 20px 24px;
+        }
+
+        /* HEADER */
+        .header {
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .school {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .exam-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 2px;
+            color: #333;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .meta-box {
+            background: var(--light);
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        /* SECTION */
+        .section {
+            margin-top: 14px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary);
+            background: #eef3fb;
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* LISTS */
+        ol {
+            margin: 0 0 0 20px;
+            padding: 0;
+        }
+
+        li {
+            margin: 4px 0;
+            font-size: 14px;
+        }
+
+        .mcq {
+            column-count: 2;
+            column-gap: 30px;
+        }
+
+        .mcq li {
+            break-inside: avoid;
+            margin-bottom: 6px;
+        }
+
+        .options {
+            margin-top: 2px;
+            margin-left: 6px;
+            font-size: 13px;
+        }
+
+        /* TRUE/FALSE */
+        .tf-grid {
+            columns: 2;
+            column-gap: 30px;
+            font-size: 13px;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        th {
+            background: #eef3fb;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 5px 6px;
+            text-align: left;
+        }
+
+        /* CODE */
+        .code-box,
+        pre {
+            background: #f4f6fa;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 6px;
+            font-size: 12px;
+            margin: 6px 0;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+        }
+
+        /* PROGRAM LIST */
+        .programs li {
+            margin-bottom: 6px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* PRINT */
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .page {
+                padding: 10mm;
+            }
+        }
+
+        /* START BUTTON STYLES */
+        #startBtn {
+            display: block;
+            margin: 200px auto;
+            padding: 20px 40px;
+            font-size: 18px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #startBtn:hover {
+            background-color: #15315c;
+        }
+
+    </style>
+
+<script>
+    /* ---------- RIGHT CLICK DISABLE ---------- */
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+    /* ---------- KEYBOARD BLOCK ---------- */
+    function blockKeys(e) {
+        // Block common cheat shortcuts
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+            (e.ctrlKey && ["S", "P", "U", "C", "X", "V", "A"].includes(e.key))
+        ) {
+            e.preventDefault();
+            recordViolation("Attempted to use a blocked shortcut: " + e.key);
+        }
+
+        // Block ESC key to prevent leaving fullscreen
+        if (e.key === "Escape") {
+            e.preventDefault();
+            recordViolation("Attempted to exit fullscreen using ESC");
+        }
+    }
+
+    document.addEventListener("keydown", blockKeys);
+
+    /* ---------- VIOLATION TRACKING ---------- */
+    let violationCount = 0;
+
+    function recordViolation(reason) {
+        violationCount++;
+        const violDiv = document.getElementById("violations");
+        violDiv.innerHTML += violationCount + ". " + reason + "<br>";
+
+        if (violationCount >= 3) {
+            document.body.innerHTML = "<h1 style='color:red; text-align:center;'>Exam Locked — Too many violations</h1>";
+        }
+    }
+
+    /* ---------- TAB SWITCH DETECTION ---------- */
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            recordViolation("Switched tabs or minimized window");
+        }
+    });
+
+    /* ---------- WINDOW BLUR ---------- */
+    window.addEventListener("blur", function () {
+        recordViolation("Window lost focus");
+    });
+
+    /* ---------- FULLSCREEN & SHOW EXAM ---------- */
+    function startExam() {
+        const el = document.documentElement;
+        if (el.requestFullscreen) {
+            el.requestFullscreen();
+        } else if (el.webkitRequestFullscreen) {
+            el.webkitRequestFullscreen();
+        } else if (el.msRequestFullscreen) {
+            el.msRequestFullscreen();
+        }
+
+        // Hide start button and show exam content
+        document.getElementById("startBtn").style.display = "none";
+        document.getElementById("examContent").style.display = "block";
+    }
+</script>
+
+
+</head>
+
+<body>
+
+    <!-- START BUTTON -->
+    <button id="startBtn" onclick="startExam()">Start Exam</button>
+
+    <!-- EXAM CONTENT -->
+    <div id="examContent" class="page">
+
+            <!-- Add this div at the top inside #examContent -->
+<div id="violations" style="color:red; font-weight:bold; margin-bottom:10px;"></div>
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <div class="school">PADRI VJEKO CENTRE TSS</div>
+                    <div class="exam-title">GENCP302 — C Programming Fundamentals</div>
+                </div>
+                <div style="text-align:right;font-size:12px;">
+                    <strong>Formative Assessment</strong>
+                </div>
+            </div>
+
+            <div class="meta-grid">
+                <div class="meta-box"><strong>Learning Outcome:</strong> Write C Programming Codes</div>
+                <div class="meta-box"><strong>Total Marks:</strong> __________ / 70</div>
+                <div class="meta-box"><strong>Trainee Name:</strong>
+                    ________________________________________________________________________________</div>
+                <div class="meta-box"><strong>Date:</strong> ____________</div>
+            </div>
+        </div>
+
+            <!-- PART I -->
+            <div class="section">
+                <div class="section-title">PART I — Choose the Correct
+                    Answer</div>
+                <ol class="mcq">
+                    <li>Which of the following is NOT a token in C?
+                        <div class="options">A. Keyword &nbsp; B. Variable
+                            &nbsp; C. Operator &nbsp; D. Function prototype
+                        </div>
+                    </li>
+                    <li>Which of these is a valid C data type?
+                        <div class="options">A. integer &nbsp; B. char &nbsp; C.
+                            float32 &nbsp; D. string</div>
+                    </li>
+                    <li>Which of the following is a correct constant
+                        declaration?
+                        <div class="options">A. int const x = 10; &nbsp; B.
+                            constant int x = 10; &nbsp; C. x = 10 const int;
+                            &nbsp; D. int x const = 10;</div>
+                    </li>
+                    <li>Which operator is used for logical AND in C?
+                        <div class="options">A. &amp; &nbsp; B. &amp;&amp;
+                            &nbsp; C. | &nbsp; D. ||</div>
+                    </li>
+                    <li>Which of the following is NOT a preprocessor directive?
+                        <div class="options">A. #define &nbsp; B. #include
+                            &nbsp; C. #pragma &nbsp; D. #function</div>
+                    </li>
+                    <li>In C, the entry point of a program is:
+                        <div class="options">A. void main() &nbsp; B. main()
+                            &nbsp; C. int main() &nbsp; D. program()</div>
+                    </li>
+                    <li>Which statement correctly declares a function returning
+                        an integer?
+                        <div class="options">A. int add(int a,int b); &nbsp; B.
+                            function int add(...) &nbsp; C. int function
+                            add &nbsp; D. add(...) int</div>
+                    </li>
+                    <li>Which of these is a single-line comment in C?
+                        <div class="options">A. /* */ &nbsp; B. // comment
+                            &nbsp; C. &lt;!-- --&gt; &nbsp; D. # comment
+                        </div>
+                    </li>
+                    <li>What will the following C code print if <b>x = 10</b>?
+                        <pre class="code-box">if (x > 5){
+    printf("Hello");
+                    }else{
+    printf("world")};</pre>
+                        <div class="options">A. Hello &nbsp; B. world &nbsp; C.
+                            Error &nbsp; D. Nothing</div>
+                    </li>
+                    <li>What is the return type of the function shown below?
+                        <pre class="code-box">float multiply(float a, float b){
+    return a * b;
+}</pre>
+                        <div class="options">A. int &nbsp; B. void &nbsp; C.
+                            float &nbsp; D. double</div>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- PART II -->
+            <div class="section">
+                <div class="section-title">PART II — True or False</div>
+                <div class="tf-grid">
+                    <ol>
+                        <li>Function arguments are values passed into a function
+                            when called.</li>
+                        <li>#include &lt;stdio.h&gt; is NOT a preprocessor
+                            directive.</li>
+                        <li>% is a modulus arithmetic operator.</li>
+                        <li>string s = "Hello"; is valid in standard C.</li>
+                        <li>A function declaration specifies name, return type,
+                            parameters.</li>
+                        <li>int sum(int,int); is a valid declaration.</li>
+                        <li>Comments affect execution.</li>
+                        <li>switch can replace many else-if checks.</li>
+                        <li>void function returns a value.</li>
+                        <li>
+                            The following code will print "Yes". Study the
+                            program below:
+
+                            <pre class="code-box">
+int x = 5;
+
+if(x < 10){
+    printf("Yes");
+}else if(x < 20){
+    printf("Maybe");
+}else
+    printf("No");
+</pre>
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+
+            <!-- PART III -->
+            <div class="section">
+                <div class="section-title">PART III — Structured Questions</div>
+                <ol>
+                    <li>Sequence these C program components in typical order:
+                        <ul>
+                            <li>___. Functions</li>
+                            <li>___. Preprocessor directives</li>
+                            <li>___. Statements &amp; expressions</li>
+                            <li>___. Comments</li>
+                        </ul>
+                    </li>
+                    <li>Order correctly these steps of writing a C function:
+                        <ul>
+                            <li>___.Call the function</li>
+                            <li>___.Define the function</li>
+                            <li>___.Declare the function</li>
+                        </ul>
+                    </li>
+                    <li>Match the following C keywords/functions with their
+                        correct description:
+                        <table>
+                            <tr>
+                                <th>No</th>
+                                <th>Item</th>
+                                <th>Match(Fill in the Correct item)</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>float</td>
+                                <td></td>
+                                <td>Data type for integers</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>void</td>
+                                <td></td>
+                                <td>Decimal numbers</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>switch</td>
+                                <td></td>
+                                <td>Single characters</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>int</td>
+                                <td></td>
+                                <td>No return value</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>else if</td>
+                                <td></td>
+                                <td>Decision statement</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>if</td>
+                                <td></td>
+                                <td>New condition</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>char</td>
+                                <td></td>
+                                <td>Multiple cases</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>#define</td>
+                                <td></td>
+                                <td>Define constants</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>%</td>
+                                <td></td>
+                                <td>Output function</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>printf()</td>
+                                <td></td>
+                                <td>Remainder operator</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- PART IV -->
+            <div class="section">
+                <div class="section-title">PART IV — Program Creation</div>
+                <ol class="programs">
+                    <li>Write a complete C program that asks the user to enter a
+                        number and checks whether the number is
+                        <b>positive, negative, or zero</b>. The program must
+                        display the correct message based on the value
+                        entered.
+                    </li>
+                    <li>Write a complete C program that asks the user to enter a
+                        number from <b>1 to 7</b> and prints the
+                        corresponding <b>day of the week</b> using a <b>switch
+                            statement</b>. Display an error message if
+                        the number is outside the valid range.</li>
+                    <li>Write a C program that asks the user to enter a number
+                        and determines whether the number is <b>even
+                            or odd</b> using a <b>user-defined function</b>. The
+                        function should return a value indicating
+                        whether the number is even or odd, and the main program
+                        should print the result.</li>
+                    <li>Write a C program that reads a <b>student’s name</b> and
+                        <b>marks</b>, then determines and prints
+                        the student’s <b>grade using a user-defined
+                            function</b>. The function should return the grade
+                        based
+                        on the grading rules below. Output must look like this:
+                        <pre class="code-box">Student: Alice
+Marks: 78
+Grade: B</pre>
+                    </li>
+                </ol>
+
+                <table>
+                    <tr>
+                        <th colspan="2">Grading Rules</th>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>85 – 100</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>70 – 84</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>55 – 69</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>40 – 54</td>
+                    </tr>
+                    <tr>
+                        <td>Fail</td>
+                        <td>&lt; 40</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                Hack the Challenge — May Your Code Compile!
+            </div>
+
+        </div>
+    </body>
+
+</html>

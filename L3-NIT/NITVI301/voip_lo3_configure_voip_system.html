@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>LO3 - Configure VoIP System</title>
+
+        <style>
+        body {
+            font-family: "Calisto MT", Roboto, Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            line-height: 1.7;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(120deg, #0a4ea3, #1e88e5);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #0a4ea3;
+            border-bottom: 3px solid #e0e6ef;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #1e88e5;
+        }
+
+        ul {
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .steps {
+            background: #f8fbff;
+            border-left: 4px solid #1e88e5;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .code {
+            background: #0d1117;
+            color: #00ffae;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: Consolas, monospace;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .note {
+            background: #eef5ff;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 5px solid #0a4ea3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>LEARNING OUTCOME 3: CONFIGURE VOIP SYSTEM</h1>
+        </header>
+
+        <div class="container">
+
+            <div class="card">
+                <h2>Configuration of Router Based VoIP system</h2>
+
+                <p>This is the process of setting up a router so that VoIP
+                    devices can connect and make calls.</p>
+
+                <ul>
+                    <li>The router manages both internet traffic and voice
+                        traffic.</li>
+                    <li>Proper configuration ensures IP phones, computers, and
+                        VoIP servers communicate properly.</li>
+                    <li>Includes assigning IP addresses, configuring gateways,
+                        setting passwords, and sometimes prioritizing
+                        voice traffic (QoS).</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h2>1. VoIP Essential Router-Based Configurations</h2>
+
+                <p>These are the minimum settings a router must have to support
+                    VoIP:</p>
+
+                <h3>1. Interface</h3>
+
+                <ul>
+                    <li>This is the connection point on the router where devices
+                        connect.</li>
+                    <li>Each interface is given an IP address and subnet so that
+                        devices on the network can communicate.
+                    </li>
+                    <li>Example: LAN interface 192.168.1.1 connects phones and
+                        computers.</li>
+                </ul>
+
+                <div class="steps">
+                    <strong>Steps:</strong>
+
+                    <ol>
+                        <li>Enter configuration mode: enable → configure
+                            terminal</li>
+                        <li>Select interface: interface GigabitEthernet0/1</li>
+                        <li>Assign IP: ip address 192.168.1.1 255.255.255.0</li>
+                        <li>Activate interface: no shutdown</li>
+                    </ol>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h3>2. IP Default Gateway</h3>
+
+                <ul>
+                    <li>This is the IP address the router uses to send traffic
+                        to other networks or the internet.</li>
+                    <li>It allows VoIP calls to reach external SIP servers or
+                        other networks.</li>
+                    <li>Example: WAN gateway 203.0.113.1 for internet
+                        connectivity.</li>
+                </ul>
+
+                <div class="code">
+                    Command: ip route 0.0.0.0 0.0.0.0 203.0.113.1
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h3>3. Passwords</h3>
+
+                <ul>
+                    <li>Routers must have secure passwords to protect
+                        configuration and access.</li>
+                    <li>Admin accounts should have strong passwords to prevent
+                        unauthorized access.</li>
+                    <li>Optional: Secure access via SSH instead of Telnet for
+                        safer management.</li>
+                </ul>
+
+                <div class="steps">
+                    <strong>Steps:</strong>
+
+                    <ol>
+                        <li>Set admin user: username admin privilege 15 secret
+                            MyStrongPassword123</li>
+                        <li>Enable SSH: ip domain-name office.local → crypto key
+                            generate rsa → ip ssh version 2</li>
+                        <li>Disable Telnet: line vty 0 4 → transport input ssh →
+                            login local</li>
+                    </ol>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>2. Creating VoIP Pool for Voice System</h2>
+
+                <p>A VoIP Pool is a range of IP addresses reserved for VoIP
+                    devices (like IP phones) in a network.</p>
+
+                <ul>
+                    <li>The router or DHCP server assigns IP addresses
+                        automatically to VoIP devices from this pool.</li>
+                    <li>Ensures IP phones have proper network addresses for
+                        calling and registration.</li>
+                </ul>
+
+                <h3>Key Elements of a VoIP Pool</h3>
+
+                <h4>A. Pool Name</h4>
+
+                <ul>
+                    <li>This is a label for the pool so you can identify it
+                        easily.</li>
+                    <li>Example: VOIP_POOL_01</li>
+                    <li>Purpose: Helps organize multiple pools if you have
+                        different office areas or departments.</li>
+                </ul>
+
+                <h4>B. Pool Address (Network Address and Subnet Mask)</h4>
+
+                <ul>
+                    <li>Network Address: The first IP in the range used for the
+                        VoIP pool.</li>
+                    <li>Subnet Mask: Defines how many IP addresses are available
+                        in the pool.</li>
+                </ul>
+
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Example</th>
+                        </tr>
+                        <tr>
+                            <td>Network Address</td>
+                            <td>192.168.10.0</td>
+                        </tr>
+                        <tr>
+                            <td>Subnet Mask</td>
+                            <td>255.255.255.0</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <ul>
+                    <li>This provides addresses from 192.168.10.1 to
+                        192.168.10.254 for phones.</li>
+                    <li>Purpose: Defines the range of IP addresses available for
+                        VoIP devices.</li>
+                </ul>
+
+                <h4>C. Voice Option (Option 150)</h4>
+
+                <ul>
+                    <li>DHCP Option 150 tells IP phones where the VoIP server
+                        (IP PBX) is located.</li>
+                    <li>Phones use this IP to register with the PBX and make
+                        calls.</li>
+                </ul>
+
+                <div class="code">
+                    <!-- Example command -->
+                    option 150 ip 192.168.10.100
+                </div>
+
+                <ul>
+                    <li>Purpose: Automatically directs IP phones to the PBX
+                        server for registration, so you don’t have to configure
+                        each phone manually.</li>
+                </ul>
+
+                <h3>3. Sample VoIP Pool Configuration (Cisco-style)</h3>
+
+                <div class="code">
+                    ip dhcp pool VOIP_POOL_01<br>
+                    network 192.168.10.0 255.255.255.0<br>
+                    default-router 192.168.10.1<br>
+                    option 150 ip 192.168.10.100
+                </div>
+
+                <ul>
+                    <li>ip dhcp pool VOIP_POOL_01 → Name of the pool</li>
+                    <li>network 192.168.10.0 255.255.255.0 → Defines the address
+                        range</li>
+                    <li>default-router 192.168.10.1 → Gateway for phones</li>
+                    <li>option 150 ip 192.168.10.100 → Points phones to the VoIP
+                        server</li>
+                </ul>
+
+                <p>Creating a VoIP pool automates IP assignment and ensures all
+                    phones connect to the VoIP server correctly, simplifying
+                    network management in offices or call centers.</p>
+
+                <div class="note" style="text-align:center;">
+                    <strong>IMAGE:</strong>
+                    <!-- Placeholder for your diagram -->
+                    <br><br>
+                    <img src="voip_pool_diagram.png" alt="VoIP Pool Diagram"
+                        style="max-width:100%; border-radius:8px;" />
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h2>4. Configuration of Phone Line Number</h2>
+
+                <p>This is the process of assigning a telephone number
+                    (extension) to an IP phone in a VoIP system.</p>
+
+                <p>In VoIP networks, each phone must have a unique extension
+                    number so users can call each other inside the
+                    organization.</p>
+
+                <h3>Example</h3>
+                <ul>
+                    <li>Reception → Extension 100</li>
+                    <li>Manager → Extension 101</li>
+                    <li>Office 1 → Extension 102</li>
+                </ul>
+
+                <h3>Purpose</h3>
+                <ul>
+                    <li>Allows users to dial and communicate internally</li>
+                    <li>Helps the VoIP server (IP PBX) identify each phone</li>
+                    <li>Organizes communication inside the network</li>
+                </ul>
+
+                <h3>Phone Directory for IP Phone</h3>
+
+                <p>A phone directory is a list of users, extension numbers, and
+                    sometimes names stored in the VoIP system.</p>
+                <p>IP phones can access this directory to find and call other
+                    users easily.</p>
+
+                <h4>Example Directory</h4>
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Extension</th>
+                        </tr>
+                        <tr>
+                            <td>Reception</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Manager</td>
+                            <td>101</td>
+                        </tr>
+                        <tr>
+                            <td>Finance</td>
+                            <td>102</td>
+                        </tr>
+                        <tr>
+                            <td>IT Office</td>
+                            <td>103</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h4>Purpose</h4>
+                <ul>
+                    <li>Makes it easy to search for contacts</li>
+                    <li>Reduces the need to remember extension numbers</li>
+                    <li>Improves communication efficiency</li>
+                </ul>
+
+                <p>Some systems allow the directory to be stored on the PBX
+                    server or downloaded automatically to IP phones.</p>
+
+                <h3>ePhones</h3>
+
+                <p>ePhones (Ethernet Phones) are IP phones registered to a VoIP
+                    router or VoIP server.</p>
+                <p>In many systems (especially Cisco VoIP systems), an ePhone
+                    configuration identifies a specific IP phone device.</p>
+
+                <p>Each ePhone usually includes:</p>
+                <ul>
+                    <li>MAC address of the phone</li>
+                    <li>Extension number</li>
+                    <li>Phone type or model</li>
+                    <li>Button configuration</li>
+                </ul>
+
+                <h4>Example Configuration (Cisco-style)</h4>
+                <div class="code">
+                    ephone 1<br>
+                    mac-address 001B.D5A1.2345<br>
+                    type 7960<br>
+                    button 1:1
+                </div>
+
+                <h4>Explanation:</h4>
+                <ul>
+                    <li>ephone 1 → Identifies the phone device</li>
+                    <li>mac-address → Unique hardware address of the IP
+                        phone</li>
+                    <li>type 7960 → Model of the phone</li>
+                    <li>button 1:1 → Assigns extension 1 to button 1</li>
+                </ul>
+
+                <h4>Purpose</h4>
+                <ul>
+                    <li>Registers the IP phone with the VoIP system</li>
+                    <li>Connects the physical device to a phone number</li>
+                    <li>Allows the phone to make and receive calls</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h2>5. Configuration of Phone Call Manager (CME)</h2>
+
+                <h3>1. Phone Call Manager (CME) Configuration</h3>
+
+                <p>Call Manager Express (CME) is a Cisco router-based VoIP
+                    system. It manages IP phones, extensions, and internal calls
+                    without a separate server.</p>
+
+                <p>The configuration includes:</p>
+                <ul>
+                    <li>Activating telephony services</li>
+                    <li>Registering phones (ephones)</li>
+                    <li>Assigning directory numbers (DNs / extensions)</li>
+                    <li>Auto-assigning line numbers</li>
+                    <li>Testing the system</li>
+                </ul>
+
+                <h3>2. Telephone Services</h3>
+
+                <p>The <strong>telephony-service</strong> command activates VoIP
+                    services on the router.</p>
+
+                <div class="code">
+                    telephony-service<br>
+                    ip source-address 192.168.1.1 port 2000
+                </div>
+
+                <ul>
+                    <li><strong>ip source-address</strong> → The router IP that
+                        phones use to register</li>
+                    <li><strong>port 2000</strong> → Default SIP signaling port
+                        for IP phones</li>
+                </ul>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Allows the router to handle IP phone registration</li>
+                    <li>Enables internal VoIP calling features</li>
+                </ul>
+
+                <h3>3. Maximum Number of ePhones</h3>
+
+                <p>ePhones are the actual IP phones connected to the router. You
+                    must configure the maximum number of phones the router can
+                    support.</p>
+
+                <div class="code">
+                    max-ephones 10
+                </div>
+
+                <ul>
+                    <li>The router can register up to 10 IP phones.</li>
+                </ul>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Prevents system overload</li>
+                    <li>Helps plan capacity for office phones</li>
+                </ul>
+
+                <h3>4. Maximum Number of Directory Numbers (DN)</h3>
+
+                <p>Directory Numbers (DNs) are the extension numbers assigned to
+                    phones. You can define the maximum number of extensions in
+                    the system.</p>
+
+                <div class="code">
+                    max-dn 20
+                </div>
+
+                <ul>
+                    <li>The system can create 20 extensions.</li>
+                </ul>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Organize the phone system</li>
+                    <li>Assign extensions to phones automatically</li>
+                </ul>
+
+                <h3>5. Auto Assignment of Line Numbers</h3>
+
+                <p>CME can automatically assign extension numbers to phones when
+                    they register.</p>
+
+                <div class="code">
+                    auto assign 1 to 10
+                </div>
+
+                <ul>
+                    <li>Phones registering will receive extensions 1–10
+                        automatically.</li>
+                </ul>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Reduces manual configuration</li>
+                    <li>Makes installation faster</li>
+                </ul>
+
+                <h3>6. Testing the System</h3>
+
+                <p>After configuration, you need to verify everything works
+                    correctly.</p>
+
+                <div class="steps">
+                    <strong>Steps:</strong>
+                    <ol>
+                        <li>Check registered phones: <code>show ephone
+                                registered</code></li>
+                        <li>Check assigned directory numbers: <code>show
+                                ephone-dn</code></li>
+                        <li>Test call between extensions (Example: Extension 101
+                            → Extension 102)</li>
+                        <li>Test VoIP features: Call hold, transfer, voicemail,
+                            auto-assigned extensions</li>
+                    </ol>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Ensure phones are connected</li>
+                    <li>Confirm calls can be made internally</li>
+                    <li>Verify extensions and features work correctly</li>
+                </ul>
+
+                <h3>7. Sample CME Configuration (Cisco CLI)</h3>
+
+                <div class="code">
+                    telephony-service<br>
+                    ip source-address 192.168.1.1 port 2000<br>
+                    max-ephones 10<br>
+                    max-dn 20<br>
+                    auto assign 1 to 10
+                </div>
+
+                <ul>
+                    <li>telephony-service → Activates CME</li>
+                    <li>ip source-address → Router IP for phone
+                        registration</li>
+                    <li>max-ephones 10 → Max 10 phones</li>
+                    <li>max-dn 20 → Max 20 extensions</li>
+                    <li>auto assign 1 to 10 → Automatic assignment of
+                        extensions</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h2>6. Configuration of VoIP System Server Based (IP PBX / PABX
+                    / PBX)</h2>
+
+                <p>A VoIP Server-Based System is a centralized voice system that
+                    manages calls for an organization.</p>
+
+                <p><strong>IP PBX:</strong> Internet Protocol Private Branch
+                    Exchange (VoIP system using IP network)</p>
+                <p><strong>PABX / PBX:</strong> Traditional private branch
+                    exchange for analog or digital lines</p>
+
+                <p>The server handles:</p>
+                <ul>
+                    <li>User registration</li>
+                    <li>Call routing</li>
+                    <li>Extension management</li>
+                    <li>External calls</li>
+                    <li>Advanced features like IVR, FollowMe, and CRM
+                        integration</li>
+                </ul>
+
+                <h3>1. VoIP Users</h3>
+                <p>People or devices using the VoIP system.</p>
+                <ul>
+                    <li>Can be IP phones, softphones, or mobile devices.</li>
+                    <li>Each user is assigned a unique extension (Directory
+                        Number).</li>
+                    <li><strong>Purpose:</strong> Identify callers and manage
+                        calls internally.</li>
+                </ul>
+
+                <h3>2. Frequency for Voice</h3>
+                <p>Voice is analog by nature, but VoIP converts it to digital
+                    signals.</p>
+                <ul>
+                    <li>Human voice ranges roughly 300–3400 Hz, which is enough
+                        for conversation.</li>
+                    <li>VoIP uses compression and sampling to send voice
+                        efficiently over networks.</li>
+                </ul>
+
+                <h3>3. Frame and Packet (Voice Packet)</h3>
+                <ul>
+                    <li><strong>Frame:</strong> Small unit of digital data in a
+                        network.</li>
+                    <li><strong>Packet:</strong> A chunk of data (including
+                        voice) sent over IP networks.</li>
+                    <li>Voice is encoded, divided into packets, and sent over
+                        the network.</li>
+                    <li><strong>Purpose:</strong> Allows real-time voice
+                        communication over IP networks.</li>
+                </ul>
+
+                <h3>4. Layered Model</h3>
+                <p>VoIP uses standard network protocols and layered models:</p>
+
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Function</th>
+                        </tr>
+                        <tr>
+                            <td>Application</td>
+                            <td>VoIP software / IP PBX services</td>
+                        </tr>
+                        <tr>
+                            <td>Transport</td>
+                            <td>UDP (User Datagram Protocol)</td>
+                        </tr>
+                        <tr>
+                            <td>Network</td>
+                            <td>Internet Protocol (IP)</td>
+                        </tr>
+                        <tr>
+                            <td>Data Link / Physical</td>
+                            <td>Ethernet / Switch / Cabling</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p><strong>Key Protocols:</strong></p>
+                <ul>
+                    <li>IP → Delivers packets between devices</li>
+                    <li>UDP → Lightweight transport for real-time traffic</li>
+                    <li>RTP → Real-Time Transport Protocol carries the actual
+                        voice data</li>
+                </ul>
+
+                <p><strong>Purpose:</strong> Ensures voice is sent reliably and
+                    quickly with minimal delay.</p>
+
+                <h3>5. Inter PBX Circuits</h3>
+                <p>Connections between two PBX servers (branches). Allows calls
+                    between offices without using PSTN (saves costs).</p>
+                <p>Example: PBX Office A ↔ PBX Office B</p>
+
+                <h3>6. Switchboard Facilities</h3>
+                <p>Central point for call management and operator assistance.
+                    Routes incoming calls to the correct extension.</p>
+                <p>Example: Reception answers incoming call → transfers to Sales
+                    / Support.</p>
+
+                <h3>7. Extension Facilities</h3>
+                <p>Internal numbers (DNs) for each user or phone.</p>
+                <p>Example: 100 = Reception, 101 = Manager, 102 = IT</p>
+                <p><strong>Purpose:</strong> Enables internal communication
+                    without public lines.</p>
+
+                <h3>8. Public Exchange Services</h3>
+                <p>Access to external phone networks (PSTN / GSM). Enables
+                    national and international calling.</p>
+
+                <h3>9. Alarms</h3>
+                <p>System alerts to notify issues:</p>
+                <ul>
+                    <li><strong>Fuse Alarm:</strong> Triggered when a protective
+                        fuse blows.</li>
+                    <li><strong>Mains Fail:</strong> Occurs when main power
+                        supply fails. The system may switch to backup
+                        batteries.</li>
+                    <li><strong>Purpose:</strong> Ensure system reliability and
+                        maintenance.</li>
+                </ul>
+
+                <h3>10. Tones</h3>
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Tone</th>
+                            <th>Meaning</th>
+                        </tr>
+                        <tr>
+                            <td>Dial tone</td>
+                            <td>Phone ready to dial</td>
+                        </tr>
+                        <tr>
+                            <td>Ring tone</td>
+                            <td>Destination phone ringing</td>
+                        </tr>
+                        <tr>
+                            <td>Busy tone</td>
+                            <td>Line is busy</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>11. Numbering</h3>
+                <p>Assigns internal extensions logically.</p>
+
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Department</th>
+                            <th>Extensions</th>
+                        </tr>
+                        <tr>
+                            <td>Reception</td>
+                            <td>100–109</td>
+                        </tr>
+                        <tr>
+                            <td>Sales</td>
+                            <td>110–119</td>
+                        </tr>
+                        <tr>
+                            <td>IT</td>
+                            <td>120–129</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>12. Local Calls</h3>
+                <p>
+                    Calls made within the same PBX system. These are internal
+                    calls between extensions without using external phone lines.
+                </p>
+                <div class="note">
+                    <p><strong>Example:</strong> Extension 101 → Extension
+                        102</p>
+                    <p><strong>Purpose:</strong> Allows seamless internal
+                        communication between employees or departments, reducing
+                        the need for public lines and minimizing call costs.</p>
+                </div>
+
+                <h3>13. Outgoing Exchange Line / Inter PBX Calls</h3>
+                <p>
+                    Calls that go outside the local PBX or to another branch
+                    PBX. These calls are routed through exchange lines or
+                    inter-PBX circuits.
+                </p>
+                <div class="note">
+                    <p><strong>Example:</strong> Extension 101 → PSTN → Client
+                        Phone / Extension at another branch PBX</p>
+                    <p><strong>Purpose:</strong> Enables external communication
+                        with clients, suppliers, or other offices, while
+                        integrating multiple PBX systems.</p>
+                </div>
+
+                <h3>14. Exchange Line Relay Sets</h3>
+                <p>
+                    Hardware relays that connect internal PBX extensions to
+                    external telephone lines. Can operate manually or
+                    automatically to switch calls between internal and external
+                    lines.
+                </p>
+                <div class="note">
+                    <p><strong>Purpose:</strong> Ensures calls can flow
+                        seamlessly from internal extensions to external
+                        networks, providing reliability and flexibility in call
+                        management.</p>
+                </div>
+
+                <h3>15. Interactive Voice Response (IVR)</h3>
+                <p>
+                    An automated phone menu that guides callers using voice
+                    prompts or keypad input, helping route calls efficiently
+                    without human intervention.
+                </p>
+                <div class="note">
+                    <p><strong>Example Menu:</strong></p>
+                    <ul>
+                        <li>Press 1 for Sales</li>
+                        <li>Press 2 for Support</li>
+                        <li>Press 3 for Accounts</li>
+                    </ul>
+                    <p><strong>Purpose:</strong> Automates call distribution,
+                        reduces workload for receptionists, ensures calls reach
+                        the correct department, and improves customer service
+                        efficiency.</p>
+                </div>
+
+                <h3>16. Call Routing Methods</h3>
+
+                <div class="note">
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                            <th>Explanation / Example</th>
+                        </tr>
+                        <tr>
+                            <td>Round Robin</td>
+                            <td>Calls distributed one by one sequentially</td>
+                            <td>
+                                Calls are assigned to agents in order. <br>
+                                Example: Call 1 → Agent A, Call 2 → Agent B,
+                                Call 3 → Agent C, Call 4 → Agent A (repeat).
+                                <br>
+                                Purpose: Ensures equal distribution among all
+                                agents.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Regular</td>
+                            <td>Calls go to a fixed first destination</td>
+                            <td>
+                                Calls are sent to a primary agent first, then
+                                forwarded if busy. <br>
+                                Example: All incoming sales calls → Sales Agent
+                                1 → if busy → Sales Agent 2. <br>
+                                Purpose: Ensures calls reach the main contact
+                                first.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Uniform</td>
+                            <td>Calls go to the agent idle the longest</td>
+                            <td>
+                                Calls are routed to the agent who has been free
+                                for the longest time. <br>
+                                Example: Agent A idle 10 min, Agent B idle 5 min
+                                → next call goes to Agent A. <br>
+                                Purpose: Balances workload fairly among agents.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Simultaneous</td>
+                            <td>Rings multiple phones at the same time</td>
+                            <td>
+                                All designated agents’ phones ring
+                                simultaneously. <br>
+                                Example: Call → Agent A + Agent B + Agent C
+                                simultaneously → first to answer takes the call.
+                                <br>
+                                Purpose: Reduces waiting time for callers.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Weighted</td>
+                            <td>Calls distributed based on agent priority</td>
+                            <td>
+                                Calls are assigned based on predefined agent
+                                priorities or skill levels. <br>
+                                Example: Senior Agent → 70% of calls, Junior
+                                Agent → 30% of calls. <br>
+                                Purpose: Ensures experienced agents handle more
+                                calls or critical tasks.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>17. FollowMe</h3>
+                <p>Forwards calls to multiple devices until answered.</p>
+                <p>Example: Office Phone → Mobile → Home Phone → Voicemail</p>
+                <p><strong>Purpose:</strong> Never miss important calls.</p>
+
+                <h3>18. Customer Relationship Management (CRM) Software</h3>
+                <p>Integration with VoIP allows automatic display of customer
+                    information when a call arrives.</p>
+                <p>Example: Salesforce, HubSpot, Zoho CRM</p>
+
+                <p><strong>Purpose:</strong></p>
+                <ul>
+                    <li>Improves customer service</li>
+                    <li>Tracks all interactions</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h2>7. Configuration of Calls Routing</h2>
+
+                <p>Call Routing is the process of defining how incoming calls
+                    are directed inside a VoIP or PBX system.</p>
+                <p>It ensures that calls reach the right person, department, or
+                    device efficiently.</p>
+
+                <h3>Interactive Voice Response (IVR)</h3>
+                <p>IVR is an automated phone menu that interacts with callers
+                    using voice prompts or keypad input.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Welcome to ABC Company</li>
+                        <li>Press 1 for Sales</li>
+                        <li>Press 2 for Support</li>
+                        <li>Press 3 for Accounts</li>
+                        <li>Press 0 for Reception</li>
+                    </ul>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Automates call handling</li>
+                    <li>Reduces workload on receptionists</li>
+                    <li>Ensures calls go to the correct department</li>
+                </ul>
+
+                <h3>Call Routing Methods</h3>
+                <p>Different methods define how incoming calls are distributed
+                    among agents or extensions:</p>
+
+                <h4>a) Round Robin</h4>
+                <p>Calls are distributed in order, one after another.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Call 1 → Agent A</li>
+                        <li>Call 2 → Agent B</li>
+                        <li>Call 3 → Agent C</li>
+                        <li>Call 4 → Agent A (repeat)</li>
+                    </ul>
+                </div>
+
+                <p><strong>Purpose:</strong> Equal distribution among
+                    agents.</p>
+
+                <h4>b) Regular Routing</h4>
+                <p>Calls are sent to a fixed destination first, then forwarded
+                    if busy.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>All incoming sales calls → Sales Agent 1 → If busy →
+                            Sales Agent 2</li>
+                    </ul>
+                </div>
+
+                <p><strong>Purpose:</strong> Ensure calls reach the main contact
+                    first.</p>
+
+                <h4>c) Uniform</h4>
+                <p>Calls go to the agent who has been idle the longest.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Agent A idle 10 min, Agent B idle 5 min → next call
+                            goes to Agent A</li>
+                    </ul>
+                </div>
+
+                <p><strong>Purpose:</strong> Balance workload fairly.</p>
+
+                <h4>d) Simultaneous</h4>
+                <p>Rings multiple phones at the same time. First agent to answer
+                    takes the call.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Call → Agent A + Agent B + Agent C
+                            simultaneously</li>
+                    </ul>
+                </div>
+
+                <p><strong>Purpose:</strong> Reduce waiting time.</p>
+
+                <h4>e) Weighted</h4>
+                <p>Calls are distributed based on priority or skill level.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Senior Agent → 70% of calls</li>
+                        <li>Junior Agent → 30% of calls</li>
+                    </ul>
+                </div>
+
+                <p><strong>Purpose:</strong> Ensure experienced agents handle
+                    most calls.</p>
+
+                <h3>FollowMe</h3>
+                <p>FollowMe is a feature that forwards calls to multiple numbers
+                    until answered.</p>
+
+                <div class="note">
+                    <p>Example Sequence:</p>
+                    <ul>
+                        <li>Call → Office Phone</li>
+                        <li>If not answered → Mobile Phone</li>
+                        <li>If not answered → Home Phone</li>
+                        <li>If not answered → Voicemail</li>
+                    </ul>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Never miss important calls</li>
+                    <li>Allows users to answer calls on multiple devices</li>
+                </ul>
+
+                <h3>Customer Relationship Management (CRM) Integration</h3>
+                <p>CRM software tracks customer information and integrates with
+                    the VoIP system.</p>
+
+                <div class="note">
+                    <p>How it works:</p>
+                    <ul>
+                        <li>Caller dials company → VoIP system identifies the
+                            caller → CRM displays customer info on agent’s
+                            screen.</li>
+                    </ul>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Improve customer support</li>
+                    <li>Track communication history</li>
+                    <li>Allow agents to respond quickly and efficiently</li>
+                </ul>
+
+                <h4>Examples:</h4>
+                <ul>
+                    <li>Salesforce</li>
+                    <li>HubSpot</li>
+                    <li>Zoho CRM</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h2>8. Testing of VoIP System</h2>
+
+                <p>VoIP system testing is the process of checking if the voice
+                    network works correctly and delivers clear voice
+                    communication. It measures network performance and verifies
+                    that calls work correctly.</p>
+
+                <h3>Main parameters tested:</h3>
+                <ul>
+                    <li>Speed (Bandwidth)</li>
+                    <li>Latency</li>
+                    <li>Jitter</li>
+                    <li>Packet Loss</li>
+                    <li>Quality of Service (QoS)</li>
+                </ul>
+
+                <h3>Speed (Bandwidth)</h3>
+                <p>Speed or bandwidth is the amount of data that can travel
+                    through the network per second. VoIP requires enough
+                    bandwidth to carry voice packets.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>One VoIP call may require 80–100 kbps.</li>
+                    </ul>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Ensure the network can support multiple voice
+                        calls.</li>
+                    <li>Example test tools: Speed test tools, Network monitoring
+                        software</li>
+                </ul>
+
+                <h3>Latency</h3>
+                <p>Latency is the time it takes for voice packets to travel from
+                    the caller to the receiver. In simple terms: Delay between
+                    speaking and hearing the voice.</p>
+
+                <div class="note">
+                    <p>Good VoIP latency should be:</p>
+                    <table>
+                        <tr><th>Quality</th><th>Latency</th></tr>
+                        <tr><td>Excellent</td><td>&lt; 150 ms</td></tr>
+                        <tr><td>Acceptable</td><td>150–300 ms</td></tr>
+                        <tr><td>Poor</td><td>&gt; 300 ms</td></tr>
+                    </table>
+                </div>
+
+                <p>High latency causes echo and delay during conversation.</p>
+
+                <h3>Jitter</h3>
+                <p>Jitter is the variation in packet arrival time. Voice packets
+                    should arrive at regular intervals. Irregular arrival causes
+                    distorted or broken voice.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Packet 1 → arrives on time</li>
+                        <li>Packet 2 → arrives late</li>
+                        <li>Packet 3 → arrives early</li>
+                    </ul>
+                </div>
+
+                <div class="note">
+                    <p>Good VoIP jitter value:</p>
+                    <table>
+                        <tr><th>Quality</th><th>Jitter</th></tr>
+                        <tr><td>Good</td><td>&lt; 30 ms</td></tr>
+                    </table>
+                </div>
+
+                <h3>Packet Loss</h3>
+                <p>Packet loss occurs when some voice packets are lost during
+                    transmission.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Sent packets → 1 2 3 4 5</li>
+                        <li>Received → 1 2 4 5</li>
+                        <li>Packet 3 lost</li>
+                    </ul>
+                </div>
+
+                <p>This causes:</p>
+                <ul>
+                    <li>Missing audio</li>
+                    <li>Choppy voice</li>
+                    <li>Call interruptions</li>
+                </ul>
+
+                <div class="note">
+                    <p>Good VoIP packet loss should be:</p>
+                    <table>
+                        <tr><th>Quality</th><th>Packet Loss</th></tr>
+                        <tr><td>Good</td><td>&lt; 1%</td></tr>
+                    </table>
+                </div>
+
+                <h3>Quality of Service (QoS)</h3>
+                <p>QoS is a network technique that prioritizes voice traffic
+                    over other data. This ensures voice packets are sent faster
+                    than normal data traffic.</p>
+
+                <div class="note">
+                    <p>Example:</p>
+                    <ul>
+                        <li>Network Traffic ↓</li>
+                        <li>Router Priority:</li>
+                        <ol>
+                            <li>Voice packets</li>
+                            <li>Video</li>
+                            <li>Normal data</li>
+                        </ol>
+                    </ul>
+                </div>
+
+                <h4>Purpose:</h4>
+                <ul>
+                    <li>Improve voice clarity</li>
+                    <li>Reduce delay and packet loss</li>
+                </ul>
+
+                <h3>VoIP Router-Based Testing</h3>
+                <p>This testing is done when the VoIP system is managed by a
+                    router with Call Manager Express (CME).</p>
+
+                <h4>Local Call Testing</h4>
+                <p>Example test: Extension 101 → Extension 102</p>
+                <p>Check:</p>
+                <ul>
+                    <li>Call connection</li>
+                    <li>Voice clarity</li>
+                    <li>No delay</li>
+                    <li>No packet loss</li>
+                </ul>
+
+                <p>Commands that can be used in routers:</p>
+                <ul>
+                    <li>ping</li>
+                    <li>show voice call summary</li>
+                    <li>show ephone registered</li>
+                </ul>
+
+                <p><strong>Purpose:</strong> Verify the router handles VoIP
+                    calls correctly.</p>
+
+                <h3>VoIP Server-Based Testing</h3>
+                <p>In this setup, a VoIP server (IP PBX) manages calls.</p>
+                <p>Examples of VoIP servers:</p>
+                <ul>
+                    <li>IP PBX systems</li>
+                    <li>VoIP call servers</li>
+                </ul>
+
+                <h4>Testing includes:</h4>
+
+                <h5>Local Calls</h5>
+                <p>Test calls between internal extensions.</p>
+                <p>Example: Extension 201 → Extension 202</p>
+                <p>Verify:</p>
+                <ul>
+                    <li>Phone rings correctly</li>
+                    <li>Clear voice communication</li>
+                </ul>
+
+                <h5>Outgoing / External Calls</h5>
+                <p>Test calls from the VoIP system to external phone
+                    networks.</p>
+                <p>Example: Office Extension → PSTN → Mobile Phone</p>
+                <p>Verify:</p>
+                <ul>
+                    <li>Connection success</li>
+                    <li>Voice quality</li>
+                    <li>Correct routing</li>
+                </ul>
+
+                <h5>Call Routing Testing</h5>
+                <p>Check if calls are sent to the correct destination.</p>
+                <p>Example: Customer Call → IVR → Support Department</p>
+                <p>Verify:</p>
+                <ul>
+                    <li>Correct department receives the call</li>
+                    <li>Routing rules work properly</li>
+                </ul>
+
+                <h5>FollowMe Testing</h5>
+                <p>Test the FollowMe feature.</p>
+                <p>Example:</p>
+                <ul>
+                    <li>Call → Office Phone</li>
+                    <li>No answer → Mobile Phone</li>
+                    <li>No answer → Voicemail</li>
+                </ul>
+
+                <p>Verify:</p>
+                <ul>
+                    <li>Call forwarding works correctly</li>
+                    <li>No missed calls</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <footer>
+            VoIP System Notes – Learning Outcome 3
+        </footer>
+
+    </body>
+
+</html>

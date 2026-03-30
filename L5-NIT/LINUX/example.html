@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIT vsftpd Configuration Notes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f7fa;
+        padding: 20px;
+    }
+    h1, h2, h3 {
+        color: #1e3a8a;
+    }
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        background-color: #1e40af;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    .card-body {
+        background-color: #ffffff;
+    }
+    .code-line {
+        background: #e0e7ff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-family: monospace;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+    .icon {
+        margin-right: 8px;
+    }
+    table th, table td {
+        vertical-align: middle;
+    }
+    .summary-table th {
+        background-color: #1e40af;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mb-4"><i class="bi bi-folder2-open icon"></i>NIT vsftpd Configuration Notes</h1>
+
+    <!-- Scenario Overview -->
+    <div class="card">
+        <div class="card-header"><i class="bi bi-info-circle icon"></i>🏫 Scenario Overview</div>
+        <div class="card-body">
+            <ul>
+                <li>The school <strong>NIT</strong> has learning materials (PDFs, notes, videos).</li>
+                <li>All materials are stored in <strong>NIT-RESOURCES</strong> shared folder.</li>
+                <li><strong>TEACHER</strong> uploads, deletes, and updates files.</li>
+                <li>5 <strong>STUDENTS</strong> connect from their computers to access the resources.</li>
+                <li>FTP is used for easy download/upload of files.</li>
+                <li>Shared folder path: <code>/srv/ftp/shared → NIT-RESOURCES</code></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- vsftpd.conf Explanation -->
+    <div class="card">
+        <div class="card-header"><i class="bi bi-journal-code icon"></i>📘 vsftpd.conf Explanation</div>
+        <div class="card-body">
+
+            <!-- Network & Listening -->
+            <h3>🌐 Network & Listening</h3>
+            <p><span class="code-line">listen=YES</span> ✅ The FTP server listens on IPv4.<br>📌 Allows students and teacher to connect using normal IP addresses.</p>
+            <p><span class="code-line">listen_ipv6=NO</span> ✅ Disables IPv6.<br>📌 Keeps configuration simple for school networks that use IPv4.</p>
+
+            <!-- Access Control -->
+            <h3>🔐 Access Control</h3>
+            <p><span class="code-line">anonymous_enable=NO</span> ❌ Prevents unknown users from accessing NIT resources.<br>📌 Only teacher and students with usernames can login.</p>
+            <p><span class="code-line">local_enable=YES</span> ✅ Allows Linux system users to login.<br>📌 Teacher and students are Linux users on the server.</p>
+
+            <!-- File Management -->
+            <h3>✏️ File Management</h3>
+            <p><span class="code-line">write_enable=YES</span> ✅ Allows upload, delete, rename.<br>📌 Teacher can upload new notes.<br>📌 Students can upload assignments (if folder permissions allow).</p>
+            <p><span class="code-line">local_umask=002</span> ✅ Sets shared permissions.<br>📌 Files uploaded by teacher are readable by students.<br>📌 Student uploads readable by teacher.</p>
+
+            <!-- Security -->
+            <h3>🔒 Security (Chroot)</h3>
+            <p><span class="code-line">chroot_local_user=YES</span> 🔒 Locks users inside the shared folder.<br>📌 Students cannot browse system files.<br>📌 Teacher stays inside NIT-RESOURCES.</p>
+            <p><span class="code-line">allow_writeable_chroot=YES</span> ✅ Prevents login errors.<br>📌 Allows file upload inside shared folder.</p>
+
+            <!-- Shared Folder -->
+            <h3>📁 Shared Folder</h3>
+            <p><span class="code-line">local_root=/srv/ftp/shared</span> 📂 Sets the NIT-RESOURCES folder.<br>📌 All users log directly into shared resources directory.<br>📌 Everyone sees same files.</p>
+
+            <!-- Passive Mode -->
+            <h3>🔁 Passive Mode (Client Access)</h3>
+            <p><span class="code-line">pasv_enable=YES</span><br>
+            <span class="code-line">pasv_min_port=30000</span><br>
+            <span class="code-line">pasv_max_port=31000</span> 🌍 Enables FTP access from different networks.<br>📌 Students use FileZilla from home or school.<br>📌 Works behind firewalls and routers.</p>
+
+            <!-- Logging & Performance -->
+            <h3>📊 Logging & Performance</h3>
+            <p><span class="code-line">xferlog_enable=YES</span> 📜 Records file transfers.<br>📌 Teacher can check who downloaded or uploaded files.</p>
+            <p><span class="code-line">log_ftp_protocol=YES</span> 🔍 Logs FTP commands.<br>📌 Helps admin troubleshoot login or transfer issues.</p>
+            <p><span class="code-line">use_localtime=YES</span> 🕒 Uses local time.<br>📌 Logs show correct class-time activity.</p>
+            <p><span class="code-line">reverse_lookup_enable=NO</span> ⚡ Speeds up login.<br>📌 Students connect faster without DNS delay.</p>
+
+            <!-- Security & Limits -->
+            <h3>🛡️ Security & Limits</h3>
+            <p><span class="code-line">hide_ids=YES</span> 🙈 Hides Linux usernames.<br>📌 Students don’t see system usernames in file listings.</p>
+            <p><span class="code-line">max_clients=50</span> 👥 Limits total FTP connections.<br>📌 Prevents server overload.</p>
+            <p><span class="code-line">max_per_ip=5</span> 🚦 Limits connections per computer.<br>📌 Prevents one student from abusing the connection.</p>
+
+        </div>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="card">
+        <div class="card-header"><i class="bi bi-card-list icon"></i>🧠 Summary</div>
+        <div class="card-body">
+            <table class="table table-bordered summary-table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>What They Can Do</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TEACHER</td>
+                        <td>Upload, delete, manage resources</td>
+                    </tr>
+                    <tr>
+                        <td>STUDENT1–5</td>
+                        <td>Download & upload assignments</td>
+                    </tr>
+                    <tr>
+                        <td>Shared Folder</td>
+                        <td>NIT-RESOURCES</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>Users locked inside folder</td>
+                    </tr>
+                    <tr>
+                        <td>Mode</td>
+                        <td>Passive (recommended)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>✅ <strong>Final Result:</strong></p>
+            <ul>
+                <li>Secure shared folder</li>
+                <li>Easy student access</li>
+                <li>Teacher full control</li>
+                <li>No anonymous users</li>
+                <li>Works with FileZilla</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming Assignment</title>
+<style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9f9f9; color: #333; line-height: 1.6; padding: 20px; }
+    h1, h2, h3 { margin-bottom: 15px; color: #0d6efd; }
+    h1 { text-align: center; margin-bottom: 30px; font-size: 2em; }
+    p, li { margin-bottom: 10px; }
+
+    /* Container */
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 25px 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+
+    /* Sections */
+    section { margin-bottom: 30px; }
+    section h2 { border-bottom: 2px solid #0d6efd; padding-bottom: 5px; }
+
+    /* Lists */
+    ol, ul { padding-left: 20px; }
+    .mcq li { margin-bottom: 12px; }
+    .tf li { margin-bottom: 8px; }
+    .matching li { margin-bottom: 6px; }
+    .ordering li { margin-bottom: 6px; }
+    .programming li { margin-bottom: 12px; }
+
+    /* Questions */
+    .question { margin-bottom: 10px; }
+
+    /* Modern table for Matching */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #0d6efd; color: white; }
+
+    /* Code styling */
+    pre, code { background: #f4f4f4; padding: 3px 6px; border-radius: 4px; font-family: monospace; }
+    pre { overflow-x: auto; padding: 10px; }
+
+    /* Responsive */
+    @media(max-width: 600px){
+        .container { padding: 20px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>C Programming Assignment Questions</h1>
+
+    <!-- Multiple Choice -->
+    <section>
+        <h2>1. Multiple Choice Questions (MCQs)</h2>
+        <ol class="mcq">
+            <li class="question">
+                Which of the following is not a token in C?
+                <ul>
+                    <li>a) Keyword</li>
+                    <li>b) Operator</li>
+                    <li>c) Variable</li>
+                    <li>d) Preprocessor directive</li>
+                </ul>
+            </li>
+            <li class="question">
+                Which data type in C is used to store decimal values?
+                <ul>
+                    <li>a) int</li>
+                    <li>b) float</li>
+                    <li>c) char</li>
+                    <li>d) double</li>
+                </ul>
+            </li>
+            <li class="question">
+                The symbol # in C is used for:
+                <ul>
+                    <li>a) Variables</li>
+                    <li>b) Preprocessor directives</li>
+                    <li>c) Comments</li>
+                    <li>d) Loops</li>
+                </ul>
+            </li>
+            <li class="question">
+                Which of the following is a valid constant declaration in C?
+                <ul>
+                    <li>a) const int x = 5;</li>
+                    <li>b) int const x = 5;</li>
+                    <li>c) #define PI 3.14</li>
+                    <li>d) All of the above</li>
+                </ul>
+            </li>
+            <li class="question">
+                What is the purpose of the return statement in a function?
+                <ul>
+                    <li>a) To print output</li>
+                    <li>b) To end the program</li>
+                    <li>c) To return a value to the caller</li>
+                    <li>d) To declare a variable</li>
+                </ul>
+            </li>
+            <li class="question">
+                Which operator is used for logical AND in C?
+                <ul>
+                    <li>a) &</li>
+                    <li>b) &&</li>
+                    <li>c) |</li>
+                    <li>d) ||</li>
+                </ul>
+            </li>
+            <li class="question">
+                Which of the following if statements will execute when x = 10?
+                <ul>
+                    <li>a) if(x < 5)</li>
+                    <li>b) if(x == 10)</li>
+                    <li>c) if(x > 20)</li>
+                    <li>d) if(x != 10)</li>
+                </ul>
+            </li>
+            <li class="question">
+                To call a function named sum with two arguments a and b, the correct syntax is:
+                <ul>
+                    <li>a) sum(a, b);</li>
+                    <li>b) call sum(a, b);</li>
+                    <li>c) function sum(a, b);</li>
+                    <li>d) sum = (a, b);</li>
+                </ul>
+            </li>
+            <li class="question">
+                What is the output of the following code?
+                <pre>
+int x = 5;
+if(x > 0)
+    printf("Positive");
+else
+    printf("Negative");
+                </pre>
+                <ul>
+                    <li>a) Positive</li>
+                    <li>b) Negative</li>
+                    <li>c) 5</li>
+                    <li>d) Error</li>
+                </ul>
+            </li>
+            <li class="question">
+                Which of the following is incorrect about functions in C?
+                <ul>
+                    <li>a) A function can have zero or more arguments</li>
+                    <li>b) A function must always return a value</li>
+                    <li>c) Functions help modularize code</li>
+                    <li>d) Functions can call other functions</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+    <!-- True/False -->
+    <section>
+        <h2>2. True / False Questions</h2>
+        <ol class="tf">
+            <li>int is used to store integer values in C.</li>
+            <li>#include &lt;stdio.h&gt; is a preprocessor directive.</li>
+            <li>A switch statement can only check for integer values.</li>
+            <li>Comments are ignored by the compiler.</li>
+            <li>float x = 5.5; int y = x; will cause a compile-time error.</li>
+            <li>else if can be used without an if preceding it.</li>
+            <li>Nested if statements are used to test multiple conditions.</li>
+            <li>void functions cannot return any value.</li>
+        </ol>
+    </section>
+
+    <!-- Matching -->
+    <section>
+        <h2>3. Matching Questions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Term</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>int</td><td>Stores integer values</td></tr>
+                <tr><td>float</td><td>Stores decimal values</td></tr>
+                <tr><td>char</td><td>Stores a single character</td></tr>
+                <tr><td>const</td><td>Immutable variable</td></tr>
+                <tr><td>#define</td><td>Macro constant</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Ordering/Sequencing -->
+    <section>
+        <h2>4. Ordering / Sequencing Questions</h2>
+        <ol class="ordering">
+            <li>Arrange the steps of C program execution in correct order: Start → Declare variables → Call functions → Execute statements → End</li>
+            <li>Arrange the function-related steps in order: Declare function → Define function → Call function → Execute function code</li>
+        </ol>
+    </section>
+
+    <!-- Programming -->
+    <section>
+        <h2>5. Programming-Related Questions</h2>
+        <ol class="programming">
+            <li>Complete the code to declare an integer variable num and initialize it with 10: <pre>________ num = 10;</pre></li>
+            <li>Complete the code for a main function that prints "Hello": 
+<pre>
+#include &lt;stdio.h&gt;
+int main() {
+    ___________("Hello");
+    return 0;
+}
+</pre>
+            </li>
+            <li>Predict the output: <pre>
+int a = 5, b = 2;
+printf("%d", a / b);
+</pre></li>
+            <li>Predict the output: <pre>
+int x = 7;
+if(x % 2 == 0)
+    printf("Even");
+else
+    printf("Odd");
+</pre></li>
+            <li>Detect the error: <pre>
+int main() {
+    int a = 5
+    printf("%d", a);
+    return 0;
+}
+</pre></li>
+            <li>Detect the error: <pre>
+void main() {
+    printf("Hello");
+}
+</pre></li>
+            <li>Write a function add that takes two integers and returns their sum.</li>
+            <li>Write a switch statement that prints "Red", "Green", or "Blue" depending on color = 2.</li>
+            <li>Write a program that checks if a number is positive, negative, or zero.</li>
+        </ol>
+    </section>
+
+    <!-- Higher-Order -->
+    <section>
+        <h2>6. Higher-Order / Real-World Programming</h2>
+        <ol class="programming">
+            <li>Analyze and fix the logical error: <pre>
+int main() {
+    int x = 10;
+    if(x = 5)
+        printf("x is 5");
+    return 0;
+}
+</pre></li>
+            <li>Evaluate which function type is appropriate for a task that prints a message but returns nothing.</li>
+            <li>Create a program that calculates factorial using a function.</li>
+            <li>Modify a program to include constants for maximum and minimum allowed values.</li>
+            <li>Optimize a for loop that prints numbers from 1 to 100.</li>
+        </ol>
+    </section>
+
+    <!-- Employable Skills / Advanced -->
+    <section>
+        <h2>7. Employable Skills / Advanced Programming</h2>
+        <ol class="programming">
+            <li>Write a C program to calculate employee salary with basic allowances and deductions.</li>
+            <li>Develop a function to determine if a job candidate passes a skill test based on score thresholds.</li>
+            <li>Write a program to store and display student records using functions.</li>
+            <li>Detect and fix errors in a program meant to process customer orders.</li>
+            <li>Predict the output of a program simulating a bank transaction.</li>
+            <li>Fill in the missing code to calculate total revenue from multiple sales.</li>
+            <li>Write a function to swap two numbers using pointers.</li>
+            <li>Create a program that sorts an array of integers in ascending order using functions.</li>
+            <li>Develop a program using nested if-else to assign grades based on marks.</li>
+            <li>Design a C program that uses switch-case to display days of the week.</li>
+            <li>Write a menu-driven program to perform addition, subtraction, multiplication, or division.</li>
+            <li>Modify a program to use constants for tax rates and calculate net salary.</li>
+            <li>Create a program that validates user input before processing it.</li>
+            <li>Analyze a buggy program and rewrite it to be modular with functions.</li>
+        </ol>
+    </section>
+</div>
+</body>
+</html>

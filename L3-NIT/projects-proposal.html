@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Project Ideas</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Calisto MT", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        color: #fff;
+        padding: 30px;
+        counter-reset: project; /* GLOBAL counter */
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        color: #38bdf8;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        background: #1e293b;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        transition: 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    }
+
+    .card h2 {
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        color: #facc15;
+    }
+
+    .project-list {
+        list-style: none;
+    }
+
+    .project-list li {
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Continuous numbering */
+    .project-list li::before {
+        counter-increment: project;
+        content: counter(project);
+        background: #38bdf8;
+        color: #0f172a;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-size: 0.8rem;
+    }
+
+    .project-list li:last-child {
+        border-bottom: none;
+    }
+
+    /* Glow effect */
+    .card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(56,189,248,0.2), transparent);
+        transform: rotate(25deg);
+        opacity: 0;
+        transition: 0.5s;
+    }
+
+    .card:hover::before {
+        opacity: 1;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: #94a3b8;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>💡 C Programming Project Ideas</h1>
+
+<div class="container">
+
+    <div class="card">
+        <h2>🏫 Education & Student Systems</h2>
+        <ul class="project-list">
+            <li>Student Record Management System</li>
+            <li>Grade Calculator</li>
+            <li>Attendance Tracking System</li>
+            <li>Exam Result Processing System</li>
+            <li>Simple Quiz Application</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🏦 Business & Finance</h2>
+        <ul class="project-list">
+            <li>Basic Banking System</li>
+            <li>Expense Tracker</li>
+            <li>Loan Calculator</li>
+            <li>Invoice Generator</li>
+            <li>Payroll System</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🏥 Health & Personal</h2>
+        <ul class="project-list">
+            <li>BMI Calculator</li>
+            <li>Simple Patient Record System</li>
+            <li>Medicine Reminder</li>
+            <li>Calorie Intake Tracker</li>
+            <li>Blood Donation Management System</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🛒 Retail & Inventory</h2>
+        <ul class="project-list">
+            <li>Inventory Management System</li>
+            <li>Supermarket Billing System</li>
+            <li>Product Catalog Manager</li>
+            <li>Order Management System</li>
+            <li>Warehouse Stock Alert System</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🚗 Transport & Utility</h2>
+        <ul class="project-list">
+            <li>Bus Reservation System</li>
+            <li>Fuel Consumption Calculator</li>
+            <li>Vehicle Service Reminder</li>
+            <li>Parking Management System</li>
+            <li>Route Distance Calculator</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>💻 System Utilities</h2>
+        <ul class="project-list">
+            <li>File Organizer</li>
+            <li>Simple Text Editor</li>
+            <li>Password Generator</li>
+            <li>File Backup Utility</li>
+            <li>Command-Line Calculator</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🌍 Community & Social</h2>
+        <ul class="project-list">
+            <li>Library Management System</li>
+            <li>Voting System</li>
+            <li>Contact Management System</li>
+            <li>Event Scheduling System</li>
+            <li>Job Applicant Tracking System</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    GIVE IT YOUR BEST DEAR. HAPPY CODING! 🚀
+</footer>
+
+</body>
+</html>

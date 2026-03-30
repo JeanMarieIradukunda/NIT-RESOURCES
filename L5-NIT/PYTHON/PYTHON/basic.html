@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Basic Concepts Notes</title>
+<style>
+  body {
+    font-family: 'Consolas', monospace;
+    background-color: #f4f4f4;
+    color: #222;
+    padding: 40px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    color: #004c99;
+  }
+  pre, code {
+    background: #e8e8e8;
+    padding: 10px;
+    border-radius: 6px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  section {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    padding: 25px;
+  }
+  .bonus {
+    background: #e6f2ff;
+    border-left: 6px solid #007acc;
+  }
+</style>
+</head>
+<body>
+<h1>Section A: Applying Python Basic Concepts</h1>
+
+<section>
+  <h2>1️⃣ Data Types</h2>
+  <pre><code># Store your name, age, and height
+name = "John Doe"
+age = 20
+height = 1.75
+
+# Print values with their data types
+print(name, type(name))
+print(age, type(age))
+print(height, type(height))
+
+# Create a list of 5 subjects
+subjects = ["Math", "English", "Biology", "History", "Computer Science"]
+
+# Print the first and last subject
+print("First subject:", subjects[0])
+print("Last subject:", subjects[-1])
+
+# Replace the third subject
+subjects[2] = "Physics"
+print("Updated subjects list:", subjects)
+
+# Check whether a number is even or odd
+num = int(input("Enter a number: "))
+if num % 2 == 0:
+    print(num, "is even.")
+else:
+    print(num, "is odd.")
+
+# Boolean variable
+is_student = True
+print("Are you a student?", is_student)
+
+# Two float variables representing product prices
+price1 = 25.50
+price2 = 40.75
+total_cost = price1 + price2
+print("Total cost =", total_cost)</code></pre>
+</section>
+
+<section>
+  <h2>2️⃣ Variables</h2>
+  <pre><code># Swapping two variables without using a third
+a = 5
+b = 10
+a, b = b, a
+print("After swapping: a =", a, ", b =", b)
+
+# Area of a rectangle
+length = 10
+width = 5
+area = length * width
+print("Area of rectangle =", area)
+
+# Concatenate first and last name
+first_name = "John"
+last_name = "Doe"
+full_name = first_name + " " + last_name
+print("Full name:", full_name)
+
+# Calculate total pay
+hours_worked = 40
+rate_per_hour = 15
+total_pay = hours_worked * rate_per_hour
+print("Total Pay:", total_pay)
+
+# Example: assigning before declaring
+x = 10  # No need to declare before assigning
+print("x =", x)</code></pre>
+</section>
+
+<section>
+  <h2>3️⃣ Comments</h2>
+  <pre><code># Single-line comment: This program calculates the area of a circle
+
+"""
+Multi-line comment:
+We use the formula: Area = π * r^2
+We'll take radius = 7
+"""
+
+radius = 7
+pi = 3.14159
+area = pi * radius ** 2
+print("Area of the circle =", area)
+
+# Short program with descriptive comments
+name = "Alice"   # Student's name
+age = 20         # Student's age
+print("Hello", name, "you are", age, "years old")
+
+# Script with 3 comment types
+# This is a single-line comment
+"""
+This is a multi-line comment
+It can describe code sections
+in more detail
+"""
+
+x = 10  # Inline comment: assigning value 10 to x
+print(x)</code></pre>
+</section>
+
+<section>
+  <h2>4️⃣ Operators</h2>
+  <pre><code># Arithmetic Operators
+a = int(input("Enter first number: "))
+b = int(input("Enter second number: "))
+
+print("Sum:", a + b)
+print("Difference:", a - b)
+print("Product:", a * b)
+print("Quotient:", a / b)
+
+# Assignment Operators
+x = 10
+x += 5
+x -= 2
+x *= 3
+x /= 2
+print("Final value of x =", x)
+
+# Comparison Operators
+num1 = 8
+num2 = 12
+if num1 == num2:
+    print("Numbers are equal.")
+else:
+    print("Numbers are not equal.")
+
+# Logical Operators
+marks = 65
+attendance = 80
+if marks >= 50 and attendance >= 75:
+    print("Student passes.")
+else:
+    print("Student fails.")
+
+# Membership Operator
+words = ["apple", "banana", "cherry"]
+word = input("Enter a word: ")
+if word in words:
+    print(word, "is in the list.")
+else:
+    print(word, "is not in the list.")</code></pre>
+</section>
+
+<section class="bonus">
+  <h2>💡 Bonus Challenge</h2>
+  <pre><code># Ask user for personal details
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+
+# Ask for 3 favorite subjects
+subjects = []
+for i in range(1, 4):
+    subject = input(f"Enter favorite subject {i}: ")
+    subjects.append(subject)
+
+# Calculate future age (in 5 years)
+future_age = age + 5
+
+# Print the result using formatted string
+print(f"Hello {name}, in 5 years you will be {future_age} years old, and your first subject is {subjects[0]}.")
+
+"""
+Explanation:
+- We use variables to store name, age, and subjects.
+- We use a list to store multiple subjects.
+- We use arithmetic (+) to find future age.
+- We use string formatting to print a clear message.
+"""</code></pre>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python Jump Statements — break / continue / pass</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Font fallback (Poppins) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Berlin Sans FD: if you have the font file, place BerlinsSansFD.woff2 beside this HTML */
+    @font-face {
+      font-family: "Berlins Sans FD";
+      src: url("./BerlinsSansFD.woff2") format("woff2");
+      font-weight: 300 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root{
+      --accent: #6f42c1; /* subtle purple */
+      --muted: #6c757d;
+      --bg: #fbfbfd;
+      --card: #ffffff;
+    }
+
+    body{
+      font-family: "Berlins Sans FD", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+      color: #0f1720;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* Header */
+    .hero {
+      background: linear-gradient(135deg, rgba(111,66,193,0.08), rgba(99,102,241,0.05));
+      border-radius: 14px;
+      padding: 28px;
+      margin-top: 18px;
+      box-shadow: 0 6px 18px rgba(26, 27, 31, 0.04);
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:.75rem;
+      font-weight:700;
+      letter-spacing: .2px;
+    }
+
+    .logo {
+      width:56px;
+      height:56px;
+      border-radius:12px;
+      display:inline-grid;
+      place-items:center;
+      background: linear-gradient(135deg, var(--accent), #3b82f6);
+      color:white;
+      box-shadow: 0 8px 22px rgba(111,66,193,0.12);
+      font-size:22px;
+    }
+
+    h1.display {
+      font-size:1.5rem;
+      margin-bottom: .25rem;
+    }
+
+    .lead-muted {
+      color: var(--muted);
+      margin-bottom:0;
+    }
+
+    /* Card styles */
+    .card-code{
+      background: linear-gradient(180deg, #fbfbff, #ffffff);
+      border: 1px solid rgba(15,23,32,0.04);
+      border-radius: 12px;
+    }
+
+    pre.code-block {
+      background: #0f172055;
+      color: #0b1220;
+      padding: 16px;
+      border-radius: 8px;
+      overflow:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Noto Mono", monospace;
+      font-size: .95rem;
+      line-height:1.5;
+      margin-bottom:0;
+    }
+
+    .output-badge {
+      display:inline-block;
+      background:#f1f5f9;
+      color:#0b1220;
+      padding:.35rem .6rem;
+      border-radius:8px;
+      font-family:inherit;
+      font-weight:600;
+      font-size:.9rem;
+    }
+
+    .summary-table th {
+      background: linear-gradient(90deg, rgba(111,66,193,0.06), rgba(59,130,246,0.04));
+      border-top-left-radius:8px;
+      border-top-right-radius:8px;
+    }
+
+    /* copy btn */
+    .copy-btn {
+      position:absolute;
+      right: .5rem;
+      top:.5rem;
+      z-index:5;
+      border-radius:6px;
+      font-size:.82rem;
+    }
+
+    .code-wrapper {
+      position:relative;
+      margin-top:.75rem;
+    }
+
+    /* small screens */
+    @media (max-width:575px){
+      .logo { width:46px; height:46px; font-size:18px; }
+      h1.display { font-size:1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+
+    <!-- Header -->
+    <div class="hero p-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="brand">
+          <div class="logo">Py</div>
+          <div>
+            <div class="hstack gap-2">
+              <div>
+                <h1 class="display mb-0">Jump Statements in Python</h1>
+                <div class="lead-muted">break · continue · pass — what they do and practical examples</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <span class="badge bg-light text-muted"><i class="bi bi-code-slash"></i> Python</span>
+          <span class="badge bg-light text-muted ms-1"><i class="bi bi-lightbulb"></i> Concepts</span>
+        </div>
+      </div>
+
+      <p class="mb-0 text-muted">Jump statements in Python are special control-flow statements that alter execution in loops or conditional blocks. They are mainly used to:</p>
+      <ul class="mb-0 mt-2">
+        <li>Exit a loop prematurely</li>
+        <li>Skip specific iterations</li>
+        <li>Write placeholder code without affecting execution</li>
+      </ul>
+    </div>
+
+    <div class="row mt-4 gx-4">
+      <!-- break card -->
+      <div class="col-md-6 mb-3">
+        <div class="card card-code p-3 h-100">
+          <div class="d-flex align-items-start justify-content-between">
+            <div>
+              <h5 class="mb-1">🔹 <strong>break</strong> Statement</h5>
+              <div class="text-muted small">Terminate a loop immediately when a condition is met.</div>
+            </div>
+            <div class="text-end">
+              <span class="badge bg-light text-muted">Syntax</span>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <strong class="d-block mb-2">Example</strong>
+            <div class="code-wrapper">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-break"><i class="bi bi-clipboard"></i> Copy</button>
+              <pre id="code-break" class="code-block"><code>for i in range(1, 6):
+    if i == 3:
+        break
+    print(i)</code></pre>
+            </div>
+
+            <div class="mt-3">
+              <strong>Output</strong>
+              <div class="mt-2"><span class="output-badge">1<br>2</span></div>
+            </div>
+
+            <p class="mt-3 mb-0"><small class="text-muted">When <code>i == 3</code>, the loop stops immediately — values 3, 4, 5 are not processed.</small></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- continue card -->
+      <div class="col-md-6 mb-3">
+        <div class="card card-code p-3 h-100">
+          <div class="d-flex align-items-start justify-content-between">
+            <div>
+              <h5 class="mb-1">🔹 <strong>continue</strong> Statement</h5>
+              <div class="text-muted small">Skip the current iteration and continue with the next one.</div>
+            </div>
+            <div class="text-end">
+              <span class="badge bg-light text-muted">Syntax</span>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <strong class="d-block mb-2">Example</strong>
+            <div class="code-wrapper">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-continue"><i class="bi bi-clipboard"></i> Copy</button>
+              <pre id="code-continue" class="code-block"><code>for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)</code></pre>
+            </div>
+
+            <div class="mt-3">
+              <strong>Output</strong>
+              <div class="mt-2"><span class="output-badge">1<br>2<br>4<br>5</span></div>
+            </div>
+
+            <p class="mt-3 mb-0"><small class="text-muted">When <code>i == 3</code>, that iteration is skipped; the loop continues with <code>i = 4</code>.</small></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- pass card -->
+      <div class="col-md-6 mb-3">
+        <div class="card card-code p-3 h-100">
+          <div class="d-flex align-items-start justify-content-between">
+            <div>
+              <h5 class="mb-1">🔹 <strong>pass</strong> Statement</h5>
+              <div class="text-muted small">A no-op placeholder — useful when syntax requires a statement but logic is pending.</div>
+            </div>
+            <div class="text-end">
+              <span class="badge bg-light text-muted">Syntax</span>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <strong class="d-block mb-2">Example</strong>
+            <div class="code-wrapper">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-pass"><i class="bi bi-clipboard"></i> Copy</button>
+              <pre id="code-pass" class="code-block"><code>for i in range(1, 6):
+    if i == 3:
+        pass  # placeholder for future code
+    print(i)</code></pre>
+            </div>
+
+            <div class="mt-3">
+              <strong>Output</strong>
+              <div class="mt-2"><span class="output-badge">1<br>2<br>3<br>4<br>5</span></div>
+            </div>
+
+            <p class="mt-3 mb-0"><small class="text-muted"><code>pass</code> does nothing — control flows normally.</small></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary table -->
+      <div class="col-md-6 mb-3">
+        <div class="card p-3 h-100">
+          <h5>✅ Summary Table</h5>
+          <div class="table-responsive">
+            <table class="table summary-table align-middle">
+              <thead>
+                <tr>
+                  <th scope="col">Statement</th>
+                  <th scope="col">Function</th>
+                  <th scope="col">Effect on Loop</th>
+                  <th scope="col">Typical Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>break</strong></td>
+                  <td>Terminates loop immediately</td>
+                  <td>Exits the loop</td>
+                  <td>Stop searching or exit early</td>
+                </tr>
+                <tr>
+                  <td><strong>continue</strong></td>
+                  <td>Skips current iteration</td>
+                  <td>Continues to next iteration</td>
+                  <td>Skip unwanted values</td>
+                </tr>
+                <tr>
+                  <td><strong>pass</strong></td>
+                  <td>Does nothing</td>
+                  <td>No effect</td>
+                  <td>Placeholder for future code</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practical examples -->
+      <div class="col-12">
+        <div class="card p-3">
+          <div class="d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Practical Examples — break, continue, pass</h5>
+            <small class="text-muted">Real-life usage</small>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-4">
+              <h6>break — Stop Searching</h6>
+              <p class="text-muted small">Stop once the item is found.</p>
+            </div>
+            <div class="col-md-8">
+              <div class="code-wrapper">
+                <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-prac-break"><i class="bi bi-clipboard"></i> Copy</button>
+                <pre id="code-prac-break" class="code-block"><code>students = ["Alice", "John", "Peter", "Maria", "David"]
+
+search_name = "Maria"
+
+for name in students:
+    if name == search_name:
+        print(f"{search_name} found in the list!")
+        break
+    print(f"Checking {name}...")</code></pre>
+              </div>
+              <div class="mt-2 text-muted small">
+                <strong>Output:</strong>
+                <div class="output-badge mt-1">Checking Alice...<br>Checking John...<br>Checking Peter...<br>Maria found in the list!</div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-md-4">
+              <h6>continue — Skip Certain Values</h6>
+              <p class="text-muted small">Skip items that don't apply.</p>
+            </div>
+            <div class="col-md-8">
+              <div class="code-wrapper">
+                <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-prac-continue"><i class="bi bi-clipboard"></i> Copy</button>
+                <pre id="code-prac-continue" class="code-block"><code>students = ["Alice", "John", "Peter", "Maria", "David"]
+
+for name in students:
+    if name == "John":
+        continue  # skip John
+    print(name)</code></pre>
+              </div>
+              <div class="mt-2 text-muted small">
+                <strong>Output:</strong>
+                <div class="output-badge mt-1">Alice<br>Peter<br>Maria<br>David</div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row mb-2">
+            <div class="col-md-4">
+              <h6>pass — Placeholder for Future Logic</h6>
+              <p class="text-muted small">Leave a placeholder while continuing normal flow.</p>
+            </div>
+            <div class="col-md-8">
+              <div class="code-wrapper">
+                <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="code-prac-pass"><i class="bi bi-clipboard"></i> Copy</button>
+                <pre id="code-prac-pass" class="code-block"><code>students = ["Alice", "John", "Peter"]
+
+for name in students:
+    if name == "John":
+        pass  # will handle absence logic later
+    else:
+        print(f"{name} is present.")</code></pre>
+              </div>
+              <div class="mt-2 text-muted small">
+                <strong>Output:</strong>
+                <div class="output-badge mt-1">Alice is present.<br>Peter is present.</div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="small text-muted"><i class="bi bi-lightbulb"></i> Real-life analogy included for easier recall.</div>
+            <div>
+              <span class="badge bg-light text-muted me-1">break — Leave meeting when done</span>
+              <span class="badge bg-light text-muted me-1">continue — Skip unrelated topic</span>
+              <span class="badge bg-light text-muted">pass — Note to discuss later</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-4 text-center text-muted small">
+      Crafted with <i class="bi bi-heart-fill text-danger"></i> · Designed for learning · <span class="ms-2">© Python Concepts</span>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap JS (Popper included) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Copy-to-clipboard for code blocks
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const targetId = btn.getAttribute('data-target');
+        const codeEl = document.getElementById(targetId);
+        if (!codeEl) return;
+        const text = codeEl.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = btn.innerHTML;
+          btn.innerHTML = '<i class="bi bi-check-lg"></i> Copied';
+          btn.classList.remove('btn-outline-secondary');
+          btn.classList.add('btn-success');
+          setTimeout(() => {
+            btn.innerHTML = original;
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-secondary');
+          }, 1400);
+        } catch (err) {
+          console.error('Copy failed', err);
+          alert('Copy failed. Select and copy manually.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

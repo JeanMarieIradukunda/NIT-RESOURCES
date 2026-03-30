@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python Generators Notes</title>
+        <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1, h2, h3 {
+            color: #2e6da4;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e8f0fe;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        .note {
+            background-color: #fffbcc;
+            border-left: 6px solid #ffeb3b;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <h1>Python Generators Notes</h1>
+        </header>
+        <main>
+            <section>
+                <h2>A. Definition & Explanation</h2>
+                <p><strong>Definition:</strong> A generator in Python is a
+                    special type of function that returns an iterator which we
+                    can iterate over one value at a time. Instead of returning
+                    all values at once like a list, a generator produces values
+                    on the fly using the <code>yield</code> keyword.</p>
+
+                <p><strong>OR:</strong> A Python generator is a special
+                    function that returns values one at a time using the yield
+                    keyword, instead of returning all values at
+                    once.</p>
+
+                <p><strong>Simply, </strong> A generator is a function that
+                    produces values one by one using <strong>yield</strong>
+                    keyword.</p>
+
+                <h3>How it works:</h3>
+                <p>Normal functions use <code>return</code> to send back a value
+                    and exit. Generators use <code>yield</code> to pause the
+                    function and save its state, so it can resume later where it
+                    left off.</p>
+
+                <h3>Example:</h3>
+                <pre>
+def simple_generator():
+    yield 1
+    yield 2
+    yield 3
+
+gen = simple_generator()  # create a generator object
+print(next(gen))  # Output: 1
+print(next(gen))  # Output: 2
+print(next(gen))  # Output: 3
+# next(gen) now would raise StopIteration
+            </pre>
+
+                <h3>Comparison with Normal Functions and Lists:</h3>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Normal Function</th>
+                        <th>List</th>
+                        <th>Generator</th>
+                    </tr>
+                    <tr>
+                        <td>Returns</td>
+                        <td>Single value</td>
+                        <td>All values at once</td>
+                        <td>One value at a time</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Usage</td>
+                        <td>Low for single value</td>
+                        <td>High if list is large</td>
+                        <td>Very low, lazy evaluation</td>
+                    </tr>
+                    <tr>
+                        <td>State Saving</td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Yes, resumes from last yield</td>
+                    </tr>
+                    <tr>
+                        <td>Suitable for</td>
+                        <td>Small computations</td>
+                        <td>Storing data</td>
+                        <td>Large datasets, streams</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2>B. Uses and Applications (When to Use)</h2>
+                <ul>
+                    <li><strong>Memory efficiency:</strong> Generators produce
+                        items one at a time, ideal for very large data.</li>
+                    <li><strong>Processing large datasets:</strong> Read large
+                        files line by line without loading the entire file.</li>
+                    <li><strong>Infinite sequences:</strong> Generate sequences
+                        like Fibonacci numbers without limit.</li>
+                    <li><strong>Pipelining / streaming data:</strong> Pass data
+                        through multiple steps without storing everything in
+                        memory.</li>
+                </ul>
+
+                <h2>e. Python Generators – Student-Based Examples</h2>
+
+                <p>
+                    A <strong>generator</strong> is a special function that
+                    produces values
+                    <strong>one at a time</strong> using the <code>yield</code>
+                    keyword.
+                    Unlike lists, generators do not store all values in memory.
+                </p>
+
+                <!-- Example 1 -->
+                <h3>🧑‍🎓 Example 1: Generator with Student Names</h3>
+                <div class="example">
+                    <pre><code>def student_names():
+    yield "Alice"
+    yield "Bob"
+    yield "John"
+
+for name in student_names():
+    print(name)</code></pre>
+                    <p><strong>Output:</strong></p>
+                    <pre><code>Alice
+Bob
+John</code></pre>
+                    <p>✔ Values are produced one by one</p>
+                </div>
+
+                <!-- Example 2 -->
+                <h3>🧑‍🎓 Example 2: Generator from a Student List</h3>
+                <div class="example">
+                    <pre><code>students = ["Alice", "Bob", "John"]
+
+def get_students(students):
+    for student in students:
+        yield student
+
+for s in get_students(students):
+    print(s)</code></pre>
+                    <p>✅ Useful when working with large student lists.</p>
+                </div>
+
+                <!-- Example 3 -->
+                <h3>🧑‍🎓 Example 3: Generator for Student Marks</h3>
+                <div class="example">
+                    <pre><code>marks = [45, 78, 90, 60]
+
+def pass_marks(marks):
+    for m in marks:
+        if m >= 50:
+            yield m
+
+for p in pass_marks(marks):
+    print(p)</code></pre>
+                    <p><strong>Output:</strong></p>
+                    <pre><code>78
+90
+60</code></pre>
+                    <p>✔ Only passing marks are generated.</p>
+                </div>
+
+                <!-- Generator Expression -->
+                <h3>🧑‍🎓 Example 4: Generator Expression (Short Form)</h3>
+                <p>
+                    Generator expressions work like list comprehensions but use
+                    <strong>( ) instead of [ ]</strong>.
+                </p>
+                <div class="example">
+                    <pre><code>marks = [40, 55, 70, 30]
+
+passed = (m for m in marks if m >= 50)
+
+for m in passed:
+    print(m)</code></pre>
+                </div>
+
+                <!-- Generator vs List -->
+                <h3>🔄 Generator vs List</h3>
+                <table>
+                    <tr>
+                        <th>List</th>
+                        <th>Generator</th>
+                    </tr>
+                    <tr>
+                        <td>Stores all values in memory</td>
+                        <td>Produces values one at a time</td>
+                    </tr>
+                    <tr>
+                        <td>Uses more memory</td>
+                        <td>Uses less memory</td>
+                    </tr>
+                    <tr>
+                        <td><code>[ ]</code></td>
+                        <td><code>( )</code></td>
+                    </tr>
+                </table>
+
+                <!-- Real-Life Analogy -->
+                <h3>🧑‍🏫 Real-Life Analogy</h3>
+                <div class="example">
+                    <p>
+                        Think of a teacher reading marks:
+                    </p>
+                    <ul>
+                        <li>Reads one mark at a time</li>
+                        <li>Does not memorize all marks at once</li>
+                    </ul>
+                    <p><strong>That is exactly how a generator
+                            works.</strong></p>
+                </div>
+
+                <!-- Why Use Generators -->
+                <h3>✅ Why Use Generators?</h3>
+                <ul>
+                    <li>Memory efficient</li>
+                    <li>Faster for large student data</li>
+                    <li>Clean and readable code</li>
+                    <li>Used in data processing, files, and databases</li>
+                </ul>
+
+                <h3>Example (Memory-efficient for large files):</h3>
+                <pre>
+def read_file_line_by_line(file_path):
+    with open(file_path, "r") as file:
+        for line in file:
+            yield line.strip()  # yields one line at a time
+
+for line in read_file_line_by_line("data.txt"):
+    print(line)  # memory-friendly
+            </pre>
+            </section>
+
+            <section>
+                <h2>C. Real-Life Examples (Simple for Beginners)</h2>
+
+                <h3>Generating Numbers:</h3>
+                <pre>
+def even_numbers(limit):
+    for n in range(limit):
+        if n % 2 == 0:
+            yield n
+
+for num in even_numbers(10):
+    print(num)  # 0, 2, 4, 6, 8
+            </pre>
+
+                <h3>Reading Large CSV Files Line by Line:</h3>
+                <pre>
+def read_csv(file_path):
+    with open(file_path) as f:
+        for line in f:
+            yield line.split(",")  # yields each row as a list
+            </pre>
+
+                <h3>Simple Fibonacci Generator:</h3>
+                <pre>
+def fibonacci(n):
+    a, b = 0, 1
+    count = 0
+    while count < n:
+        yield a
+        a, b = b, a + b
+        count += 1
+
+for num in fibonacci(5):
+    print(num)  # 0, 1, 1, 2, 3
+            </pre>
+
+                <h3>Infinite Natural Numbers:</h3>
+                <pre>
+def natural_numbers():
+    n = 1
+    while True:
+        yield n
+        n += 1
+
+# Use with caution!
+# for num in natural_numbers():
+#     print(num)
+            </pre>
+
+                <div class="note">
+                    ✅ <strong>Key Takeaways for Beginners:</strong><br>
+                    - <code>yield</code> pauses the function and returns a
+                    value.<br>
+                    - Generators are memory-friendly.<br>
+                    - Perfect for loops over large data or infinite sequences.
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

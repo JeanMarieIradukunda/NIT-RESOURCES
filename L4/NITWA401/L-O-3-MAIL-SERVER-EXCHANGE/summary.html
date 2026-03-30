@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Systems Notes</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #eef2f7, #dbeafe);
+        padding: 40px 20px;
+        color: #1f2937;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-weight: 700;
+        font-size: 32px;
+        color: #1e3a8a;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 50px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+        border-left: 6px solid #2563eb;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .card h2 {
+        margin-bottom: 10px;
+        font-size: 20px;
+        color: #1e40af;
+    }
+
+    .section-title {
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 5px;
+        color: #111827;
+    }
+
+    ul {
+        margin-left: 18px;
+        margin-bottom: 10px;
+    }
+
+    ul li {
+        margin-bottom: 6px;
+    }
+
+    .simple {
+        background: #f1f5f9;
+        padding: 10px;
+        border-radius: 8px;
+        font-style: italic;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .table-section {
+        margin-top: 40px;
+    }
+
+    .table-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #1e3a8a;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+        background: #2563eb;
+        color: white;
+        font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+        background: #f9fafb;
+    }
+
+    tr:hover {
+        background: #eef2ff;
+    }
+
+    @media (max-width: 768px) {
+        th, td {
+            font-size: 12px;
+            padding: 10px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Email Systems & Services Notes</h1>
+
+    <div class="cards">
+
+        <!-- Exchange Server -->
+        <div class="card">
+            <h2>1) Microsoft Exchange Server</h2>
+
+            <div class="section-title">What it is:</div>
+            <p>A mail server system used by organizations to manage email, calendars, contacts, and tasks.</p>
+
+            <div class="section-title">Key Points:</div>
+            <ul>
+                <li>Installed on company servers (on-premises) or used as Exchange Online (cloud).</li>
+                <li>Manages user mailboxes.</li>
+                <li>Handles email sending and receiving.</li>
+                <li>Provides enterprise-level security and control.</li>
+                <li>Used mostly by businesses and institutions.</li>
+            </ul>
+
+            <div class="simple">
+                Exchange is the engine that runs the email system in many companies.
+            </div>
+        </div>
+
+        <!-- Outlook -->
+        <div class="card">
+            <h2>2) Microsoft Outlook</h2>
+
+            <div class="section-title">What it is:</div>
+            <p>An email application (client) used to access and manage emails.</p>
+
+            <div class="section-title">Key Points:</div>
+            <ul>
+                <li>Installed on a computer or used via web (Outlook Web).</li>
+                <li>Connects to Exchange, Microsoft 365, Gmail, or other email servers.</li>
+                <li>Lets you read/send emails, manage calendar, tasks, and contacts.</li>
+                <li>Does NOT store company email systems itself (unless using local files).</li>
+            </ul>
+
+            <div class="simple">
+                Outlook is the app you use to open and manage your email.
+            </div>
+        </div>
+
+        <!-- Microsoft 365 -->
+        <div class="card">
+            <h2>3) Microsoft 365</h2>
+
+            <div class="section-title">What it is:</div>
+            <p>A cloud-based subscription service that includes email, Office apps, and collaboration tools.</p>
+
+            <div class="section-title">Key Points:</div>
+            <ul>
+                <li>Includes Exchange Online (cloud email server).</li>
+                <li>Includes Outlook, Word, Excel, PowerPoint, Teams, and OneDrive.</li>
+                <li>Hosted in the cloud.</li>
+                <li>Monthly or yearly subscription.</li>
+                <li>Designed for businesses, schools, and individuals.</li>
+            </ul>
+
+            <div class="simple">
+                Microsoft 365 is a complete online productivity package, and Exchange Online is part of it.
+            </div>
+        </div>
+
+        <!-- Gmail -->
+        <div class="card">
+            <h2>4) Gmail</h2>
+
+            <div class="section-title">What it is:</div>
+            <p>A free web-based email service provided by Google.</p>
+
+            <div class="section-title">Key Points:</div>
+            <ul>
+                <li>Works through web browser or Gmail app.</li>
+                <li>Uses Google’s mail servers.</li>
+                <li>Includes Google Workspace (business version).</li>
+                <li>Cloud-based.</li>
+                <li>Popular for personal and business use.</li>
+            </ul>
+
+            <div class="simple">
+                Gmail is Google’s email service, similar to Outlook email but hosted by Google.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="table-section">
+        <h2>Quick Comparison Table</h2>
+
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Exchange Server</th>
+                <th>Outlook</th>
+                <th>Microsoft 365</th>
+                <th>Gmail</th>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>Mail server</td>
+                <td>Email client app</td>
+                <td>Cloud service suite</td>
+                <td>Email service</td>
+            </tr>
+            <tr>
+                <td>Installed where?</td>
+                <td>Company server / Cloud</td>
+                <td>Computer / Web</td>
+                <td>Cloud</td>
+                <td>Cloud</td>
+            </tr>
+            <tr>
+                <td>Stores mailboxes?</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes (Exchange Online)</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Used by</td>
+                <td>Mainly businesses</td>
+                <td>Individuals & Businesses</td>
+                <td>Individuals & Businesses</td>
+                <td>Individuals & Businesses</td>
+            </tr>
+            <tr>
+                <td>Requires subscription?</td>
+                <td>Yes (License)</td>
+                <td>Usually Yes</td>
+                <td>Yes</td>
+                <td>Free (Basic)</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

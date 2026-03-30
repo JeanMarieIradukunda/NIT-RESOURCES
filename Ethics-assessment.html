@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>L5-NIT Ethics Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+    <style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #eef1f4;
+        margin: 0;
+        padding: 20px;
+        color: #1a1a1a;
+    }
+
+    .exam-wrapper {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .header {
+        background: #dde4eb;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .header h2 {
+        margin: 0 0 8px 0;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .header table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .header table td {
+        padding: 6px 8px;
+    }
+
+    .header table tr:nth-child(even) {
+        background: #e3eaf2;
+    }
+
+    .center-text {
+        text-align: center;
+    }
+
+    #timer {
+        font-size: 18px;
+        color: #c62828;
+        font-weight: 700;
+        text-align: center;
+        margin: 12px 0;
+    }
+
+    #warning {
+        font-size: 14px;
+        color: #c62828;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .question {
+        background: #fff;
+        padding: 14px 16px;
+        margin: 12px 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        line-height: 1.5;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .question b {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+
+    .question label {
+        display: block;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .question select {
+        width: 100%;
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: 1px solid #bbb;
+        background: #fff;
+        font-size: 14px;
+    }
+
+    .answer {
+        margin-left: 12px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 14px;
+        margin-top: 4px;
+    }
+
+    .correct {
+        background-color: #d0f0d6;
+        color: #2e7d32;
+    }
+
+    .incorrect {
+        background-color: #fde0e0;
+        color: #c62828;
+    }
+
+    .correct-answer {
+        margin-left: 12px;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1565c0;
+        background-color: #e3f2fd;
+        padding: 4px 8px;
+        border-radius: 6px;
+        margin-top: 4px;
+    }
+
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        background: #2f5aa8;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    button:hover {
+        background: #1e3f7a;
+        transform: translateY(-1px);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+    }
+
+    table th, table td {
+        border: 1px solid #cfd8dc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    table th {
+        background: #e3eaf2;
+        font-weight: 600;
+    }
+
+    #submission-output .question {
+        padding: 12px 14px;
+        margin: 8px 0;
+    }
+
+    #submission-output table {
+        margin-bottom: 12px;
+    }
+</style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        /* ================= CONFIG ================= */
+        const EXAM_MINUTES = 40;
+        const MAX_VIOLATIONS = 3;
+        const VIOLATION_PENALTY = 2;
+        const SCHOOL = "PADRI VJEKO CENTRE TSS";
+        const CLASS = "L5-NIT";
+        const MODULE = "FORMATIVE ASSESSMENT OF ETHICS";
+
+        let STUDENT_NAME = "";
+        let allowViolationCount = false;
+        let initialLoadComplete = false;
+        let violations = 0;
+
+        const QUESTIONS = [
+
+            /* ========= SECTION A: TRUE / FALSE (20) ========= */
+            { id: "q1", text: "Social diversity refers to similarities among people in a group.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q2", text: "Social differences can affect how people interact with each other.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q3", text: "Ethnicity is related to a person’s cultural or racial background.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q4", text: "Lifestyle only refers to a person’s job.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q5", text: "Religion is a person’s system of beliefs or faith.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q6", text: "Language differences can create communication challenges.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q7", text: "Workplace conflicts only happen when people agree with each other.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q8", text: "Harassment includes unwanted behavior that makes someone uncomfortable.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q9", text: "Diversity without inclusion means everyone is treated equally.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q10", text: "Generation gaps refer to differences between age groups.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q11", text: "Unconscious bias is always intentional.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q12", text: "Social diversity can improve innovation.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q13", text: "Communication barriers can lead to misunderstandings.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q14", text: "High-context communication is always direct and clear.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q15", text: "Low-context communication relies heavily on body language.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q16", text: "Active listening means interrupting to give your opinion.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q17", text: "Teamwork helps improve productivity.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q18", text: "A good team member is always unreliable.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+            { id: "q19", text: "Professional ethics guide behavior in the workplace.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "TRUE" },
+            { id: "q20", text: "Integrity means being dishonest when no one is watching.", options: [{ value: "TRUE", text: "TRUE" }, { value: "FALSE", text: "FALSE" }], answer: "FALSE" },
+
+            /* ========= SECTION B: MULTIPLE CHOICE (30) ========= */
+
+            { id: "q21", text: "What is social diversity?", options: [{ value: "A", text: "Similarity among people" }, { value: "B", text: "Variety of social characteristics" }, { value: "C", text: "Only cultural beliefs" }, { value: "D", text: "Only religion" }], answer: "B" },
+            { id: "q22", text: "Which is an example of social difference?", options: [{ value: "A", text: "Same hobbies" }, { value: "B", text: "Same language" }, { value: "C", text: "Different beliefs" }, { value: "D", text: "Same culture" }], answer: "C" },
+            { id: "q23", text: "Ethnicity refers to:", options: [{ value: "A", text: "Job type" }, { value: "B", text: "Cultural background" }, { value: "C", text: "Income level" }, { value: "D", text: "Education" }], answer: "B" },
+            { id: "q24", text: "Lifestyle means:", options: [{ value: "A", text: "A person’s religion" }, { value: "B", text: "A person’s daily habits" }, { value: "C", text: "A person’s nationality" }, { value: "D", text: "A person’s gender" }], answer: "B" },
+            { id: "q25", text: "Which is a communication issue?", options: [{ value: "A", text: "Teamwork" }, { value: "B", text: "Language barriers" }, { value: "C", text: "Respect" }, { value: "D", text: "Cooperation" }], answer: "B" },
+            { id: "q26", text: "Harassment includes:", options: [{ value: "A", text: "Encouraging others" }, { value: "B", text: "Helping classmates" }, { value: "C", text: "Bullying someone" }, { value: "D", text: "Sharing ideas" }], answer: "C" },
+            { id: "q27", text: "Diversity without inclusion means:", options: [{ value: "A", text: "Equal treatment" }, { value: "B", text: "Everyone participates" }, { value: "C", text: "Some people excluded" }, { value: "D", text: "Fair leadership" }], answer: "C" },
+            { id: "q28", text: "Generation gap refers to:", options: [{ value: "A", text: "Language differences" }, { value: "B", text: "Age differences" }, { value: "C", text: "Income differences" }, { value: "D", text: "Religion" }], answer: "B" },
+            { id: "q29", text: "Unconscious bias means:", options: [{ value: "A", text: "Intentional discrimination" }, { value: "B", text: "Hidden judgments" }, { value: "C", text: "Fair decisions" }, { value: "D", text: "Equal treatment" }], answer: "B" },
+            { id: "q30", text: "Which is a positive impact of diversity?", options: [{ value: "A", text: "Conflict" }, { value: "B", text: "Misunderstanding" }, { value: "C", text: "Innovation" }, { value: "D", text: "Harassment" }], answer: "C" },
+
+            { id: "q31", text: "Active listening means:", options: [{ value: "A", text: "Ignoring the speaker" }, { value: "B", text: "Paying full attention" }, { value: "C", text: "Talking more" }, { value: "D", text: "Interrupting" }], answer: "B" },
+            { id: "q32", text: "Avoiding slang helps because:", options: [{ value: "A", text: "It confuses people" }, { value: "B", text: "It improves clarity" }, { value: "C", text: "It wastes time" }, { value: "D", text: "It creates conflict" }], answer: "B" },
+            { id: "q33", text: "High-context communication depends on:", options: [{ value: "A", text: "Direct words" }, { value: "B", text: "Body language" }, { value: "C", text: "Written text" }, { value: "D", text: "Instructions" }], answer: "B" },
+            { id: "q34", text: "Low-context communication is:", options: [{ value: "A", text: "Indirect" }, { value: "B", text: "Emotional" }, { value: "C", text: "Clear and direct" }, { value: "D", text: "Complex" }], answer: "C" },
+            { id: "q35", text: "Eye contact in low-context culture shows:", options: [{ value: "A", text: "Disrespect" }, { value: "B", text: "Fear" }, { value: "C", text: "Attention" }, { value: "D", text: "Anger" }], answer: "C" },
+
+            { id: "q36", text: "Co-cultural communication involves:", options: [{ value: "A", text: "Only dominant groups" }, { value: "B", text: "Only teachers" }, { value: "C", text: "Non-dominant groups" }, { value: "D", text: "No interaction" }], answer: "C" },
+            { id: "q37", text: "Assimilation means:", options: [{ value: "A", text: "Keeping your culture only" }, { value: "B", text: "Adopting dominant culture" }, { value: "C", text: "Ignoring others" }, { value: "D", text: "Separation" }], answer: "B" },
+            { id: "q38", text: "Accommodation means:", options: [{ value: "A", text: "Full rejection" }, { value: "B", text: "Total separation" }, { value: "C", text: "Adjusting while keeping identity" }, { value: "D", text: "Ignoring rules" }], answer: "C" },
+            { id: "q39", text: "Stereotypes are:", options: [{ value: "A", text: "Flexible ideas" }, { value: "B", text: "Fixed beliefs about a group" }, { value: "C", text: "Fair opinions" }, { value: "D", text: "Scientific facts" }], answer: "B" },
+            { id: "q40", text: "Ethnocentrism means:", options: [{ value: "A", text: "Respecting all cultures" }, { value: "B", text: "Thinking your culture is best" }, { value: "C", text: "Ignoring culture" }, { value: "D", text: "Learning culture" }], answer: "B" },
+
+            { id: "q41", text: "A team is:", options: [{ value: "A", text: "One person" }, { value: "B", text: "A group working together" }, { value: "C", text: "A teacher only" }, { value: "D", text: "A leader only" }], answer: "B" },
+            { id: "q42", text: "Teamwork spirit means:", options: [{ value: "A", text: "Competing only" }, { value: "B", text: "Supporting others" }, { value: "C", text: "Ignoring others" }, { value: "D", text: "Working alone" }], answer: "B" },
+            { id: "q43", text: "Which is a quality of a good team member?", options: [{ value: "A", text: "Laziness" }, { value: "B", text: "Responsibility" }, { value: "C", text: "Absence" }, { value: "D", text: "Conflict" }], answer: "B" },
+            { id: "q44", text: "Which is NOT a teamwork benefit?", options: [{ value: "A", text: "Creativity" }, { value: "B", text: "Productivity" }, { value: "C", text: "Conflict" }, { value: "D", text: "Skill development" }], answer: "C" },
+            { id: "q45", text: "A good leader is:", options: [{ value: "A", text: "Dishonest" }, { value: "B", text: "Visionary" }, { value: "C", text: "Lazy" }, { value: "D", text: "Unfair" }], answer: "B" },
+
+            { id: "q46", text: "Authoritarian leadership means:", options: [{ value: "A", text: "Group decision" }, { value: "B", text: "Leader decides alone" }, { value: "C", text: "No decisions" }, { value: "D", text: "Random decisions" }], answer: "B" },
+            { id: "q47", text: "First step in problem-solving is:", options: [{ value: "A", text: "Implement solution" }, { value: "B", text: "Identify problem" }, { value: "C", text: "Evaluate" }, { value: "D", text: "Ignore problem" }], answer: "B" },
+            { id: "q48", text: "A good solution should be:", options: [{ value: "A", text: "Expensive" }, { value: "B", text: "Impossible" }, { value: "C", text: "Feasible" }, { value: "D", text: "Confusing" }], answer: "C" },
+            { id: "q49", text: "Ethics are:", options: [{ value: "A", text: "Rules of right and wrong" }, { value: "B", text: "Laws only" }, { value: "C", text: "Religion only" }, { value: "D", text: "Personal habits" }], answer: "A" },
+            { id: "q50", text: "Professionalism includes:", options: [{ value: "A", text: "Being irresponsible" }, { value: "B", text: "Being respectful" }, { value: "C", text: "Being rude" }, { value: "D", text: "Ignoring rules" }], answer: "B" }
+
+        ];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function promptStudentName() {
+            let name = "";
+            while (!name) {
+                name = prompt("Enter your full name for the exam:");
+                if (name) {
+                    STUDENT_NAME = name.trim();
+                    document.getElementById("student-name").innerText = STUDENT_NAME;
+                    allowViolationCount = true;
+                }
+            }
+        }
+
+        function buildExam() {
+            const container = document.getElementById("exam-container");
+            const shuffledQuestions = shuffleArray([...QUESTIONS]);
+
+            shuffledQuestions.forEach((q, index) => {
+                const div = document.createElement("div");
+                div.className = "question";
+                div.innerHTML = `<b>Question ${index + 1}:</b> ${q.text}<br>`;
+
+                const shuffledOptions = shuffleArray([...q.options]);
+                shuffledOptions.forEach(opt => {
+                    const label = document.createElement("label");
+                    label.innerHTML = `<input type="radio" name="${q.id}" value="${opt.value}"> ${opt.text}`;
+                    div.appendChild(label);
+                });
+
+                container.appendChild(div);
+            });
+        }
+
+        let seconds = EXAM_MINUTES * 60;
+        let timerInt;
+
+        function tick() {
+            seconds--;
+            let m = Math.floor(seconds / 60);
+            let s = seconds % 60;
+            document.getElementById("timer").innerText = `Time: ${m}:${s.toString().padStart(2, '0')}`;
+            if (seconds <= 0) submitExam();
+        }
+
+        function fs() { document.documentElement.requestFullscreen?.(); }
+
+        function violation(type) {
+            if (!allowViolationCount || !initialLoadComplete) return;
+            violations++;
+            document.getElementById("warning").innerText = `Violation: ${type} (${violations}/${MAX_VIOLATIONS})`;
+            if (violations >= MAX_VIOLATIONS) {
+                alert("Too many violations — exam ended");
+                submitExam();
+            }
+        }
+
+        function submitExam() {
+            clearInterval(timerInt);
+            let score = 0;
+            const totalMarks = QUESTIONS.length;
+            const BONUS_MARKS = 2;
+            const penalty = violations * VIOLATION_PENALTY;
+
+            let output = `<div id="submission-output"><h1>Assessment Submitted</h1>`;
+
+            // Metadata table
+            output += `<table class="metadata">
+        <tr><td><strong>School</strong></td><td>${SCHOOL}</td></tr>
+        <tr style="background:#dde4eb;"><td><strong>Class</strong></td><td>${CLASS}</td></tr>
+        <tr><td><strong>Module</strong></td><td>${MODULE}</td></tr>
+        <tr style="background:#dde4eb;"><td><strong>Student</strong></td><td>${STUDENT_NAME}</td></tr>
+        <tr><td><strong>Violations</strong></td><td>${violations}</td></tr>
+    </table>`;
+
+            // Questions
+            QUESTIONS.forEach((q, index) => {
+                const sel = document.querySelector(`input[name="${q.id}"]:checked`);
+                const val = sel ? sel.value : "(No Answer)";
+                const selText = sel ? q.options.find(o => o.value === val)?.text : "(No Answer)";
+                const correctText = q.options.find(o => o.value === q.answer)?.text;
+                const ok = val === q.answer;
+                if (ok) score++;
+
+                output += `<div class="question">
+            <b>Q${index + 1}: ${q.text}</b>
+            <div class="answer ${ok ? 'correct' : 'incorrect'}">Your Answer: ${val} - ${selText}</div>
+            <div class="correct-answer">Correct Answer: ${q.answer} - ${correctText}</div>
+        </div>`;
+            });
+
+            const finalScore = Math.min(Math.max(score - penalty + BONUS_MARKS, 0), totalMarks);
+
+            // Scores table
+            output += `<table class="scores">
+        <tr><td><strong>Raw Score</strong></td><td>${score}/${totalMarks}</td></tr>
+        <tr style="background:#dde4eb;"><td><strong>Penalty</strong></td><td>-${penalty}</td></tr>
+        <tr><td><strong>Bonus</strong></td><td>+${BONUS_MARKS}</td></tr>
+        <tr style="background:#dde4eb;"><td><strong>Final Score</strong></td><td>${finalScore}/${totalMarks}</td></tr>
+    </table>`;
+
+            output += `<div style="text-align:center; margin-top:20px;">
+        <button onclick="downloadPDF()">Download PDF</button>
+    </div></div>`;
+
+            document.body.innerHTML = output;
+        }
+
+
+        
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const canvas = await html2canvas(document.body, { scale: 2, backgroundColor: "#eef1f4" });
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pdfHeight);
+            pdf.save(`${STUDENT_NAME}_Exam_Submission.pdf`);
+        }
+
+        function initSecurity() {
+            document.addEventListener("visibilitychange", () => { if (document.hidden) violation("TAB_SWITCH"); });
+            window.addEventListener("blur", () => violation("WINDOW_BLUR"));
+            document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) violation("EXIT_FULLSCREEN"); });
+            document.addEventListener("keydown", e => {
+                if ([123, 116].includes(e.keyCode)) e.preventDefault();
+                if (e.ctrlKey && ["t", "n", "w", "i", "u", "r"].includes(e.key.toLowerCase())) {
+                    e.preventDefault(); violation("SHORTCUT");
+                }
+            });
+            document.addEventListener("contextmenu", e => e.preventDefault());
+            window.addEventListener("beforeunload", function (e) {
+                if (allowViolationCount && initialLoadComplete) {
+                    e.preventDefault(); e.returnValue = "";
+                }
+            });
+        }
+
+        window.onload = () => {
+            promptStudentName();
+            fs();
+            buildExam();
+            initSecurity();
+            timerInt = setInterval(tick, 1000);
+            initialLoadComplete = true;
+        };
+    </script>
+</head>
+
+<body>
+    <div class="exam-wrapper">
+
+        <div class="header">
+            <h2>PADRI VJEKO CENTRE TSS</h2>
+            <p><strong>Class:</strong> L5-NIT</p>
+            <p><strong>Module:</strong> Formative Assessment — Ethics</p>
+            <p><strong>Student:</strong> <span id="student-name">(Enter Name)</span></p>
+        </div>
+
+        <div id="timer" class="center-text"></div>
+        <div id="warning" class="center-text"></div>
+
+        <div id="exam-container"></div>
+
+        <button onclick="submitExam()">Submit Examination</button>
+
+    </div>
+</body>
+
+</html>

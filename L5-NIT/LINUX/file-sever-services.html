@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Server Services Notes</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    body { background-color: #f4f7fa; padding-top: 30px; padding-bottom: 30px; }
+    .note-card { margin-bottom: 25px; border-radius: 15px; padding: 25px; }
+    pre { background-color: #e9ecef; padding: 15px; border-radius: 10px; overflow-x: auto; }
+    h1, h2 { text-align: center; margin-bottom: 30px; }
+    .protocol-icon { font-size: 1.5rem; margin-right: 10px; }
+    .accordion-button::after { filter: invert(1); }
+    .card-header { font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📁 File Server Services</h1>
+
+<!-- 1. Configuration -->
+<div class="card note-card shadow-sm border-primary bg-light">
+<h2>1. Configuration of File Server Service</h2>
+<p>A <strong>File Server</strong> stores and manages files so multiple users on a network can access, share, and store data efficiently.</p>
+<p><em>Analogy:</em> Like a school library: students (users) come to read, borrow, or return books (files).</p>
+</div>
+
+<!-- 2. File Sharing Protocols -->
+<div class="card note-card shadow-sm border-success bg-light">
+<h2>2. Description of File Sharing Protocols</h2>
+
+<h4><i class="bi bi-printer-fill protocol-icon text-primary"></i> SMB/CIFS</h4>
+<p><strong>Definition:</strong> Protocol mainly in Windows to share files, printers, and resources. Linux uses it via Samba.</p>
+<p><em>Analogy:</em> Classroom printer shared among students.</p>
+<p><strong>Example in School:</strong> Teacher shares assignment templates on a central PC.</p>
+
+<h4><i class="bi bi-folder-fill protocol-icon text-success"></i> NFS (Network File System)</h4>
+<p><strong>Definition:</strong> Linux/Unix systems access remote files as if local.</p>
+<p><em>Analogy:</em> Shared locker in a school corridor.</p>
+<p><strong>Example in College:</strong> Lab PCs mount server directory via NFS, files appear local.</p>
+
+<h4><i class="bi bi-envelope-fill protocol-icon text-warning"></i> FTP</h4>
+<p><strong>Definition:</strong> Protocol for uploading/downloading files over TCP/IP.</p>
+<p><em>Analogy:</em> Mail service sending/receiving packages.</p>
+<p><strong>Example in School:</strong> Teachers upload lecture notes to a server; students download from anywhere.</p>
+</div>
+
+<!-- 3. Installation -->
+<div class="card note-card shadow-sm border-info bg-light">
+<h2>3. Installation of File Server Software</h2>
+
+<h5 class="text-primary"><i class="bi bi-windows"></i> SMB/CIFS (Samba on Ubuntu)</h5>
+<pre><code>sudo apt update
+sudo apt install samba</code></pre>
+<p>Usage: Share files with Windows/Linux clients. Example: Share textbooks with staff.</p>
+
+<h5 class="text-success"><i class="bi bi-terminal-fill"></i> NFS</h5>
+<pre><code>sudo apt update
+sudo apt install nfs-kernel-server</code></pre>
+<p>Usage: Linux-to-Linux sharing. Example: Lab assignments access.</p>
+
+<h5 class="text-warning"><i class="bi bi-upload"></i> FTP</h5>
+<pre><code>sudo apt update
+sudo apt install vsftpd</code></pre>
+<p>Usage: Upload/download files. Example: Teachers upload lesson materials; students download.</p>
+</div>
+
+<!-- 4. FTP Configuration -->
+<div class="card note-card shadow-sm border-danger bg-light">
+<h2>4. Perform FTP Server Configuration</h2>
+<pre><code>sudo nano /etc/vsftpd.conf</code></pre>
+<p>Enable local users and write permissions:</p>
+<pre><code>local_enable=YES
+write_enable=YES</code></pre>
+<p>Restart FTP service:</p>
+<pre><code>sudo systemctl restart vsftpd</code></pre>
+<p>Students can now log in with username/password to access shared notes.</p>
+</div>
+
+<!-- 5. Permissions -->
+<div class="card note-card shadow-sm border-warning bg-light">
+<h2>5. Set Permissions and Access Control</h2>
+<p>Permissions ensure users access only what they are allowed:</p>
+<ul>
+<li><strong>Read (r):</strong> View files</li>
+<li><strong>Write (w):</strong> Modify files</li>
+<li><strong>Execute (x):</strong> Run files or scripts</li>
+</ul>
+<pre><code>sudo chown teacher:staff /srv/samba
+sudo chmod 770 /srv/samba</code></pre>
+<p><em>Analogy:</em> Only students in a class can open their locker; others cannot.</p>
+<p>Example: Teachers edit assignments; students only view.</p>
+</div>
+
+<!-- 6. Backup -->
+<div class="card note-card shadow-sm border-secondary bg-light">
+<h2>6. Apply Backup and Recovery Techniques</h2>
+<p>Definition: Regularly saving copies of data to prevent loss due to hardware failure, mistakes, or attacks.</p>
+<ul>
+<li>rsync for incremental backups</li>
+<li>tar for archive backups</li>
+<li>Automated cron jobs</li>
+</ul>
+<pre><code>rsync -av /srv/samba /mnt/backup/</code></pre>
+<p><em>Analogy:</em> Weekly photocopies of library books.</p>
+<p>Example: All student assignment submissions backed up daily to a separate server.</p>
+</div>
+
+<!-- Summary Table -->
+<div class="card note-card shadow-sm border-dark bg-light">
+<h2>✅ Summary Table of Protocols</h2>
+<div class="table-responsive">
+<table class="table table-striped table-bordered text-center">
+<thead class="table-dark">
+<tr>
+<th>Protocol</th>
+<th>Use Case</th>
+<th>Real-life Analogy</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>SMB/CIFS</td><td>Share files/printers across Windows/Linux</td><td>Classroom printer shared</td><td>Teacher shares templates</td></tr>
+<tr><td>NFS</td><td>Share files between Linux machines</td><td>Shared locker</td><td>Lab directory access</td></tr>
+<tr><td>FTP</td><td>Upload/download files</td><td>Mail service</td><td>Upload lecture notes</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Collapsible FTP Example for Teacher -->
+<div class="card note-card shadow-sm border-info bg-light">
+<h2>🔧 FTP Server Configuration Example: NIT-L5-RESOURCES (Teacher)</h2>
+<div class="accordion" id="ftpAccordionTeacher">
+<!-- Steps 1-8 accordion items as in previous example -->
+</div>
+</div>
+
+<!-- Collapsible FTP Setup for 1 Teacher + 90 Students -->
+<div class="card note-card shadow-sm border-primary bg-light mt-3">
+<h2>🔧 Step-by-Step FTP Setup for 1 Teacher + 90 Students</h2>
+<p>Scenario: Teacher uploads notes; students download (read-only). Shared folder: /srv/ftp/NIT-L5-RESOURCES</p>
+
+<div class="accordion" id="ftpStudentsAccordion">
+
+<!-- Step 1 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading1">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse1">
+Step 1: Update System
+</button></h2>
+<div id="ftpSCollapse1" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo apt update
+sudo apt upgrade -y</code></pre>
+<p>Ensure system is up-to-date.</p>
+</div></div></div>
+
+<!-- Step 2 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading2">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse2">
+Step 2: Install FTP Server
+</button></h2>
+<div id="ftpSCollapse2" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo apt install vsftpd -y</code></pre>
+<p>vsftpd: Very Secure FTP Daemon.</p>
+</div></div></div>
+
+<!-- Step 3 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading3">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse3">
+Step 3: Create Teacher User
+</button></h2>
+<div id="ftpSCollapse3" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo adduser teacher</code></pre>
+<p>Assign password: teacher123. Teacher uploads and manages notes.</p>
+</div></div></div>
+
+<!-- Step 4 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading4">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse4">
+Step 4: Create Student Users (90)
+</button></h2>
+<div id="ftpSCollapse4" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>for i in $(seq 1 90); do
+    sudo adduser --disabled-password --gecos "" student$i
+    echo "student$i:password123" | sudo chpasswd
+done</code></pre>
+<p>Each student gets a unique account to log in and download notes.</p>
+</div></div></div>
+
+<!-- Step 5 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading5">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse5">
+Step 5: Create Student Group
+</button></h2>
+<div id="ftpSCollapse5" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo groupadd nit_students</code></pre>
+<p>Single group to control all students’ permissions.</p>
+</div></div></div>
+
+<!-- Step 6 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading6">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse6">
+Step 6: Add Students to Group
+</button></h2>
+<div id="ftpSCollapse6" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>for i in $(seq 1 90); do
+    sudo usermod -aG nit_students student$i
+done</code></pre>
+<p>Append all students to nit_students group.</p>
+</div></div></div>
+
+<!-- Step 7 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading7">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse7">
+Step 7: Create Shared FTP Directory
+</button></h2>
+<div id="ftpSCollapse7" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo mkdir -p /srv/ftp/NIT-L5-RESOURCES</code></pre>
+<p>Central folder for teacher and students.</p>
+</div></div></div>
+
+<!-- Step 8 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading8">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse8">
+Step 8: Set Ownership & Permissions
+</button></h2>
+<div id="ftpSCollapse8" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo chown teacher:nit_students /srv/ftp/NIT-L5-RESOURCES
+sudo chmod 750 /srv/ftp/NIT-L5-RESOURCES</code></pre>
+<p>Teacher full control; students read-only. Optional 770 if students upload files.</p>
+</div></div></div>
+
+<!-- Step 9 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading9">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse9">
+Step 9: Configure vsftpd
+</button></h2>
+<div id="ftpSCollapse9" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo nano /etc/vsftpd.conf
+listen=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+chroot_local_user=YES</code></pre>
+<p>Restrict users, allow teacher to upload notes.</p>
+</div></div></div>
+
+<!-- Step 10 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading10">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse10">
+Step 10: Set Student Home Directory (Optional)
+</button></h2>
+<div id="ftpSCollapse10" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>for i in $(seq 1 90); do
+    sudo usermod -d /srv/ftp/NIT-L5-RESOURCES student$i
+done</code></pre>
+<p>Students land directly in shared folder upon login.</p>
+</div></div></div>
+
+<!-- Step 11 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading11">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse11">
+Step 11: Restart vsftpd
+</button></h2>
+<div id="ftpSCollapse11" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<pre><code>sudo systemctl restart vsftpd
+sudo systemctl enable vsftpd</code></pre>
+<p>Apply configuration changes; enable service on boot.</p>
+</div></div></div>
+
+<!-- Step 12 -->
+<div class="accordion-item">
+<h2 class="accordion-header" id="ftpSHeading12">
+<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ftpSCollapse12">
+Step 12: Test FTP Access
+</button></h2>
+<div id="ftpSCollapse12" class="accordion-collapse collapse" data-bs-parent="#ftpStudentsAccordion">
+<div class="accordion-body">
+<p>Teacher uploads a note:</p>
+<pre><code>ftp &lt;server-ip&gt;
+Username: teacher
+Password: teacher123
+cd NIT-L5-RESOURCES
+put lecture1.pdf</code></pre>
+<p>Student downloads:</p>
+<pre><code>ftp &lt;server-ip&gt;
+Username: student1
+Password: password123
+cd NIT-L5-RESOURCES
+get lecture1.pdf</code></pre>
+</div></div></div>
+
+</div>
+</div>
+
+<!-- User Roles Summary Table -->
+<div class="card note-card shadow-sm border-dark bg-light mt-3">
+<h2>✅ User Roles Summary</h2>
+<div class="table-responsive">
+<table class="table table-striped table-bordered text-center">
+<thead class="table-dark">
+<tr>
+<th>User Type</th>
+<th>Purpose</th>
+<th>Access Level</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>teacher</td><td>Upload lecture notes, manage files</td><td>Owner: read/write/execute</td></tr>
+<tr><td>students</td><td>Download lecture notes</td><td>Group: read-only (or read/write if allowed)</td></tr>
+<tr><td>others</td><td>None</td><td>No access</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>School Comprehensive Assessment — Python (RTQF 5)</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet">
+
+    <!-- Font Awesome for sidebar icons -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-600: #1d4ed8;
+      --shadow: 0 6px 18px rgba(20, 20, 40, 0.06);
+      --radius: 10px;
+      --max-width: 1200px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: "Calisto MT", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      background: var(--bg);
+      color: #111827;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* LAYOUT */
+    .app {
+      display: flex;
+      min-height: 100vh;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 20px;
+      max-width: var(--max-width);
+      margin: 18px auto;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #0f1724, #152034);
+      color: #f8fafc;
+      border-radius: 12px;
+      padding: 18px;
+      flex: 0 0 260px;
+      position: sticky;
+      top: 20px;
+      height: calc(100vh - 40px);
+      overflow: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px
+    }
+
+    .brand .logo {
+      width: 50px;
+      height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 10px
+    }
+
+    .brand h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600
+    }
+
+    nav.nav a {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.92);
+      text-decoration: none;
+      padding: 10px 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      font-size: 14px;
+      transition: all .18s ease
+    }
+
+    nav.nav a i {
+      width: 18px;
+      text-align: center
+    }
+
+    nav.nav a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateX(4px)
+    }
+
+    nav.nav a.active {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.03)
+    }
+
+    .sidebar .section-title {
+      color: rgba(255, 255, 255, 0.72);
+      margin: 12px 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px
+    }
+
+    /* CONTENT */
+    .content {
+      flex: 1 1 auto;
+      min-width: 0
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(17, 24, 39, 0.06);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer
+    }
+
+    header.card {
+      background: linear-gradient(180deg, #fff, #fbfdff);
+      padding: 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(10, 25, 47, 0.03);
+      margin-bottom: 12px
+    }
+
+    header.card h1 {
+      margin: 0;
+      font-size: 20px
+    }
+
+    header.card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    /* section card */
+    .section {
+      margin-bottom: 18px;
+      display: block
+    }
+
+    .section .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(16, 24, 40, 0.04);
+      margin-top: 10px;
+      animation: fadeUp .28s ease both
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 16px
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    /* tables & lists */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px
+    }
+
+    table th,
+    table td {
+      padding: 10px 12px;
+      border: 1px solid #e6eef8;
+      text-align: left;
+      vertical-align: middle
+    }
+
+    table th {
+      background: #f3f6ff;
+      font-weight: 600;
+      color: #0f1724
+    }
+
+    .qa-list {
+      display: grid;
+      gap: 10px
+    }
+
+    .qa-list .item {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(13, 17, 23, 0.04)
+    }
+
+    /* responsive grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px
+    }
+
+    @media(max-width:980px) {
+      .grid-2 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media print {
+      body {
+        background: white
+      }
+
+      .sidebar,
+      .menu-toggle {
+        display: none
+      }
+
+      .app {
+        max-width: 100%;
+        padding: 0;
+        margin: 0
+      }
+
+      .card,
+      header.card {
+        box-shadow: none;
+        border: none
+      }
+    }
+
+    @media(max-width:900px) {
+      .app {
+        padding: 12px
+      }
+
+      .sidebar {
+        position: fixed;
+        left: -320px;
+        z-index: 999;
+        transition: all .22s ease;
+        width: 280px
+      }
+
+      .sidebar.open {
+        left: 10px
+      }
+
+      .menu-toggle {
+        display: inline-flex
+      }
+
+      .content {
+        margin-left: 0
+      }
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px
+    }
+
+    .muted-2 {
+      color: #475569
+    }
+
+    .section-sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    pre {
+      background: #f9fbff;
+      color: #052245;
+      padding: 10px;
+      border-radius: 8px;
+      overflow: auto;
+      font-size: 13px
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px
+    }
+
+    .icon-right {
+      float: right;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+  </style>
+  </head>
+
+  <body>
+
+    <div class="app">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar" aria-label="Sidebar navigation">
+        <div class="brand" style="margin-bottom:12px">
+          <div class="logo">PY</div>
+          <div>
+            <h3>Assessment (Level 5)</h3>
+            <div class="small">Networking & Internet Technology</div>
+          </div>
+        </div>
+
+        <div class="section-title">Navigation</div>
+        <nav class="nav" id="navlinks" aria-label="Main">
+          <a href="#instructions"><i class="fas fa-info-circle"></i>
+            Instructions</a>
+
+          <div class="section-title" style="margin-top:10px">SECTION A</div>
+          <a href="#fill"><i class="fas fa-pen-nib"></i> A. Fill in the
+            blanks</a>
+          <a href="#mcq"><i class="fas fa-check-square"></i> B. Multiple
+            Choice</a>
+          <a href="#tf"><i class="fas fa-toggle-on"></i> C. True / False</a>
+          <a href="#match"><i class="fas fa-link"></i> D. Matching</a>
+          <a href="#order"><i class="fas fa-list-ol"></i> E. Ordering</a>
+          <a href="#short"><i class="fas fa-comment-dots"></i> F. Short
+            Answers</a>
+
+          <div class="section-title">SECTION B</div>
+          <a href="#data-types"><i class="fas fa-database"></i> 18. Data
+            Types</a>
+          <a href="#venv"><i class="fas fa-box"></i> 19. Virtual Env</a>
+          <a href="#control"><i class="fas fa-code-branch"></i> 20. Control
+            Structures</a>
+          <a href="#functions"><i class="fas fa-cogs"></i> 21. Functions</a>
+
+          <div class="section-title">SECTION C</div>
+          <a href="#essay"><i class="fas fa-file-lines"></i> Section C — Choose
+            1</a>
+        </nav>
+
+        <div style="height:18px"></div>
+        <div class="small muted-2">Tip: Use the menu on small screens. Click any
+          item to jump to that question.</div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="content" id="main">
+
+        <div class="topbar">
+          <button class="menu-toggle" aria-label="Open menu" id="menuToggle"
+            onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <div style="display:flex;gap:12px;flex:1;align-items:center;">
+            <header class="card" style="flex:1">
+              <div
+                style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+                <div>
+                  <h1>SCHOOL COMPREHENSIVE ASSESSMENT</h1>
+                  <div class="muted-2">Sector: ICT & Multimedia • RTQF Level: 5
+                    • Trades: Networking & Internet Technology</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="badge">Duration: 3 Hours</div>
+                  <div class="bg-success small muted"
+                    style="margin-top:6px">Marks: 100</div>
+                </div>
+              </div>
+            </header>
+          </div>
+        </div>
+
+        <!-- Instructions -->
+        <section id="instructions" class="section"
+          aria-labelledby="instructions">
+          <div class="card">
+            <h2>Instructions to Candidates</h2>
+            <p class="section-sub">Answer all questions in Section A. In Section
+              B answer all questions. In Section C answer only ONE question.
+              Read each question carefully and write your answers in the space
+              provided. Total marks: 100.</p>
+          </div>
+        </section>
+
+        <!-- SECTION A -->
+        <section id="fill" class="section" aria-labelledby="fill">
+          <h2>A. FILL IN THE BLANKS — <span class="small">7 Marks (1 mark
+              each)</span></h2>
+          <div class="card">
+            <ol class="small">
+              <li>A. high-level, simplicity</li>
+              <li>B. store</li>
+              <li>C. int</li>
+              <li>D. #</li>
+              <li>E. if</li>
+              <li>F. for</li>
+              <li>G. user-defined function</li>
+            </ol>
+            <div class="muted small" style="margin-top:10px">Marking: 1 mark
+              each</div>
+          </div>
+        </section>
+
+        <section id="mcq" class="section" aria-labelledby="mcq">
+          <h2>B. MULTIPLE CHOICE QUESTIONS — <span class="small">10 Marks (1
+              mark each)</span></h2>
+          <div class="card">
+            <div class="qa-list">
+              <div class="item"><strong>2.</strong> b) Easy to learn and highly
+                readable</div>
+              <div class="item"><strong>3.</strong> d) decimal</div>
+              <div class="item"><strong>4.</strong> b) **</div>
+              <div class="item"><strong>5.</strong> b) while</div>
+              <div class="item"><strong>6.</strong> c) continue</div>
+              <div class="item"><strong>7.</strong> a) pip</div>
+              <div class="item"><strong>8.</strong> a) .py</div>
+              <div class="item"><strong>9.</strong> b) def myFunc():</div>
+              <div class="item"><strong>10.</strong> b) list</div>
+              <div class="item"><strong>11.</strong> b) Repeating tasks
+                automatically</div>
+            </div>
+            <div class="muted small" style="margin-top:10px">Marking: 1 mark
+              each</div>
+          </div>
+        </section>
+
+        <section id="tf" class="section" aria-labelledby="tf">
+          <h2>C. TRUE / FALSE — <span class="small">5 Marks</span></h2>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Q#</th>
+                  <th>Answer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12A</td>
+                  <td>TRUE</td>
+                </tr>
+                <tr>
+                  <td>12B</td>
+                  <td>TRUE</td>
+                </tr>
+                <tr>
+                  <td>12C</td>
+                  <td>TRUE</td>
+                </tr>
+                <tr>
+                  <td>12D</td>
+                  <td>FALSE (Python is interpreted, not
+                    compiled)</td>
+                </tr>
+                <tr>
+                  <td>12E</td>
+                  <td>FALSE (tuples are immutable)</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="muted small" style="margin-top:10px">Marking: 1 mark
+              each</div>
+          </div>
+        </section>
+
+        <section id="match" class="section" aria-labelledby="match">
+          <h2>D. MATCHING QUESTIONS — <span class="small">10 Marks</span></h2>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Column A (Concept)</th>
+                  <th>Column B
+                    (Description)</th>
+                  <th>Answer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1. int</td>
+                  <td>C. A data type for whole
+                    numbers</td>
+                  <td>1 → C</td>
+                </tr>
+                <tr>
+                  <td>2. list</td>
+                  <td>D. Ordered, mutable collection</td>
+                  <td>2
+                    → D</td>
+                </tr>
+                <tr>
+                  <td>3. def</td>
+                  <td>B. Used to define functions</td>
+                  <td>3 →
+                    B</td>
+                </tr>
+                <tr>
+                  <td>4. pip</td>
+                  <td>A. Used to manage packages</td>
+                  <td>4 →
+                    A</td>
+                </tr>
+                <tr>
+                  <td>5. Virtual environment</td>
+                  <td>E. Isolates Python
+                    project dependencies</td>
+                  <td>5 → E</td>
+                </tr>
+                <tr>
+                  <td>6. float</td>
+                  <td>F. Number with decimals</td>
+                  <td>6 →
+                    F</td>
+                </tr>
+                <tr>
+                  <td>7. if statement</td>
+                  <td>G. Used for
+                    decision-making</td>
+                  <td>7 → G</td>
+                </tr>
+                <tr>
+                  <td>8. while loop</td>
+                  <td>H. Repeats based on
+                    condition</td>
+                  <td>8 → H</td>
+                </tr>
+                <tr>
+                  <td>9. break</td>
+                  <td>I. Stops a loop immediately</td>
+                  <td>9 →
+                    I</td>
+                </tr>
+                <tr>
+                  <td>10. continue</td>
+                  <td>J. Skips to the next loop
+                    iteration</td>
+                  <td>10 → J</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="muted small" style="margin-top:10px">Marking: 1 mark
+              each</div>
+          </div>
+        </section>
+
+        <section id="order" class="section" aria-labelledby="order">
+          <h2>E. ORDERING QUESTIONS — <span class="small">5 Marks</span></h2>
+          <div class="card">
+            <p class="small">Correct order:</p>
+            <ol class="small">
+              <li>Check system requirements</li>
+              <li>Download Python installer</li>
+              <li>Install Python</li>
+              <li>Verify installation using <code>python3 --version</code></li>
+              <li>Configure Python virtual environment</li>
+            </ol>
+            <div class="muted small" style="margin-top:10px">Marking: 1 mark
+              each</div>
+          </div>
+        </section>
+
+        <section id="short" class="section" aria-labelledby="short">
+          <h2>F. SHORT-ANSWER QUESTIONS — <span class="small">20
+              Marks</span></h2>
+          <div class="card">
+            <h3 class="small">15. Four benefits of using Python (4 marks)</h3>
+            <ul class="small">
+              <li>Easy to learn and read</li>
+              <li>Cross-platform compatibility</li>
+              <li>Large standard library</li>
+              <li>Supports multiple programming paradigms</li>
+              <li>Rapid development</li>
+              <li>High community support</li>
+            </ul>
+
+            <h3 class="small" style="margin-top:10px">16. Python code to create
+              and print variable <code>age</code> (6 marks)</h3>
+            <pre><code># Example (2 marks for assignment, 1 mark for print, 3 marks for syntax)
+age = 21
+print(age)</code></pre>
+
+            <h3 class="small" style="margin-top:10px">17. Python function
+              <code>greet()</code> with default parameter (5 marks)
+            </h3>
+            <pre><code># Function definition (2 marks), default parameter (1), print (1), call (1)
+def greet(name="Student"):
+    print(f"Hello, {name}!")
+
+# function call
+greet()
+</code></pre>
+          </div>
+        </section>
+
+        <!-- SECTION B -->
+        <section id="data-types" class="section" aria-labelledby="data-types">
+          <h2>SECTION B — ANSWER ALL QUESTIONS (30 Marks)</h2>
+
+          <div class="card" id="question18">
+            <h3>18. Python data types (10 marks)</h3>
+            <ul class="small">
+              <li><strong>int:</strong> whole numbers, e.g., <code>x =
+                  5</code></li>
+              <li><strong>float:</strong> decimal numbers, e.g., <code>y =
+                  3.14</code></li>
+              <li><strong>str:</strong> text enclosed in quotes, e.g.,
+                <code>name = "Alice"</code>
+              </li>
+              <li><strong>bool:</strong> True/False, e.g., <code>flag =
+                  True</code></li>
+              <li><strong>list:</strong> ordered, mutable collection, e.g.,
+                <code>lst = [1,2,3]</code>
+              </li>
+              <li><strong>tuple:</strong> ordered, immutable collection, e.g.,
+                <code>tup = (1,2)</code>
+              </li>
+              <li><strong>dict:</strong> key-value pairs, e.g., <code>d =
+                  {"name":"Alice"}</code></li>
+              <li><strong>set:</strong> unordered, unique elements, e.g.,
+                <code>s = {1,2,3}</code>
+              </li>
+            </ul>
+            <div class="muted small" style="margin-top:8px">Marking: 1–2 marks
+              per data type with example</div>
+          </div>
+
+          <div class="card" id="question19">
+            <h3>19. Python virtual environment steps (10 marks)</h3>
+            <ul class="small">
+              <li><strong>Create:</strong> <code>python -m venv env_name</code>
+                ✅</li>
+              <li><strong>Activate:</strong>
+                <ul>
+                  <li>Windows: <code>env_name\Scripts\activate</code></li>
+                  <li>Linux/Mac: <code>source env_name/bin/activate</code></li>
+                </ul>
+              </li>
+              <li><strong>Use:</strong> install packages within environment
+                using <code>pip</code></li>
+              <li><strong>Deactivate:</strong> <code>deactivate</code></li>
+            </ul>
+            <div class="muted small" style="margin-top:8px">Marking: 2–3 marks
+              per step</div>
+          </div>
+
+          <div class="card" id="question20">
+            <h3>20. Python control structures (10 marks)</h3>
+            <p class="small">Explain and give examples of the following control
+              structures and jump statements:</p>
+            <ul class="small">
+              <li><strong>If / elif / else:</strong> decision making with
+                examples</li>
+              <li><strong>for / while loops:</strong> iteration examples</li>
+              <li><strong>Jump statements:</strong>
+                <ul>
+                  <li><code>break</code> — ends loop immediately</li>
+                  <li><code>continue</code> — skips current iteration</li>
+                  <li><code>pass</code> — placeholder</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="muted small" style="margin-top:8px">Marking: 2–3 marks
+              per control type with example</div>
+          </div>
+
+          <div class="card" id="question21">
+            <h3>21. User-defined functions (10 marks)</h3>
+            <ul class="small">
+              <li><strong>Syntax:</strong> <code>def
+                  function_name(parameters):</code></li>
+              <li><strong>Default parameters:</strong> <code>def
+                  greet(name="Student"):</code></li>
+              <li><strong>Function calls:</strong> <code>greet()</code> or
+                <code>greet("Alice")</code>
+              </li>
+              <li><strong>Example:</strong></li>
+            </ul>
+            <pre><code>def add(a, b=0):
+    return a + b
+
+result = add(5, 3)
+print(result)  # 8
+</code></pre>
+            <div class="muted small" style="margin-top:8px">Marking: marks
+              distributed across syntax, parameters, examples and calls</div>
+          </div>
+        </section>
+
+        <!-- SECTION C -->
+        <section id="essay" class="section" aria-labelledby="essay">
+          <h2>SECTION C — ANSWER ALL QUESTIONS (15 Marks)</h2>
+
+          <!-- Flex container for two side-by-side cards -->
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+            <!-- Question 23 image card -->
+            <div class="card" style="flex: 1; min-width: 280px;">
+              <h3>23. Python Program – Student Marks Processing (Solution)</h3>
+              <p class="small">Solution image:</p>
+
+              <!-- Replace this path with your local image -->
+              <img src="imgs/23.png"
+                alt="Question 23 Solution"
+                style="width:100%; border-radius:8px; border:1px solid #ccc;">
+            </div>
+
+            <!-- Question 24 image card -->
+            <div class="card" style="flex: 1; min-width: 280px;">
+              <h3>24. Python Program – School Library Borrowing System
+                (Solution)</h3>
+              <p class="small">Solution image:</p>
+
+              <!-- Replace this path with your local image -->
+              <img src="imgs/24.png"
+                alt="Question 24 Solution"
+                style="width:100%; border-radius:8px; border:1px solid #ccc;">
+            </div>
+
+          </div>
+        </section>
+
+        <footer style="margin-top:18px;text-align:center" aria-hidden="false">
+          <div class="small muted-2">Prepared by: JMV IRADUKUNDA — Good
+            luck!</div>
+        </footer>
+
+      </main>
+    </div>
+
+    <script>
+    // Sidebar toggle for mobile
+    const sidebar = document.getElementById('sidebar');
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+    }
+
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('#navlinks a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          sidebar.classList.remove('open');
+        }
+      })
+    });
+
+    // Active link highlighting based on scroll
+    const links = Array.from(document.querySelectorAll('#navlinks a'));
+    const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+    function onScroll() {
+      const pos = window.scrollY + 120; // small offset
+      let current = links[0];
+      for (let i = 0; i < sections.length; i++) {
+        const s = sections[i];
+        if (!s) continue;
+        if (s.offsetTop <= pos) current = links[i];
+      }
+      links.forEach(l => l.classList.remove('active'));
+      current.classList.add('active');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  </script>
+  </body>
+
+</html>

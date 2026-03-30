@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux System Configuration Notes</title>
+    <style>
+        body {
+            font-family: 'Calisto MT', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2,
+        h3 {
+            color: #1f2937;
+        }
+
+        h2 {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            margin: 10px 0 20px 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        code,
+        pre {
+            display: block;
+            background: #f1f5f9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #2563eb;
+            overflow-x: auto;
+        }
+
+        .tip {
+            background-color: #e0f2fe;
+            border-left: 4px solid #0284c7;
+            padding: 10px;
+            margin: 15px 0;
+        }
+
+        .result {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 10px;
+            margin: 15px 0;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Linux System Configuration</h1>
+    </header>
+
+    <main>
+        <section>
+            <p><strong>Linux system configuration</strong> refers to the process of setting up and customizing a Linux
+                operating system to meet user, application, or system requirements. In simpler terms, it’s like tuning
+                your Linux computer so it works the way you want it to.</p>
+        </section>
+
+        <section>
+            <h2>Key Aspects of Linux System Configuration</h2>
+            <ul>
+                <li><strong>Network Configuration:</strong> Setting up IP addresses (static or dynamic), DNS, gateways,
+                    and network interfaces.</li>
+                <li><strong>User and Group Management:</strong> Adding, deleting, or modifying users and groups,
+                    managing permissions and access rights.</li>
+                <li><strong>Service and Daemon Management:</strong> Starting, stopping, enabling, or disabling system
+                    services (like SSH, Apache, MySQL).</li>
+                <li><strong>System Files Configuration:</strong> Editing configuration files located in /etc/ (e.g.,
+                    /etc/hosts, /etc/fstab).</li>
+                <li><strong>Hardware Configuration:</strong> Setting up printers, disks, storage devices, and
+                    peripherals.</li>
+                <li><strong>Software Installation and Management:</strong> Installing, updating, or removing software
+                    using package managers like apt, yum, or dnf.</li>
+                <li><strong>Security Configuration:</strong> Configuring firewalls, SELinux, AppArmor, and user
+                    permissions.</li>
+                <li>
+                    <strong>Kernel and Boot Configuration:</strong> Adjusting kernel parameters, bootloader settings
+                    (GRUB), and startup processes.
+                    <br>
+                    <em>GRUB (GNU GRand Unified Bootloader)</em>: GRUB is the default bootloader used by most Linux
+                    distributions. It loads the OS kernel and presents a boot menu for selecting operating systems or
+                    kernel versions.
+                    <br>
+                    <strong>Key Functions:</strong> Boot management (dual-boot selection), kernel loading, command line
+                    interface for advanced boot commands, configuration handling (/boot/grub/grub.cfg), and recovery
+                    options.
+                    <br>
+                    <strong>Main Configuration Files:</strong> <code>/boot/grub/grub.cfg</code> (main menu),
+                    <code>/etc/default/grub</code> (user settings like timeout and default entry), and
+                    <code>/etc/grub.d/</code> (scripts to generate grub.cfg).
+                    <br>
+                    <strong>Common Commands:</strong> <code>sudo update-grub</code>,
+                    <code>sudo grub-install /dev/sdX</code>, <code>sudo nano /etc/default/grub</code>.
+                    <br>
+                    <strong>Boot Process:</strong> BIOS/UEFI initializes → GRUB loads → kernel and initrd loaded → root
+                    filesystem mounted → init/systemd starts services → login screen appears.
+                </li>
+
+            </ul>
+        </section>
+
+        <section>
+            <h2>Example: Basic Linux System Configuration on Ubuntu Server</h2>
+
+            <h3>Step 1: Set a Static IP Address</h3>
+            <p>Open the netplan configuration file (Ubuntu 18.04+ uses Netplan):</p>
+            <pre><code>sudo nano /etc/netplan/00-installer-config.yaml</code></pre>
+            <p>Example configuration:</p>
+            <pre><code>network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.1.100/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]</code></pre>
+            <p>Apply configuration:</p>
+            <pre><code>sudo netplan apply</code></pre>
+
+            <h3>Step 2: Create a New User</h3>
+            <pre><code>sudo adduser john
+sudo usermod -aG sudo john</code></pre>
+
+            <h3>Step 3: Enable SSH Access</h3>
+            <pre><code>sudo apt update
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh</code></pre>
+
+            <h3>Step 4: Configure Firewall (UFW)</h3>
+            <pre><code>sudo ufw allow OpenSSH
+sudo ufw enable
+sudo ufw status</code></pre>
+
+            <h3>Step 5: Update System Packages</h3>
+            <pre><code>sudo apt update
+sudo apt upgrade -y</code></pre>
+
+            <div class="result">
+                <strong>✅ Result of Configuration:</strong>
+                <ul>
+                    <li>Your server has a static IP.</li>
+                    <li>A new user with sudo rights can log in.</li>
+                    <li>SSH is enabled for remote access.</li>
+                    <li>Firewall is active and configured.</li>
+                    <li>System packages are updated.</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Server Login</h2>
+            <p>Server login is the process of accessing a server using a username and password or other authentication
+                methods to manage, run commands, or use its resources.</p>
+
+            <h3>Key Points</h3>
+            <ul>
+                <li><strong>Credentials:</strong> Username, password, sometimes SSH keys for secure login.</li>
+                <li><strong>Protocols:</strong> SSH (Linux), RDP (Windows), Telnet (rare), web-based logins (cPanel).
+                </li>
+                <li><strong>Purpose:</strong> Manage server settings, upload/download files, run applications, monitor
+                    logs.</li>
+            </ul>
+
+            <h3>Real-world Example on Ubuntu Server</h3>
+            <pre><code>ssh username@192.168.1.10</code></pre>
+            <p>Enter your password when prompted. Once authenticated, you can run commands on the server.</p>
+
+            <div class="tip">
+                💡 Tip: Using SSH keys instead of passwords is more secure and widely recommended.
+            </div>
+        </section>
+    </main>
+
+</body>
+
+</html>

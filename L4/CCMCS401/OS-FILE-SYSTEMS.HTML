@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Operating Systems Notes</title>
+        <style>
+        body {
+            font-family: 'Optus', Tahoma, Geneva, Optus, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            color: #2c3e50;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1000px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .example {
+            background-color: #eaf3ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .skills {
+            background-color: #fff3e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ff9800;
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <h1>Operating Systems (OS) Notes</h1>
+        </header>
+
+        <section>
+            <h2>Types of Operating Systems (OS)</h2>
+
+            <p>
+                You already know operating systems like <strong>Windows, Linux,
+                    and macOS</strong>.
+                These are <strong>names of operating systems</strong>.
+                <br><br>
+                The following are <strong>types (categories)</strong> of
+                operating systems,
+                classified based on <strong>how they work</strong> and
+                <strong>how they manage tasks</strong>.
+            </p>
+
+            <div class="note">
+                <strong>Think of it like this:</strong>
+                <ul>
+                    <li><strong>Windows, Linux</strong> → Names of operating
+                        systems</li>
+                    <li><strong>Batch, Real-time, Time-sharing</strong> → Ways
+                        an OS operates</li>
+                </ul>
+            </div>
+
+            <!-- 1. Batch OS -->
+            <h3>1. Batch Operating System</h3>
+            <ul>
+                <li>Processes many jobs together without user interaction.</li>
+                <li>Jobs are submitted and stored in a queue.</li>
+                <li>Executed one after another automatically.</li>
+            </ul>
+
+            <div class="example">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>Payroll systems</li>
+                    <li>Old bank transaction processing</li>
+                    <li>Mainframe computers</li>
+                </ul>
+                <em>👉 Not interactive | 👉 Slow response</em>
+            </div>
+
+            <!-- 2. Distributed OS -->
+            <h3>2. Distributed Operating System</h3>
+            <ul>
+                <li>Manages multiple computers working together as one
+                    system.</li>
+                <li>Tasks and resources are shared across machines.</li>
+            </ul>
+
+            <div class="example">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>Cloud computing</li>
+                    <li>Google servers</li>
+                    <li>University networks</li>
+                </ul>
+                <em>👉 Many computers, one system</em>
+            </div>
+
+            <!-- 3. RTOS -->
+            <h3>3. Real-Time Operating System (RTOS)</h3>
+            <ul>
+                <li>Responds to inputs within a fixed time limit.</li>
+                <li>Correctness depends on timing.</li>
+            </ul>
+
+            <h4>a) Hard Real-Time Operating System</h4>
+            <ul>
+                <li>Deadlines must never be missed.</li>
+                <li>Failure can be dangerous.</li>
+            </ul>
+
+            <div class="example">
+                <ul>
+                    <li>Heart pacemaker</li>
+                    <li>Aircraft navigation system</li>
+                    <li>Nuclear reactor control</li>
+                </ul>
+                <em>👉 Very strict timing</em>
+            </div>
+
+            <h4>b) Soft Real-Time Operating System</h4>
+            <ul>
+                <li>Deadlines are important but flexible.</li>
+                <li>Performance degrades if delayed.</li>
+            </ul>
+
+            <div class="example">
+                <ul>
+                    <li>Video streaming</li>
+                    <li>Online games</li>
+                    <li>Multimedia systems</li>
+                </ul>
+                <em>👉 Timing is important, but flexible</em>
+            </div>
+
+            <!-- 4. Network OS -->
+            <h3>4. Network Operating System (NOS)</h3>
+            <ul>
+                <li>Allows computers to share resources over a network.</li>
+                <li>Each computer runs its own OS.</li>
+            </ul>
+
+            <div class="example">
+                <ul>
+                    <li>Windows Server</li>
+                    <li>Linux Server</li>
+                    <li>Novell NetWare</li>
+                </ul>
+                <em>👉 Each computer is independent</em>
+            </div>
+
+            <!-- 5. Time-Sharing OS -->
+            <h3>5. Time-Sharing Operating System</h3>
+            <ul>
+                <li>Many users use the computer at the same time.</li>
+                <li>CPU time is divided into small time slices.</li>
+            </ul>
+
+            <div class="example">
+                <ul>
+                    <li>Unix</li>
+                    <li>Linux</li>
+                    <li>Modern Windows</li>
+                </ul>
+                <em>👉 Many users, fair CPU sharing</em>
+            </div>
+
+            <!-- 6. Mobile OS -->
+            <h3>6. Mobile Operating System</h3>
+            <ul>
+                <li>Designed for smartphones and tablets.</li>
+                <li>Manages touch input, apps, battery, and wireless
+                    communication.</li>
+            </ul>
+
+            <p><strong>Key Characteristics:</strong></p>
+            <ul>
+                <li>Touch-based interface</li>
+                <li>Battery efficient</li>
+                <li>Supports app stores</li>
+                <li>Handles sensors (camera, GPS, fingerprint)</li>
+            </ul>
+
+            <div class="example">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>Android</li>
+                    <li>iOS</li>
+                </ul>
+                <em>👉 Used on phones and tablets</em>
+            </div>
+
+            <!-- 7. Embedded OS -->
+            <h3>7. Embedded Operating System</h3>
+            <ul>
+                <li>Built into a device to perform one specific function.</li>
+                <li>Not designed for general-purpose use.</li>
+                <li>Often works in the background.</li>
+            </ul>
+
+            <p><strong>Key Characteristics:</strong></p>
+            <ul>
+                <li>Small size</li>
+                <li>Fast and reliable</li>
+                <li>Limited user interaction</li>
+                <li>Designed for a specific task</li>
+            </ul>
+
+            <div class="example">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>Washing machines</li>
+                    <li>Microwave ovens</li>
+                    <li>Digital cameras</li>
+                    <li>Traffic lights</li>
+                    <li>Smart TVs</li>
+                </ul>
+                <em>👉 Built inside devices</em>
+            </div>
+
+            <!-- Final Clarification -->
+            <h3>IMPORTANT FINAL CLARIFICATION 🚀</h3>
+            <ul>
+                <li><strong>Windows, Linux, macOS are NOT types.</strong></li>
+                <li>They are operating systems that can belong to many
+                    types.</li>
+            </ul>
+
+            <ul>
+                <li>Linux → Time-sharing, Network OS, Distributed OS</li>
+                <li>Windows Server → Network OS</li>
+                <li>Unix → Time-sharing OS</li>
+            </ul>
+
+            <!-- Memory Tip -->
+            <h3>Simple Memory Tip 🧠</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Main Idea</th>
+                </tr>
+                <tr>
+                    <td>Batch</td>
+                    <td>Jobs run together</td>
+                </tr>
+                <tr>
+                    <td>Distributed</td>
+                    <td>Many computers = one system</td>
+                </tr>
+                <tr>
+                    <td>Real-time</td>
+                    <td>Must respond on time</td>
+                </tr>
+                <tr>
+                    <td>Network</td>
+                    <td>Share resources</td>
+                </tr>
+                <tr>
+                    <td>Time-sharing</td>
+                    <td>Many users at once</td>
+                </tr>
+                <tr>
+                    <td>Mobile</td>
+                    <td>Phones & tablets</td>
+                </tr>
+                <tr>
+                    <td>Embedded</td>
+                    <td>Inside devices</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Operating System File System</h2>
+
+            <h3>1. File System Role</h3>
+            <p><strong>Description:</strong></p>
+            <ul>
+                <li>A file system is a way an operating system organizes and
+                    stores data on storage devices (hard drives, SSDs, USB
+                    drives).</li>
+                <li>It manages files and directories so users and applications
+                    can read, write, and access data efficiently.</li>
+            </ul>
+            <p><strong>Key Roles:</strong></p>
+            <ul>
+                <li><strong>Organize Data:</strong> Creates a hierarchy
+                    (folders, subfolders) to keep files manageable.</li>
+                <li><strong>Store and Retrieve:</strong> Tracks where files are
+                    physically stored on the disk.</li>
+                <li><strong>Access Control:</strong> Ensures security, giving
+                    permissions (read/write/execute) to users.</li>
+                <li><strong>Data Integrity:</strong> Prevents data loss and
+                    corruption.</li>
+            </ul>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Your Documents folder on Windows, where you store Word,
+                        Excel, or PDF files.</li>
+                    <li>Photos on a USB drive or memory card are stored in
+                        folders by a file system.</li>
+                </ul>
+            </div>
+
+            <h3>2. Major Types of File Systems in Microsoft Windows</h3>
+
+            <h4>a) File Allocation Table (FAT)</h4>
+            <p><strong>Description:</strong> One of the oldest file systems.
+                Uses a table to track where files are stored on the disk.</p>
+            <p><strong>Variants:</strong></p>
+            <ul>
+                <li>FAT12 – Used in very small storage devices like floppy
+                    disks.</li>
+                <li>FAT16 – Supports larger disks, used in early PCs.</li>
+                <li>FAT32 – Supports drives up to 2 TB; still used in USB drives
+                    and SD cards for compatibility.</li>
+            </ul>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>FAT32: USB drives used to transfer files between
+                        Windows, Mac, and cameras.</li>
+                    <li>FAT12: Old floppy disks (rarely used now).</li>
+                </ul>
+            </div>
+
+            <h4>b) New Technology File System (NTFS)</h4>
+            <p><strong>Description:</strong> Modern Windows file system,
+                designed for large storage and security. Supports permissions,
+                encryption, compression, and large files.</p>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+                <li>Handles very large drives and files.</li>
+                <li>File permissions and security for different users.</li>
+                <li>Reliable due to journaling (records changes to prevent
+                    corruption).</li>
+            </ul>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Windows system (C:) drive.</li>
+                    <li>Software installations and system files.</li>
+                </ul>
+            </div>
+
+            <h3>3. Major Types of File Systems in Linux / Unix</h3>
+
+            <h4>a) Extended File System (ext4)</h4>
+            <p><strong>Description:</strong> The most widely used Linux file
+                system.
+                Supports large files, journaling, and high performance.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Ubuntu and other Linux distributions use ext4 by
+                        default.</li>
+                </ul>
+            </div>
+
+            <h4>b) XFS: X File System</h4>
+            <p><strong>Description:</strong> High-performance file system
+                optimized
+                for large files and large disks.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Used on enterprise Linux servers and databases.</li>
+                </ul>
+            </div>
+
+            <h4>c) Btrfs (B-tree File System)</h4>
+            <p><strong>Description:</strong> Modern Linux file system with
+                advanced
+                features such as snapshots, compression, and self-healing.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Used in modern Linux systems and cloud
+                        environments.</li>
+                </ul>
+            </div>
+
+            <h3>4. Major Types of File Systems in macOS</h3>
+
+            <h4>a) Apple File System (APFS)</h4>
+            <p><strong>Description:</strong> Modern macOS file system optimized
+                for SSDs.
+                Supports encryption, snapshots, and fast performance.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Default file system on macOS Big Sur and later.</li>
+                </ul>
+            </div>
+
+            <h4>b) HFS+: Hierarchical File System</h4>
+            <p><strong>Description:</strong> Older macOS file system used before
+                APFS.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Older Mac computers and backup drives.</li>
+                </ul>
+            </div>
+
+            <h3>5. Cross-Platform and Removable Media File Systems</h3>
+
+            <h4>a) exFAT: Extended File Allocation Table</h4>
+            <p><strong>Description:</strong> Designed for flash storage.
+                Removes FAT32 file size limits and works across operating
+                systems.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Large USB flash drives and SD cards.</li>
+                </ul>
+            </div>
+
+            <h4>b) ISO 9660</h4>
+            <p><strong>Description:</strong> File system standard for optical
+                media.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>CDs, DVDs, and ISO installation files.</li>
+                </ul>
+            </div>
+
+            <h3>6. Network and Advanced File Systems</h3>
+
+            <h4>a) Network File System (NFS)</h4>
+            <p><strong>Description:</strong> Allows files to be shared over a
+                network,
+                mainly in Linux and Unix environments.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Shared folders on Linux servers.</li>
+                </ul>
+            </div>
+
+            <h4>b) Server Message Block (SMB / CIFS)</h4>
+            <p><strong>Description:</strong> Network file system used mainly by
+                Windows.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Windows file sharing on local networks.</li>
+                </ul>
+            </div>
+
+            <h4>c) ZFS</h4>
+            <p><strong>Description:</strong> Advanced file system with strong
+                data integrity,
+                snapshots, and storage pooling.</p>
+            <div class="example">
+                <strong>Real-life example:</strong>
+                <ul>
+                    <li>Enterprise servers and data centers.</li>
+                </ul>
+            </div>
+
+            <h3>7. Summary Table</h3>
+            <table>
+                <tr>
+                    <th>File System</th>
+                    <th>Description</th>
+                    <th>Typical Use / Example</th>
+                </tr>
+                <tr>
+                    <td>FAT32</td>
+                    <td>Compatible, simple</td>
+                    <td>USB drives, SD cards</td>
+                </tr>
+                <tr>
+                    <td>NTFS</td>
+                    <td>Secure, modern</td>
+                    <td>Windows system drive</td>
+                </tr>
+                <tr>
+                    <td>ext4</td>
+                    <td>Stable Linux file system</td>
+                    <td>Linux OS partitions</td>
+                </tr>
+                <tr>
+                    <td>APFS</td>
+                    <td>Fast, SSD-optimized</td>
+                    <td>macOS system disks</td>
+                </tr>
+                <tr>
+                    <td>exFAT</td>
+                    <td>Large removable storage</td>
+                    <td>USB & external drives</td>
+                </tr>
+                <tr>
+                    <td>NFS / SMB</td>
+                    <td>Network file sharing</td>
+                    <td>Shared folders on networks</td>
+                </tr>
+            </table>
+
+            <h3>Key Points to Remember</h3>
+            <ul>
+                <li>Different operating systems use different file systems.</li>
+                <li>Some file systems focus on compatibility, others on security
+                    or performance.</li>
+                <li>Choosing the right file system improves reliability and
+                    efficiency.</li>
+            </ul>
+
+        </section>
+    </body>
+</html>

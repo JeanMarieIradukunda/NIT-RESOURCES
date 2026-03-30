@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Windows Server Administration - DHCP Group Tasks</title>
+
+        <style>
+    body{
+        margin:0;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+        color:#fff;
+    }
+
+    header{
+        text-align:center;
+        padding:40px 20px;
+    }
+
+    header h1{
+        margin:0;
+        font-size:32px;
+        letter-spacing:1px;
+    }
+
+    header h2{
+        margin-top:10px;
+        font-weight:400;
+        color:#00d4ff;
+    }
+
+    .container{
+        width:90%;
+        max-width:1100px;
+        margin:30px auto 60px;
+    }
+
+    .card{
+        background:rgba(255,255,255,0.08);
+        backdrop-filter:blur(10px);
+        border-radius:15px;
+        margin-bottom:20px;
+        box-shadow:0 8px 25px rgba(0,0,0,0.4);
+        overflow:hidden;
+        transition:0.4s;
+    }
+
+    .card-header{
+        padding:18px 25px;
+        cursor:pointer;
+        font-size:18px;
+        font-weight:bold;
+        background:rgba(0,0,0,0.3);
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .card-header:hover{
+        background:rgba(0,0,0,0.5);
+    }
+
+    .card-content{
+        max-height:0;
+        overflow:hidden;
+        transition:max-height 0.5s ease;
+        padding:0 25px;
+    }
+
+    .card-content ul{
+        margin:15px 0 25px;
+        padding-left:20px;
+    }
+
+    .card-content li{
+        margin-bottom:8px;
+    }
+
+    .active .card-content{
+        max-height:2000px;
+        padding-top:15px;
+    }
+
+    .badge{
+        background:#00d4ff;
+        color:#000;
+        padding:4px 10px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:bold;
+    }
+
+    footer{
+        text-align:center;
+        padding:20px;
+        font-size:14px;
+        opacity:0.8;
+    }
+</style>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>Windows Server Administration Module</h1>
+            <h2>Learning Outcome 3: Deploy DHCP Services</h2>
+        </header>
+
+        <div class="container">
+
+            <!-- GROUP 1 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 1: Introduction to DHCP & DHCP Operations
+                    <span class="badge">C1</span>
+                </div>
+                <div class="card-content">
+                    <h3>Presentation Focus</h3>
+                    <ul>
+                        <li><strong>What is DHCP?</strong>
+                            <ul>
+                                <li>Definition of DHCP (Dynamic Host
+                                    Configuration Protocol)</li>
+                                <li>Role of DHCP in a network</li>
+                                <li>Manual IP vs Automatic IP assignment</li>
+                            </ul>
+                        </li>
+                        <li><strong>Why is DHCP Needed?</strong>
+                            <ul>
+                                <li>Reduces manual configuration</li>
+                                <li>Prevents IP conflicts</li>
+                                <li>Saves time in large networks</li>
+                                <li>Centralized IP management</li>
+                            </ul>
+                        </li>
+                        <li><strong>Main Tasks of DHCP</strong>
+                            <ul>
+                                <li>Assigns IP address</li>
+                                <li>Assigns Subnet Mask</li>
+                                <li>Assigns Default Gateway</li>
+                                <li>Assigns DNS Server</li>
+                                <li>Manages IP leases</li>
+                            </ul>
+                        </li>
+                        <li><strong>DORA Process</strong>
+                            <ul>
+                                <li>Discover</li>
+                                <li>Offer</li>
+                                <li>Request</li>
+                                <li>Acknowledgement</li>
+                                <li>Explain full communication between client
+                                    and server</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- GROUP 2 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 2: Installation of DHCP Services
+                    <span class="badge">C2</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Overview of DHCP Role in Windows Server</li>
+                        <li>Installation Process:
+                            <ul>
+                                <li>Open Server Manager</li>
+                                <li>Add Roles and Features</li>
+                                <li>Select DHCP Server Role</li>
+                                <li>Install required features</li>
+                            </ul>
+                        </li>
+                        <li>Post-install configuration</li>
+                        <li>Authorize DHCP Server in Active Directory</li>
+                        <li>Verify installation</li>
+                        <li><strong>Practical Demonstration
+                                Required</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- GROUP 3 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 3: Enabling and Authorizing DHCP Server
+                    <span class="badge">C3</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Enable DHCP Server via GUI</li>
+                        <li>DHCP Authorization:
+                            <ul>
+                                <li>Why authorization is required</li>
+                                <li>Prevent rogue DHCP servers</li>
+                            </ul>
+                        </li>
+                        <li>Verify DHCP Service Status</li>
+                        <li><strong>Practical Demonstration's Steps are
+                                Required</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- GROUP 4 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 4: Scope Configuration in DHCP
+                    <span class="badge">C4</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Definition and Purpose of a Scope</li>
+                        <li>Scope Configuration:
+                            <ul>
+                                <li>Scope Name</li>
+                                <li>IP Range (192.168.1.10 – 192.168.1.100)</li>
+                                <li>Subnet Mask</li>
+                                <li>Exclusions</li>
+                                <li>Lease Duration</li>
+                            </ul>
+                        </li>
+                        <li>Start DHCP Service After Scope Creation</li>
+                        <li><strong>Practical Demonstration's Steps are
+                                Required</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- GROUP 5 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 5: Advanced Scope Settings & IP Management
+                    <span class="badge">C5</span>
+                </div>
+                <div class="card-content">
+                    <ul>
+                        <li>Configure Scope Options:
+                            <ul>
+                                <li>Default Gateway</li>
+                                <li>DNS Server</li>
+                                <li>Domain Name</li>
+                            </ul>
+                        </li>
+                        <li>Reservation using MAC Address</li>
+                        <li>Lease Management:
+                            <ul>
+                                <li>View active leases</li>
+                                <li>Renew / Release IP addresses</li>
+                            </ul>
+                        </li>
+                        <li><strong>Practical Demonstration's Steps are
+                                Required</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- GROUP 6 -->
+            <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                    🔹 GROUP 6: Testing DHCP Configuration & Basic Concepts
+                    <span class="badge">C6</span>
+                </div>
+                <div class="card-content">
+
+                    <h4>📘 Part 1: Basic Understanding of DHCP</h4>
+                    <ul>
+                        <li><strong>Define DHCP (Dynamic Host Configuration
+                                Protocol)</strong></li>
+                        <li>Explain the purpose of DHCP in a network</li>
+                        <li>Difference between:
+                            <ul>
+                                <li>Static IP Addressing</li>
+                                <li>Dynamic IP Addressing</li>
+                            </ul>
+                        </li>
+                        <li>Explain key DHCP components:
+                            <ul>
+                                <li>DHCP Server</li>
+                                <li>DHCP Client</li>
+                                <li>Scope</li>
+                                <li>Lease</li>
+                                <li>Reservation</li>
+                            </ul>
+                        </li>
+                        <li>Explain the DORA Process:
+                            <ul>
+                                <li>Discover</li>
+                                <li>Offer</li>
+                                <li>Request</li>
+                                <li>Acknowledgement</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>🛠 Part 2: Practical Testing of DHCP Configuration</h4>
+                    <ul>
+                        <li><strong>Start and Verify DHCP Service</strong></li>
+                        <li>Check service status in
+                            <code>services.msc</code></li>
+
+                        <li><strong>Check IP on DHCP Client</strong>
+                            <ul>
+                                <li><code>ipconfig /all</code></li>
+                                <li><code>ipconfig /renew</code></li>
+                                <li><code>ipconfig /release</code></li>
+                            </ul>
+                            <li>Explain results displayed after each
+                                command</li>
+                        </li>
+
+                        <li><strong>Verify from DHCP Server</strong>
+                            <ul>
+                                <li>Open DHCP Console</li>
+                                <li>Check Address Leases</li>
+                                <li>Confirm client device appears in lease
+                                    list</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>🔎 Part 3: Troubleshooting DHCP Issues</h4>
+                    <ul>
+                        <li>What happens if client does not receive IP?</li>
+                        <li>Check network cable or Wi-Fi connection</li>
+                        <li>Ensure DHCP service is running</li>
+                        <li>Verify scope is activated</li>
+                        <li>Check if IP range is exhausted</li>
+                        <li>Look for rogue DHCP servers</li>
+                    </ul>
+
+                    <hr>
+
+                    <h4>🎯 Final Requirement</h4>
+                    <ul>
+                        <li>Provide clear explanation of DHCP basics</li>
+                        <li>Demonstrate testing process live</li>
+                        <li>Show screenshots or live command output</li>
+                        <li>Give short technical conclusion</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            ✅ Each group must include definition, importance, step-by-step
+            explanation, practical demo, screenshots/live demo, and short
+            conclusion.
+        </footer>
+
+        <script>
+    function toggleCard(header){
+        const card = header.parentElement;
+        card.classList.toggle("active");
+    }
+</script>
+
+    </body>
+</html>

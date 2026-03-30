@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Resources Portal – L3 NIT</title>
+<link rel="icon" type="image/png"
+    href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body {
+    font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+    background: #f4f6f9;
+    min-height: 100vh;
+    padding: 40px;
+    color: #1f2937;
+}
+
+/* Container */
+.portal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.portal-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.portal-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+.portal-header p {
+    color: #475569;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Back link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1e40af;
+    text-decoration: none;
+    margin: 20px 0;
+}
+.back-link:hover { text-decoration: underline; }
+.back-link i { font-size: 1.3rem; }
+
+/* Search */
+.search-bar {
+    max-width: 360px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+}
+
+/* Grid */
+.folder-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+/* Cards */
+.folder-card {
+    text-decoration: none;
+    border-radius: 18px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    min-height: 140px;
+}
+
+/* Course Cards */
+.folder-card.course {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+}
+.folder-card.course i { color: #ffffff; }
+
+/* File / Project Cards */
+.folder-card.projects {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+.folder-card.assignment {
+    background: linear-gradient(135deg, #10b981, #34d399);
+}
+.folder-card.projects i, .folder-card.assignment i { color: #ffffff; }
+
+/* Hover effect */
+.folder-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* Card Icons */
+.folder-card i {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+/* Card Title */
+.folder-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .folder-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 576px) {
+    .folder-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="portal-card">
+
+    <!-- Header -->
+    <div class="portal-header">
+        <h1>LEVEL - 3 – NETWORKING AND INTERNET TECHNOLOGY </h1>
+        <p>Course Modules & Academic Documents</p>
+    </div>
+
+    <!-- Back button -->
+    <a href="../" class="back-link">
+        <i class="bi bi-arrow-left-circle-fill"></i>
+        Go to Parent Directory
+    </a>
+
+    <!-- Search -->
+    <input type="text"
+        id="searchInput"
+        class="form-control search-bar"
+        placeholder="Search courses or documents...">
+
+    <!-- Content -->
+    <div class="folder-row" id="folderContainer">
+
+        <a href="GENCP302/" class="folder-card course" data-name="gencp302">
+            <i class="bi bi-folder-fill"></i>
+            <div class="folder-title">GENCP302</div>
+        </a>
+
+        <a href="NICI301/" class="folder-card course" data-name="nici301">
+            <i class="bi bi-folder-fill"></i>
+            <div class="folder-title">NICI301</div>
+        </a>
+
+        <a href="NITVI301/" class="folder-card course" data-name="nitvi301">
+            <i class="bi bi-folder-fill"></i>
+            <div class="folder-title">NITVI301</div>
+        </a>
+
+        <a href="projects-proposal.html" class="folder-card projects" data-name="projects proposal">
+            <i class="bi bi-lightning-charge-fill"></i>
+            <div class="folder-title">C LANGUAGE PROJECTS IDEAS</div>
+        </a>
+
+        <a href="project-assignment.html" class="folder-card assignment" data-name="project-assignment system">
+            <i class="bi bi-journal-check"></i>
+            <div class="folder-title">IDEAS ASSIGNMENT</div>
+        </a>
+
+    </div>
+</div>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".folder-card");
+
+searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+    cards.forEach(card => {
+        card.style.display = card.dataset.name.includes(value) ? "" : "none";
+    });
+});
+</script>
+
+</body>
+</html>

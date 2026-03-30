@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🧮 Simple Calculator Explanation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #e3f2fd);
+            font-family: "Consolas", sans-serif;
+        }
+
+        pre {
+            background: #0d1117;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            overflow-x: auto;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #0d47a1;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background-color: #e3f2fd;
+            padding: 0.5rem 1rem;
+            border-left: 5px solid #2196f3;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .emoji-title {
+            font-size: 1.3rem;
+            color: #0277bd;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <div class="text-center mb-4">
+            <h1 class="fw-bold text-primary"><i class="bi bi-calculator"></i> Simple Calculator Code</h1>
+            <p class="text-secondary">Understand how a simple calculator works step by step 💡</p>
+        </div>
+
+        <!-- Code Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <pre><code>print("Simple Calculator")
+                        print("Enter number → operator → next number → ... → = to finish")
+
+                        # Step 1: get the first number
+                        first = float(input("Enter first number: "))
+                        result = first
+
+                        while True:
+                            op = input("Enter operator (+, -, *, / or = to stop): ")
+
+                            if op == "=":
+                                print("Final Answer =", result)
+                                break
+
+                            next_num = float(input("Enter next number: "))
+
+                            if op == "+":
+                                result = result + next_num
+                            elif op == "-":
+                                result = result - next_num
+                            elif op == "*":
+                                result = result * next_num
+                            elif op == "/":
+                                result = result / next_num
+                            else:
+                                print("Invalid operator!")
+
+                            print("Current Result =", result)</code></pre>
+            </div>
+        </div>
+
+        <!-- Explanation Section -->
+        <div class="card p-4">
+            <h4 class="emoji-title">🧩 Now Let’s Explain It Clearly 👇</h4>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Line 1–2</h5>
+                <div class="highlight">
+                    <code>print("Simple Calculator")<br>print("Enter number → operator → next number → ... → = to finish")</code>
+                </div>
+                <p>💬 These two lines just display messages to tell the user what the program does and how to use it.
+                </p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 1: Get the first number</h5>
+                <div class="highlight">
+                    <code>first = float(input("Enter first number: "))</code>
+                </div>
+                <p>👉 <code>input()</code> asks the user to type something.<br>
+                    👉 <code>float()</code> converts it to a number (with decimals).<br>
+                    👉 The result is stored in <code>first</code>.</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 2: Store that number in result</h5>
+                <div class="highlight"><code>result = first</code></div>
+                <p>This variable <b>result</b> will keep updating as we perform more operations.</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 3: Start a loop to keep calculating</h5>
+                <div class="highlight"><code>while True:</code></div>
+                <p>💡 Means “repeat again and again until we tell it to stop.”</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 4: Ask for an operator</h5>
+                <div class="highlight"><code>op = input("Enter operator (+, -, *, / or = to stop): ")</code></div>
+                <p>The user types one of these: +, -, *, / or =</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 5: If user types "="</h5>
+                <div class="highlight">
+                    <code>if op == "=":<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Final Answer =", result)<br>&nbsp;&nbsp;&nbsp;&nbsp;break</code>
+                </div>
+                <p>If the user enters "=", the program shows the final result and stops the loop.</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 6: Get the next number</h5>
+                <div class="highlight"><code>next_num = float(input("Enter next number: "))</code></div>
+                <p>The user types another number to continue the calculation.</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 7: Perform the correct operation</h5>
+                <div class="highlight">
+                    <code>
+                            if op == "+": result = result + next_num<br>
+                            elif op == "-": result = result - next_num<br>
+                            elif op == "*": result = result * next_num<br>
+                            elif op == "/": result = result / next_num<br>
+                            else: print("Invalid operator!")
+          </code>
+                </div>
+                <p>🧮 The correct math operation is done depending on the operator entered.</p>
+            </div>
+
+            <div class="mt-3">
+                <h5 class="section-title">🟦 Step 8: Show the result after each operation</h5>
+                <div class="highlight"><code>print("Current Result =", result)</code></div>
+                <p>Displays the updated total after every operation.</p>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="section-title">🧠 Example Run</h5>
+                <pre><code>Simple Calculator
+                        Enter number → operator → next number → ... → = to finish
+                        Enter first number: 10
+                        Enter operator (+, -, *, / or = to stop): +
+                        Enter next number: 5
+                        Current Result = 15.0
+                        Enter operator (+, -, *, / or = to stop): *
+                        Enter next number: 2
+                        Current Result = 30.0
+                        Enter operator (+, -, *, / or = to stop): =
+                        Final Answer = 30.0</code></pre>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="section-title">🏫 Real-life Example (Padri Vjeko Centre)</h5>
+                <div class="highlight">
+                    Imagine a student entering marks for continuous assessment:<br><br>
+                    First mark: 10<br>
+                    Add next mark: + 8<br>
+                    Add next mark: + 7<br>
+                    Then press = → It shows total = <b>25.0</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>🧮 Learning Python | Padri Vjeko Centre</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

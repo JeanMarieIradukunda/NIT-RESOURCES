@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory Concepts</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Berlin Sans FB Font -->
+    <link href="https://fonts.cdnfonts.com/css/berlin-sans-fb" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Berlin Sans FB', sans-serif;
+            background-color: #f9fafd;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin-top: 50px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #0d6efd;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .card-body ul {
+            padding-left: 20px;
+        }
+
+        .analogy {
+            background-color: #e7f1ff;
+            padding: 10px 15px;
+            border-left: 5px solid #0d6efd;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .example {
+            background-color: #fff3cd;
+            padding: 10px 15px;
+            border-left: 5px solid #ffc107;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="mb-4 text-center">Active Directory Concepts</h1>
+
+        <!-- Domain -->
+        <div class="card">
+            <div class="card-header">1. Domain</div>
+            <div class="card-body">
+                <ul>
+                    <li>A domain is the basic unit of Active Directory.</li>
+                    <li>It is a logical group of objects (users, computers, printers, groups) that share the same
+                        database and security policies.</li>
+                    <li>Each domain has a unique name, like <code>school.local</code>.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Think of a domain as one school campus (e.g., NIT). Everyone in
+                    that campus follows the same rules.</div>
+            </div>
+        </div>
+
+        <!-- Domain Controller -->
+        <div class="card">
+            <div class="card-header">2. Domain Controller (DC)</div>
+            <div class="card-body">
+                <ul>
+                    <li>A Domain Controller is a server that stores the AD database and handles authentication and
+                        authorization.</li>
+                    <li>It ensures that users and computers prove their identity before accessing resources.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: The head office of the school that checks ID cards and decides
+                    permissions.</div>
+            </div>
+        </div>
+
+        <!-- Forest -->
+        <div class="card">
+            <div class="card-header">3. Forest</div>
+            <div class="card-body">
+                <ul>
+                    <li>A forest is the topmost container in AD.</li>
+                    <li>It is a collection of one or more domains sharing the same schema and global catalog.</li>
+                    <li>The first domain created is called the forest root domain.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: A school district (PADRI VJEKO CENTRE) containing multiple
+                    campuses (NIT, FAD, BDC).</div>
+            </div>
+        </div>
+
+        <!-- Tree -->
+        <div class="card">
+            <div class="card-header">4. Tree</div>
+            <div class="card-body">
+                <ul>
+                    <li>A tree is a hierarchy of domains within a forest.</li>
+                    <li>Domains in a tree share a contiguous namespace (e.g., nit.school.local, fad.school.local).</li>
+                </ul>
+                <div class="analogy">✅ School analogy: A branch of schools under one district that share a common name.
+                </div>
+            </div>
+        </div>
+
+        <!-- Organizational Units -->
+        <div class="card">
+            <div class="card-header">5. Organizational Units (OUs)</div>
+            <div class="card-body">
+                <ul>
+                    <li>OUs are containers within a domain used to organize users, groups, and computers.</li>
+                    <li>Policies and control can be delegated at the OU level.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Departments or classes inside NIT, e.g., ICT Department, Finance
+                    Department.</div>
+            </div>
+        </div>
+
+        <!-- Global Catalog -->
+        <div class="card">
+            <div class="card-header">6. Global Catalog (GC)</div>
+            <div class="card-body">
+                <ul>
+                    <li>Stores a partial replica of all objects in the forest.</li>
+                    <li>Allows users to search and log in quickly across domains.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: A central library index across all campuses.</div>
+            </div>
+        </div>
+
+        <!-- Trust Relationship -->
+        <div class="card">
+            <div class="card-header">7. Trust Relationship</div>
+            <div class="card-body">
+                <ul>
+                    <li>A trust is a link between domains/forests allowing cross-domain access.</li>
+                    <li>Trusts can be one-way or two-way.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Agreement between schools allowing students to use other
+                    campuses' resources.</div>
+            </div>
+        </div>
+
+        <!-- Group Policy -->
+        <div class="card">
+            <div class="card-header">8. Group Policy (GPO)</div>
+            <div class="card-body">
+                <ul>
+                    <li>A set of rules applied to users and computers in a domain/OU.</li>
+                    <li>Controls password rules, desktop settings, software installation.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: School rules applied to classes or departments.</div>
+            </div>
+        </div>
+
+        <!-- User Accounts -->
+        <div class="card">
+            <div class="card-header">9. User Accounts</div>
+            <div class="card-body">
+                <ul>
+                    <li>Represents a person in AD.</li>
+                    <li>Stores username, password, and permissions.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: A student/teacher ID for accessing facilities.</div>
+            </div>
+        </div>
+
+        <!-- Computer Accounts -->
+        <div class="card">
+            <div class="card-header">10. Computer Accounts</div>
+            <div class="card-body">
+                <ul>
+                    <li>Represents computers joined to a domain.</li>
+                    <li>Allows authentication and centralized management.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Registered school computers with unique IDs.</div>
+            </div>
+        </div>
+
+        <!-- Security & Distribution Groups -->
+        <div class="card">
+            <div class="card-header">11. Security Groups & Distribution Groups</div>
+            <div class="card-body">
+                <ul>
+                    <li>Security Groups: Assign permissions to resources.</li>
+                    <li>Distribution Groups: Used for email communication only.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Security Group = Science Club (access labs), Distribution Group =
+                    Debate Team mailing list.</div>
+            </div>
+        </div>
+
+        <!-- Schema -->
+        <div class="card">
+            <div class="card-header">12. Schema</div>
+            <div class="card-body">
+                <ul>
+                    <li>The blueprint of Active Directory.</li>
+                    <li>Defines the structure and attributes of objects.</li>
+                </ul>
+                <div class="analogy">✅ School analogy: Standard student record format for all schools.</div>
+            </div>
+        </div>
+
+        <!-- Real-World Example -->
+        <div class="card">
+            <div class="card-header">Real-World Example</div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <!-- Text Column -->
+                    <div class="col-md-6">
+                        <div class="example">
+                            <strong>Forest:</strong> PADRI VJEKO CENTRE — contains all domains (NIT, FAD, BDC) sharing
+                            the schema and global catalog.<br>
+                            <strong>Tree:</strong> NIT, FAD, BDC — separate campuses under the same forest.<br>
+                            <strong>Domain:</strong> Each campus (NIT, FAD, BDC) has its own rules and staff/student
+                            records.<br>
+                            <strong>DC:</strong> Administration office of each campus managing logins.<br>
+                            <strong>GC:</strong> Central library index for all campuses.<br>
+                            <strong>OUs:</strong> Departments or classes inside a campus.<br>
+                            <strong>User Accounts:</strong> Student/teacher IDs.<br>
+                            <strong>Computer Accounts:</strong> Registered lab computers.<br>
+                            <strong>Trust Relationship:</strong> Cross-campus resource access.<br>
+                            <strong>GPO:</strong> School rules like uniforms and exam policies.<br>
+                            <strong>Security & Distribution Groups:</strong> Clubs and communication groups.<br>
+                            <strong>Schema:</strong> Standard record format for all campuses.
+                        </div>
+                    </div>
+                    <!-- Image Column -->
+                    <div class="col-md-6 text-center">
+                        <img src="Eg_adds_concepts.html.png" alt="Active Directory Example"
+                            class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Active Directory Hierarchy Section -->
+        <section class="container my-5">
+            <h2 class="mb-4 text-center text-primary">Active Directory Hierarchy – Real-World Example</h2>
+
+            <!-- FOREST -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 FOREST (PADRI VJEKO CENTRE)</div>
+                <div class="card-body">
+                    <p>Represents the entire Active Directory environment. All domains (NIT, FAD, BDC) belong to this
+                        forest. They share a common schema (rules for objects) and global catalog.</p>
+                    <div class="analogy">👉 Analogy: The whole school district, PADRI VJEKO CENTRE.</div>
+                </div>
+            </div>
+
+            <!-- TREES -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 TREES → NIT, FAD, BDC</div>
+                <div class="card-body">
+                    <p>Each tree can contain one or more domains. They are separate campuses but still under the same
+                        forest.</p>
+                    <div class="analogy">👉 Analogy: NIT campus, FAD campus, and BDC campus under one school district.
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOMAIN -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 DOMAIN</div>
+                <div class="card-body">
+                    <p>A logical boundary where rules, policies, and authentication are managed. Each campus (like NIT)
+                        is a domain with its own rules but still part of the bigger forest.</p>
+                    <div class="analogy">👉 Analogy: Each campus (NIT, FAD, BDC) operates with its own staff and student
+                        records.</div>
+                </div>
+            </div>
+
+            <!-- DOMAIN CONTROLLER -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 DOMAIN CONTROLLER (DC)</div>
+                <div class="card-body">
+                    <p>The server that manages login, authentication, and security inside the domain. It enforces
+                        policies and verifies users.</p>
+                    <div class="analogy">👉 Analogy: The administration office of each campus that checks ID cards and
+                        manages students.</div>
+                </div>
+            </div>
+
+            <!-- GLOBAL CATALOG -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 GLOBAL CATALOG (GC)</div>
+                <div class="card-body">
+                    <p>A central searchable index that stores key information about all objects in the forest. Allows
+                        users in one domain to quickly find resources in another domain.</p>
+                    <div class="analogy">👉 Analogy: A central library index for all campuses so a student from NIT can
+                        look up a teacher in FAD.</div>
+                </div>
+            </div>
+
+            <!-- ORGANIZATIONAL UNITS -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 ORGANIZATIONAL UNITS (OUs)</div>
+                <div class="card-body">
+                    <p>Sub-divisions inside a domain to organize users, groups, and computers. Example: ICT Department,
+                        Finance Department, Engineering Class.</p>
+                    <div class="analogy">👉 Analogy: Inside NIT campus, there are departments and classes to organize
+                        staff and students.</div>
+                </div>
+            </div>
+
+            <!-- USER ACCOUNTS -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 USER ACCOUNTS</div>
+                <div class="card-body">
+                    <p>Represent individual people in AD (students, teachers, staff). Provide username and password to
+                        access resources.</p>
+                    <div class="analogy">👉 Analogy: Each student/teacher has a school ID card.</div>
+                </div>
+            </div>
+
+            <!-- COMPUTER ACCOUNTS -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 COMPUTER ACCOUNTS</div>
+                <div class="card-body">
+                    <p>Represent each device (PC, laptop, server) joined to the domain. Enables central management
+                        (updates, policies, security).</p>
+                    <div class="analogy">👉 Analogy: Registered lab computers in the school that are officially
+                        recognized.</div>
+                </div>
+            </div>
+
+            <!-- TRUST RELATIONSHIP -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 TRUST RELATIONSHIP</div>
+                <div class="card-body">
+                    <p>Links between different domains (NIT ↔ FAD ↔ BDC). Allows cross-campus access to resources.</p>
+                    <div class="analogy">👉 Analogy: An agreement where NIT students can attend a FAD library session.
+                    </div>
+                </div>
+            </div>
+
+            <!-- GROUP POLICY -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 GROUP POLICY (GPO)</div>
+                <div class="card-body">
+                    <p>Set of rules controlling what users and computers can/can’t do. Examples: password rules, desktop
+                        backgrounds, software restrictions.</p>
+                    <div class="analogy">👉 Analogy: School rules like uniforms, exam policies, or lab regulations
+                        applied across students.</div>
+                </div>
+            </div>
+
+            <!-- SECURITY & DISTRIBUTION GROUPS -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 SECURITY & DISTRIBUTION GROUPS</div>
+                <div class="card-body">
+                    <p>Security Groups: Assign permissions (who can use lab, printer, etc.). Distribution Groups: Email
+                        lists or communication-only groups.</p>
+                    <div class="analogy">
+                        👉 Analogy:<br>
+                        Security Group = Science Club (with access to labs).<br>
+                        Distribution Group = Debate Team mailing list (just for communication).
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCHEMA -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">🔹 SCHEMA</div>
+                <div class="card-body">
+                    <p>The blueprint of the Active Directory database. Defines what objects exist (user, computer,
+                        printer) and what attributes they have (username, password, ID, etc.).</p>
+                    <div class="analogy">👉 Analogy: The standard student record form that ensures all schools record
+                        names, IDs, and subjects the same way.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Administration Notes - PVC TSS School</title>
+    <style>
+        body {
+            font-family: 'Calisto MT', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #0077b6;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        section {
+            padding: 20px 40px;
+            background-color: white;
+            margin: 20px auto;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #023e8a;
+            border-bottom: 2px solid #90e0ef;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #0077b6;
+        }
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #90e0ef;
+            color: #023e8a;
+            padding: 8px;
+            text-align: left;
+        }
+        td {
+            padding: 8px;
+        }
+        .note {
+            background-color: #caf0f8;
+            padding: 10px;
+            border-left: 5px solid #0077b6;
+            margin: 10px 0;
+        }
+        .example {
+            background-color: #ade8f4;
+            padding: 10px;
+            border-left: 5px solid #023e8a;
+            margin: 10px 0;
+        }
+        .summary {
+            background-color: #90e0ef;
+            padding: 10px;
+            border-left: 5px solid #0077b6;
+            margin: 10px 0;
+        }
+        .icon {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🖥️ Server Administration Notes - PVC TSS School</h1>
+    </header>
+
+    <section>
+        <h2>🖥️ What is Server Administration?</h2>
+        <p>Server administration means managing and maintaining computer servers — the powerful computers that store, process, and deliver data or services to other computers on a network.</p>
+        <p>The person doing this is called a <strong>Server Administrator</strong> or <strong>System Administrator</strong>. Their main job is to ensure servers:</p>
+        <ul>
+            <li>Run smoothly</li>
+            <li>Stay secure</li>
+            <li>Are properly backed up</li>
+            <li>Serve users or clients reliably</li>
+        </ul>
+
+        <div class="example">
+            <strong>Example:</strong> PVC TSS School computer lab network with teachers' laptops, students' computers, printers, and a main server.
+        </div>
+    </section>
+
+    <section>
+        <h2>⚙️ Role of Server Administration at PVC TSS</h2>
+        <ul>
+            <li><strong>Install and configure the server</strong>
+                <ul>
+                    <li>Set up Windows Server or Linux OS</li>
+                    <li>Create student and teacher accounts</li>
+                </ul>
+            </li>
+            <li><strong>Manage users and permissions</strong>
+                <ul>
+                    <li>Allow teachers to edit marks</li>
+                    <li>Allow students to access only their folders</li>
+                </ul>
+            </li>
+            <li><strong>Maintain security</strong>
+                <ul>
+                    <li>Protect server from viruses</li>
+                    <li>Manage firewalls and network security</li>
+                </ul>
+            </li>
+            <li><strong>Backup and recovery</strong>
+                <ul>
+                    <li>Regularly save important school data</li>
+                    <li>Restore data if the server crashes</li>
+                </ul>
+            </li>
+            <li><strong>Update and monitor performance</strong>
+                <ul>
+                    <li>Keep the system up to date</li>
+                    <li>Check for errors or slow performance</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>💡 Summary Table</h2>
+        <table>
+            <tr>
+                <th>Term</th>
+                <th>Meaning</th>
+                <th>Example at PVC TSS</th>
+            </tr>
+            <tr>
+                <td>Server</td>
+                <td>A powerful computer that stores and manages data for others</td>
+                <td>Main computer holding student records</td>
+            </tr>
+            <tr>
+                <td>Server Administration</td>
+                <td>Managing and maintaining that server</td>
+                <td>Installing updates, managing accounts, backups</td>
+            </tr>
+            <tr>
+                <td>Server Administrator</td>
+                <td>The person responsible for it</td>
+                <td>ICT teacher or technician managing the system</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>🖥️ Main Purposes of Server Administration</h2>
+        <table>
+            <tr>
+                <th>Purpose</th>
+                <th>Explanation</th>
+                <th>Example at PVC TSS</th>
+            </tr>
+            <tr>
+                <td>Data Storage and Access</td>
+                <td>Store and organize school data for easy access</td>
+                <td>Teachers save marks; students access assignments</td>
+            </tr>
+            <tr>
+                <td>User Management</td>
+                <td>Control who can log in and what they can do</td>
+                <td>Separate accounts for teachers, students, admins</td>
+            </tr>
+            <tr>
+                <td>Security Management</td>
+                <td>Protect data from viruses and unauthorized access</td>
+                <td>Passwords, firewalls, antivirus</td>
+            </tr>
+            <tr>
+                <td>Backup and Recovery</td>
+                <td>Regularly save copies of data</td>
+                <td>Weekly exam results backup</td>
+            </tr>
+            <tr>
+                <td>Performance Monitoring</td>
+                <td>Ensure server runs smoothly</td>
+                <td>Check overload or storage issues</td>
+            </tr>
+            <tr>
+                <td>Software Updates</td>
+                <td>Keep system and software updated</td>
+                <td>Monthly patches</td>
+            </tr>
+            <tr>
+                <td>Network Services Management</td>
+                <td>Manage shared resources</td>
+                <td>Printing, online portal access</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>💾 Data Management Before & After Server Administration</h2>
+        <table>
+            <tr>
+                <th>Stage</th>
+                <th>Style</th>
+                <th>Challenges/Solutions</th>
+            </tr>
+            <tr>
+                <td>Before Server Administration</td>
+                <td>Manual, local storage</td>
+                <td>Disorganized, unsafe, no backups</td>
+            </tr>
+            <tr>
+                <td>After Server Administration</td>
+                <td>Centralized, secure, managed by admin</td>
+                <td>Organized, safe, easy access and recovery</td>
+            </tr>
+        </table>
+
+        <div class="note">
+            Centralized = One main place → secure, fast, organized.<br>
+            Non-centralized = Many separate places → risky, slow, messy.
+        </div>
+    </section>
+
+    <section>
+        <h2>🧠 Active Directory & Related Concepts</h2>
+        <ul>
+            <li><strong>AD (Active Directory):</strong> Microsoft service for managing users, computers, and resources.</li>
+            <li><strong>Domain:</strong> Network group managed by AD. Example: pvctss.local</li>
+            <li><strong>DC (Domain Controller):</strong> Server that runs AD, verifies users, controls access.</li>
+            <li><strong>ADDS:</strong> Windows Server role to make a server a DC.</li>
+        </ul>
+
+        <div class="example">
+            Installing ADDS → gives tools to manage AD<br>
+            Promoting to DC → server becomes main controller of the network.
+        </div>
+    </section>
+
+    <section>
+        <h2>🎯 Why Promote AD to DC?</h2>
+        <ul>
+            <li>Centralized user authentication</li>
+            <li>Centralized resource management (files, printers)</li>
+            <li>Security policies enforcement</li>
+            <li>Replication and redundancy</li>
+            <li>Simplified administration</li>
+        </ul>
+
+        <div class="summary">
+            Promoting AD to DC turns your server from a “capable tool” into the main controller of the school network.
+        </div>
+    </section>
+</body>
+</html>

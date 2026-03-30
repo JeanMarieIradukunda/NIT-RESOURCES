@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Step-by-Step Solutions – L5-NIT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f3f5f8;
+            margin: 0;
+            padding: 0;
+            color: #2c2c2c;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4a148c, #1a237e);
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.06);
+        }
+
+        section h2 {
+            color: #1a237e;
+            border-bottom: 2px solid #e8eaf6;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #4a148c;
+            margin-top: 20px;
+        }
+
+        pre {
+            background: #f5f7fb;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        .explanation {
+            background: #eef2ff;
+            padding: 12px 15px;
+            border-left: 5px solid #3f51b5;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .real-life {
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-left: 5px solid #2e7d32;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .challenge {
+            background: #fff8e1;
+            border-left: 6px solid #ff8f00;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin: 40px 0 10px;
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+            }
+            section {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+    <h1>✅ STEP-BY-STEP SOLUTIONS & EXPLANATIONS</h1>
+    <p>Python Practical Exercises – L5-NIT<br>
+       Prepared by Trainer JMV-IRADUKUNDA</p>
+</header>
+
+<section>
+    <h2>1️⃣ Special-Purpose Functions (map, filter, reduce)</h2>
+
+    <h3>🔹 Exercise 1: Student Marks Processing</h3>
+
+    <pre>marks = [45, 67, 89, 32, 76, 90, 54]</pre>
+
+    <h3>✅ Step 1: Increase each mark by 5 (using map)</h3>
+    <pre>
+bonus_marks = list(map(lambda m: m + 5, marks))
+print(bonus_marks)
+    </pre>
+
+    <div class="explanation">
+        map() applies a function to each element<br>
+        lambda m: m + 5 adds bonus marks<br>
+        list() converts result to a list
+    </div>
+    <div class="real-life">🧠 Real life: Schools automatically add bonus points.</div>
+
+    <h3>✅ Step 2: Filter passing students (≥ 50)</h3>
+    <pre>
+passed = list(filter(lambda m: m >= 50, bonus_marks))
+print(passed)
+    </pre>
+
+    <div class="explanation">
+        filter() keeps only values that return True<br>
+        Students who failed are removed
+    </div>
+    <div class="real-life">🧠 Real life: Filtering successful candidates.</div>
+
+    <h3>✅ Step 3: Total class score (using reduce)</h3>
+    <pre>
+from functools import reduce
+
+total_score = reduce(lambda a, b: a + b, passed)
+print(total_score)
+    </pre>
+
+    <div class="explanation">
+        reduce() combines values into one<br>
+        Adds all marks together
+    </div>
+    <div class="real-life">🧠 Real life: Calculating total results.</div>
+</section>
+
+<section>
+    <h2>2️⃣ Lambda Functions</h2>
+
+    <h3>🔹 Exercise 3: Electricity Bill Calculator</h3>
+    <pre>
+bill = lambda units: units * 120
+
+units = [50, 120, 300]
+
+for u in units:
+    print(f"Units: {u}, Bill: {bill(u)} RWF")
+    </pre>
+
+    <div class="explanation">
+        Lambda = small one-line function<br>
+        No need to define a full function<br>
+        Used when logic is short and simple
+    </div>
+    <div class="real-life">🧠 Real life: Utility billing systems.</div>
+
+    <h3>🔹 Exercise 4: Sorting Phone Numbers</h3>
+    <pre>
+numbers = ["+250788123456", "+256701234567", "+250722999888"]
+
+sorted_numbers = sorted(numbers, key=lambda n: not n.startswith("+250"))
+print(sorted_numbers)
+    </pre>
+
+    <div class="explanation">
+        sorted() sorts lists<br>
+        key decides how sorting happens<br>
+        Rwandan numbers come first
+    </div>
+    <div class="real-life">🧠 Real life: Telecom databases.</div>
+</section>
+
+<section>
+    <h2>3️⃣ Python Generators</h2>
+
+    <h3>🔹 Exercise 5: Daily Sales Generator</h3>
+    <pre>
+def daily_sales(sales):
+    for sale in sales:
+        yield sale
+
+sales_data = [12000, 15000, 18000, 20000]
+
+total = 0
+for sale in daily_sales(sales_data):
+    total += sale
+
+print("Total sales:", total)
+    </pre>
+
+    <div class="explanation">
+        yield produces values one at a time<br>
+        Saves memory<br>
+        Perfect for large data
+    </div>
+    <div class="real-life">🧠 Real life: Processing large business data.</div>
+
+    <h3>🔹 Exercise 6: Student ID Generator</h3>
+    <pre>
+def student_id_generator(start=1000):
+    while True:
+        yield start
+        start += 1
+
+gen = student_id_generator()
+
+print(next(gen))
+print(next(gen))
+print(next(gen))
+    </pre>
+
+    <div class="explanation">
+        IDs generated only when needed<br>
+        Infinite generator
+    </div>
+    <div class="real-life">🧠 Real life: Automatic ID systems.</div>
+</section>
+
+<section>
+    <h2>4️⃣ Python Closures</h2>
+
+    <h3>🔹 Exercise 7: Salary Calculator</h3>
+    <pre>
+def salary_calculator(base_salary):
+    def calculate(bonus):
+        return base_salary + bonus
+    return calculate
+
+teacher_salary = salary_calculator(300000)
+print(teacher_salary(50000))
+    </pre>
+
+    <div class="explanation">
+        Inner function remembers base_salary<br>
+        This memory is called a closure
+    </div>
+    <div class="real-life">🧠 Real life: Payroll systems.</div>
+
+    <h3>🔹 Exercise 8: Login Counter</h3>
+    <pre>
+def login_counter():
+    count = 0
+    def login():
+        nonlocal count
+        count += 1
+        return count
+    return login
+
+user = login_counter()
+print(user())
+print(user())
+print(user())
+    </pre>
+
+    <div class="explanation">
+        nonlocal allows modifying outer variable<br>
+        Keeps count even after function ends
+    </div>
+    <div class="real-life">🧠 Real life: Tracking user activity.</div>
+</section>
+
+<section>
+    <h2>5️⃣ Python Decorators</h2>
+
+    <h3>🔹 Exercise 9: Execution Logger</h3>
+    <pre>
+def logger(func):
+    def wrapper():
+        print("Function started")
+        func()
+        print("Task completed")
+    return wrapper
+
+@logger
+def process_transactions():
+    print("Processing bank transactions...")
+
+process_transactions()
+    </pre>
+
+    <div class="explanation">
+        Decorators add extra behavior<br>
+        No change to original function code
+    </div>
+    <div class="real-life">🧠 Real life: System logging.</div>
+
+    <h3>🔹 Exercise 10: Authentication Decorator</h3>
+    <pre>
+def auth_required(func):
+    def wrapper(user_logged_in):
+        if user_logged_in:
+            func()
+        else:
+            print("Access denied")
+    return wrapper
+
+@auth_required
+def view_account_balance():
+    print("Your balance is 250,000 RWF")
+
+view_account_balance(True)
+    </pre>
+
+    <div class="explanation">
+        Controls access<br>
+        Used heavily in web apps
+    </div>
+    <div class="real-life">🧠 Real life: Security systems.</div>
+</section>
+
+<section>
+    <h2>6️⃣ Recursive Functions</h2>
+
+    <h3>🔹 Exercise 11: Loan Repayment Countdown</h3>
+    <pre>
+def repay(balance, monthly_payment):
+    if balance <= 0:
+        return 0
+    return 1 + repay(balance - monthly_payment, monthly_payment)
+
+months = repay(500000, 50000)
+print("Months needed:", months)
+    </pre>
+
+    <div class="explanation">
+        Function calls itself<br>
+        Stops when balance ≤ 0
+    </div>
+    <div class="real-life">🧠 Real life: Financial calculations.</div>
+</section>
+
+<section>
+    <h2>7️⃣ Higher-Order Functions</h2>
+
+    <h3>🔹 Exercise 13: Payment Processor</h3>
+    <pre>
+def process_payment(amount, payment_method):
+    payment_method(amount)
+
+def cash(amount):
+    print(f"Paid {amount} RWF in cash")
+
+def mobile_money(amount):
+    print(f"Paid {amount} RWF via Mobile Money")
+
+process_payment(10000, mobile_money)
+    </pre>
+
+    <div class="explanation">
+        Functions passed as arguments<br>
+        Flexible and reusable
+    </div>
+    <div class="real-life">🧠 Real life: Payment gateways.</div>
+</section>
+
+<section class="challenge">
+    <h2>🔥 Final Integrated Challenge (Concept Review)</h2>
+
+    <pre>
+def attendance_counter():
+    count = 0
+    def attend():
+        nonlocal count
+        count += 1
+        print("Attendance count:", count)
+    return attend
+
+attendance = attendance_counter()
+attendance()
+attendance()
+    </pre>
+
+    <div class="explanation">
+        Concepts used:<br>
+        ✔ Closure<br>
+        ✔ Function memory<br>
+        ✔ Real-life logic
+    </div>
+</section>
+
+<footer>
+    © 2026 | Python Step-by-Step Solutions | Trainer JMV-IRADUKUNDA
+</footer>
+
+</div>
+
+</body>
+</html>

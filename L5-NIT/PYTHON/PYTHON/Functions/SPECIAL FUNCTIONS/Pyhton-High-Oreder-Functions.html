@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Higher-Order Functions Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background-color: #3f51b5;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1, h2, h3 {
+            color: #303f9f;
+            background-color: #f5f7fa;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        .note {
+            background-color: #fffbcc;
+            border-left: 6px solid #ffeb3b;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Higher-Order Functions Notes</h1>
+    </header>
+    <main>
+        <section>
+            <h2>A. Definition & Explanation</h2>
+            <p>A higher-order function is a function that either:</p>
+            <ul>
+                <li>Takes one or more functions as arguments, or</li>
+                <li>Returns a function as its result.</li>
+            </ul>
+            <p>This allows for more flexible, reusable, and modular code.</p>
+
+            <h3>Key Points:</h3>
+            <ul>
+                <li>Functions in Python are first-class objects—they can be passed around like integers, strings, or lists.</li>
+                <li>Higher-order functions enable functional programming patterns, like applying operations on other functions.</li>
+            </ul>
+
+            <h3>Example – Passing a Function as an Argument:</h3>
+            <pre>
+def greet(name):
+    return f"Hello, {name}!"
+
+def custom_greeting(func, name):
+    return func(name)  # Calls the passed-in function
+
+print(custom_greeting(greet, "Alice"))  # Output: Hello, Alice!
+            </pre>
+
+            <h3>Example – Returning a Function:</h3>
+            <pre>
+def multiplier(n):
+    def multiply(x):
+        return x * n
+    return multiply
+
+double = multiplier(2)  # Returns a function that doubles a number
+print(double(5))        # Output: 10
+            </pre>
+        </section>
+
+        <section>
+            <h2>B. Uses and Applications (When to Use)</h2>
+            <ul>
+                <li>Write cleaner, reusable code.</li>
+                <li>Dynamically modify behavior without rewriting functions.</li>
+                <li>Functional programming: apply operations over sequences or compose functions.</li>
+            </ul>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+                <li>Avoids code repetition.</li>
+                <li>Makes your program more flexible and extensible.</li>
+                <li>Often used in callbacks, event handling, and data processing pipelines.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>C. Real-Life Examples</h2>
+
+            <h3>1. Applying Discounts or Tax Calculations Dynamically:</h3>
+            <pre>
+def apply_discount(price, discount_func):
+    return price - discount_func(price)
+
+def ten_percent(price):
+    return price * 0.10
+
+print(apply_discount(100, ten_percent))  # Output: 90.0
+            </pre>
+
+            <h3>2. Data Processing Using map, filter, and reduce:</h3>
+            <pre>
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+
+# map: double each number
+doubled = list(map(lambda x: x*2, numbers))
+
+# filter: keep only even numbers
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+# reduce: sum all numbers
+total = reduce(lambda x, y: x + y, numbers)
+
+print(doubled)  # [2, 4, 6, 8, 10]
+print(evens)    # [2, 4]
+print(total)    # 15
+            </pre>
+
+            <h3>3. Custom Validation Functions in Web Forms:</h3>
+            <pre>
+def validate_input(input_value, validation_func):
+    if validation_func(input_value):
+        return "Valid input"
+    else:
+        return "Invalid input"
+
+def is_positive(number):
+    return number > 0
+
+print(validate_input(10, is_positive))  # Output: Valid input
+print(validate_input(-5, is_positive))  # Output: Invalid input
+            </pre>
+
+            <div class="note">
+                ✅ <strong>Summary:</strong><br>
+                - Higher-order functions accept functions as arguments or return functions.<br>
+                - They make your code cleaner, reusable, and modular.<br>
+                - Common use cases: data processing, dynamic behaviors, and functional programming.
+            </div>
+        </section>
+    </main>
+</body>
+</html>

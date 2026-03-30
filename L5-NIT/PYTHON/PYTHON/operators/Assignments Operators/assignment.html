@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Assignment Operators</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4b6cb7;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #4b6cb7;
+            margin-top: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f0fe;
+            border-left: 5px solid #4b6cb7;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Python Assignment Operators
+    </header>
+
+    <div class="container">
+        <h2>1. = (Simple Assignment)</h2>
+        <p>Assigns a value to a variable.</p>
+        <pre><code>x = 5
+print(x)  # Output: 5</code></pre>
+        <p><strong>Explanation:</strong> The value <code>5</code> is stored in the variable <code>x</code>.</p>
+
+        <h2>2. += (Add AND Assign)</h2>
+        <p>Adds the right-hand value to the variable and assigns the result.</p>
+        <pre><code>x = 5
+x += 3  # equivalent to x = x + 3
+print(x)  # Output: 8</code></pre>
+
+        <h2>3. -= (Subtract AND Assign)</h2>
+        <p>Subtracts the right-hand value from the variable and assigns the result.</p>
+        <pre><code>x = 5
+x -= 2  # equivalent to x = x - 2
+print(x)  # Output: 3</code></pre>
+
+        <h2>4. *= (Multiply AND Assign)</h2>
+        <p>Multiplies the variable by the right-hand value and assigns the result.</p>
+        <pre><code>x = 5
+x *= 3  # equivalent to x = x * 3
+print(x)  # Output: 15</code></pre>
+
+        <h2>5. /= (Divide AND Assign)</h2>
+        <p>Divides the variable by the right-hand value (floating-point division) and assigns the result.</p>
+        <pre><code>x = 10
+x /= 4  # equivalent to x = x / 4
+print(x)  # Output: 2.5</code></pre>
+
+        <h2>6. %= (Modulus AND Assign)</h2>
+        <p>Takes modulus of the variable with the right-hand value and assigns the remainder.</p>
+        <pre><code>x = 10
+x %= 3  # equivalent to x = x % 3
+print(x)  # Output: 1</code></pre>
+
+        <h2>7. //= (Floor Division AND Assign)</h2>
+        <p>Divides and rounds down to the nearest integer, then assigns the result.</p>
+        <pre><code>x = 10
+x //= 3  # equivalent to x = x // 3
+print(x)  # Output: 3</code></pre>
+
+        <h2>8. **= (Exponent AND Assign)</h2>
+        <p>Raises the variable to the power of the right-hand value and assigns the result.</p>
+        <pre><code>x = 2
+x **= 3  # equivalent to x = x ** 3
+print(x)  # Output: 8</code></pre>
+
+        <h2>9. &= (Bitwise AND AND Assign)</h2>
+        <p>Performs bitwise AND between the variable and the right-hand value.</p>
+        <pre><code>x = 5      # binary: 0101
+x &= 3     # binary: 0011
+print(x)   # Output: 1 (0101 & 0011 = 0001)</code></pre>
+
+        <h2>10. |= (Bitwise OR AND Assign)</h2>
+        <p>Performs bitwise OR and assigns the result.</p>
+        <pre><code>x = 5      # binary: 0101
+x |= 3     # binary: 0011
+print(x)   # Output: 7 (0101 | 0011 = 0111)</code></pre>
+
+        <h2>11. ^= (Bitwise XOR AND Assign)</h2>
+        <p>Performs bitwise XOR and assigns the result.</p>
+        <pre><code>x = 5      # binary: 0101
+x ^= 3     # binary: 0011
+print(x)   # Output: 6 (0101 ^ 0011 = 0110)</code></pre>
+
+        <h2>12. >>= (Right Shift AND Assign)</h2>
+        <p>Shifts the bits of the variable to the right and assigns the result.</p>
+        <pre><code>x = 8      # binary: 1000
+x >>= 2
+print(x)   # Output: 2 (1000 >> 2 = 0010)</code></pre>
+
+        <h2>13. <<= (Left Shift AND Assign)</h2>
+        <p>Shifts the bits of the variable to the left and assigns the result.</p>
+        <pre><code>x = 2      # binary: 0010
+x <<= 3
+print(x)   # Output: 16 (0010 << 3 = 10000)</code></pre>
+
+        <div class="summary">
+            <h3>✅ Summary:</h3>
+            <p><strong>=</strong> → assign</p>
+            <p><strong>+=, -=, *=, /=, %=, //=, **=</strong> → arithmetic + assign</p>
+            <p><strong>&=, |=, ^=, >>=, <<=</strong> → bitwise + assign</p>
+        </div>
+    </div>
+</body>
+</html>

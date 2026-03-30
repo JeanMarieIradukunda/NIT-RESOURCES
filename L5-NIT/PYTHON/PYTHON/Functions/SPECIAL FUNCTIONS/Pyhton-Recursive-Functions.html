@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Recursive Functions Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background-color: #3b75aa;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1, h2, h3 {
+            color: #00796b;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        .note {
+            background-color: #fffbcc;
+            border-left: 6px solid #ffeb3b;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Recursive Functions Notes</h1>
+    </header>
+    <main>
+        <section>
+            <h2>A. Definition & Explanation</h2>
+            <p>A recursive function in Python is a function that calls itself to solve a smaller instance of the same problem. The main idea is to break a complex problem into simpler sub-problems that can be solved using the same logic.</p>
+
+            <h3>Key Points:</h3>
+            <ul>
+                <li>A recursive function must have a base case to stop the recursion, otherwise it will continue indefinitely and cause a <code>RecursionError</code>.</li>
+                <li>Each recursive call should move closer to the base case.</li>
+            </ul>
+
+            <h3>Structure of a Recursive Function:</h3>
+            <pre>
+def recursive_function(parameters):
+    if base_case_condition:
+        return base_case_value
+    else:
+        # function calls itself with a smaller or simpler input
+        return recursive_function(smaller_input)
+            </pre>
+
+            <h3>Example – Factorial of a Number:</h3>
+            <pre>
+def factorial(n):
+    if n == 0 or n == 1:  # Base case
+        return 1
+    else:
+        return n * factorial(n - 1)  # Recursive call
+
+print(factorial(5))  # Output: 120
+            </pre>
+            <p><strong>Explanation:</strong> <br>
+            Each call reduces <code>n</code> by 1. The base case <code>n == 0 or n == 1</code> stops the recursion, preventing infinite calls.</p>
+        </section>
+
+        <section>
+            <h2>B. Uses and Applications (When to Use)</h2>
+            <p>Recursion is appropriate when:</p>
+            <ul>
+                <li>A problem can be divided into similar sub-problems.</li>
+                <li>You can express the solution in terms of itself.</li>
+                <li>Iterative solutions exist, but recursion provides simpler or more elegant code.</li>
+            </ul>
+            <p>Common scenarios include:</p>
+            <ul>
+                <li>Traversing hierarchical structures (trees, directories, nested lists)</li>
+                <li>Mathematical sequences (factorials, Fibonacci numbers)</li>
+                <li>Searching and sorting algorithms (binary search, quicksort)</li>
+                <li>Backtracking problems (solving puzzles like Sudoku or mazes)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>C. Real-Life Examples</h2>
+
+            <h3>1. Calculating Factorials:</h3>
+            <pre>
+# Already shown above
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(5))  # Output: 120
+            </pre>
+
+            <h3>2. Searching Files and Folders:</h3>
+            <pre>
+import os
+
+def list_files(folder):
+    for item in os.listdir(folder):
+        path = os.path.join(folder, item)
+        if os.path.isdir(path):
+            list_files(path)  # Recursive call for subfolder
+        else:
+            print(path)
+
+list_files("/path/to/directory")
+            </pre>
+            <div class="note">
+                ✅ <strong>Key Takeaways for Beginners:</strong><br>
+                - Recursive functions call themselves to solve smaller sub-problems.<br>
+                - Always define a base case to prevent infinite recursion.<br>
+                - Useful for hierarchical structures, sequences, searching, sorting, and backtracking problems.
+            </div>
+        </section>
+    </main>
+</body>
+</html>

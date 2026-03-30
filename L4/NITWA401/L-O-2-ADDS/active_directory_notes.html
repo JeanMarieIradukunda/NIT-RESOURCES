@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Active Directory (AD) — Notes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    /* Preferred: Berlin Sans FB if available on the system; fallback to modern sans */
+    :root {
+      --accent: #0d6efd;
+      --muted: #6c757d;
+      --card-bg: #f8fafc;
+    }
+
+    body {
+      font-family: 'Berlin Sans FB', 'Berlin Sans FB Demi', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      color: #1f2937;
+      line-height: 1.5;
+      padding-bottom: 4rem;
+    }
+
+    .hero {
+      background: linear-gradient(90deg, rgba(13, 110, 253, 0.06), rgba(0, 123, 255, 0.03));
+      border-left: 4px solid var(--accent);
+      padding: 2rem;
+      border-radius: 12px;
+    }
+
+    .key-point {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .term-card {
+      border-left: 4px solid rgba(13, 110, 253, 0.12);
+    }
+
+    .badge-pill {
+      border-radius: 999px
+    }
+
+    .kbd-like {
+      background: #0b5ed7;
+      color: #fff;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 600
+    }
+
+    .section-title {
+      font-weight: 700
+    }
+
+    footer {
+      opacity: 0.7;
+      margin-top: 2rem
+    }
+
+    /* responsive tweaks */
+    @media (min-width:992px) {
+      .hero {
+        padding: 3rem
+      }
+    }
+    
+
+    .study-img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-top: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-5">
+    <header class="mb-4">
+      <div class="d-flex align-items-center gap-3">
+        <div class="rounded-3 bg-white p-3 shadow-sm">
+          <i class="bi bi-folder-fill fs-2 text-primary"></i>
+        </div>
+        <div>
+          <h1 class="h3">Active Directory (AD) — Quick Reference</h1>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero mb-4">
+      <div class="row align-items-center">
+        <div class="col-lg-9">
+          <h2 class="mb-2">What is Active Directory?</h2>
+          <p class="mb-1">Active Directory (AD) is Microsoft’s directory service that provides a centralized system for
+            managing users, computers, groups, applications, and resources across a Windows network. Think of it as the
+            <strong>phone book + security guard + control center</strong> for your IT environment.
+          </p>
+          <div class="mt-3">
+            <span class="badge bg-primary badge-pill me-2">Key concepts</span>
+            <span class="badge bg-light text-dark">Authentication</span>
+            <span class="badge bg-light text-dark">Authorization</span>
+            <span class="badge bg-light text-dark">Group Policy</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h3 class="section-title mb-3">🔑 Key Points About Active Directory</h3>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>1. Directory Service</h5>
+            <ul class="mb-0">
+              <li>Stores information about objects (users, computers, printers, shares).</li>
+              <li>Objects are organized hierarchically inside Active Directory Domain Services (AD DS).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>2. Centralized Management</h5>
+            <ul class="mb-0">
+              <li>Admins manage accounts, permissions, and policies from one place.</li>
+              <li>Simplifies administration — no need to configure each device individually.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>3. Authentication & Authorization</h5>
+            <ul class="mb-0">
+              <li>Handles login requests (authentication) and access control (authorization).</li>
+              <li>Uses Kerberos for secure ticketing and LDAP for directory queries.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>4. Domain & Forest Structure</h5>
+            <ul class="mb-0">
+              <li><strong>Domain:</strong> logical grouping of objects sharing a database.</li>
+              <li><strong>Forest:</strong> collection of one or more domains sharing a global catalog and trust
+                relationships.</li>
+              <li><strong>Organizational Units (OUs):</strong> containers to organize objects and apply
+                policies/delegation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>5. Group Policy</h5>
+            <p class="mb-0">Apply security settings and configurations (password policies, desktop restrictions,
+              software deployment) centrally via Group Policy Objects (GPOs).</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="key-point h-100">
+            <h5>6. Scalability</h5>
+            <p class="mb-0">AD scales from small networks (dozens of users) to global enterprises with hundreds of
+              thousands of objects.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h3 class="section-title mb-3">⚙️ Real-World Example</h3>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <p class="mb-1">Imagine a university with thousands of students and staff:</p>
+          <ul>
+            <li><strong>Without AD:</strong> Each computer needs its own user accounts and security settings —
+              administrative chaos.</li>
+            <li><strong>With AD:</strong></li>
+            <ul>
+              <li>Students use the same credentials to log into any lab computer.</li>
+              <li>IT enforces rules like "students cannot install software" using Group Policy.</li>
+              <li>Resources (printers, file shares) can be targeted to groups like <em>Staff-only</em>.</li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h3 class="section-title mb-3">📘 Key Terms (Quick Glossary)</h3>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Active Directory (AD)</h5>
+            <p class="small text-muted mb-0">Microsoft directory service that stores information about network objects
+              and provides centralized authentication, authorization, and administration.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Domain Controller (DC)</h5>
+            <p class="small text-muted mb-0">A server running AD DS that authenticates users/computers, enforces
+              security policies, and replicates directory data to other DCs.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Organizational Unit (OU)</h5>
+            <p class="small text-muted mb-0">A container inside a domain used to organize users, groups, and computers;
+              useful for applying GPOs and delegating administration.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Global Catalog (GC)</h5>
+            <p class="small text-muted mb-0">A special read-only database containing a subset of attributes for every
+              object in the forest — used for fast searches and cross-domain logons.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Group Policy Object (GPO)</h5>
+            <p class="small text-muted mb-0">A set of settings and rules applied to users or computers in AD to control
+              security, configuration, and behavior (e.g., disable USB drives).</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card p-3 term-card">
+            <h5 class="mb-1">Active Directory Domain Services (AD DS)</h5>
+            <p class="small text-muted mb-0">The core service running on DCs that provides directory storage,
+              authentication, replication, and policy enforcement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h3 class="section-title mb-3">Study Tips</h3>
+      <div class="text-center">
+        <img src="ADDS.png" alt="Active Directory Study Tips Diagram" class="study-img">
+        <p class="small text-muted mt-2">This diagram illustrates AD structure and tips: build a lab, map concepts, and
+          practice common tasks.</p>
+      </div>
+    </section>
+
+    <footer class="text-center text-muted small">
+      <div>PADRI VJEKO CENTRE TSS | L5-NETWORKIN AND INTERNET TECHNOLOGY</div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

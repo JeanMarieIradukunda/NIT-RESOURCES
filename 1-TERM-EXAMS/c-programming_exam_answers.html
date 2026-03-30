@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Programming Marking Guide – RTQF Level 3</title>
+
+        <!-- ICONS -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        <style>
+        body {
+            margin: 0;
+            font-family: "Cambria", Tahoma, sans-serif;
+            background: #f8f9fa;
+            color: #222;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            background: #181a1b;
+            color: #e8e8e8;
+        }
+
+        body.dark .card {
+            border-color: #3a3b3c;
+        }
+
+        body.dark .sidebar {
+            background: #202122;
+            border-right-color: #3a3b3c;
+        }
+
+        body.dark .sidebar a {
+            color: #ddd;
+        }
+
+        body.dark .sidebar a:hover,
+        body.dark .sidebar a.active {
+            background: #333;
+            color: #fff;
+        }
+
+        body.dark table th {
+            background: #333;
+            color: #eee;
+        }
+
+        body.dark table td {
+            border-color: #444;
+        }
+
+        /* Toggle Button */
+        .toggle-container {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toggle-btn {
+            background: #007bff;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: #ffffff;
+            border-right: 1px solid #ddd;
+            position: fixed;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            background: #e4e6eb;
+        }
+
+        .sidebar a.active {
+            background: #007bff;
+            color: #fff !important;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 280px;
+            padding: 30px 40px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+        }
+
+        /* Card Colors */
+        #fill { background: #fff9e6; }
+        #mcq { background: #e6f7ff; }
+        #tf { background: #e8ffe6; }
+        #matching { background: #f3e6ff; }
+        #ordering { background: #ffe6e6; }
+        #short { background: #e6fff7; }
+        #sectionb { background: #e6ecff; }
+        #sectionc { background: #ffe6f7; }
+
+        .card {
+            border: 1px solid #e2e2e2;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        /* Back To Top Button */
+        #backTop {
+            position: fixed;
+            bottom: 25px;
+            right: 30px;
+            background: #007bff;
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 50%;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            display: none;
+            z-index: 990;
+            transition: 0.3s;
+        }
+
+        #backTop:hover {
+            background: #0056b3;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <!-- Dark Mode Button -->
+        <div class="toggle-container">
+            <button class="toggle-btn" onclick="toggleDarkMode()">
+                <i class="fa-solid fa-moon"></i> Dark Mode
+            </button>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button id="backTop"
+            onclick="window.scrollTo({top:0,behavior:'smooth'});">
+            ↑
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Marking Guide Navigation</h2>
+            <ul>
+                <li><a href="#header">Header Info</a></li>
+                <li><a href="#fill">Fill in the Blanks</a></li>
+                <li><a href="#mcq">Multiple Choice</a></li>
+                <li><a href="#tf">True / False</a></li>
+                <li><a href="#matching">Matching</a></li>
+                <li><a href="#ordering">Ordering</a></li>
+                <li><a href="#short">Short Answers</a></li>
+                <li><a href="#sectionb">Section B</a></li>
+                <li><a href="#sectionc">Section C</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+
+            <div id="header" class="card">
+                <h2>SCHOOL COMPREHENSIVE ASSESSMENT - MARKING GUIDE</h2>
+                <p><strong>SECTOR:</strong> ICT & MULTIMEDIA<br>
+                    <strong>RTQF LEVEL:</strong> 3<br>
+                    <strong>TRADE:</strong> NETWORKING AND INTERNET
+                    TECHNOLOGY<br>
+                    <strong>DURATION:</strong> 3 HOURS</p>
+            </div>
+
+            <!-- ================= SECTION A ================= -->
+            <div class="section-title">SECTION A: ANSWER ALL QUESTIONS (55
+                Marks)</div>
+
+            <div class="card" id="fill">
+                <h3>A. Fill in the Blanks (10 Marks)</h3>
+                <ol>
+                    <li>A set of instructions written to perform a task is
+                        called <strong>computer program</strong>.</li>
+                    <li>A system of rules used to write instructions is called a
+                        <strong>programming language</strong>.</li>
+                    <li>The comment symbol in C is <strong>//</strong>.</li>
+                    <li>A flowchart uses <strong>standardized
+                            symbols</strong>.</li>
+                    <li>C was developed by <strong>Dennis Ritchie</strong>.</li>
+                    <li>A constant is declared using
+                        <strong>const</strong>.</li>
+                    <li>Assignment operator is <strong>=</strong>.</li>
+                    <li>Programs must follow correct
+                        <strong>syntax</strong>.</li>
+                    <li>A flowchart represents an
+                        <strong>graphical</strong>.</li>
+                    <li>Example of high-level language:
+                        <strong>Python</strong>.</li>
+                </ol>
+            </div>
+
+            <div class="card" id="mcq">
+                <h3>B. Multiple Choice Questions (10 Marks)</h3>
+                <ol>
+                    <li>d) Assembly</li>
+                    <li>c) bool</li>
+                    <li>a) &&</li>
+                    <li>b) Dev-C++</li>
+                    <li>c) int number;</li>
+                    <li>d) Decision-making</li>
+                    <li>a) Input/Output</li>
+                    <li>c) Ordered steps</li>
+                    <li>b) ==</li>
+                    <li>d) main()</li>
+                </ol>
+            </div>
+
+            <div class="card" id="tf">
+                <h3>C. True/False (10 Marks)</h3>
+                <ol>
+                    <li>False</li><li>True</li><li>True</li><li>False</li><li>True</li>
+                    <li>True</li><li>False</li><li>False</li><li>True</li><li>False</li>
+                </ol>
+            </div>
+
+            <div class="card" id="matching">
+                <h3>D. Matching (8 Marks)</h3>
+                <table>
+                    <tr><th>Column A</th><th>Column B</th><th>Answer</th></tr>
+                    <tr><td>Flowchart</td><td>Shows program steps</td><td>1 —
+                            E</td></tr>
+                    <tr><td>Algorithm</td><td>Step-by-step procedure</td><td>2 —
+                            G</td></tr>
+                    <tr><td>Constant</td><td>Fixed value</td><td>3 — B</td></tr>
+                    <tr><td>Compiler</td><td>Converts to machine code</td><td>4
+                            — F</td></tr>
+                    <tr><td>If statement</td><td>Decision-making</td><td>5 —
+                            D</td></tr>
+                    <tr><td>Variable</td><td>Changeable data</td><td>6 —
+                            H</td></tr>
+                    <tr><td>IDE</td><td>Coding environment</td><td>7 —
+                            A</td></tr>
+                    <tr><td>Data type</td><td>Defines type</td><td>8 —
+                            C</td></tr>
+                </table>
+            </div>
+
+            <div class="card" id="ordering">
+                <h3>E. Ordering (4 Marks)</h3>
+                <ol>
+                    <li>Install compiler</li>
+                    <li>Write code</li>
+                    <li>Save as .c</li>
+                    <li>Compile</li>
+                    <li>Run & Debug</li>
+                </ol>
+            </div>
+
+            <div class="card" id="short">
+                <h3>F. Short-Answer Questions (13 Marks)</h3>
+
+                <ol>
+                    <li>
+                        <strong>List any four types of programming languages. (4
+                            marks)</strong>
+                        <ul>
+                            <li>Machine language – directly understood by the
+                                computer.</li>
+                            <li>Assembly language – uses mnemonic codes for
+                                instructions.</li>
+                            <li>High-level language – easier for humans to
+                                read/write (e.g., C, Python).</li>
+                            <li>Object-oriented language – organizes code using
+                                objects and classes (e.g., Java, C++).</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Give five purposes of programming languages. (5
+                            marks)</strong>
+                        <ul>
+                            <li>To communicate instructions to a computer.</li>
+                            <li>To automate tasks and reduce manual effort.</li>
+                            <li>To solve problems by implementing
+                                algorithms.</li>
+                            <li>To create applications and software for
+                                users.</li>
+                            <li>To control hardware and interact with
+                                devices.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Identify two flowchart symbols and state their
+                            uses. (2 marks)</strong>
+                        <ul>
+                            <li>Oval (Terminator): Represents the start or end
+                                of a process.</li>
+                            <li>Rectangle (Process): Represents a processing
+                                step or instruction.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <strong>Define a token in C and give four examples. (2
+                            marks)</strong>
+                        <p>Definition: A token is the smallest element in a C
+                            program that has meaning.</p>
+                        <ul>
+                            <li><code>int</code> (keyword)</li>
+                            <li><code>x</code> (identifier)</li>
+                            <li><code>+</code> (operator)</li>
+                            <li><code>123</code> (constant)</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- SECTION B -->
+            <h2 class="section-title" id="sectionb">SECTION B: ANSWER ANY THREE
+                (30 Marks)</h2>
+
+            <!-- Q1 -->
+            <div class="card">
+                <h3>1. Explain the different data types in C and give
+                    examples.</h3>
+
+                <p><strong>1. int (Integer):</strong> Used for whole
+                    numbers.</p>
+                <ul><li>Example: <code>int age = 20;</code></li></ul>
+
+                <p><strong>2. float (Floating-point):</strong> Stores decimal
+                    values.</p>
+                <ul><li>Example: <code>float price = 12.5;</code></li></ul>
+
+                <p><strong>3. char (Character):</strong> Stores one
+                    character.</p>
+                <ul><li>Example: <code>char grade = 'A';</code></li></ul>
+
+                <p><strong>4. double:</strong> Stores double-precision
+                    decimals.</p>
+                <ul><li>Example: <code>double salary =
+                            12500.75;</code></li></ul>
+
+                <p><strong>5. void:</strong> Represents no value.</p>
+                <ul><li>Example: <code>void display();</code></li></ul>
+            </div>
+
+            <!-- Q2 -->
+            <div class="card">
+                <h3>2. Describe the steps of developing a flowchart and its
+                    importance.</h3>
+
+                <p><strong>A. Steps:</strong></p>
+                <ul>
+                    <li>Define the problem</li>
+                    <li>Identify inputs & outputs</li>
+                    <li>Determine solution steps</li>
+                    <li>Draw with standard symbols</li>
+                    <li>Check logical flow</li>
+                </ul>
+
+                <p><strong>B. Importance:</strong></p>
+                <ul>
+                    <li>Clarifies algorithm</li>
+                    <li>Enhances understanding</li>
+                    <li>Reduces errors</li>
+                    <li>Useful documentation</li>
+                    <li>Improves planning</li>
+                </ul>
+            </div>
+
+            <!-- Q3 -->
+            <div class="card">
+                <h3>3. Discuss the structure of a C program and give an
+                    example.</h3>
+
+                <p><strong>1. Preprocessor Directives</strong> — include
+                    libraries.</p>
+
+                <p><strong>2. Functions</strong> — contain executable code.</p>
+
+                <p><strong>3. Variables</strong> — store data.</p>
+
+                <p><strong>4. Statements</strong> — instructions.</p>
+
+                <p><strong>5. Comments</strong> — documentation.</p>
+
+                <pre
+                    style="background:#f4f4f4; padding:10px; border-radius:6px;">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 10; // variable
+    printf("Value: %d", x);
+    return 0;
+}
+</pre>
+            </div>
+
+            <!-- Q4 -->
+            <div class="card">
+                <h3>4. Explain the main types of operators in C with
+                    examples.</h3>
+
+                <p><strong>1. Arithmetic Operators:</strong> + - * / %</p>
+                <ul><li>Example: <code>a + b</code></li></ul>
+
+                <p><strong>2. Logical Operators:</strong> && || !</p>
+                <ul><li>Example: <code>(a > 5 && b < 10)</code></li></ul>
+
+                <p><strong>3. Relational Operators:</strong> > < >= <= == !=</p>
+                <ul><li>Example: <code>a == b</code></li></ul>
+
+                <p><strong>4. Assignment Operators:</strong> = += -=</p>
+                <ul><li>Example: <code>x += 5;</code></li></ul>
+
+                <p><strong>5. Increment/Decrement:</strong> ++ --</p>
+                <ul><li><code>x++;</code> or <code>--y;</code></li></ul>
+            </div>
+
+            <!-- SECTION C -->
+            <h2 class="section-title" id="sectionc">SECTION C (Compulsory)</h2>
+
+            <div class="card">
+                <h3>A. Local File Image</h3>
+                <p><img src="imgs/flowchart.png" alt="Student Image"
+                        class="section-image"></p>
+
+                <h3>B. Question 2: Algorithm</h3>
+                <p>Here’s a step-by-step algorithm:</p>
+                <pre class="code-block">
+Start
+
+Input the student’s name.
+
+Input the marks of three subjects (Mark1, Mark2, Mark3).
+
+Calculate the total: Total = Mark1 + Mark2 + Mark3.
+
+Calculate the average: Average = Total / 3.
+
+Display the student’s name, total, and average.
+
+End
+    </pre>
+
+                <h3>C. Question 3: C Program</h3>
+                <p>Here’s the C program implementing the above algorithm:</p>
+                <pre class="code-block">
+#include &lt;stdio.h&gt;
+
+int main() {
+    char name[50];
+    float mark1, mark2, mark3, total, average;
+
+    // Input student name
+    printf("Enter student name: ");
+    scanf("%[^\n]", name); // Reads full name with spaces
+
+    // Input marks
+    printf("Enter mark for subject 1: ");
+    scanf("%f", &mark1);
+    printf("Enter mark for subject 2: ");
+    scanf("%f", &mark2);
+    printf("Enter mark for subject 3: ");
+    scanf("%f", &mark3);
+
+    // Calculate total and average
+    total = mark1 + mark2 + mark3;
+    average = total / 3;
+
+    // Display results
+    printf("\nStudent Name: %s\n", name);
+    printf("Total Marks: %.2f\n", total);
+    printf("Average Marks: %.2f\n", average);
+
+    return 0;
+}
+    </pre>
+
+                <h3>Explanation:</h3>
+                <ul>
+                    <li><code>scanf("%[^\n]", name);</code> reads the full name
+                        including spaces.</li>
+                    <li>Marks are <code>float</code> to allow decimal
+                        points.</li>
+                    <li>Total and average are calculated and displayed.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <style>
+            /* Section C Image */
+.section-image {
+    max-width: 60%;    /* Reduce image size */
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+/* Code blocks in Section C */
+.code-block {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+}
+
+        </style>
+        <!-- JavaScript -->
+        <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark");
+        }
+
+        /* Back to Top Button */
+        window.addEventListener("scroll", () => {
+            document.getElementById("backTop").style.display =
+                window.scrollY > 300 ? "block" : "none";
+        });
+
+        /* Highlight Active Sidebar Link */
+        const sections = document.querySelectorAll(".card, .section-title");
+        const navLinks = document.querySelectorAll(".sidebar a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 120;
+                if (scrollY >= top) current = sec.id;
+            });
+
+            navLinks.forEach(a => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+    </body>
+</html>

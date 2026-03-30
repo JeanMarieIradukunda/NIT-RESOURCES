@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Python Practical Assessment</title>
+
+<style>
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background:#eef1f5;
+    margin:0;
+}
+
+.container {
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:20px;
+}
+
+h1 { margin-top:0; }
+
+#loginBox {
+    text-align:center;
+    padding:40px;
+}
+
+input, button, textarea {
+    font-size:16px;
+    padding:10px;
+    margin:8px 0;
+    width:100%;
+}
+
+button {
+    background:#1e3a5f;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover {
+    background:#2c5282;
+}
+
+#examBox { display:none; }
+
+#violations {
+    color:red;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+#timer {
+    font-weight:bold;
+    font-size:18px;
+}
+
+#questionArea {
+    background:#f0f4ff;
+    padding:15px;
+    border-radius:6px;
+    margin:15px 0;
+    white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div id="loginBox">
+<h1>Python Practical Assessment</h1>
+<input id="studentName" placeholder="Enter Student Name">
+<input id="pass" placeholder="Enter Question Password">
+<button onclick="startExam()">Start Exam</button>
+</div>
+
+<div id="examBox">
+<h2 id="welcome"></h2>
+<div id="timer"></div>
+<div id="violations">Violations: 0</div>
+
+<div id="questionArea"></div>
+
+<textarea id="answer" rows="18" placeholder="Write your Python program here..."></textarea>
+
+<button onclick="saveAnswer()">Save Answer</button>
+<button onclick="submitExam()">Submit & Print</button>
+</div>
+
+</div>
+
+<script>
+
+// ================= QUESTIONS =================
+
+const QUESTIONS = {
+Q1:`Create a program that stores 5 student names in a list and prints those whose name length is greater than 4 using a loop and condition.`,
+Q2:`Create a dictionary of 5 products with prices. Increase each price by 10% using operators and print the updated dictionary.`,
+Q3:`Write a program that counts how many numbers in a list are even and odd using a loop and conditional statements.`,
+Q4:`Create a list of numbers and stop printing when a number greater than 50 is found (use break).`,
+Q5:`Create a list of numbers and skip numbers divisible by 3 while printing others (use continue).`,
+Q6:`Create a dictionary of students and marks. Use pass inside a loop for marks not yet entered (None value).`,
+Q7:`Write a function that accepts a list and returns the sum using a loop and built-in sum() for comparison.`,
+Q8:`Create a function with a default parameter that adds a bonus mark to all values in a marks list.`,
+Q9:`Write a function that receives a list as an argument and returns a new list containing only values greater than 10.`,
+Q10:`Create a function that takes a dictionary of items and prints keys and values using a loop.`,
+Q11:`Write a program using a lambda function to multiply each number in a list by 2.`,
+Q12:`Use lambda with filter() to get numbers greater than 20 from a list.`,
+Q13:`Use lambda with sorted() to sort a dictionary by its values.`,
+Q14:`Create a function that searches for a name in a list and returns its index or -1 if not found.`,
+Q15:`Write a program that removes duplicate values from a list using loops and conditions.`,
+Q16:`Create a dictionary of items and quantities. Write a function to calculate total quantity.`,
+Q17:`Write a function that accepts a list and returns the maximum and minimum using built-in functions.`,
+Q18:`Create a generator function that yields one number at a time from a list.`,
+Q19:`Create a generator that yields only even numbers from a list.`,
+Q20:`Write a generator that yields dictionary keys one by one.`,
+Q21:`Create a closure that remembers a bonus value and adds it to every number in a list when called.`,
+Q22:`Write a closure that remembers a subject name and prints it with each student mark from a dictionary.`,
+Q23:`Create a decorator that prints “Function Started” and “Function Ended”.`,
+Q24:`Write a decorator that counts how many times a list-processing function is called.`,
+Q25:`Loop through a list and build a dictionary with number → square.`,
+Q26:`Function that returns dictionary number → even/odd.`,
+Q27:`List of dictionaries for students. Print those who passed.`,
+Q28:`Update dictionary value if key exists, otherwise continue.`,
+Q29:`Process scores list: break if negative, continue if zero, else add.`,
+Q30:`Full program using list, dictionary grade map, default parameter function, loop, lambda, decorator, generator.`
+};
+
+// =============== PASSWORD MAP =================
+
+const PASSWORDS = {
+"PY101":"Q1","PY102":"Q2","PY103":"Q3","PY104":"Q4","PY105":"Q5",
+"PY106":"Q6","PY107":"Q7","PY108":"Q8","PY109":"Q9","PY110":"Q10",
+"PY111":"Q11","PY112":"Q12","PY113":"Q13","PY114":"Q14","PY115":"Q15",
+"PY116":"Q16","PY117":"Q17","PY118":"Q18","PY119":"Q19","PY120":"Q20",
+"PY121":"Q21","PY122":"Q22","PY123":"Q23","PY124":"Q24","PY125":"Q25",
+"PY126":"Q26","PY127":"Q27","PY128":"Q28","PY129":"Q29","PY130":"Q30"
+};
+
+// ================= EXAM LOGIC =================
+
+let violations = 0;
+let timeLeft = 30 * 60; // 60 minutes
+
+function startExam(){
+    let name = document.getElementById("studentName").value.trim();
+    let pass = document.getElementById("pass").value.trim();
+
+    if(!PASSWORDS[pass]){
+        alert("Invalid password");
+        return;
+    }
+
+    let qid = PASSWORDS[pass];
+
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("examBox").style.display="block";
+    document.getElementById("welcome").innerText =
+    "Student: "+name+" | Question: "+qid;
+
+    document.getElementById("questionArea").innerText =
+    QUESTIONS[qid];
+
+    // Restore previous answer if any
+    document.getElementById("answer").value =
+        localStorage.getItem("python_exam_answer_"+pass) || "";
+
+    enterFullscreen();
+    startTimer();
+}
+
+// ================= TIMER =================
+
+function startTimer(){
+    setInterval(()=>{
+        timeLeft--;
+        let m = Math.floor(timeLeft/60);
+        let s = timeLeft%60;
+        document.getElementById("timer").innerText =
+        "Time Left: "+m+"m "+s+"s";
+
+        if(timeLeft<=0) submitExam();
+    },1000);
+}
+
+// ================= SECURITY =================
+
+function enterFullscreen(){
+    document.documentElement.requestFullscreen();
+}
+
+document.addEventListener("fullscreenchange", ()=>{
+    if(!document.fullscreenElement){
+        violations++;
+        updateViolations();
+    }
+});
+
+document.addEventListener("keydown", e=>{
+    if(e.key==="Escape"){
+        violations++;
+        updateViolations();
+    }
+});
+
+document.addEventListener("copy", e=> e.preventDefault());
+document.addEventListener("paste", e=> e.preventDefault());
+
+// ================= STORAGE =================
+
+function saveAnswer(){
+    let pass = document.getElementById("pass").value.trim();
+    localStorage.setItem("python_exam_answer_"+pass,
+        document.getElementById("answer").value);
+    alert("Saved locally");
+}
+
+// ================= PRINT / SUBMIT =================
+
+function submitExam(){
+    saveAnswer();
+
+    // Prepare printable page: only question & answer
+    let qText = document.getElementById("questionArea").innerText;
+    let aText = document.getElementById("answer").value;
+    let student = document.getElementById("studentName").value;
+
+    let printContent = `
+    <h2>Python Practical Exam Submission</h2>
+    <p><strong>Student:</strong> ${student}</p>
+    <hr>
+    <p><strong>Question:</strong></p>
+    <pre>${qText}</pre>
+    <p><strong>Answer:</strong></p>
+    <pre>${aText}</pre>
+    `;
+
+    let printWindow = window.open('', '', 'height=800,width=1000');
+    printWindow.document.write('<html><head><title>Print Submission</title></head><body>');
+    printWindow.document.write(printContent);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+
+    document.exitFullscreen?.();
+}
+
+// ================= UI =================
+
+function updateViolations(){
+    document.getElementById("violations").innerText =
+    "Violations: "+violations;
+}
+
+</script>
+
+</body>
+</html>

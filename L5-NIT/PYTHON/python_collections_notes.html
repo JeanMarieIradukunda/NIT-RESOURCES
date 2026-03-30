@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Applying Python Collections</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+            rel="stylesheet">
+
+        <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Poppins',sans-serif;
+    }
+
+    body{
+        background:linear-gradient(135deg,#141e30,#243b55);
+        color:#fff;
+        padding:20px;
+    }
+
+    .container{
+        max-width:1200px;
+        margin:auto;
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:30px;
+        font-size:36px;
+        color:#00e6ff;
+    }
+
+    h2{
+        margin-bottom:15px;
+        color:#00ffcc;
+    }
+
+    h3{
+        margin:15px 0 10px;
+        color:#ffd369;
+    }
+
+    .card{
+        background:rgba(255,255,255,0.08);
+        padding:25px;
+        margin-bottom:25px;
+        border-radius:12px;
+        backdrop-filter:blur(8px);
+        box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    ul{
+        margin-left:20px;
+    }
+
+    pre{
+        background:#111;
+        padding:15px;
+        border-radius:8px;
+        overflow-x:auto;
+        margin-top:10px;
+        color:#00ffcc;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:15px;
+    }
+
+    th,td{
+        border:1px solid rgba(255,255,255,0.2);
+        padding:10px;
+        text-align:left;
+    }
+
+    th{
+        background:rgba(0,230,255,0.2);
+    }
+
+    .section-title{
+        margin-top:40px;
+        font-size:22px;
+        color:#00e6ff;
+    }
+
+    footer{
+        text-align:center;
+        margin-top:40px;
+        font-size:14px;
+        opacity:0.8;
+    }
+
+    @media(max-width:768px){
+        h1{font-size:24px;}
+    }
+</style>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <h1>📘 Applying Python Collections</h1>
+
+            <div class="card">
+                <h2>🔹 1. What Are Collections in Python?</h2>
+                Collections are data structures/Assemblies used to store
+                multiple values in a single variable.
+                They help organize, manage, and process data efficiently.
+                Python provides built-in collection types in two main
+                categories:
+                • Basic built-in collections
+                • Collections module specialized types
+            </div>
+
+            <div class="card">
+                <h2>📂 2. Description of Collection Types</h2>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 A. Lists in Python</h3>
+
+                <p><strong>What is a List?</strong><br>
+                    A list is a collection used to store multiple items in a
+                    single variable.
+                    Lists are ordered, changeable (mutable), and allow duplicate
+                    values.</p>
+
+                <p><strong>Creating a List</strong></p>
+                <pre>
+fruits = ["apple", "banana", "orange"]
+print(fruits)
+    </pre>
+
+                <p><strong>Accessing Elements</strong><br>
+                    Lists use indexing. Index starts at 0.</p>
+                <pre>
+print(fruits[0])   # apple
+print(fruits[1])   # banana
+print(fruits[-1])  # orange (last item)
+    </pre>
+
+                <p><strong>Changing an Item</strong></p>
+                <pre>
+fruits[1] = "grapes"
+print(fruits)
+    </pre>
+
+                <p><strong>Adding Items</strong></p>
+                <pre>
+fruits.append("mango")      # Adds to end
+fruits.insert(1, "kiwi")    # Adds at specific position
+print(fruits)
+    </pre>
+
+                <p><strong>Removing Items</strong></p>
+                <pre>
+fruits.remove("banana")   # Removes specific value
+fruits.pop()              # Removes last item
+fruits.pop(0)             # Removes item at index 0
+print(fruits)
+    </pre>
+
+                <p><strong>Useful List Methods</strong></p>
+                <pre>
+len(fruits)        # Number of items
+fruits.sort()      # Sort alphabetically
+fruits.reverse()   # Reverse order
+fruits.count("apple")  # Count occurrences
+fruits.index("apple")  # Find index position
+    </pre>
+
+                <p><strong>Looping Through a List</strong></p>
+                <pre>
+for fruit in fruits:
+    print(fruit)
+    </pre>
+
+                <p><strong>Example: Student Marks List</strong></p>
+                <pre>
+marks = [60, 75, 80, 90]
+
+total = sum(marks)
+average = total / len(marks)
+
+print("Total:", total)
+print("Average:", average)
+    </pre>
+
+                <p><strong>Key Characteristics of Lists</strong></p>
+                <ul>
+                    <li>Ordered (items have index positions)</li>
+                    <li>Mutable (can be changed after creation)</li>
+                    <li>Allow duplicate values</li>
+                    <li>Can store different data types</li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 B. Tuples in Python</h3>
+
+                <p><strong>What is a Tuple?</strong><br>
+                    A tuple is a collection used to store multiple items in a
+                    single variable.
+                    Tuples are ordered but <strong>immutable</strong> (cannot be
+                    changed after creation).</p>
+
+                <p><strong>Creating a Tuple</strong></p>
+                <pre>
+colors = ("red", "green", "blue")
+print(colors)
+    </pre>
+
+                <p><strong>Accessing Elements</strong><br>
+                    Just like lists, tuples use indexing (starting from 0).</p>
+                <pre>
+print(colors[0])   # red
+print(colors[1])   # green
+print(colors[-1])  # blue
+    </pre>
+
+                <p><strong>Important: Tuples Are Immutable</strong></p>
+                <pre>
+colors[0] = "yellow"   # ❌ This will cause an error
+    </pre>
+                <p>You cannot modify, add, or remove items once a tuple is
+                    created.</p>
+
+                <p><strong>Tuple Methods (Limited)</strong><br>
+                    Tuples only have two built-in methods:</p>
+                <pre>
+colors.count("red")   # Counts occurrences
+colors.index("green") # Finds index position
+    </pre>
+
+                <p><strong>Looping Through a Tuple</strong></p>
+                <pre>
+for color in colors:
+    print(color)
+    </pre>
+
+                <p><strong>Example: Student Information (Using
+                        Tuple)</strong></p>
+                <pre>
+student = ("Alice", 18, "IT")
+
+print("Name:", student[0])
+print("Age:", student[1])
+print("Course:", student[2])
+    </pre>
+
+                <p><strong>Why Use Tuples?</strong></p>
+                <ul>
+                    <li>Data should not change (fixed values)</li>
+                    <li>Faster than lists</li>
+                    <li>Used for constant data like coordinates, days of week,
+                        etc.</li>
+                </ul>
+
+                <p><strong>Key Characteristics of Tuples</strong></p>
+                <ul>
+                    <li>Ordered</li>
+                    <li>Immutable (cannot be changed)</li>
+                    <li>Allow duplicate values</li>
+                    <li>Can store different data types</li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 C. Dictionaries in Python</h3>
+
+                <p><strong>What is a Dictionary?</strong><br>
+                    A dictionary is a collection that stores data in
+                    <strong>key–value pairs</strong>.
+                    Each key is unique and is used to access its corresponding
+                    value.</p>
+
+                <p><strong>Creating a Dictionary</strong></p>
+                <pre>
+student = {
+    "name": "John",
+    "age": 20,
+    "course": "IT"
+}
+
+print(student)
+    </pre>
+
+                <p><strong>Accessing Values</strong></p>
+                <pre>
+print(student["name"])   # John
+print(student["age"])    # 20
+    </pre>
+
+                <p><strong>Changing Values</strong></p>
+                <pre>
+student["age"] = 21
+print(student)
+    </pre>
+
+                <p><strong>Adding New Key-Value Pairs</strong></p>
+                <pre>
+student["grade"] = "A"
+print(student)
+    </pre>
+
+                <p><strong>Removing Items</strong></p>
+                <pre>
+student.pop("course")   # Removes specific key
+del student["age"]      # Deletes key
+print(student)
+    </pre>
+
+                <p><strong>Common Dictionary Methods</strong></p>
+                <pre>
+student.keys()     # Returns all keys
+student.values()   # Returns all values
+student.items()    # Returns key-value pairs
+student.get("name") # Safe access (avoids error if key not found)
+student.update({"age": 22}) # Update dictionary
+    </pre>
+
+                <p><strong>Looping Through a Dictionary</strong></p>
+                <pre>
+for key, value in student.items():
+    print(key, ":", value)
+    </pre>
+
+                <p><strong>Example: Students Marks Dictionary</strong></p>
+                <pre>
+marks = {
+    "Alice": 85,
+    "Bob": 78,
+    "Clara": 92
+}
+
+total = sum(marks.values())
+average = total / len(marks)
+
+print("Total Marks:", total)
+print("Average Marks:", average)
+    </pre>
+
+                <p><strong>Key Characteristics of Dictionaries</strong></p>
+                <ul>
+                    <li>Store data as key–value pairs</li>
+                    <li>Keys must be unique</li>
+                    <li>Mutable (can be changed)</li>
+                    <li>Fast lookup using keys</li>
+                    <li>Ordered (Python 3.7+ maintains insertion order)</li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 D. Sets in Python</h3>
+
+                <p><strong>What is a Set?</strong><br>
+                    A set is a collection that is <strong>unordered</strong>,
+                    <strong>unindexed</strong>, and does not allow duplicate
+                    values.
+                    Sets are useful for mathematical operations like union and
+                    intersection.</p>
+
+                <p><strong>Creating a Set</strong></p>
+                <pre>
+numbers = {1, 2, 3, 4}
+print(numbers)
+    </pre>
+
+                <p><strong>Duplicate Values Are Automatically
+                        Removed</strong></p>
+                <pre>
+numbers = {1, 2, 2, 3}
+print(numbers)   # Output: {1, 2, 3}
+    </pre>
+
+                <p><strong>Adding and Removing Elements</strong></p>
+                <pre>
+numbers.add(5)        # Add one item
+numbers.remove(2)     # Remove specific item
+numbers.discard(10)   # Removes safely (no error if not found)
+print(numbers)
+    </pre>
+
+                <p><strong>Set Operations (Mathematical)</strong></p>
+                <pre>
+A = {1, 2, 3}
+B = {3, 4, 5}
+
+print(A.union(B))         # {1,2,3,4,5}
+print(A.intersection(B))  # {3}
+print(A.difference(B))    # {1,2}
+print(A.symmetric_difference(B)) # {1,2,4,5}
+    </pre>
+
+                <p><strong>Looping Through a Set</strong></p>
+                <pre>
+for num in A:
+    print(num)
+    </pre>
+
+                <p><strong>Example: Removing Duplicate Student IDs</strong></p>
+                <pre>
+student_ids = [101, 102, 103, 101, 102]
+
+unique_ids = set(student_ids)
+print(unique_ids)
+    </pre>
+
+                <p><strong>Key Characteristics of Sets</strong></p>
+                <ul>
+                    <li>Unordered (no index positions)</li>
+                    <li>No duplicate values allowed</li>
+                    <li>Mutable (can add/remove items)</li>
+                    <li>Fast membership testing</li>
+                    <li>Supports mathematical set operations</li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 E. Frozen Set in Python</h3>
+
+                <p><strong>What is a Frozen Set?</strong><br>
+                    A frozen set is an <strong>immutable version of a
+                        set</strong>.
+                    Once created, you cannot add or remove elements.
+                    It is used when you need a fixed collection of unique
+                    values.</p>
+
+                <p><strong>Creating a Frozen Set</strong></p>
+                <pre>
+fs = frozenset([1, 2, 3])
+print(fs)
+    </pre>
+
+                <p><strong>Important: Frozen Sets Cannot Be
+                        Modified</strong></p>
+                <pre>
+fs.add(4)      # ❌ Error
+fs.remove(1)   # ❌ Error
+    </pre>
+
+                <p><strong>Why Use Frozen Set?</strong></p>
+                <ul>
+                    <li>When data must not change</li>
+                    <li>Can be used as a dictionary key</li>
+                    <li>Useful in mathematical operations</li>
+                </ul>
+
+                <p><strong>Set Operations (Supported)</strong></p>
+                <pre>
+A = frozenset([1, 2, 3])
+B = frozenset([3, 4, 5])
+
+print(A.union(B))                 # {1,2,3,4,5}
+print(A.intersection(B))          # {3}
+print(A.difference(B))            # {1,2}
+print(A.symmetric_difference(B))   # {1,2,4,5}
+    </pre>
+
+                <p><strong>Example: Using Frozen Set as Dictionary
+                        Key</strong></p>
+                <pre>
+data = {}
+
+key = frozenset(["Math", "Science"])
+data[key] = "Group A"
+
+print(data)
+    </pre>
+
+                <p><strong>Key Characteristics of Frozen Sets</strong></p>
+                <ul>
+                    <li>Immutable (cannot be changed)</li>
+                    <li>Unordered</li>
+                    <li>No duplicate values</li>
+                    <li>Supports set operations</li>
+                    <li>Can be used as dictionary keys</li>
+                </ul>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 F. ChainMap in Python</h3>
+
+                <p><strong>What is ChainMap?</strong><br>
+                    <code>ChainMap</code> is a class from the
+                    <code>collections</code> module.
+                    It allows you to combine multiple dictionaries into one view
+                    without merging them.</p>
+
+                <p><strong>Importing ChainMap</strong></p>
+                <pre>
+from collections import ChainMap
+    </pre>
+
+                <p><strong>Creating a ChainMap</strong></p>
+                <pre>
+dict1 = {"a": 1}
+dict2 = {"b": 2}
+
+combined = ChainMap(dict1, dict2)
+
+print(combined)
+    </pre>
+
+                <p><strong>Accessing Values</strong></p>
+                <pre>
+print(combined["a"])  # 1
+print(combined["b"])  # 2
+    </pre>
+
+                <p><strong>How It Works</strong><br>
+                    ChainMap searches keys in the first dictionary first.
+                    If not found, it checks the next dictionary.</p>
+
+                <p><strong>Updating Values</strong></p>
+                <pre>
+dict1["a"] = 10
+print(combined["a"])  # 10
+    </pre>
+
+                <p><strong>Adding New Items</strong></p>
+                <pre>
+combined["c"] = 3
+print(dict1)  # New items are added to the first dictionary by default
+    </pre>
+
+                <p><strong>Useful Methods</strong></p>
+                <pre>
+combined.maps        # Returns list of dictionaries
+combined.new_child() # Adds a new dictionary on top
+combined.parents     # Returns all but the first dictionary
+    </pre>
+
+                <p><strong>Example: Student Configuration Settings</strong></p>
+                <pre>
+defaults = {"language": "English", "level": "Beginner"}
+user_settings = {"level": "Advanced"}
+
+settings = ChainMap(user_settings, defaults)
+
+print(settings["language"])  # English
+print(settings["level"])     # Advanced
+    </pre>
+
+                <p><strong>When to Use ChainMap?</strong></p>
+                <ul>
+                    <li>When combining multiple dictionaries</li>
+                    <li>When using default settings with overrides</li>
+                    <li>When you want a dynamic view without merging data</li>
+                </ul>
+
+                <p><strong>Key Characteristics</strong></p>
+                <ul>
+                    <li>Groups multiple dictionaries together</li>
+                    <li>Searches from left to right</li>
+                    <li>Does not create a new merged dictionary</li>
+                    <li>Part of the collections module</li>
+                </ul>
+            </div>
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 G. Deque (Double-Ended Queue) in Python</h3>
+
+                <p><strong>What is a Deque?</strong><br>
+                    A <code>deque</code> (double-ended queue) is a data
+                    structure from the <code>collections</code> module.
+                    It allows fast insertion and removal of items from both the
+                    beginning and the end.</p>
+
+                <p><strong>Importing Deque</strong></p>
+                <pre>
+from collections import deque
+    </pre>
+
+                <p><strong>Creating a Deque</strong></p>
+                <pre>
+d = deque([1, 2, 3])
+print(d)
+    </pre>
+
+                <p><strong>Adding Elements</strong></p>
+                <pre>
+d.append(4)        # Add to the right (end)
+d.appendleft(0)    # Add to the left (beginning)
+
+print(d)
+    </pre>
+
+                <p><strong>Removing Elements</strong></p>
+                <pre>
+d.pop()       # Remove from the right
+d.popleft()   # Remove from the left
+
+print(d)
+    </pre>
+
+                <p><strong>Other Useful Methods</strong></p>
+                <pre>
+d.extend([5, 6])         # Add multiple items to the right
+d.extendleft([7, 8])     # Add multiple items to the left
+d.remove(2)              # Remove specific value
+d.reverse()              # Reverse order
+    </pre>
+
+                <p><strong>Example: Queue System (Students Line)</strong></p>
+                <pre>
+queue = deque()
+
+queue.append("Alice")
+queue.append("Bob")
+queue.append("Charlie")
+
+print(queue)
+
+served = queue.popleft()
+print("Served:", served)
+print("Remaining:", queue)
+    </pre>
+
+                <p><strong>Why Use Deque?</strong></p>
+                <ul>
+                    <li>Faster than lists for inserting/removing at both
+                        ends</li>
+                    <li>Useful for queues and stacks</li>
+                    <li>Ideal for real-time data processing</li>
+                </ul>
+
+                <p><strong>Key Characteristics</strong></p>
+                <ul>
+                    <li>Supports operations at both ends</li>
+                    <li>Thread-safe for basic operations</li>
+                    <li>Part of the collections module</li>
+                    <li>More efficient than lists for front
+                        insertions/removals</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>📘 ✔ Specialized Tools from the collections Module</h2>
+                The collections module is a built-in Python library that
+                provides specialized container data types beyond lists, tuples,
+                dictionaries, and sets.
+            </div>
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 1. Counter</h3>
+
+                <p><strong>What is Counter?</strong><br>
+                    <code>Counter</code> is a class from the
+                    <code>collections</code> module used to count the frequency
+                    of items in a list, string, or other iterable.</p>
+
+                <p><strong>Importing Counter</strong></p>
+                <pre>
+from collections import Counter
+    </pre>
+
+                <p><strong>Example: Counting Items</strong></p>
+                <pre>
+data = ["a", "b", "a", "c", "b", "a"]
+count = Counter(data)
+
+print(count)
+    </pre>
+
+                <p><strong>Common Methods</strong></p>
+                <pre>
+count["a"]          # Get count of specific item
+count.most_common() # Returns items sorted by frequency
+count.elements()    # Returns iterator of elements
+    </pre>
+
+                <p><strong>Example Use Case:</strong> Counting student grades or
+                    survey responses.</p>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 2. OrderedDict</h3>
+
+                <p><strong>What is OrderedDict?</strong><br>
+                    <code>OrderedDict</code> is a dictionary that remembers the
+                    order in which keys were inserted.
+                    (In modern Python versions, regular dictionaries also
+                    maintain insertion order.)</p>
+
+                <p><strong>Importing OrderedDict</strong></p>
+                <pre>
+from collections import OrderedDict
+    </pre>
+
+                <p><strong>Creating an OrderedDict</strong></p>
+                <pre>
+od = OrderedDict()
+od["a"] = 1
+od["b"] = 2
+
+print(od)
+    </pre>
+
+                <p><strong>Useful Methods</strong></p>
+                <pre>
+od.move_to_end("a")   # Move key to end
+od.popitem()          # Remove last item
+    </pre>
+
+                <p><strong>Example Use Case:</strong> When order of data
+                    insertion is important.</p>
+            </div>
+
+            <div class="card p-4 shadow-sm">
+                <h3>🔹 3. defaultdict</h3>
+
+                <p><strong>What is defaultdict?</strong><br>
+                    <code>defaultdict</code> is a dictionary that provides a
+                    default value for missing keys automatically.</p>
+
+                <p><strong>Importing defaultdict</strong></p>
+                <pre>
+from collections import defaultdict
+    </pre>
+
+                <p><strong>Example with Default Integer</strong></p>
+                <pre>
+d = defaultdict(int)
+
+d["a"] += 1
+print(d)
+    </pre>
+
+                <p><strong>Other Common Default Types</strong></p>
+                <pre>
+defaultdict(list)
+defaultdict(set)
+    </pre>
+
+                <p><strong>Example Use Case:</strong> Grouping data without
+                    checking if key exists.</p>
+
+                <pre>
+students = [("IT", "Alice"), ("IT", "Bob"), ("HR", "John")]
+
+groups = defaultdict(list)
+
+for dept, name in students:
+    groups[dept].append(name)
+
+print(groups)
+    </pre>
+
+            </div>
+            <div class="card p-4 shadow-sm">
+                <h2>📘 ✔ Stack and Queue Operations in Python</h2>
+
+                <p>Stack and Queue are important data structures used to store
+                    and manage data in a specific order.</p>
+
+                <!-- STACK -->
+                <h3>📌 Stack (LIFO - Last In, First Out)</h3>
+
+                <p><strong>What is a Stack?</strong><br>
+                    A stack follows the LIFO principle.
+                    The last item added is the first one removed.</p>
+
+                <p><strong>Common Operations:</strong></p>
+                <ul>
+                    <li><strong>push</strong> → Add item (using append)</li>
+                    <li><strong>pop</strong> → Remove last item</li>
+                    <li><strong>peek</strong> → View top item</li>
+                    <li><strong>is_empty</strong> → Check if stack is empty</li>
+                </ul>
+
+                <p><strong>Example Using List:</strong></p>
+                <pre>
+stack = []
+
+# Push operations
+stack.append(1)
+stack.append(2)
+stack.append(3)
+
+print("Stack:", stack)
+
+# Pop operation
+stack.pop()
+
+print("After Pop:", stack)
+
+# Peek (Top Element)
+print("Top Element:", stack[-1])
+    </pre>
+
+                <p><strong>Example Use Case:</strong> Undo operations, browser
+                    history.</p>
+
+                <!-- QUEUE -->
+                <h3>📌 Queue (FIFO - First In, First Out)</h3>
+
+                <p><strong>What is a Queue?</strong><br>
+                    A queue follows the FIFO principle.
+                    The first item added is the first one removed.</p>
+
+                <p><strong>Common Operations:</strong></p>
+                <ul>
+                    <li><strong>enqueue</strong> → Add item</li>
+                    <li><strong>dequeue</strong> → Remove first item</li>
+                    <li><strong>front</strong> → View first item</li>
+                    <li><strong>is_empty</strong> → Check if queue is empty</li>
+                </ul>
+
+                <p><strong>Example Using deque (Recommended):</strong></p>
+                <pre>
+from collections import deque
+
+queue = deque()
+
+# Enqueue operations
+queue.append(1)
+queue.append(2)
+queue.append(3)
+
+print("Queue:", queue)
+
+# Dequeue operation
+queue.popleft()
+
+print("After Dequeue:", queue)
+
+# Front Element
+print("Front Element:", queue[0])
+    </pre>
+
+                <p><strong>Example Use Case:</strong> Printer queue, student
+                    waiting line.</p>
+
+                <h3>🔎 Difference Between Stack and Queue</h3>
+                <ul>
+                    <li><strong>Stack:</strong> LIFO (Last In, First Out)</li>
+                    <li><strong>Queue:</strong> FIFO (First In, First Out)</li>
+                    <li>Stack uses <code>pop()</code></li>
+                    <li>Queue uses <code>popleft()</code> with deque</li>
+                </ul>
+
+            </div>
+            <footer>
+                © 2026 | Python Collections Notes | Modern Educational Design
+            </footer>
+
+        </div>
+    </body>
+</html>

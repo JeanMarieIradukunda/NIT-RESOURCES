@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application of Conditional Statements</title>
+    <style>
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background-color: #fdf8f2;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #ffffff;
+            padding: 25px 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        section {
+            background-color: #ffffff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #e67e22;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+
+        pre {
+            background-color: #f0f3f5;
+            border: 1px solid #ccd2da;
+            padding: 12px;
+            display: inline-block;
+            text-align: left;
+            font-family: "Courier New", monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 40px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        table th {
+            background-color: #2c3e50;
+            color: #ffffff;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>APPLICATION OF CONDITIONAL STATEMENTS</h1>
+        <!-- <p><em>(Employable Skills for Sustainable Job Creation)</em></p> -->
+    </header>
+
+    <section>
+        <p>Conditional statements help a program make decisions, just like humans do in daily life.</p>
+    </section>
+
+    <section>
+        <h2>1. IF STATEMENT</h2>
+        <h3>Definition</h3>
+        <p>The if statement checks a condition and performs an action only if the condition is true.</p>
+
+        <h3>Usage</h3>
+        <p>Used when only one condition needs to be checked.</p>
+
+        <h3>When to Use</h3>
+        <ul>
+            <li>When there is one decision</li>
+            <li>When no alternative action is required</li>
+        </ul>
+
+        <h3>Syntax</h3>
+        <pre>if (condition) {
+    statement;
+}</pre>
+
+        <h3>Simple Example (C Program)</h3>
+        <pre>int money = 500;
+
+if (money >= 300) {
+    printf("You can buy food");
+}</pre>
+
+        <h3>Real-Life Example</h3>
+        <p>👉 If you have enough money, you buy food.</p>
+
+        <h3>Applications</h3>
+        <ul>
+            <li>Checking pass marks</li>
+            <li>Checking age eligibility</li>
+            <li>Verifying login access</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>2. ELSE IF STATEMENT</h2>
+        <h3>Definition</h3>
+        <p>The else if statement checks multiple conditions one after another.</p>
+
+        <h3>Usage</h3>
+        <p>Used when more than one condition needs to be tested.</p>
+
+        <h3>When to Use</h3>
+        <ul>
+            <li>When there are many choices</li>
+            <li>When decisions depend on different conditions</li>
+        </ul>
+
+        <h3>Syntax</h3>
+        <pre>if (condition1) {
+    statement;
+}
+else if (condition2) {
+    statement;
+}
+else {
+    statement;
+}</pre>
+
+        <h3>Simple Example (C Program)</h3>
+        <pre>int marks = 65;
+
+if (marks >= 80) {
+    printf("Grade A");
+}
+else if (marks >= 60) {
+    printf("Grade B");
+}
+else {
+    printf("Fail");
+}</pre>
+
+        <h3>Real-Life Example</h3>
+        <p>👉 If score is high → Grade A</p>
+        <p>👉 If score is average → Grade B</p>
+        <p>👉 Otherwise → Fail</p>
+
+        <h3>Applications</h3>
+        <ul>
+            <li>Grading systems</li>
+            <li>Salary categories</li>
+            <li>Weather decisions</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. SWITCH STATEMENT</h2>
+        <h3>Definition</h3>
+        <p>The switch statement selects one option from many choices based on a value.</p>
+
+        <h3>Usage</h3>
+        <p>Used when you compare one variable with many fixed values.</p>
+
+        <h3>When to Use</h3>
+        <ul>
+            <li>When there are menu options</li>
+            <li>When values are fixed (1, 2, 3…)</li>
+        </ul>
+
+        <h3>Syntax</h3>
+        <pre>switch (variable) {
+    case value1:
+        statement;
+        break;
+    case value2:
+        statement;
+        break;
+    default:
+        statement;
+}</pre>
+
+        <h3>Simple Example (C Program)</h3>
+        <pre>int day = 1;
+
+switch (day) {
+    case 1:
+        printf("Monday");
+        break;
+    case 2:
+        printf("Tuesday");
+        break;
+    default:
+        printf("Invalid day");
+}</pre>
+
+        <h3>Real-Life Example</h3>
+        <p>👉 Press 1 → Call</p>
+        <p>👉 Press 2 → Message</p>
+        <p>👉 Any other → Invalid option</p>
+
+        <h3>Applications</h3>
+        <ul>
+            <li>ATM menus</li>
+            <li>Phone menu systems</li>
+            <li>School timetable selection</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. NESTED CONDITIONS</h2>
+        <h3>Definition</h3>
+        <p>Nested conditions are if statements inside another if statement.</p>
+
+        <h3>Usage</h3>
+        <p>Used when a decision depends on another decision.</p>
+
+        <h3>When to Use</h3>
+        <ul>
+            <li>When conditions are dependent</li>
+            <li>When checking step by step</li>
+        </ul>
+
+        <h3>Syntax</h3>
+        <pre>if (condition1) {
+    if (condition2) {
+        statement;
+    }
+}</pre>
+
+        <h3>Simple Example (C Program)</h3>
+        <pre>int age = 20;
+int hasID = 1;
+
+if (age >= 18) {
+    if (hasID == 1) {
+        printf("You can vote");
+    }
+}</pre>
+
+        <h3>Real-Life Example</h3>
+        <p>👉 If you are 18 years</p>
+        <p>👉 AND you have an ID</p>
+        <p>👉 THEN you can vote</p>
+
+        <h3>Applications</h3>
+        <ul>
+            <li>Job eligibility checks</li>
+            <li>Security systems</li>
+            <li>Loan approval</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Importance in Employable Skills & Job Creation</h2>
+        <p>Conditional statements help programmers:</p>
+        <ul>
+            <li>Build decision-making systems</li>
+            <li>Create smart applications</li>
+            <li>Solve real-world problems</li>
+            <li>Develop software for businesses</li>
+        </ul>
+        <p>Used in:</p>
+        <ul>
+            <li>Banking systems</li>
+            <li>Mobile apps</li>
+            <li>Business software</li>
+            <li>Automation systems</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Summary Table</h2>
+        <table>
+            <tr>
+                <th>Statement</th>
+                <th>Purpose</th>
+            </tr>
+            <tr><td>if</td><td>One decision</td></tr>
+            <tr><td>else if</td><td>Multiple conditions</td></tr>
+            <tr><td>switch</td><td>Menu-based selection</td></tr>
+            <tr><td>Nested if</td><td>Step-by-step decisions</td></tr>
+        </table>
+    </section>
+
+    <footer>
+        © Conditional Statements Notes – Centered & Professional Design
+    </footer>
+</div>
+</body>
+</html>

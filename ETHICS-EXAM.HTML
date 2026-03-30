@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ETHICS EXAM - L5 NIT | PADRI VJEKO CENTRE TSS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to right, #e8ecf1, #f5f7fa);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #555;
+        }
+
+        h3 {
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+            margin-top: 30px;
+            color: #2c3e50;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+            transition: 0.2s;
+        }
+
+        .question:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .options label {
+            display: block;
+            padding: 6px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .options label:hover {
+            background: #eef6ff;
+        }
+
+        textarea {
+            width: 100%;
+            height: 110px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            padding: 8px;
+            resize: vertical;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 10px 5px;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #2c80b4;
+        }
+
+        /* Lock inputs for students but allow teacher mode to override */
+        .locked input:not(.teacher-only):not(.mark),
+        .locked textarea:not(.teacher-only):not(.mark),
+        .locked select:not(.teacher-only):not(.mark) {
+            pointer-events: none;
+            background: #f0f0f0;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        .teacher {
+            background: #eef6ff;
+            padding: 12px;
+            margin-top: 10px;
+            border-left: 5px solid #3498db;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .header-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .teacher-only {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>ETHICS EXAM</h1>
+        <h2>L5 NIT – PADRI VJEKO CENTRE TSS</h2>
+
+        <div class="question">
+            <p><b>Student Name:</b> <input type="text" id="studentName"></p>
+            <div class="header-box">
+                <div><b>Time:</b> 50 Minutes</div>
+                <div class="badge">L5 NIT EXAM</div>
+            </div>
+        </div>
+
+        <button type="button" onclick="enableTeacherMode()">Enable Teacher Mode</button>
+
+        <form id="examForm">
+
+            <!-- Section A: MCQs -->
+            <h3>Section A: Multiple Choice Questions</h3>
+
+            <div class="question">
+                <p>1. What does social diversity mean?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> Everyone
+                        in a group is the same</label>
+                    <label><input type="radio" name="q1" value="b"> People
+                        in a group are different in many ways</label>
+                    <label><input type="radio" name="q1" value="c"> Only
+                        differences in age matter</label>
+                    <label><input type="radio" name="q1" value="d"> Only
+                        differences in education matter</label>
+                </div>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>2. Which of the following is a type of workplace
+                    diversity?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> Hair
+                        color</label>
+                    <label><input type="radio" name="q2" value="b">
+                        Religion</label>
+                    <label><input type="radio" name="q2" value="c"> Favorite
+                        color</label>
+                    <label><input type="radio" name="q2" value="d">
+                        Height</label>
+                </div>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>3. What is unconscious bias?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> Choosing
+                        friends randomly</label>
+                    <label><input type="radio" name="q3" value="b"> Hidden
+                        attitudes that affect decisions without
+                        realizing</label>
+                    <label><input type="radio" name="q3" value="c">
+                        Following school rules</label>
+                    <label><input type="radio" name="q3" value="d"> Speaking
+                        loudly in class</label>
+                </div>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>4. Which factor is demographic?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a">
+                        Income</label>
+                    <label><input type="radio" name="q4" value="b">
+                        Age</label>
+                    <label><input type="radio" name="q4" value="c">
+                        Political program</label>
+                    <label><input type="radio" name="q4" value="d"> Study
+                        habits</label>
+                </div>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>5. Why should we speak slowly in multicultural
+                    settings?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> To show
+                        authority</label>
+                    <label><input type="radio" name="q5" value="b"> So
+                        everyone can follow and understand</label>
+                    <label><input type="radio" name="q5" value="c"> To
+                        finish presentations quickly</label>
+                    <label><input type="radio" name="q5" value="d"> To avoid
+                        asking questions</label>
+                </div>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <!-- Section B: True / False -->
+            <h3>Section B: True / False</h3>
+
+            <div class="question">
+                <p>6. Social differences can affect teamwork and
+                    friendships.</p>
+                <label><input type="radio" name="q6" value="true">
+                    True</label>
+                <label><input type="radio" name="q6" value="false">
+                    False</label>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>7. Diversity without inclusion means everyone is treated
+                    equally.</p>
+                <label><input type="radio" name="q7" value="true">
+                    True</label>
+                <label><input type="radio" name="q7" value="false">
+                    False</label>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>8. Respecting students’ religious practices is part of
+                    social diversity.</p>
+                <label><input type="radio" name="q8" value="true">
+                    True</label>
+                <label><input type="radio" name="q8" value="false">
+                    False</label>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>9. Active listening means interrupting when you know the
+                    answer.</p>
+                <label><input type="radio" name="q9" value="true">
+                    True</label>
+                <label><input type="radio" name="q9" value="false">
+                    False</label>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <div class="question">
+                <p>10. Urban and rural students may have different access to
+                    resources and experiences.</p>
+                <label><input type="radio" name="q10" value="true">
+                    True</label>
+                <label><input type="radio" name="q10" value="false">
+                    False</label>
+                <div class="teacher"><b>Marks:</b> <input type="number" class="mark" max="1"></div>
+            </div>
+
+            <!-- Section C: Scenario-Based -->
+            <h3>Section C: Scenario-Based Open Questions (20 Marks)</h3>
+
+            <div class="question">
+                <p><b>11. (Kigali Case)</b></p>
+                <p>In Kigali, a student leader stays calm during
+                    disagreements and helps the group find a solution.</p>
+                <p><b>Question:</b> Which leadership qualities are
+                    demonstrated?</p>
+                <textarea placeholder="Write your answer here..."></textarea>
+                <div class="teacher">
+                    <p><b>Expected Points (Guide):</b></p>
+                    <ul>
+                        <li>Empathy (understanding others)</li>
+                        <li>Decision-making</li>
+                        <li>Integrity (fairness)</li>
+                        <li>Team motivation / inspiration</li>
+                    </ul>
+                    Marks: <input type="number" class="mark" max="5">
+                </div>
+            </div>
+
+            <div class="question">
+                <p><b>12. (Gicumbi Case)</b></p>
+                <p>In Gicumbi, a leader motivates students and works with
+                    them to achieve a common goal.</p>
+                <p><b>Question:</b> Which leadership style does this
+                    represent?</p>
+                <textarea placeholder="Write your answer here..."></textarea>
+                <div class="teacher">
+                    <p><b>Expected Answer (Guide):</b></p>
+                    <ul>
+                        <li>Joining leadership style</li>
+                        <li>Leader collaborates with team</li>
+                        <li>Encourages participation</li>
+                        <li>Supports group success</li>
+                    </ul>
+                    Marks: <input type="number" class="mark" max="5">
+                </div>
+            </div>
+
+            <div class="question">
+                <p><b>13. (Nyanza Case)</b></p>
+                <p>In Nyanza, students have different beliefs that affect
+                    how they respond during discussions.</p>
+                <p><b>Question:</b> What cultural communication difference
+                    is shown?</p>
+                <textarea placeholder="Write your answer here..."></textarea>
+                <div class="teacher">
+                    <p><b>Expected Answer (Guide):</b></p>
+                    <ul>
+                        <li>Cultural communication differences</li>
+                        <li>Beliefs influence communication</li>
+                        <li>Affects interaction and responses</li>
+                    </ul>
+                    Marks: <input type="number" class="mark" max="5">
+                </div>
+            </div>
+
+            <div class="question">
+                <p><b>14. (Kirehe Case)</b></p>
+                <p>In Kirehe, a student from a minority group adjusts how
+                    they speak to fit in with others in class.</p>
+                <p><b>Question:</b> What is co-cultural communication based
+                    on this situation?</p>
+                <textarea placeholder="Write your answer here..."></textarea>
+                <div class="teacher">
+                    <p><b>Expected Answer (Guide):</b></p>
+                    <ul>
+                        <li>Co-cultural communication</li>
+                        <li>Non-dominant group adapting</li>
+                        <li>Adjusting communication style</li>
+                        <li>Fitting into dominant culture</li>
+                    </ul>
+                    Marks: <input type="number" class="mark" max="5">
+                </div>
+            </div>
+
+            <button type="button" onclick="submitExam()">Submit & Lock</button>
+            <button type="button" class="teacher-only" onclick="calculateFinal()">Calculate Final Marks</button>
+
+        </form>
+
+        <div class="result teacher-only" id="result"></div>
+
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: "b", q2: "b", q3: "b", q4: "b", q5: "b",
+            q6: "true", q7: "false", q8: "true", q9: "false", q10: "true"
+        };
+
+        // Auto-save student answers
+        document.querySelectorAll("input, textarea").forEach(el => el.addEventListener("input", saveProgress));
+
+        function saveProgress() {
+            const data = {};
+            document.querySelectorAll("input, textarea").forEach(el => {
+                const key = el.name || el.id;
+                if (!key) return; // skip if no name/id
+                if (el.type === "radio") {
+                    if (el.checked) data[key] = el.value;
+                } else {
+                    data[key] = el.value;
+                }
+            });
+            localStorage.setItem("examData", JSON.stringify(data));
+        }
+
+        // Load saved answers
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem("examData") || "{}");
+            for (let key in saved) {
+                const els = document.getElementsByName(key);
+                if (els.length) {
+                    els.forEach(el => {
+                        if (el.type === "radio") {
+                            if (el.value === saved[key]) el.checked = true;
+                        } else {
+                            el.value = saved[key];
+                        }
+                    });
+                } else {
+                    const el = document.getElementById(key);
+                    if (el) el.value = saved[key];
+                }
+            }
+        };
+
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem("examData"));
+            if (!saved) return;
+            for (let key in saved) {
+                const el = document.querySelector(`[name="${key}"], #${key}`);
+                if (el) {
+                    if (el.type === "radio") document.querySelector(`[name="${key}"][value="${saved[key]}"]`).checked = true;
+                    else el.value = saved[key];
+                }
+            }
+        };
+
+        let teacherMode = false;
+
+        function enableTeacherMode() {
+            const pass = prompt("Enter teacher password:");
+            if (pass === "PADRI2026") {
+                teacherMode = true;
+                document.querySelectorAll('.teacher').forEach(el => el.style.display = 'block');
+                document.querySelectorAll('.teacher-only').forEach(el => el.style.display = 'inline-block');
+
+                // Unlock all inputs for teacher
+                document.querySelectorAll('input, textarea, select').forEach(el => el.disabled = false);
+
+                alert("Teacher mode enabled! You can now grade and adjust marks freely.");
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+
+        function submitExam() {
+            const form = document.getElementById("examForm");
+            form.classList.add("locked");
+
+            // Lock only student fields; teachers can still edit
+            if (teacherMode) {
+                document.querySelectorAll('input, textarea, select').forEach(el => {
+                    if (!el.closest('.teacher') && !el.classList.contains('teacher-only')) {
+                        el.disabled = false; // keep teacher mode unlocked
+                    }
+                });
+            }
+
+            alert("Exam locked for students! Teacher mode allows corrections and grading.");
+        }
+
+        function calculateFinal() {
+            let auto = 0;
+            for (let key in correctAnswers) {
+                const selected = document.querySelector(`input[name=${key}]:checked`);
+                if (selected && selected.value === correctAnswers[key]) {
+                    auto++;
+                    selected.parentElement.style.background = "#d4edda";
+                } else if (selected) {
+                    selected.parentElement.style.background = "#f8d7da";
+                }
+            }
+
+            let manual = 0;
+            document.querySelectorAll(".mark").forEach(m => manual += Number(m.value) || 0);
+
+            document.getElementById("result").innerHTML =
+                `Auto Score: ${auto}/10 <br> Manual Score: ${manual} <br><br> FINAL: ${auto + manual}/30`;
+        }
+    </script>
+
+</body>
+
+</html>

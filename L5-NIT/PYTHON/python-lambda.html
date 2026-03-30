@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Lambda Functions — Study Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#0b1220;
+  --bg2:#020617;
+  --card:#0f172a;
+  --accent:#22d3ee;
+  --accent2:#a78bfa;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --good:#22c55e;
+  --warn:#f59e0b;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter, sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  line-height:1.65;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px 60px;
+}
+
+.header{
+  background:linear-gradient(135deg,#0f172a,#020617);
+  border-radius:22px;
+  padding:40px 30px;
+  box-shadow:0 15px 40px rgba(0,0,0,.45);
+  margin-bottom:30px;
+  position:relative;
+  overflow:hidden;
+}
+
+.header::after{
+  content:"λ";
+  position:absolute;
+  right:30px;
+  bottom:-10px;
+  font-size:120px;
+  opacity:.06;
+  font-weight:700;
+}
+
+.header h1{
+  margin:0;
+  font-size:34px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.header p{
+  margin-top:10px;
+  color:var(--muted);
+}
+
+.section{
+  background:var(--card);
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:22px;
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
+  border:1px solid #1f2937;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.section:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 36px rgba(0,0,0,.5);
+}
+
+.section h2{
+  margin-top:0;
+  font-size:22px;
+  color:var(--accent);
+}
+
+.section h3{
+  color:var(--accent2);
+  margin-bottom:6px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#020617;
+  color:var(--accent);
+  font-size:12px;
+  margin-bottom:10px;
+  border:1px solid #1f2937;
+}
+
+ul{ padding-left:18px; }
+li{ margin-bottom:6px; }
+
+code{
+  background:#020617;
+  color:#67e8f9;
+  padding:2px 7px;
+  border-radius:6px;
+  font-size:0.95em;
+  border:1px solid #1f2937;
+}
+
+pre{
+  background:#020617;
+  padding:16px;
+  border-radius:12px;
+  overflow:auto;
+  border:1px solid #1f2937;
+  margin-top:10px;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px;
+}
+
+.table th,.table td{
+  border:1px solid #1f2937;
+  padding:10px;
+}
+
+.table th{
+  background:#020617;
+  color:var(--accent);
+  font-weight:600;
+}
+
+.note{
+  background:#052e1f;
+  border-left:4px solid var(--good);
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.warn{
+  background:#3f2a05;
+  border-left:4px solid var(--warn);
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  margin-top:30px;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>🧠 Python Lambda Functions</h1>
+  <p>Modern, student-friendly notes with examples and real-life use cases</p>
+</div>
+
+<!-- A -->
+<div class="section">
+<h2>A. Definitions & Core Meaning</h2>
+
+<h3>✅ What is a Lambda Function?</h3>
+<ul>
+<li>A small one-line function written without <code>def</code></li>
+<li>Used for quick, short tasks</li>
+<li>Often created where it is immediately needed</li>
+</ul>
+
+<h3>✅ Why is it called Anonymous?</h3>
+<ul>
+<li>No function name</li>
+<li>Created inline</li>
+<li>Used immediately</li>
+</ul>
+
+<pre>
+lambda x: x * 2
+</pre>
+
+<h3>✅ Difference from Normal Function</h3>
+
+<pre>
+def double(x):
+    return x * 2
+</pre>
+
+<pre>
+lambda x: x * 2
+</pre>
+
+<h3>✅ General Syntax</h3>
+<pre>
+lambda arguments : expression
+</pre>
+
+<pre>
+lambda a, b: a + b
+</pre>
+</div>
+
+<!-- B -->
+<div class="section">
+<h2>B. Basic Concepts of Lambda Functions</h2>
+
+<h3>✅ Structure</h3>
+<pre>
+lambda parameters : single_expression
+</pre>
+
+<ul>
+<li>Parameters → inputs</li>
+<li>Expression → calculated & returned</li>
+</ul>
+
+<h3>✅ Rules & Limitations</h3>
+<ul>
+<li>✅ Only one expression</li>
+<li>❌ No multiple statements</li>
+<li>❌ No assignments</li>
+<li>❌ No multi-line logic</li>
+<li>✅ Auto-return (no <code>return</code> keyword)</li>
+</ul>
+
+<h3>✅ Example</h3>
+<pre>
+square = lambda x: x * x
+print(square(5))
+</pre>
+
+<div class="note">Output: 25</div>
+
+<h3>✅ Lambda vs Multi-Line Function</h3>
+<pre>
+lambda x: x + 1
+</pre>
+
+<pre>
+def add_one(x):
+    y = x + 1
+    return y
+</pre>
+
+<div class="warn">Use regular functions when logic becomes longer.</div>
+
+<h3>✅ Simple Examples</h3>
+<pre>
+add = lambda a, b: a + b
+is_even = lambda x: x % 2 == 0
+</pre>
+</div>
+
+<!-- C -->
+<div class="section">
+<h2>C. Comparison with Regular Functions</h2>
+
+<table class="table">
+<tr><th>Feature</th><th>Lambda</th><th>Regular Function</th></tr>
+<tr><td>Syntax</td><td>Short</td><td>Longer</td></tr>
+<tr><td>Name</td><td>Usually none</td><td>Named</td></tr>
+<tr><td>Expressions</td><td>One</td><td>Many</td></tr>
+<tr><td>Readability</td><td>Lower if complex</td><td>Better</td></tr>
+<tr><td>Reusability</td><td>Limited</td><td>High</td></tr>
+<tr><td>Best for</td><td>Quick tasks</td><td>Full logic</td></tr>
+</table>
+
+<h3>Example — Conditional Logic</h3>
+
+<pre>
+max_val = lambda a, b: a if a > b else b
+</pre>
+
+<pre>
+def max_val(a, b):
+    if a > b:
+        return a
+    else:
+        return b
+</pre>
+
+<div class="note">Performance difference is very small — choose readability first.</div>
+</div>
+
+<!-- D -->
+<div class="section">
+<h2>D. Most Common Use Cases</h2>
+
+<h3>✅ Sorting</h3>
+<pre>
+students = [("Ana",80), ("Bob",65)]
+students.sort(key=lambda s: s[1])
+</pre>
+
+<h3>✅ Filtering</h3>
+<pre>
+evens = list(filter(lambda x: x % 2 == 0, nums))
+</pre>
+
+<h3>✅ Mapping</h3>
+<pre>
+squares = list(map(lambda x: x*x, nums))
+</pre>
+
+<h3>✅ Quick Calculations</h3>
+<pre>
+tax = lambda price: price * 0.18
+</pre>
+
+<h3>✅ Callbacks</h3>
+<pre>
+button_click_handler = lambda: print("Clicked")
+</pre>
+</div>
+
+<!-- E -->
+<div class="section">
+<h2>E. Functions Commonly Used with Lambda</h2>
+
+<h3>map()</h3>
+<pre>
+result = list(map(lambda x: x+10, nums))
+</pre>
+
+<h3>filter()</h3>
+<pre>
+result = list(filter(lambda x: x > 10, nums))
+</pre>
+
+<h3>reduce()</h3>
+<pre>
+from functools import reduce
+total = reduce(lambda a,b: a+b, [1,2,3,4])
+</pre>
+
+<h3>sorted(), max(), min()</h3>
+<pre>
+top = max(students, key=lambda s: s[1])
+</pre>
+
+<h3>Lambda vs List Comprehension</h3>
+<pre>
+list(map(lambda x: x*x, nums))
+[x*x for x in nums]
+</pre>
+</div>
+
+<!-- F -->
+<div class="section">
+<h2>F. Student Real-Life Examples</h2>
+
+<pre>
+sorted_marks = sorted(marks, key=lambda m: m[1], reverse=True)
+passing = list(filter(lambda s: s >= 50, scores))
+weighted = lambda test, exam: test*0.4 + exam*0.6
+top = max(students, key=lambda s: s["avg"])
+present_days = sum(map(lambda d: d, attendance))
+</pre>
+</div>
+
+<!-- G -->
+<div class="section">
+<h2>G. Advantages & Disadvantages</h2>
+
+<ul>
+<li>✅ Short & quick</li>
+<li>✅ Good for temporary logic</li>
+<li>✅ Useful with map/filter/sorted</li>
+<li>⚠️ Hard to read when complex</li>
+<li>⚠️ Only one expression</li>
+<li>⚠️ Not for big logic</li>
+</ul>
+
+<div class="warn">
+❌ Avoid lambda for multi-step logic, complex conditions, or highly reused code.
+</div>
+</div>
+
+<!-- H -->
+<div class="section">
+<h2>H. Summary</h2>
+
+<ul>
+<li>Lambda = small one-line anonymous function</li>
+<li>Uses <code>lambda</code> keyword</li>
+<li>Returns automatically</li>
+<li>Best for short functional-style operations</li>
+</ul>
+
+<div class="note">
+Rule: Use lambda for small tasks — use <code>def</code> for larger logic.
+</div>
+</div>
+
+<div class="footer">
+PVC-PYTHON-PROGRAMMING
+</div>
+
+</div>
+</body>
+</html>

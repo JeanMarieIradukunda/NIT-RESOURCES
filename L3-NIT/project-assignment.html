@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Project Assignment</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #38bdf8;
+        margin-bottom: 20px;
+    }
+
+    .form-box {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 400px;
+        margin: auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    input, button {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+    }
+
+    input {
+        background: #0f172a;
+        color: white;
+    }
+
+    button {
+        background: #38bdf8;
+        color: #0f172a;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #0ea5e9;
+    }
+
+    .result {
+        margin-top: 15px;
+        font-size: 1.1rem;
+        color: #facc15;
+    }
+
+    .list {
+        margin-top: 30px;
+        text-align: left;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .list li {
+        background: #1e293b;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .delete-btn {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+
+    .delete-btn:hover {
+        background: #f87171;
+    }
+
+    .export-btn {
+        margin-top: 10px;
+        background: #facc15;
+        color: #0f172a;
+    }
+
+    .teacher-btn {
+        background: #10b981;
+        color: #0f172a;
+        margin-top: 10px;
+    }
+
+</style>
+</head>
+<body>
+
+<h1>🎓 Project Assignment System</h1>
+
+<div class="form-box">
+    <input type="text" id="studentName" placeholder="Enter Student Name">
+    <input type="number" id="projectNumber" placeholder="Enter Project Number (1-35)">
+    <button onclick="assignProject()">Assign Project</button>
+    <div class="result" id="result"></div>
+
+    <button class="teacher-btn" onclick="viewAllAssignments()">View All Assignments (Teacher Only)</button>
+    <button class="export-btn" onclick="exportData()">Export Assignments (Teacher Only)</button>
+</div>
+
+<ul class="list" id="assignmentList"></ul>
+
+<script>
+const projects = [
+"Student Record Management System","Grade Calculator","Attendance Tracking System","Exam Result Processing System","Simple Quiz Application",
+"Basic Banking System","Expense Tracker","Loan Calculator","Invoice Generator","Payroll System",
+"BMI Calculator","Simple Patient Record System","Medicine Reminder","Calorie Intake Tracker","Blood Donation Management System",
+"Inventory Management System","Supermarket Billing System","Product Catalog Manager","Order Management System","Warehouse Stock Alert System",
+"Bus Reservation System","Fuel Consumption Calculator","Vehicle Service Reminder","Parking Management System","Route Distance Calculator",
+"File Organizer","Simple Text Editor","Password Generator","File Backup Utility","Command-Line Calculator",
+"Library Management System","Voting System","Contact Management System","Event Scheduling System","Job Applicant Tracking System"
+];
+
+// Load saved assignments from LocalStorage
+let assignments = JSON.parse(localStorage.getItem('assignments')) || [];
+
+// ------------------- ASSIGN PROJECT -------------------
+function assignProject() {
+    const name = document.getElementById("studentName").value.trim();
+    const number = parseInt(document.getElementById("projectNumber").value);
+
+    if (!name || !number) {
+        alert("Please enter both name and project number.");
+        return;
+    }
+
+    if (number < 1 || number > projects.length) {
+        alert("Project number must be between 1 and 35.");
+        return;
+    }
+
+    const projectName = projects[number - 1];
+    const assignment = { name, projectNumber: number, projectName };
+    assignments.push(assignment);
+
+    localStorage.setItem('assignments', JSON.stringify(assignments));
+
+    document.getElementById("result").innerText = `${name} — ${projectName}`;
+    document.getElementById("studentName").value = "";
+    document.getElementById("projectNumber").value = "";
+
+    renderAssignments(true); // Show only this student's assignment
+}
+
+// ------------------- RENDER ASSIGNMENTS -------------------
+function renderAssignments(studentOnly = false) {
+    const list = document.getElementById("assignmentList");
+    list.innerHTML = "";
+
+    let filteredAssignments = assignments;
+
+    if (studentOnly) {
+        const studentName = document.getElementById("studentName").value.trim().toLowerCase();
+        filteredAssignments = assignments.filter(a => a.name.toLowerCase() === studentName);
+    }
+
+    filteredAssignments.forEach((a, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `${index + 1}. ${a.name} — ${a.projectName}`;
+
+        // Only show delete button to teacher (studentOnly = false)
+        if (!studentOnly) {
+            const delBtn = document.createElement("button");
+            delBtn.className = "delete-btn";
+            delBtn.innerText = "Delete";
+            delBtn.onclick = () => deleteAssignment(index);
+            li.appendChild(delBtn);
+        }
+
+        list.appendChild(li);
+    });
+}
+
+// ------------------- DELETE ASSIGNMENT -------------------
+function deleteAssignment(index) {
+    if (confirm("Are you sure you want to delete this assignment?")) {
+        assignments.splice(index, 1);
+        localStorage.setItem('assignments', JSON.stringify(assignments));
+        renderAssignments(false);
+    }
+}
+
+// ------------------- VIEW ALL ASSIGNMENTS (Teacher Only) -------------------
+function viewAllAssignments() {
+    const password = prompt("Enter teacher password:");
+    if(password === "Teacher123"){ // Change to your secure password
+        renderAssignments(false);
+    } else {
+        alert("Incorrect password!");
+    }
+}
+
+// ------------------- EXPORT TO CSV (Teacher Only) -------------------
+function exportData() {
+    const password = prompt("Enter teacher password to export:");
+    if(password !== "Teacher123") { 
+        alert("Incorrect password!");
+        return;
+    }
+
+    if (assignments.length === 0) {
+        alert("No assignments to export!");
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "No,Student Name,Project Number,Project Name\n";
+    assignments.forEach((a, index) => {
+        csvContent += `${index + 1},${a.name},${a.projectNumber},${a.projectName}\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "project_assignments.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Initial render: no name entered, so show empty list
+renderAssignments(true);
+</script>
+
+</body>
+</html>

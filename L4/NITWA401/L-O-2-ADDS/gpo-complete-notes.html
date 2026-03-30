@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Windows Server GPO – Complete Notes</title>
+        <style>
+        body {
+            font-family: 'Cambria', Tahoma, Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+        section {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        section h2 {
+            color: #1e3c72;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        section h3 {
+            color: #2a5298;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        .note {
+            background: #e8f0ff;
+            padding: 10px;
+            border-left: 5px solid #2a5298;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background: #2a5298;
+            color: white;
+        }
+        .steps ol {
+            margin-left: 20px;
+        }
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+    </style>
+    </head>
+    <body>
+
+        <header>
+            <h1>Windows Server – Group Policy Object (GPO)</h1>
+            <p>Complete Structured Notes (Student Friendly)</p>
+        </header>
+
+        <div class="container">
+
+            <section>
+                <h2>1. What is GPO in Windows Server?</h2>
+                <p><strong>GPO (Group Policy Object)</strong> is a set of rules
+                    and settings used by administrators to control how users and
+                    computers behave in an Active Directory environment.</p>
+                <ul>
+                    <li>Enforce password policies</li>
+                    <li>Restrict access to Control Panel</li>
+                    <li>Install software automatically</li>
+                    <li>Set desktop wallpapers</li>
+                    <li>Control Windows Updates</li>
+                    <li>Configure security settings</li>
+                </ul>
+                <div class="note"><strong>In short:</strong> GPO = Centralized
+                    management of users and computers.</div>
+            </section>
+
+            <section>
+                <h2>2. User, Domain, and OU in GPO</h2>
+
+                <h3>a) User (GPO Context)</h3>
+                <p>A <strong>User</strong> is an Active Directory account used
+                    to log in.</p>
+                <ul>
+                    <li>User Configuration applies when the user logs in</li>
+                    <li>Desktop settings</li>
+                    <li>Start Menu</li>
+                    <li>Folder Redirection</li>
+                    <li>Logon Scripts</li>
+                </ul>
+                <div class="note">Example: Disable Control Panel for students
+                    only</div>
+
+                <h3>b) Domain</h3>
+                <p>The <strong>Domain</strong> is the main Active Directory
+                    structure (e.g. <code>school.local</code>).</p>
+                <ul>
+                    <li>Applies to all users</li>
+                    <li>Applies to all computers</li>
+                </ul>
+                <div class="note">Example: Enforce password policy for
+                    everyone</div>
+
+                <h3>c) Organizational Unit (OU)</h3>
+                <p>An <strong>OU</strong> is a container used to organize users
+                    and computers.</p>
+                <ul>
+                    <li>Students</li>
+                    <li>Teachers</li>
+                    <li>IT</li>
+                    <li>Servers</li>
+                </ul>
+                <div class="note">GPOs linked to an OU apply only to objects
+                    inside that OU.</div>
+            </section>
+
+            <section>
+                <h2>3. Default Policies</h2>
+
+                <h3>a) Default Domain Policy</h3>
+                <ul>
+                    <li>Created automatically</li>
+                    <li>Linked at Domain level</li>
+                    <li>Password policy</li>
+                    <li>Account lockout</li>
+                    <li>Kerberos settings</li>
+                </ul>
+                <div class="note">Best Practice: Do NOT add many custom settings
+                    here.</div>
+
+                <h3>b) Default Domain Controllers Policy</h3>
+                <ul>
+                    <li>Linked to Domain Controllers OU</li>
+                    <li>Applies only to DCs</li>
+                    <li>Audit and security settings</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>4. User Configuration vs Computer Configuration</h2>
+
+                <h3>User Configuration</h3>
+                <p>
+                    User Configuration in Group Policy defines settings that
+                    apply to a user account,
+                    regardless of which computer the user logs into.
+                </p>
+                <ul>
+                    <li>Applies to users (user accounts)</li>
+                    <li>Triggered when the user logs in</li>
+                    <li>Controls the user environment and experience</li>
+                    <li>Examples: Desktop settings, Start Menu, Control Panel
+                        restrictions</li>
+                </ul>
+
+                <h3>Computer Configuration</h3>
+                <p>
+                    Computer Configuration in Group Policy defines settings that
+                    apply to a computer,
+                    regardless of which user logs into the machine.
+                </p>
+                <ul>
+                    <li>Applies to computers (computer accounts)</li>
+                    <li>Triggered when the computer starts or refreshes
+                        policy</li>
+                    <li>Controls system-wide behavior and security</li>
+                    <li>Examples: Security settings, Windows Updates, Firewall
+                        rules</li>
+                </ul>
+
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>User Configuration</th>
+                        <th>Computer Configuration</th>
+                    </tr>
+                    <tr>
+                        <td>Applies to</td>
+                        <td>Users</td>
+                        <td>Computers</td>
+                    </tr>
+                    <tr>
+                        <td>Triggered when</td>
+                        <td>User logs in</td>
+                        <td>Computer boots</td>
+                    </tr>
+                    <tr>
+                        <td>Example</td>
+                        <td>Disable Control Panel</td>
+                        <td>Force Windows Updates</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2>5. Linked GPO & Processing Order</h2>
+                <p>A <strong>Linked GPO</strong> is attached to a Domain, OU, or
+                    Site.</p>
+                <div class="note">A GPO does nothing until it is linked.</div>
+
+                <h3>GPO Processing Order (LSDOU)</h3>
+                <ul>
+                    <li>Local</li>
+                    <li>Site</li>
+                    <li>Domain</li>
+                    <li>OU (highest priority)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>6. Real-Life Example</h2>
+                <p><strong>School Network</strong></p>
+                <ul>
+                    <li>Domain: school.local</li>
+                    <li>OUs: Students, Teachers</li>
+                    <li>Password policy at Domain</li>
+                    <li>Block games for Students</li>
+                    <li>Allow USB for Teachers</li>
+                </ul>
+            </section>
+
+            <section class="steps">
+                <h2>7. Administrative Tasks (GUI)</h2>
+
+                <h3>A. Create an OU</h3>
+                <ol>
+                    <li>Open Active Directory Users and Computers</li>
+                    <li>Right-click Domain → New → Organizational Unit</li>
+                    <li>Enter name → OK</li>
+                </ol>
+
+                <h3>B. Create a User</h3>
+                <ol>
+                    <li>Right-click OU → New → User</li>
+                    <li>Enter user details</li>
+                    <li>Set password → Finish</li>
+                </ol>
+
+                <h3>C. Create a Group</h3>
+                <ol>
+                    <li>Right-click OU → New → Group</li>
+                    <li>Select Global & Security</li>
+                    <li>Click OK</li>
+                </ol>
+
+                <h3>D. Add User to Group</h3>
+                <ol>
+                    <li>Open Group → Members → Add</li>
+                    <li>Select user → OK</li>
+                </ol>
+
+                <h3>E. Create a GPO</h3>
+                <ol>
+                    <li>Open Group Policy Management</li>
+                    <li>Right-click Group Policy Objects → New</li>
+                    <li>Name GPO → OK</li>
+                </ol>
+
+                <h3>F. Link a GPO</h3>
+                <ol>
+                    <li>Right-click Domain or OU</li>
+                    <li>Link an Existing GPO</li>
+                    <li>Select GPO → OK</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>8. Verification Command</h2>
+                <p>Force Group Policy update:</p>
+                <code>gpupdate /force</code>
+            </section>
+
+            <section>
+                <h2>9. Summary Table</h2>
+                <table>
+                    <tr>
+                        <th>Object</th>
+                        <th>Tool Used</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>OU</td>
+                        <td>AD Users & Computers</td>
+                        <td>Organize objects</td>
+                    </tr>
+                    <tr>
+                        <td>User</td>
+                        <td>AD Users & Computers</td>
+                        <td>Login account</td>
+                    </tr>
+                    <tr>
+                        <td>Group</td>
+                        <td>AD Users & Computers</td>
+                        <td>Manage permissions</td>
+                    </tr>
+                    <tr>
+                        <td>GPO</td>
+                        <td>Group Policy Management</td>
+                        <td>Control settings</td>
+                    </tr>
+                </table>
+            </section>
+
+        </div>
+
+        <footer>
+            <p>© Windows Server GPO Notes – Designed for Learning & Exams</p>
+        </footer>
+
+    </body>
+</html>

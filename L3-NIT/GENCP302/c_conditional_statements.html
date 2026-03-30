@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming – Conditional Statements</title>
+<style>
+    /* General Styles */
+    body {
+        font-family: Cambria, Cochin, Georgia, Times, 'Calisto MT', serif;
+        background-color: #f0f4f8;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+    header {
+        background-color: #00796B;
+        color: #fff;
+        text-align: center;
+        padding: 25px 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    main {
+        max-width: 900px;
+        margin: 25px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+    h2 {
+        color: #00796B;
+        border-left: 5px solid #00796B;
+        padding-left: 10px;
+        cursor: pointer;
+        position: relative;
+    }
+    h2::after {
+        content: "▼";
+        position: absolute;
+        right: 0;
+        font-size: 0.8em;
+        transition: transform 0.3s;
+    }
+    h2.collapsed::after {
+        transform: rotate(-90deg);
+    }
+    h3 {
+        color: #0288D1;
+        margin-top: 15px;
+    }
+    h4 {
+        color: #F57C00;
+        margin-top: 10px;
+    }
+    .section {
+        margin-bottom: 25px;
+    }
+    .code-container {
+        background-color: #f4f6f8;
+        border-left: 5px solid #00796B;
+        padding: 12px;
+        margin: 10px 0;
+        font-family: "Courier New", Courier, monospace;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .code-container:hover {
+        background-color: #e0f2f1;
+    }
+    .code-content {
+        display: none;
+        white-space: pre-wrap;
+        padding-top: 8px;
+    }
+    ul {
+        list-style-type: square;
+        margin-left: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #00796B;
+        color: white;
+    }
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ccc;
+        margin: 25px 0;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>✅ C Programming – Conditional Statements</h1>
+</header>
+
+<main>
+
+<!-- Section 1 -->
+<div class="section">
+    <h2 class="collapsible">🧠 1. What is a Condition?</h2>
+    <div class="content">
+        <p>A condition is something that evaluates to either:</p>
+        <ul>
+            <li><strong>TRUE (1)</strong></li>
+            <li><strong>FALSE (0)</strong></li>
+        </ul>
+        <p>Example:</p>
+        <div class="code-container">
+            <strong>Click to view code</strong>
+            <div class="code-content">
+age >= 18   // TRUE if age is 18 or more, otherwise FALSE
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section 2 -->
+<div class="section">
+    <h2 class="collapsible">🟢 2. Why use Conditional Statements?</h2>
+    <div class="content">
+        <p>To let the computer do different things depending on the situation.</p>
+        <p>✔️ Real-life examples:</p>
+        <ul>
+            <li>If it’s raining → take an umbrella</li>
+            <li>If you are hungry → eat</li>
+            <li>If your phone battery is low → charge it</li>
+            <li>If traffic light is red → stop, else → go</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Section 3 -->
+<div class="section">
+    <h2 class="collapsible">🟦 3. Types of Conditional Statements in C</h2>
+    <div class="content">
+        <p>There are 5 main types:</p>
+        <ul>
+            <li>if</li>
+            <li>if...else</li>
+            <li>else if</li>
+            <li>nested if</li>
+            <li>switch</li>
+        </ul>
+        <p>Let’s explain each with definitions + real-life examples + C code.</p>
+    </div>
+</div>
+
+<hr>
+
+<!-- A. if -->
+<div class="section">
+    <h3>🟢 A. if Statement</h3>
+    <p><strong>Definition:</strong> Runs a block of code only if a condition is true.</p>
+    <p><strong>Real-life example:</strong> “If the door is open, enter the room.”</p>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int age = 20;
+
+if (age >= 18) {
+    printf("You are an adult.");
+}
+        </div>
+    </div>
+</div>
+
+<!-- B. if...else -->
+<div class="section">
+    <h3>🔵 B. if...else Statement</h3>
+    <p><strong>Definition:</strong> If TRUE → do something, else → do something different.</p>
+    <p><strong>Real-life example:</strong> “If it rains, take an umbrella; else wear sunglasses.”</p>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int marks = 45;
+
+if (marks >= 50) {
+    printf("You passed!");
+} else {
+    printf("You failed.");
+}
+        </div>
+    </div>
+</div>
+
+<!-- C. else if -->
+<div class="section">
+    <h3>🟣 C. else if Ladder</h3>
+    <p><strong>Definition:</strong> Used when you have multiple conditions.</p>
+    <p><strong>Real-life example:</strong> “If time is morning → Good morning, Else if afternoon → Good afternoon, Else → Good evening.”</p>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int temperature = 30;
+
+if (temperature > 35) {
+    printf("It's very hot.");
+} else if (temperature > 20) {
+    printf("It's warm.");
+} else {
+    printf("It's cold.");
+}
+        </div>
+    </div>
+</div>
+
+<!-- D. Nested if -->
+<div class="section">
+    <h3>🟠 D. Nested if</h3>
+    <p><strong>Definition:</strong> One decision depends on another.</p>
+    <p><strong>Real-life example:</strong> “If you have money, then check if you have time to go shopping.”</p>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int hasMoney = 1;
+int hasTime = 0;
+
+if (hasMoney) {
+    if (hasTime) {
+        printf("You can go shopping.");
+    } else {
+        printf("You have money but no time.");
+    }
+}
+        </div>
+    </div>
+</div>
+
+<!-- E. Switch -->
+<div class="section">
+    <h3>🟡 E. switch Statement</h3>
+    <p><strong>Definition:</strong> Check one value against many possible cases.</p>
+    <p><strong>Real-life example:</strong> Phone menu: Press 1 for English, 2 for French, 3 for Swahili</p>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int choice = 2;
+
+switch (choice) {
+    case 1:
+        printf("English");
+        break;
+    case 2:
+        printf("French");
+        break;
+    case 3:
+        printf("Swahili");
+        break;
+    default:
+        printf("Invalid choice");
+}
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Summary Table -->
+<div class="section">
+    <h2>🎯 SUMMARY TABLE</h2>
+    <table>
+        <tr>
+            <th>Statement</th>
+            <th>Meaning</th>
+            <th>Best Use</th>
+        </tr>
+        <tr>
+            <td>if</td>
+            <td>Run code only if condition is TRUE</td>
+            <td>One condition</td>
+        </tr>
+        <tr>
+            <td>if...else</td>
+            <td>True → do this, False → do something else</td>
+            <td>Two possibilities</td>
+        </tr>
+        <tr>
+            <td>else if</td>
+            <td>Many different conditions</td>
+            <td>Multiple choices</td>
+        </tr>
+        <tr>
+            <td>nested if</td>
+            <td>One decision inside another</td>
+            <td>Dependent decisions</td>
+        </tr>
+        <tr>
+            <td>switch</td>
+            <td>Check one value with multiple cases</td>
+            <td>Menus, modes, options</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Mini Problem -->
+<div class="section">
+    <h2>🧩 Mini Real Life Problem</h2>
+    <p><strong>Problem:</strong> A student scores 78 marks. Show grade:</p>
+    <ul>
+        <li>80–100 → A</li>
+        <li>70–79 → B</li>
+        <li>60–69 → C</li>
+        <li>else → Fail</li>
+    </ul>
+    <div class="code-container">
+        <strong>Click to view code</strong>
+        <div class="code-content">
+int marks = 78;
+
+if (marks >= 80) {
+    printf("Grade A");
+} else if (marks >= 70) {
+    printf("Grade B");
+} else if (marks >= 60) {
+    printf("Grade C");
+} else {
+    printf("Fail");
+}
+        </div>
+    </div>
+</div>
+
+</main>
+
+<script>
+    // Collapsible code sections
+    const codeContainers = document.querySelectorAll('.code-container');
+    codeContainers.forEach(container => {
+        container.addEventListener('click', () => {
+            const code = container.querySelector('.code-content');
+            code.style.display = code.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+    // Collapsible sections (h2)
+    const collapsibleSections = document.querySelectorAll('h2.collapsible');
+    collapsibleSections.forEach(section => {
+        section.addEventListener('click', () => {
+            section.classList.toggle('collapsed');
+            const content = section.nextElementSibling;
+            if(content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        });
+    });
+
+    // Initially collapse sections
+    collapsibleSections.forEach(section => {
+        const content = section.nextElementSibling;
+        content.style.display = 'none';
+    });
+</script>
+
+</body>
+</html>

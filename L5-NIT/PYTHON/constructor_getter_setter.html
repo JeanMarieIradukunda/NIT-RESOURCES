@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP Modules System - Python Code</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Python OOP Modules System</h1>
+
+    <div class="card">
+        <pre><code>
+class Modules:
+    # Constructor
+    def __init__(self, mod_code, mod_name):
+        # Private attributes (Encapsulation)
+        self.__modCode = mod_code
+        self.__modName = mod_name
+
+    # Getter
+    def get_modData(self):
+        return self.__modCode, self.__modName
+
+    # Setter
+    def set_modData(self, mod_code, mod_name):
+        self.__modCode = mod_code
+        self.__modName = mod_name
+
+    # Add module
+    def addModule(self):
+        modCode = input("Enter module code: ")
+        modName = input("Enter module name: ")
+
+        module = {
+            'modCode': modCode,
+            'modName': modName
+        }
+
+        return module
+
+    # Display module
+    def displayModule(self, module):
+        print(f"| {module['modCode']:<15} | {module['modName']:<25} |")
+
+
+# List to store modules
+modules_list = []
+
+# Menu system
+while True:
+    print("\n================ MENU ================")
+    print("1. Add Module")
+    print("2. Display Modules")
+    print("3. Exit")
+    print("======================================")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        module = Modules("", "")
+        mod_data = module.addModule()
+        modules_list.append(mod_data)
+        print("Module added successfully!")
+
+    elif choice == '2':
+        if len(modules_list) == 0:
+            print("No modules available.")
+        else:
+            # Table Header
+            print("\n+-----------------+---------------------------+")
+            print(f"| {'Module Code':<15} | {'Module Name':<25} |")
+            print("+-----------------+---------------------------+")
+
+            # Table Data
+            for mod in modules_list:
+                module = Modules("", "")
+                module.displayModule(mod)
+
+            print("+-----------------+---------------------------+")
+
+    elif choice == '3':
+        print("Exiting the program.")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
+        </code></pre>
+    </div>
+
+    <footer>
+        © Python OOP Project | Modules Management System
+    </footer>
+
+</div>
+
+</body>
+</html>

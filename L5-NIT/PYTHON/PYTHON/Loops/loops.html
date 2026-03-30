@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Loops Explained</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Calisto MT font -->
+  <style>
+    body {
+      font-family: "Calisto MT", serif;
+      background-color: #f8f9fa;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    pre {
+      background: #212529;
+      color: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+    .section-title {
+      color: #007bff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .emoji {
+      font-size: 1.3rem;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container py-5">
+    <h1 class="text-center mb-5 fw-bold text-primary">🐍 Python Loops Explained</h1>
+
+    <!-- Introduction -->
+    <div class="card p-4">
+      <h4 class="section-title">🔁 What is a Loop?</h4>
+      <p>In <strong>Python programming</strong>, a <b>loop</b> is a control structure used to repeat a block of code multiple times — either a fixed number of times or until a certain condition is met.</p>
+      <p>Python mainly provides two types of loops:</p>
+      <ul>
+        <li><b>for Loop</b></li>
+        <li><b>while Loop</b></li>
+      </ul>
+    </div>
+
+    <!-- For Loop -->
+    <div class="card p-4">
+      <h4 class="section-title">🔁 1. for Loop</h4>
+      <p>Used when you know how many times you want to repeat a block of code.</p>
+
+      <h6 class="text-muted">Syntax:</h6>
+      <pre>for variable in sequence:
+    # code to execute</pre>
+
+      <h6 class="text-muted mt-3">Example:</h6>
+      <pre>for i in range(5):
+    print("Hello", i)</pre>
+
+      <h6 class="text-success mt-3">👉 Output:</h6>
+      <pre>Hello 0
+Hello 1
+Hello 2
+Hello 3
+Hello 4</pre>
+
+      <p>Here, the loop runs <strong>5 times</strong>, because <code>range(5)</code> gives numbers from 0 to 4.</p>
+    </div>
+
+    <!-- While Loop -->
+    <div class="card p-4">
+      <h4 class="section-title">🔁 2. while Loop</h4>
+      <p>Used when you don’t know in advance how many times to repeat — it keeps running as long as a condition is <code>True</code>.</p>
+
+      <h6 class="text-muted">Syntax:</h6>
+      <pre>while condition:
+    # code to execute</pre>
+
+      <h6 class="text-muted mt-3">Example:</h6>
+      <pre>count = 1
+while count <= 5:
+    print("Count:", count)
+    count += 1</pre>
+
+      <h6 class="text-success mt-3">👉 Output:</h6>
+      <pre>Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5</pre>
+    </div>
+
+    <!-- Control Statements -->
+    <div class="card p-4">
+      <h4 class="section-title">⚙️ Loop Control Statements</h4>
+      <p>Python provides special keywords to control the flow of loops:</p>
+
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>break</code></td><td>Stops the loop completely</td></tr>
+          <tr><td><code>continue</code></td><td>Skips the current iteration and goes to the next one</td></tr>
+          <tr><td><code>pass</code></td><td>Does nothing — acts as a placeholder</td></tr>
+        </tbody>
+      </table>
+
+      <h6 class="text-muted">Example with <code>break</code> and <code>continue</code>:</h6>
+      <pre>for i in range(10):
+    if i == 5:
+        break   # Stop the loop when i is 5
+    if i == 2:
+        continue  # Skip printing 2
+    print(i)</pre>
+
+      <h6 class="text-success mt-3">👉 Output:</h6>
+      <pre>0
+1
+3
+4</pre>
+    </div>
+
+    <!-- Summary Table -->
+    <div class="card p-4">
+      <h4 class="section-title">✅ Summary</h4>
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th>Loop Type</th>
+            <th>When to Use</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>for</code> loop</td>
+            <td>You know how many times to repeat</td>
+            <td>Iterating over a list or range</td>
+          </tr>
+          <tr>
+            <td><code>while</code> loop</td>
+            <td>You want to repeat until a condition changes</td>
+            <td>Waiting for user input</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Example 1 -->
+    <div class="card p-4">
+      <h4 class="section-title">🎓 Example 1: Looping through a List of Students</h4>
+      <p>Suppose you have a list of students’ names:</p>
+      <pre>students = ["Alice", "Brian", "Clara", "David"]
+
+for student in students:
+    print("Student Name:", student)</pre>
+
+      <h6 class="text-success mt-3">👉 Output:</h6>
+      <pre>Student Name: Alice
+Student Name: Brian
+Student Name: Clara
+Student Name: David</pre>
+
+      <p>🧠 <strong>Explanation:</strong> The loop goes through each element in the <code>students</code> list and prints it one by one.</p>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="card p-4">
+      <h4 class="section-title">👨‍🏫 Example 3: Asking for Attendance (using while loop)</h4>
+      <p>A <code>while</code> loop is useful when you want to keep asking for input until a condition is met.</p>
+
+      <pre>present_students = []
+
+while True:
+    name = input("Enter student name (or 'done' to finish): ")
+
+    if name.lower() == 'done':
+        break  # Stop the loop
+    present_students.append(name)
+
+print("Attendance List:", present_students)</pre>
+
+      <h6 class="text-success mt-3">👉 Example Output:</h6>
+      <pre>Enter student name (or 'done' to finish): Alice
+Enter student name (or 'done' to finish): Brian
+Enter student name (or 'done' to finish): done
+Attendance List: ['Alice', 'Brian']</pre>
+
+      <p>🧠 <strong>Explanation:</strong> This loop continues to ask for names until the user types <code>'done'</code>.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

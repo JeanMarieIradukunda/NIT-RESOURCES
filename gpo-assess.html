@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>L4 - NIT Formative Assessment — Windows Server GPO (Trainer Pro)</title>
+
+<style>
+body {font-family: Inter,"Segoe UI",Arial,sans-serif;background:#eef1f4;padding:20px;margin:0;}
+.exam-wrapper {max-width:900px;margin:auto;}
+.header {background:#dde4eb;padding:22px;border-radius:10px;margin-bottom:22px;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+.question {background:#fff;padding:18px;margin:18px 0;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.06);}
+.question b {display:block;margin-bottom:8px;}
+label {display:block;margin:6px 0;cursor:pointer;}
+#timer {font-size:20px;color:#c62828;font-weight:700;text-align:center;}
+#warning {color:#c62828;font-weight:700;text-align:center;}
+button {display:block;margin:20px auto;padding:12px 26px;font-size:16px;border-radius:8px;border:none;background:#2f5aa8;color:white;cursor:pointer;}
+select{width:100%;padding:6px;border-radius:6px;}
+table{border-collapse:collapse;width:100%;}
+td,th{border:1px solid #cfd8dc;padding:10px;}
+th{background:#e3eaf2;}
+#violation-banner{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ background:#c62828;
+ color:white;
+ font-weight:800;
+ text-align:center;
+ padding:12px;
+ z-index:9999;
+ display:none;
+}
+
+@media print {
+  button { display: none; }      /* hide buttons when printing */
+  body { background: white; }    /* optional: clean background */
+  .exam-wrapper { box-shadow: none; }
+}
+
+
+</style>
+
+<!-- PDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+/* ========= CONFIG ========= */
+const EXAM_MINUTES = 40;
+const MAX_VIOLATIONS = 3;
+const VIOLATION_PENALTY = 2;
+
+/* ========= TRAINER PRO STATE ========= */
+let cheatLog = [];
+let sectionScores = { mcq:0, tf:0, match:0, order:0 };
+let sectionTotals = { mcq:0, tf:0, match:0, order:0 };
+
+function logEvent(type){
+ cheatLog.push({ type, time:(EXAM_MINUTES*60-sec) });
+}
+
+        /* ================= QUESTIONS ================= */
+        const QUESTIONS = [
+            // Multiple Choice (1–20)
+            { id: "q1", type: "mcq", text: "What does GPO stand for?", options: [{ value: "A", text: "Group Permission Option" }, { value: "B", text: "Group Policy Object" }, { value: "C", text: "Global Policy Order" }, { value: "D", text: "General Policy Operation" }], answer: "B" },
+            { id: "q2", type: "mcq", text: "GPOs are mainly used to manage:", options: [{ value: "A", text: "Only printers" }, { value: "B", text: "Only passwords" }, { value: "C", text: "User and computer settings" }, { value: "D", text: "Only network cables" }], answer: "C" },
+            { id: "q3", type: "mcq", text: "Which environment is required for Domain GPOs?", options: [{ value: "A", text: "Workgroup" }, { value: "B", text: "Active Directory" }, { value: "C", text: "Linux Server" }, { value: "D", text: "Standalone PC" }], answer: "B" },
+            { id: "q4", type: "mcq", text: "A Local GPO applies to:", options: [{ value: "A", text: "Entire domain" }, { value: "B", text: "One computer only" }, { value: "C", text: "All OUs" }, { value: "D", text: "All sites" }], answer: "B" },
+            { id: "q5", type: "mcq", text: "LSDOU stands for:", options: [{ value: "A", text: "Local, Site, Domain, OU" }, { value: "B", text: "Link, System, Domain, User" }, { value: "C", text: "Local, Security, Domain, Update" }, { value: "D", text: "Logon, Site, Domain, OU" }], answer: "A" },
+            { id: "q6", type: "mcq", text: "Which GPO has the highest priority?", options: [{ value: "A", text: "Local" }, { value: "B", text: "Site" }, { value: "C", text: "Domain" }, { value: "D", text: "OU" }], answer: "D" },
+            { id: "q7", type: "mcq", text: "Starter GPO is mainly used to:", options: [{ value: "A", text: "Delete policies" }, { value: "B", text: "Act as a template" }, { value: "C", text: "Replace AD" }, { value: "D", text: "Remove users" }], answer: "B" },
+            { id: "q8", type: "mcq", text: "Computer account names end with:", options: [{ value: "A", text: "#" }, { value: "B", text: "@" }, { value: "C", text: "$" }, { value: "D", text: "%" }], answer: "C" },
+            { id: "q9", type: "mcq", text: "User Configuration policies apply when:", options: [{ value: "A", text: "Computer boots" }, { value: "B", text: "User logs in" }, { value: "C", text: "Server shuts down" }, { value: "D", text: "Network connects" }], answer: "B" },
+            { id: "q10", type: "mcq", text: "Computer Configuration policies apply when:", options: [{ value: "A", text: "User logs in" }, { value: "B", text: "Computer starts" }, { value: "C", text: "Password changes" }, { value: "D", text: "Printer connects" }], answer: "B" },
+            { id: "q11", type: "mcq", text: "Which tool is used to manage GPOs?", options: [{ value: "A", text: "ADUC only" }, { value: "B", text: "GPMC" }, { value: "C", text: "Task Manager" }, { value: "D", text: "Control Panel" }], answer: "B" },
+            { id: "q12", type: "mcq", text: "LDAP is used to:", options: [{ value: "A", text: "Print files" }, { value: "B", text: "Query directory services" }, { value: "C", text: "Share folders" }, { value: "D", text: "Install drivers" }], answer: "B" },
+            { id: "q13", type: "mcq", text: "RADIUS provides which model?", options: [{ value: "A", text: "LSDOU" }, { value: "B", text: "AAA" }, { value: "C", text: "SMB" }, { value: "D", text: "NTFS" }], answer: "B" },
+            { id: "q14", type: "mcq", text: "SMB is used for:", options: [{ value: "A", text: "Authentication" }, { value: "B", text: "File sharing" }, { value: "C", text: "Password reset" }, { value: "D", text: "Policy linking" }], answer: "B" },
+            { id: "q15", type: "mcq", text: "Effective share permission equals:", options: [{ value: "A", text: "Highest permission" }, { value: "B", text: "Most restrictive combination" }, { value: "C", text: "First applied rule" }, { value: "D", text: "Domain rule" }], answer: "B" },
+            { id: "q16", type: "mcq", text: "A Linked GPO becomes active when it is attached to:", options: [{ value: "A", text: "Printer" }, { value: "B", text: "Domain, OU, or Site" }, { value: "C", text: "User profile" }, { value: "D", text: "Password file" }], answer: "B" },
+            { id: "q17", type: "mcq", text: "Default Domain Policy mainly contains:", options: [{ value: "A", text: "Printer rules" }, { value: "B", text: "Password policies" }, { value: "C", text: "USB settings" }, { value: "D", text: "Wallpaper rules" }], answer: "B" },
+            { id: "q18", type: "mcq", text: "Delegation of administration improves:", options: [{ value: "A", text: "Network speed" }, { value: "B", text: "Security and accountability" }, { value: "C", text: "Disk space" }, { value: "D", text: "Boot time" }], answer: "B" },
+            { id: "q19", type: "mcq", text: "Which GPO setting maps network drives automatically?", options: [{ value: "A", text: "User GPO" }, { value: "B", text: "BIOS setting" }, { value: "C", text: "Printer driver" }, { value: "D", text: "Local cache" }], answer: "A" },
+            { id: "q20", type: "mcq", text: "If Domain and OU GPO conflict, which wins?", options: [{ value: "A", text: "Domain" }, { value: "B", text: "Site" }, { value: "C", text: "OU" }, { value: "D", text: "Local" }], answer: "C" },
+
+            // True / False (21–30)
+            { id: "q21", type: "tf", text: "GPO can control software installation.", options: ["TRUE", "FALSE"], answer: "TRUE" },
+            { id: "q22", type: "tf", text: "Local GPO requires Active Directory.", options: ["TRUE", "FALSE"], answer: "FALSE" },
+            { id: "q23", type: "tf", text: "OU policies have the lowest priority.", options: ["TRUE", "FALSE"], answer: "FALSE" },
+            { id: "q24", type: "tf", text: "Computer GPOs apply before User GPOs.", options: ["TRUE", "FALSE"], answer: "TRUE" },
+            { id: "q25", type: "tf", text: "GPO stores shared files.", options: ["TRUE", "FALSE"], answer: "FALSE" },
+            { id: "q26", type: "tf", text: "LDAP helps locate user accounts.", options: ["TRUE", "FALSE"], answer: "TRUE" },
+            { id: "q27", type: "tf", text: "RADIUS is used for Wi-Fi and VPN authentication.", options: ["TRUE", "FALSE"], answer: "TRUE" },
+            { id: "q28", type: "tf", text: "A GPO works even if it is not linked.", options: ["TRUE", "FALSE"], answer: "FALSE" },
+            { id: "q29", type: "tf", text: "User Configuration affects machine behavior only.", options: ["TRUE", "FALSE"], answer: "FALSE" },
+            { id: "q30", type: "tf", text: "Computer accounts represent devices.", options: ["TRUE", "FALSE"], answer: "TRUE" },
+
+            // Matching (31–35) — 5 Complete Matching Questions
+
+            {
+                id: "q31", type: "match", text: "Match GPO Types with Their Meaning", match: [
+                    { a: "Local GPO", bOptions: ["Template base", "Applies to one computer", "Highest priority", "Network authentication"], answer: "Applies to one computer" },
+                    { a: "Starter GPO", bOptions: ["Template base", "Applies to one computer", "Highest priority", "Network authentication"], answer: "Template base" },
+                    { a: "OU GPO", bOptions: ["Template base", "Applies to one computer", "Highest priority", "Network authentication"], answer: "Highest priority" }
+                ]
+            },
+
+            {
+                id: "q32", type: "match", text: "Match Directory Technologies", match: [
+                    { a: "LDAP", bOptions: ["File sharing", "Directory queries", "Remote desktop", "Disk control"], answer: "Directory queries" },
+                    { a: "RADIUS", bOptions: ["AAA authentication", "Printer sharing", "Driver install", "Backup service"], answer: "AAA authentication" },
+                    { a: "SMB", bOptions: ["AAA authentication", "Printer sharing", "File sharing", "Domain login"], answer: "File sharing" }
+                ]
+            },
+
+            {
+                id: "q33", type: "match", text: "Match GPO Processing Order", match: [
+                    { a: "Local", bOptions: ["1st", "2nd", "3rd", "4th"], answer: "1st" },
+                    { a: "Site", bOptions: ["1st", "2nd", "3rd", "4th"], answer: "2nd" },
+                    { a: "Domain", bOptions: ["1st", "2nd", "3rd", "4th"], answer: "3rd" },
+                    { a: "OU", bOptions: ["1st", "2nd", "3rd", "4th"], answer: "4th" }
+                ]
+            },
+
+            {
+                id: "q34", type: "match", text: "Match GPO Tools and Functions", match: [
+                    { a: "GPMC", bOptions: ["Manage GPOs", "Create users", "Monitor CPU", "Format disk"], answer: "Manage GPOs" },
+                    { a: "ADUC", bOptions: ["Manage GPOs", "Create users", "Monitor CPU", "Format disk"], answer: "Create users" },
+                    { a: "gpupdate", bOptions: ["Refresh policy", "Backup server", "Reset password", "Join domain"], answer: "Refresh policy" }
+                ]
+            },
+
+            {
+                id: "q35", type: "match", text: "Match Account Types", match: [
+                    { a: "User account", bOptions: ["Represents device", "Represents person", "Represents printer", "Represents OU"], answer: "Represents person" },
+                    { a: "Computer account", bOptions: ["Represents device", "Represents person", "Represents printer", "Represents OU"], answer: "Represents device" },
+                    { a: "Service account", bOptions: ["Runs services", "Represents person", "Represents OU", "Stores files"], answer: "Runs services" }
+                ]
+            },
+
+
+            // Ordering / Sequencing (36–40)
+            { id: "q36", type: "order", text: "Arrange GPO processing order correctly:", order: ["Domain", "OU", "Local", "Site"], answer: ["Local", "Site", "Domain", "OU"] },
+            { id: "q37", type: "order", text: "Arrange steps to share a folder:", order: ["Sharing tab", "Properties", "Right-click folder", "Set permissions"], answer: ["Right-click folder", "Properties", "Sharing tab", "Set permissions"] },
+            { id: "q38", type: "order", text: "Arrange domain login flow:", order: ["Access granted", "Credentials verified", "User enters credentials", "Computer contacts Domain Controller"], answer: ["User enters credentials", "Computer contacts Domain Controller", "Credentials verified", "Access granted"] },
+            { id: "q39", type: "order", text: "Arrange GPO application sequence:", order: ["User GPOs applied", "User authenticates", "Computer authenticates", "Computer GPOs applied"], answer: ["Computer authenticates", "Computer GPOs applied", "User authenticates", "User GPOs applied"] },
+            { id: "q40", type: "order", text: "Arrange steps to create a new user and set password:", order: ["Set password", "New → User", "Finish", "Right-click OU"], answer: ["Right-click OU", "New → User", "Set password", "Finish"] }
+        ];
+
+ /* ========= UTIL ========= */
+function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function calcTotalMarks(){
+ let t=0;
+ sectionTotals={mcq:0,tf:0,match:0,order:0};
+ QUESTIONS.forEach(q=>{
+  if(q.type==="mcq"){t+=2;sectionTotals.mcq+=2;}
+  else if(q.type==="tf"){t+=1;sectionTotals.tf+=1;}
+  else if(q.type==="match"){t+=5;sectionTotals.match+=5;}
+  else if(q.type==="order"){t+=5;sectionTotals.order+=5;}
+ });
+ return t;
+}
+
+let TOTAL_MARKS = calcTotalMarks();
+
+/* ========= STATE ========= */
+let STUDENT_NAME="";
+let violations=0;
+let allowViolation=false;
+let initialLoad=false;
+let submitted=false;
+let focusLostAt = null;
+
+
+/* ========= BUILD ========= */
+function promptPassword(){
+  const PASSWORD = "@Abc@111";  // change to your desired password
+  let tries = 0;
+  while(tries < 3){
+    let input = prompt("Enter the exam password:");
+    if(input === null){ // cancel pressed
+      alert("Password required to access the exam.");
+      location.reload();
+      return;
+    }
+    if(input === PASSWORD){
+      return; // correct, continue
+    } else {
+      alert("Incorrect password. Try again.");
+      tries++;
+    }
+  }
+  alert("Too many failed attempts. Access denied.");
+  location.href = "about:blank"; // block access
+}
+
+function promptName(){
+ let n=prompt("Enter your full name:");
+ if(!n){location.reload();return;}
+ STUDENT_NAME=n.trim();
+ document.getElementById("student-name").innerText=STUDENT_NAME;
+ allowViolation=true;
+}
+
+function buildExam(){
+ const c=document.getElementById("exam-container");
+ shuffle(QUESTIONS);
+
+ QUESTIONS.forEach((q,i)=>{
+  const div=document.createElement("div");
+  div.className="question";
+  div.innerHTML=`<b>Question ${i+1}</b>: ${q.text}<br>`;
+
+  if(q.type==="mcq"){
+    shuffle(q.options);
+    q.options.forEach(o=>{
+      div.innerHTML+=`<label><input type="radio" name="${q.id}" value="${o.value}"> ${o.text}</label>`;
+    });
+  }
+
+  else if(q.type==="tf"){
+    q.options.forEach(o=>{
+      div.innerHTML+=`<label><input type="radio" name="${q.id}" value="${o}"> ${o}</label>`;
+    });
+  }
+
+  else if(q.type==="match"){
+    const table=document.createElement("table");
+    table.innerHTML="<tr><th>Column A</th><th>Select</th></tr>";
+    q.match.forEach((m,idx)=>{
+      const opts=["<option value=''>--Select--</option>",
+        ...shuffle([...m.bOptions]).map(x=>`<option>${x}</option>`)].join("");
+      table.innerHTML+=`<tr><td>${m.a}</td>
+      <td><select name="${q.id}_m_${idx}">${opts}</select></td></tr>`;
+    });
+    div.appendChild(table);
+  }
+
+  else if(q.type==="order"){
+    for(let k=0;k<q.order.length;k++){
+      const opts=["<option value=''>--Select--</option>",
+        ...shuffle([...q.order]).map(x=>`<option>${x}</option>`)].join("");
+      div.innerHTML+=`Position ${k+1}: <select name="${q.id}_o_${k}">${opts}</select><br>`;
+    }
+  }
+
+  c.appendChild(div);
+ });
+}
+
+/* ========= TIMER ========= */
+let sec=EXAM_MINUTES*60;
+let tint;
+function tick(){
+ sec--;
+ if(sec<=0){clearInterval(tint);submitExam();}
+ let m=Math.floor(sec/60),s=sec%60;
+ timer.innerText=`Time: ${m}:${s.toString().padStart(2,"0")}`;
+}
+
+/* ========= SECURITY ========= */
+function showBanner(msg){
+ const b=document.getElementById("violation-banner");
+ b.innerText=msg;
+ b.style.display="block";
+}
+
+function violate(type, immediate=false){
+ if(!allowViolation||!initialLoad) return;
+
+ violations++;
+ logEvent(type);
+
+ // After 2 violations → red banner
+ if(violations>=2){
+   showBanner(`SECURITY WARNING — Violation ${violations}/${MAX_VIOLATIONS}`);
+ }
+
+ warning.innerText=`Violation ${violations}/${MAX_VIOLATIONS}: ${type}`;
+
+ // DevTools immediate submit
+ if(immediate){
+   showBanner("DEVTOOLS DETECTED — EXAM TERMINATED");
+   submitExam();
+   return;
+ }
+
+ if(violations>=MAX_VIOLATIONS){
+   showBanner("MAX VIOLATIONS — EXAM AUTO SUBMITTED");
+   submitExam();
+ }
+}
+
+
+function initSecurity() {
+
+  // Track when focus is lost
+  let focusLostAt = null;
+
+  /* ================= TAB SWITCH / MINIMIZE ================= */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      focusLostAt = Date.now();
+    } else if (focusLostAt) {
+      const away = (Date.now() - focusLostAt) / 1000;
+      if (away > 2) { // threshold = 2 seconds
+        const violationName = "TAB_SWITCH_" + Math.round(away) + "s";
+        violate(violationName);
+      }
+      focusLostAt = null;
+    }
+  });
+
+  /* ================= WINDOW BLUR / APP SWITCH ================= */
+  window.addEventListener("blur", () => {
+    focusLostAt = Date.now();
+  });
+
+  window.addEventListener("focus", () => {
+    if (focusLostAt) {
+      const away = (Date.now() - focusLostAt) / 1000;
+      if (away > 2) { // threshold = 2 seconds
+        const violationName = "APP_INACTIVE_" + Math.round(away) + "s";
+        violate(violationName);
+      }
+      focusLostAt = null;
+    }
+  });
+
+  /* ================= EXIT FULLSCREEN ================= */
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+      violate("EXIT_FULLSCREEN");
+    }
+  });
+
+  /* ================= DEVTOOLS DETECTION ================= */
+  document.addEventListener("keydown", (e) => {
+
+    // F12
+    if (e.key === "F12") {
+      e.preventDefault();
+      violate("DEVTOOLS_OPENED", true);
+    }
+
+    // Ctrl+Shift+I/J/C
+    if (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) {
+      e.preventDefault();
+      violate("DEVTOOLS_SHORTCUT", true);
+    }
+
+    // Other Ctrl shortcuts (view source, save, print, etc.)
+    if (e.ctrlKey && ["u", "s", "p", "t", "w", "o", "n"].includes(e.key.toLowerCase())) {
+      e.preventDefault();
+      violate("CTRL_SHORTCUT_" + e.key.toUpperCase());
+    }
+  });
+
+  /* ================= COPY / PASTE / CUT ================= */
+  document.addEventListener("copy", () => violate("COPY_ATTEMPT"));
+  document.addEventListener("paste", () => violate("PASTE_ATTEMPT"));
+  document.addEventListener("cut", () => violate("CUT_ATTEMPT"));
+
+  /* ================= RIGHT CLICK ================= */
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    violate("RIGHT_CLICK");
+  });
+}
+
+
+/* ========= SCORING ========= */
+function scoreMatch(q){
+ let ok=true;
+ q.match.forEach((m,i)=>{
+  let v=document.querySelector(`select[name="${q.id}_m_${i}"]`).value;
+  if(v!==m.answer) ok=false;
+ });
+ return ok?5:0;
+}
+
+function scoreOrder(q){
+ let picks=[];
+ for(let i=0;i<q.answer.length;i++){
+  let v=document.querySelector(`select[name="${q.id}_o_${i}"]`).value;
+  if(!v) return 0;
+  picks.push(v);
+ }
+ if(new Set(picks).size!==picks.length) return 0;
+ return JSON.stringify(picks)===JSON.stringify(q.answer)?5:0;
+}
+
+
+/* ========= EXPORT AS REAL PDF ========= */
+function exportPDF(){
+    // Optional: hide the export button during printing
+    const btn = document.querySelector("button[onclick='exportPDF()']");
+    if(btn) btn.style.display = "none";
+
+    window.print(); // Opens print dialog
+
+    // Restore button after printing
+    if(btn) btn.style.display = "block";
+}
+
+/* ========= SUBMIT ========= */
+function submitExam(){
+ if(submitted) return;
+ submitted=true;
+ clearInterval(tint);
+
+ sectionScores={mcq:0,tf:0,match:0,order:0};
+ let score=0;
+
+ // Collect answers for display
+ let answerLog = [];
+
+ QUESTIONS.forEach(q=>{
+  let studentAnswer=null;
+  let correctAnswer=null;
+
+  if(q.type==="mcq"){
+   let s=document.querySelector(`input[name="${q.id}"]:checked`);
+   studentAnswer = s ? s.value + " — " + q.options.find(o=>o.value===s.value)?.text : "(No answer)";
+   correctAnswer = q.answer + " — " + q.options.find(o=>o.value===q.answer)?.text;
+   if(s && s.value===q.answer){score+=2;sectionScores.mcq+=2;}
+  }
+  else if(q.type==="tf"){
+   let s=document.querySelector(`input[name="${q.id}"]:checked`);
+   studentAnswer = s ? s.value : "(No answer)";
+   correctAnswer = q.answer;
+   if(s && s.value===q.answer){score+=1;sectionScores.tf+=1;}
+  }
+  else if(q.type==="match"){
+   let mScore=0;
+   let matchAnswers = [];
+   q.match.forEach((m,i)=>{
+     let v=document.querySelector(`select[name="${q.id}_m_${i}"]`).value;
+     studentAnswer = studentAnswer || "";
+     studentAnswer += `${m.a} → ${v || "(No answer)"}<br>`;
+     correctAnswer = correctAnswer || "";
+     correctAnswer += `${m.a} → ${m.answer}<br>`;
+   });
+   mScore = scoreMatch(q);
+   score += mScore;
+   sectionScores.match += mScore;
+  }
+  else if(q.type==="order"){
+   let picks=[];
+   studentAnswer = "";
+   correctAnswer = "";
+   for(let i=0;i<q.answer.length;i++){
+     let v=document.querySelector(`select[name="${q.id}_o_${i}"]`).value;
+     studentAnswer += `Position ${i+1}: ${v || "(No answer)"}<br>`;
+     correctAnswer += `Position ${i+1}: ${q.answer[i]}<br>`;
+     picks.push(v);
+   }
+   if(new Set(picks).size===picks.length && JSON.stringify(picks)===JSON.stringify(q.answer)){
+     score+=5;
+     sectionScores.order+=5;
+   }
+  }
+
+  answerLog.push({
+    text: q.text,
+    student: studentAnswer,
+    correct: correctAnswer
+  });
+ });
+
+ let penalty=violations*VIOLATION_PENALTY;
+ let final=Math.max(score-penalty,0);
+
+ 
+ // Build output with ultra-compact single-line questions
+let out = `
+<div style="font-family: Inter, 'Calisto MT', Arial, sans-serif; max-width:1000px; margin:20px auto; padding:20px; background:#f5f7fa; border-radius:16px; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+
+  <h1 style="text-align:center; color:#2f5aa8; margin-bottom:20px;">RE-ASSESSMENT RESULT</h1>
+
+  <!-- Three-column summary card -->
+  <div style="display:flex; gap:15px; flex-wrap:wrap; margin-bottom:25px;">
+
+    <!-- Student Summary -->
+    <div style="flex:1; min-width:200px; background:#e0f2fe; padding:15px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.08); font-size:14px;">
+        <h3 style="color:#0369a1; margin-bottom:8px;">PADI VJEKO CENTRE TSS</h3>
+      <h5  style="color:#0369a1; margin-bottom:8px;">NITWA401 - WINDOWS SERVER ADMINISTRATIONS</h5>
+      <p><b>Trainee-Names:</b> ${STUDENT_NAME}</p>
+      <p style="color:red;"><b>Violations:</b> ${violations}</p>
+      <p><b>Final Score:</b> ${final}/${TOTAL_MARKS}</p>
+    </div>
+
+    <!-- Section Breakdown -->
+    <div style="flex:1; min-width:200px; background:#d1fae5; padding:15px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.08); font-size:14px;">
+      <h3 style="color:#065f46; margin-bottom:8px;">Section Breakdown</h3>
+      <p><b>MCQ:</b> ${sectionScores.mcq}/${sectionTotals.mcq}</p>
+      <p><b>True / False:</b> ${sectionScores.tf}/${sectionTotals.tf}</p>
+      <p><b>Match:</b> ${sectionScores.match}/${sectionTotals.match}</p>
+      <p><b>Order:</b> ${sectionScores.order}/${sectionTotals.order}</p>
+    </div>
+
+    <!-- Cheating Heat-Map -->
+    <div style="flex:1; min-width:200px; background:#fee2e2; padding:15px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.08); font-size:14px;">
+      <h3 style="color:#b91c1c; margin-bottom:8px;">Cheating Heat-Map</h3>`;
+      
+cheatLog.forEach(e=>{
+  let m=Math.floor(e.time/60);
+  let s=e.time%60;
+  out += `<p style="margin:2px 0; font-family: monospace;">${e.type} at ${m}:${s.toString().padStart(2,"0")}</p>`;
+});
+
+out += `</div>
+  </div>
+
+  <!-- Answer Review (Single Line per Question) -->
+  <div style="background:#ffffff; padding:15px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:20px; font-size:13px;">
+    <h2 style="color:#1e3a8a; margin-bottom:10px;">Answer Review</h2>`;
+
+answerLog.forEach((a,i)=>{
+  out += `<p style="margin:4px 0; padding:6px; background:#f9fafb; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+    <b style="color:#1e40af;">Q${i+1}:</b> ${a.text} | 
+    <b style="color:#15803d;">Your:</b> ${a.student} | 
+     <b style="color:#b91c1c;">Correct:</b> 
+  </p>`;
+});
+
+out += `
+  </div>
+
+  <!-- Export Button -->
+  <div style="text-align:center; margin-top:15px;">
+    <button onclick="exportPDF(${final},${penalty})" 
+      style="background:#2f5aa8; color:white; border:none; padding:10px 24px; font-size:15px; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,0.1); transition:0.3s;">
+      Export PDF Report
+    </button>
+  </div>
+
+</div>`;
+
+document.body.innerHTML = out;
+}
+/* ========= INIT ========= */
+window.onload = () => {
+  promptPassword();     // <-- password first
+  promptName();         // then ask for student name
+  document.documentElement.requestFullscreen?.();
+  buildExam();
+  initSecurity();
+  tint = setInterval(tick, 1000);
+  setTimeout(()=>initialLoad = true, 1500);
+};
+
+
+</script>
+</head>
+
+<body>
+<div id="violation-banner">Assessment Violation Will be Detected</div>
+
+<div class="exam-wrapper">
+<div class="header">
+<h2>PADRI VJEKO CENTRE TSS</h2>
+<h3>NITWA401 - WINDOWS SERVER ADMINISTRATIONS</h3>
+<h4>Group Policy Managements -Re-Assessment</h4>
+Student: <span id="student-name"></span>
+</div>
+
+<div id="timer"></div>
+<div id="warning"></div>
+<div id="exam-container"></div>
+
+<button onclick="submitExam()">Submit Examination</button>
+</div>
+</body>
+</html>

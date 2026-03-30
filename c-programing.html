@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure PDF</title>
+  <style>
+    body, html { margin:0; padding:0; height:100%; overflow:hidden; }
+    iframe { width:100%; height:100%; border:none; }
+  </style>
+</head>
+<body>
+  <iframe src="C-Programming Assessment.pdf" oncontextmenu="return false;"></iframe>
+
+  <script>
+    // Disable right-click anywhere
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Attempt to prevent Ctrl+S, Ctrl+P, etc.
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === 's' || e.key === 'p')) {
+        e.preventDefault();
+        alert("Saving/Printing is disabled.");
+      }
+    });
+  </script>
+</body>
+</html>

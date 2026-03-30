@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Python Smart Notes</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts (Berlin Sans alternative: Poppins for clean style) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      border-radius: 0 0 20px 20px;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+    }
+    .card-header {
+      font-weight: 600;
+      background-color: #4facfe;
+      color: white;
+      border-radius: 15px 15px 0 0 !important;
+    }
+    code {
+      background: #f1f1f1;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+    pre {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>📘 Python Smart Notes</h1>
+    <p>Applying Python Basic Concepts</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Data Types -->
+    <div class="card">
+      <div class="card-header">1️⃣ Data Types</div>
+      <div class="card-body">
+        <p><b>a. Definition:</b> Data types define the kind of values a variable can hold.</p>
+        <p>It is a classification that specifies the kind of value a variable can store and 
+          the operations that can be performed on that data.</p>
+        <p><b>b. Role:</b> Ensure correct operations, help manage memory, guide data usage.</p>
+        <p><b>c. Real-world Examples:</b></p>
+        <ul>
+          <li><b>Integer:</b> <code>age = 20</code> → counting people in a class.</li>
+          <li><b>Float:</b> <code>temperature = 36.6</code> → measuring body temperature.</li>
+          <li><b>String:</b> <code>name = "Alice"</code> → storing student’s name.</li>
+          <li><b>Boolean:</b> <code>is_logged_in = True</code> → login status.</li>
+          <li><b>List:</b> <code>scores = [75, 80, 90]</code> → exam results.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Variables -->
+    <div class="card">
+      <div class="card-header">2️⃣ Variables</div>
+      <div class="card-body">
+        <p><b>A. Definition:</b> A variable is a named storage for holding data.</p>
+        <p><b>B. Roles:</b> Store/reuse values, improve readability, enable data manipulation.</p>
+        <p><b>C. Rules:</b></p>
+        <ul>
+          <li>Start with letter or underscore (<code>_name</code>, <code>student1</code>).</li>
+          <li>Cannot start with number (<code>1student ❌</code>).</li>
+          <li>Case-sensitive (<code>Name</code> ≠ <code>name</code>).</li>
+          <li>No spaces allowed (<code>student name ❌</code>).</li>
+          <li>Avoid reserved keywords (<code>if</code>, <code>class</code>).</li>
+        </ul>
+        <p><b>Example:</b></p>
+        <pre><code>student_name = "John"
+student_age = 21
+print(student_name, "is", student_age, "years old.")</code></pre>
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="card">
+      <div class="card-header">3️⃣ Comments</div>
+      <div class="card-body">
+        <p><b>Definition:</b> Non-executable notes in code to explain logic.</p>
+        <p><b>Role:</b> Improve readability, debugging, documentation.</p>
+        <p><b>Syntax:</b></p>
+        <pre><code># Single-line comment
+
+"""
+Multi-line comment
+for longer explanations
+"""
+</code></pre>
+        <p><b>Example:</b></p>
+        <pre><code># Calculate area of rectangle
+length = 10
+width = 5
+area = length * width
+print(area)</code></pre>
+      </div>
+    </div>
+
+    <!-- Operators -->
+<div class="card">
+  <div class="card-header">4️⃣ Operators</div>
+  <div class="card-body">
+    <p><b>Definition:</b> Operators are symbols that perform specific operations on values or variables.</p>
+    <p><b>Types with Descriptions & Examples:</b></p>
+    <ul>
+      <li>
+        <b>Arithmetic Operators:</b> Used to perform basic mathematical calculations like addition, subtraction, multiplication, and division.  
+        <br><code>+ - * / % ** //</code>
+        <pre><code>price = 50
+quantity = 3
+total = price * quantity  # Multiplication
+print(total)  # 150</code></pre>
+      </li>
+      <li>
+        <b>Comparison Operators:</b> Used to compare two values and return a boolean result (True/False).  
+        <br><code>== != > < >= <=</code>
+        <pre><code>age = 18
+print(age >= 18)  # True → checks if age is 18 or more</code></pre>
+      </li>
+      <li>
+        <b>Logical Operators:</b> Used to combine conditional statements and return True or False based on logic.  
+        <br><code>and, or, not</code>
+        <pre><code>student = True
+fees_paid = True
+print(student and fees_paid)  # True → both conditions must be true</code></pre>
+      </li>
+      <li>
+        <b>Assignment Operators:</b> Used to assign values to variables or update them with operations.  
+        <br><code>= += -= *= /=</code>
+        <pre><code>score = 10
+score += 5  # same as score = score + 5
+print(score)  # 15</code></pre>
+      </li>
+      <li>
+        <b>Membership Operators:</b> Used to test whether a value exists within a sequence (list, string, tuple).  
+        <br><code>in, not in</code>
+        <pre><code>names = ["Alice", "Bob", "John"]
+print("Bob" in names)  # True → Bob is in the list</code></pre>
+      </li>
+    </ul>
+  </div>
+
+  </div>
+
+</body>
+</html>

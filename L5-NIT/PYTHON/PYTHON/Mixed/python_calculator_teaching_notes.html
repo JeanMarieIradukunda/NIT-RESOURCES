@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Calculator — Python Notes</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#7dd3fc;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+    body{background:linear-gradient(180deg,#071024 0%, #041021 100%);color:#e6eef8;padding:24px}
+    .container{max-width:980px;margin:0 auto}
+
+    header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04263a;box-shadow:0 6px 18px rgba(13,23,37,.6)}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin-top:6px}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 6px 18px rgba(2,6,23,.6)}
+    .section-title{display:flex;justify-content:space-between;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+
+    pre{white-space:pre-wrap;overflow:auto;background:var(--glass);padding:14px;border-radius:8px;color:#cde7ff;margin:12px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:13px}
+    code{font-family:inherit}
+
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    button.copy{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--accent);cursor:pointer}
+
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:16px}
+    .sidebar .note{font-size:13px;color:var(--muted);margin-bottom:12px}
+
+    footer{color:var(--muted);font-size:13px;margin-top:18px;text-align:center}
+
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.logo{width:52px;height:52px}}
+
+    .badge{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(125,211,252,0.08);color:var(--accent);border:1px solid rgba(125,211,252,0.08)}
+
+    .example-run{background:linear-gradient(90deg, rgba(125,211,252,0.03), rgba(96,165,250,0.01));padding:12px;border-radius:8px;border:1px solid rgba(125,211,252,0.03);color:#dff6ff}
+
+    .ex-title{font-weight:600;margin-bottom:8px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">SAMS</div>
+      <div>
+        <h1>Simple Calculator — Python Notes</h1>
+        <p class="lead">Clear, commented lessons that explain the calculator examples (basic, loop, and <code>match/case</code>).</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card">
+          <div class="section-title">
+            <div>
+              <strong>1. Basic calculator (step-by-step)</strong>
+              <div class="muted">Records two numbers and an operator, then computes the answer.</div>
+            </div>
+            <span class="badge">Beginner</span>
+          </div>
+
+          <p class="muted">Notes: use <code>int()</code> to convert user input into integers. Division <code>/</code> returns a float. Always validate the operator.</p>
+
+          <div class="controls">
+            <button class="copy" data-target="code-basic">Copy Basic Code</button>
+          </div>
+
+          <pre id="code-basic"><code># Record calculation Details
+num1 = int(input("Enter First Number: "))
+operator = input("Enter operator (+, -, *, /, //, %, **): ")
+num2 = int(input("Enter Second Number: "))
+
+# Perform recorded operation
+if operator == "+":
+    answer = num1 + num2
+elif operator == "-":
+    answer = num1 - num2
+elif operator == "*":
+    answer = num1 * num2
+elif operator == "/":
+    answer = num1 / num2
+elif operator == "//":
+    answer = num1 // num2
+elif operator == "%":
+    answer = num1 % num2
+elif operator == "**":
+    answer = num1 ** num2
+else:
+    answer = "Invalid operator!"
+
+print("Result:", answer)
+</code></pre>
+
+          <div class="example-run">
+            <div class="ex-title">Example run</div>
+            <div>Enter First Number: 10<br>Enter operator (+, -, *, /, //, %, **): *<br>Enter Second Number: 5<br><strong>Result: 50</strong></div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <div class="section-title">
+            <div>
+              <strong>2. Continuous calculator (loop) — keep working until user exits</strong>
+              <div class="muted">Prompt repeatedly. Handle division-by-zero errors gracefully.</div>
+            </div>
+            <span class="badge">Interactive</span>
+          </div>
+
+          <div class="controls">
+            <button class="copy" data-target="code-loop">Copy Loop Code</button>
+          </div>
+
+          <pre id="code-loop"><code>print("🔢 Simple Calculator")
+print("Type 'exit' as operator to quit.\n")
+
+while True:
+    # Get first number
+    num1 = int(input("Enter First Number: "))
+
+    # Get operator
+    operator = input("Enter operator (+, -, *, /, //, %, ** or exit): ")
+    if operator.lower() == "exit":
+        print("Calculator closed. Goodbye! 👋")
+        break  # stop the loop
+
+    # Get second number
+    num2 = int(input("Enter Second Number: "))
+
+    # Perform operation
+    if operator == "+":
+        answer = num1 + num2
+    elif operator == "-":
+        answer = num1 - num2
+    elif operator == "*":
+        answer = num1 * num2
+    elif operator == "/":
+        if num2 != 0:
+            answer = num1 / num2
+        else:
+            answer = "Error: Division by zero!"
+    elif operator == "//":
+        if num2 != 0:
+            answer = num1 // num2
+        else:
+            answer = "Error: Division by zero!"
+    elif operator == "%":
+        if num2 != 0:
+            answer = num1 % num2
+        else:
+            answer = "Error: Division by zero!"
+    elif operator == "**":
+        answer = num1 ** num2
+    else:
+        answer = "Invalid operator!"
+
+    print("Result:", answer, "\n")
+</code></pre>
+
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <div class="section-title">
+            <div>
+              <strong>3. Using <code>match / case</code> (Python 3.10+)</strong>
+              <div class="muted">A switch-like statement — cleaner branching for operators.</div>
+            </div>
+            <span class="badge">Python 3.10+</span>
+          </div>
+
+          <div class="controls">
+            <button class="copy" data-target="code-match">Copy match/case Code</button>
+          </div>
+
+          <pre id="code-match"><code>print("🔢 Simple Calculator (using switch/match)")
+print("Type 'exit' as operator to quit.\n")
+
+while True:
+    # Get first number
+    num1 = int(input("Enter First Number: "))
+
+    # Get operator
+    operator = input("Enter operator (+, -, *, /, //, %, ** or exit): ")
+    if operator.lower() == "exit":
+        print("Calculator closed. Goodbye! 👋")
+        break
+
+    # Get second number
+    num2 = int(input("Enter Second Number: "))
+
+    # Perform operation using match (switch-like)
+    match operator:
+        case "+":
+            answer = num1 + num2
+        case "-":
+            answer = num1 - num2
+        case "*":
+            answer = num1 * num2
+        case "/":
+            answer = num1 / num2 if num2 != 0 else "Error: Division by zero!"
+        case "//":
+            answer = num1 // num2 if num2 != 0 else "Error: Division by zero!"
+        case "%":
+            answer = num1 % num2 if num2 != 0 else "Error: Division by zero!"
+        case "**":
+            answer = num1 ** num2
+        case _:
+            answer = "Invalid operator!"
+
+    print("Result:", answer, "\n")
+</code></pre>
+
+          <p class="muted">Tip: use <code>python --version</code> to confirm you have Python 3.10+ before using <code>match</code>.</p>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <strong>Quick teaching tips</strong>
+          <ul class="muted">
+            <li>Always validate user input (numbers and operator). Consider using <code>try/except</code> to catch non-integer input.</li>
+            <li>For decimals, use <code>float()</code> instead of <code>int()</code>.</li>
+            <li>Explain division behavior: <code>/</code> vs <code>//</code>.</li>
+            <li>Show how boolean arithmetic works (True = 1, False = 0) as a short exercise.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <strong>At-a-glance</strong>
+          <p class="note">Operators supported: <code>+ - * / // % **</code>. Use <code>exit</code> to stop the loop versions.</p>
+
+          <div style="margin-top:8px">
+            <strong>Good exercises</strong>
+            <ol class="muted">
+              <li>Allow decimal input and round the result to 2 decimal places.</li>
+              <li>Accept full expression input like <code>10 * 5</code> and parse it.</li>
+              <li>Add a history log of previous calculations.</li>
+              <li>Build a simple GUI using <code>tkinter</code> (desktop) or a web front-end.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <strong>Safety & validation</strong>
+          <p class="note">Never use <code>eval()</code> on raw user input — it can run arbitrary code. Instead parse or validate inputs yourself.</p>
+
+          <div style="margin-top:10px">
+            <strong>Resources</strong>
+            <div class="muted">Python docs, tutorials, and small practice projects are great next steps.</div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <footer>
+      Created for teaching — adapt, copy, and share.
+    </footer>
+  </div>
+
+  <script>
+    // copy code blocks
+    document.querySelectorAll('button.copy').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-target');
+        const codeEl = document.getElementById(id);
+        if (!codeEl) return;
+        const text = codeEl.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.innerText = 'Copied!';
+          setTimeout(() => btn.innerText = 'Copy ' + (id === 'code-basic' ? 'Basic Code' : id === 'code-loop' ? 'Loop Code' : 'match/case Code'), 1400);
+        } catch (e) {
+          alert('Copy failed — select and copy manually.');
+        }
+      })
+    })
+  </script>
+</body>
+</html>

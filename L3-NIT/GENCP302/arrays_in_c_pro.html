@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays in C Programming - Complete Notes</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:#e2e8f0;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:30px;
+}
+
+header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+header h1{
+    font-size:36px;
+    color:#38bdf8;
+}
+
+header p{
+    color:#94a3b8;
+}
+
+.section{
+    background:rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.section h2{
+    color:#facc15;
+    margin-bottom:15px;
+}
+
+.section h3{
+    color:#60a5fa;
+    margin-top:15px;
+}
+
+ul{
+    margin-left:20px;
+    margin-top:10px;
+}
+
+.code{
+    background:#0b1220;
+    padding:15px;
+    border-radius:10px;
+    margin:15px 0;
+    overflow-x:auto;
+    font-family:monospace;
+    border-left:4px solid #38bdf8;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+.table th, .table td{
+    border:1px solid rgba(255,255,255,0.2);
+    padding:10px;
+    text-align:center;
+}
+
+.table th{
+    background:#1e293b;
+    color:#facc15;
+}
+
+.footer{
+    text-align:center;
+    margin-top:40px;
+    color:#94a3b8;
+    font-size:14px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<header>
+    <h1>📘 ARRAYS IN C PROGRAMMING</h1>
+    <p>Complete Explained Modern Notes</p>
+</header>
+
+<!-- Section 1 -->
+<div class="section">
+<h2>🔹 1. Application of Arrays</h2>
+
+<h3>✅ What is an Array?</h3>
+<p>
+An array is a collection of elements of the same data type stored in continuous memory locations.
+It allows storing multiple values using a single name.
+</p>
+
+<h3>🧠 Real-Life Analogy</h3>
+<p>Instead of creating many variables:</p>
+
+<div class="code">
+int student1;<br>
+int student2;<br>
+int student3;
+</div>
+
+<p>You use:</p>
+
+<div class="code">
+int students[30];
+</div>
+
+<h3>✅ Why Use Arrays?</h3>
+<ul>
+<li>Store many values of same type</li>
+<li>Process large data efficiently</li>
+<li>Perform repetitive calculations</li>
+<li>Organize related data</li>
+</ul>
+
+<h3>✅ Applications</h3>
+
+<div class="code">
+int marks[5] = {70,85,60,90,75};
+</div>
+
+<ul>
+<li>Schools</li>
+<li>Exam systems</li>
+<li>Report generation</li>
+</ul>
+
+</div>
+
+<!-- Section 2 -->
+<div class="section">
+<h2>🔹 2. Types of Arrays</h2>
+
+<h3>1️⃣ One-Dimensional Array</h3>
+
+<div class="code">
+int numbers[5] = {10,20,30,40,50};
+</div>
+
+<p>Access:</p>
+
+<div class="code">
+printf("%d", numbers[2]);  // Output: 30
+</div>
+
+<h3>2️⃣ Two-Dimensional Array</h3>
+
+<div class="code">
+int matrix[2][3] = {
+ {1,2,3},
+ {4,5,6}
+};
+</div>
+
+<p>Access:</p>
+
+<div class="code">
+printf("%d", matrix[1][2]);  // Output: 6
+</div>
+
+<h3>3️⃣ Multi-Dimensional Arrays</h3>
+
+<div class="code">
+int data[2][3][4];
+</div>
+
+<p>Used in 3D graphics and simulations.</p>
+
+</div>
+
+<!-- Section 3 -->
+<div class="section">
+<h2>🔹 3. Declaring Arrays</h2>
+
+<p><strong>Syntax:</strong></p>
+
+<div class="code">
+datatype arrayName[size];
+</div>
+
+<p>Examples:</p>
+
+<div class="code">
+int numbers[10];<br>
+float prices[5];<br>
+char grade[3];
+</div>
+
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Size must be positive</li>
+<li>Index starts from 0</li>
+<li>Last index = size - 1</li>
+</ul>
+
+</div>
+
+<!-- Section 4 -->
+<div class="section">
+<h2>🔹 4. Initializing Arrays</h2>
+
+<h3>Method 1</h3>
+<div class="code">
+int numbers[5] = {10,20,30,40,50};
+</div>
+
+<h3>Method 2 (Partial)</h3>
+<div class="code">
+int numbers[5] = {10,20};
+</div>
+
+<h3>Method 3</h3>
+<div class="code">
+int numbers[] = {1,2,3,4};
+</div>
+
+<h3>Method 4</h3>
+<div class="code">
+int numbers[3];<br>
+numbers[0]=5;<br>
+numbers[1]=10;<br>
+numbers[2]=15;
+</div>
+
+</div>
+
+<!-- Section 5 -->
+<div class="section">
+<h2>🔹 5. Accessing Elements</h2>
+
+<div class="code">
+int arr[3] = {10,20,30};<br>
+printf("%d", arr[1]);  // 20
+</div>
+
+</div>
+
+<!-- Section 6 -->
+<div class="section">
+<h2>🔹 6. Common Mistakes</h2>
+<ul>
+<li>Using invalid index</li>
+<li>Forgetting size</li>
+<li>Mixing data types</li>
+<li>Not initializing before use</li>
+</ul>
+</div>
+
+<!-- Section 7 -->
+<div class="section">
+<h2>🔹 7. Complete Example Program</h2>
+
+<div class="code">
+#include &lt;stdio.h&gt;<br><br>
+int main() {<br>
+&nbsp;&nbsp;int marks[5];<br>
+&nbsp;&nbsp;int total=0;<br><br>
+&nbsp;&nbsp;for(int i=0;i&lt;5;i++){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scanf("%d",&marks[i]);<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;for(int i=0;i&lt;5;i++){<br>
+&nbsp;&nbsp;&nbsp;&nbsp;total+=marks[i];<br>
+&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;printf("Total=%d",total);<br>
+&nbsp;&nbsp;printf("Average=%.2f",total/5.0);<br>
+&nbsp;&nbsp;return 0;<br>
+}
+</div>
+
+</div>
+
+<!-- Summary -->
+<div class="section">
+<h2>🔥 Summary Table</h2>
+
+<table class="table">
+<tr>
+<th>Topic</th>
+<th>Explanation</th>
+</tr>
+<tr>
+<td>Array</td>
+<td>Collection of same data type</td>
+</tr>
+<tr>
+<td>1D Array</td>
+<td>Single list</td>
+</tr>
+<tr>
+<td>2D Array</td>
+<td>Table (rows & columns)</td>
+</tr>
+<tr>
+<td>Declaration</td>
+<td>datatype name[size]</td>
+</tr>
+<tr>
+<td>Initialization</td>
+<td>Assigning values</td>
+</tr>
+<tr>
+<td>Index</td>
+<td>Starts from 0</td>
+</tr>
+</table>
+
+</div>
+
+<div class="footer">
+Arrays help store large data efficiently, work with loops, reduce repetition, and organize structured information.
+</div>
+
+</div>
+
+</body>
+</html>

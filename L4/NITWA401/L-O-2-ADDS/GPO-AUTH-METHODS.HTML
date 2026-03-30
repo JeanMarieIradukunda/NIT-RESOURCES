@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Windows Server Administration – Beginner Notes</title>
+        <style>
+        /* General Styles */
+        body {
+            font-family: 'Inter', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: #0a4d8c;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #0a4d8c;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            color: #07527a;
+        }
+
+        p {
+            margin: 5px 0 15px 0;
+        }
+
+        ul, ol {
+            margin: 5px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .example {
+            background-color: #eaf4ff;
+            padding: 10px 15px;
+            border-left: 4px solid #0a4d8c;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .important {
+            background-color: #fff3cd;
+            padding: 10px 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>GROUP POLICY MANAGEMENT</h1>
+            <!-- <p>These notes are written in simple language for beginner students learning Windows Server Administration.</p> -->
+
+            <div class="section">
+                <h2>1. Management of Group Policy Objects (GPO)</h2>
+
+                <h3>1.1 Description of GPO</h3>
+                <p>Group Policy Object (GPO) is a feature in Windows Server that
+                    allows administrators to control and manage:</p>
+                <ul>
+                    <li>User settings</li>
+                    <li>Computer settings</li>
+                </ul>
+                <p>Using GPO, an administrator can:</p>
+                <ul>
+                    <li>Enforce security rules</li>
+                    <li>Control software installation</li>
+                    <li>Set desktop restrictions</li>
+                    <li>Configure system behavior</li>
+                </ul>
+                <p>GPOs work in an Active Directory (AD) environment.</p>
+
+                <h3>1.2 Types of GPO</h3>
+                <h4>Local GPO</h4>
+                <ul>
+                    <li>Applies to one computer only</li>
+                    <li>Does not require Active Directory</li>
+                    <li>Settings affect all users on that computer</li>
+                    <li>Used mostly on standalone computers</li>
+                </ul>
+                <div class="example">Example: Disable Control Panel on one
+                    PC</div>
+
+                <h4>Non-Local GPO (Domain GPO)</h4>
+                <ul>
+                    <li>Created in Active Directory</li>
+                    <li>Can be applied to Site, Domain, or Organizational Unit
+                        (OU)</li>
+                    <li>Used in enterprise networks</li>
+                </ul>
+                <div class="example">Example: Password policy for all users in a
+                    domain</div>
+
+                <h4>Starter GPO</h4>
+                <ul>
+                    <li>Used as a template</li>
+                    <li>Helps create new GPOs with predefined settings</li>
+                    <li>Saves time and ensures consistency</li>
+                </ul>
+                <div class="example">Example: Starter GPO for security
+                    settings</div>
+
+                <h3>1.3 GPO Hierarchy Policies (Order of Application)</h3>
+                <p>GPOs are applied in the LSDOU order: <strong>Local → Site →
+                        Domain → OU</strong>. This order determines which policy
+                    settings take precedence.</p>
+
+                <h4>Local Policy</h4>
+                <ul>
+                    <li>Definition: GPO stored on the computer itself</li>
+                    <li>Priority: Lowest</li>
+                    <li>Where Applied: Only affects the local computer</li>
+                </ul>
+                <div class="example">Example: Lab PC restricts all users from
+                    changing wallpaper</div>
+
+                <h4>Site Policy</h4>
+                <ul>
+                    <li>Definition: GPO linked to an Active Directory site</li>
+                    <li>Priority: Higher than Local, lower than Domain</li>
+                    <li>Where Applied: All computers in a specific physical
+                        location</li>
+                </ul>
+                <div class="example">Example: All PCs in Lab A have a shared
+                    desktop background</div>
+
+                <h4>Domain Policy</h4>
+                <ul>
+                    <li>Definition: GPO linked to the entire domain</li>
+                    <li>Priority: Higher than Site, lower than OU</li>
+                    <li>Where Applied: All users and computers in the
+                        domain</li>
+                </ul>
+                <div class="example">Example: Every student must use the same
+                    password format</div>
+
+                <h4>OU (Organizational Unit) Policy</h4>
+                <ul>
+                    <li>Definition: GPO linked to a specific OU</li>
+                    <li>Priority: Highest</li>
+                    <li>Where Applied: Specific users or computers inside an
+                        OU</li>
+                </ul>
+                <div class="example">Example: All computers in IT OU have
+                    software X installed automatically</div>
+
+                <div class="important">
+                    Important Notes:
+                    <ul>
+                        <li>When multiple GPOs configure the same setting, the
+                            last applied GPO takes precedence (OU > Domain >
+                            Site > Local)</li>
+                        <li>Administrators can use Block Inheritance or Enforce
+                            Policy to control the application of GPOs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>2. Creation of Accounts (Server Administration)</h2>
+
+                <p>
+                    In Server Administration, an <strong>Account</strong> refers
+                    to an identity that is allowed to access
+                    a server and its resources. It defines <em>who can log
+                        in</em> and <em>what actions they are allowed to
+                        perform</em>.
+                </p>
+
+                <p>An account consists of:</p>
+                <ul>
+                    <li>Username</li>
+                    <li>Authentication method (password, SSH key, certificate,
+                        etc.)</li>
+                    <li>Permissions and privileges</li>
+                </ul>
+
+                <p>
+                    The server uses this information to determine access rights
+                    and security policies.
+                </p>
+
+                <h3>2.1 User Accounts</h3>
+                <p>
+                    A <strong>User Account</strong> represents a person who logs
+                    into the network to access resources.
+                    User accounts are centrally managed using <strong>Active
+                        Directory (AD)</strong> in Windows Server environments.
+                </p>
+
+                <h4>Examples of Users</h4>
+                <ul>
+                    <li>Students</li>
+                    <li>Teachers</li>
+                    <li>Employees</li>
+                    <li>Administrators</li>
+                </ul>
+
+                <h4>Types of User Accounts</h4>
+                <ul>
+                    <li><strong>Domain User Accounts</strong> – Managed
+                        centrally by Active Directory</li>
+                    <li><strong>Local User Accounts</strong> – Exist on a single
+                        computer only (not recommended in domains)</li>
+                </ul>
+
+                <h4>User Account Characteristics</h4>
+                <ul>
+                    <li>Allows users to log in to the domain</li>
+                    <li>Provides access to files, printers, applications, and
+                        network resources</li>
+                    <li>Contains username, password, and group membership</li>
+                </ul>
+
+                <h4>Example</h4>
+                <ul>
+                    <li>Username: <code>jsmith</code></li>
+                    <li>Domain: <code>school.local</code></li>
+                </ul>
+
+                <p>
+                    When a user logs in, Windows verifies the user's identity,
+                    permissions, and applicable Group Policy Objects (GPOs).
+                </p>
+
+                <h3>2.2 Computer Accounts</h3>
+                <p>
+                    A <strong>Computer Account</strong> represents a device (PC,
+                    laptop, or server) that is joined to a domain.
+                    Each computer has its own identity within Active Directory.
+                </p>
+
+                <h4>Computer Account Characteristics</h4>
+                <ul>
+                    <li>Represents a device, not a person</li>
+                    <li>Authenticates to the domain</li>
+                    <li>Receives security and configuration policies</li>
+                    <li>Account names end with a <strong>$</strong> symbol</li>
+                </ul>
+
+                <h4>Examples</h4>
+                <ul>
+                    <li><code>PC01$</code></li>
+                    <li><code>SERVER02$</code></li>
+                </ul>
+
+                <h4>Why Computer Accounts Exist</h4>
+                <ul>
+                    <li>Enable secure communication with the domain</li>
+                    <li>Allow authentication before users log in</li>
+                    <li>Support device-based security policies</li>
+                </ul>
+
+                <p>
+                    When a computer is joined to a domain (e.g.,
+                    <code>PC01.school.local</code>),
+                    Active Directory automatically creates a corresponding
+                    computer account (<code>PC01$</code>).
+                </p>
+
+                <h3>2.3 User Accounts in Group Policy (GPO)</h3>
+                <p>
+                    <strong>User Configuration GPOs</strong> apply to users
+                    regardless of which computer they log into.
+                </p>
+
+                <h4>Examples of User GPO Settings</h4>
+                <ul>
+                    <li>Desktop wallpaper</li>
+                    <li>Start Menu restrictions</li>
+                    <li>Control Panel access control</li>
+                    <li>Folder redirection</li>
+                    <li>Logon scripts</li>
+                </ul>
+
+                <p><strong>Applied when:</strong> The user logs in</p>
+
+                <h3>2.4 Computer Accounts in Group Policy (GPO)</h3>
+                <p>
+                    <strong>Computer Configuration GPOs</strong> apply to
+                    computers regardless of which user logs in.
+                </p>
+
+                <h4>Examples of Computer GPO Settings</h4>
+                <ul>
+                    <li>Windows Updates configuration</li>
+                    <li>Firewall settings</li>
+                    <li>USB device restrictions</li>
+                    <li>Automatic software installation</li>
+                    <li>Security policies</li>
+                </ul>
+
+                <p><strong>Applied when:</strong> The computer starts up</p>
+
+                <h3>2.5 Key Differences (Exam Important)</h3>
+                <table border="1" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <th>Feature</th>
+                        <th>User Account</th>
+                        <th>Computer Account</th>
+                    </tr>
+                    <tr>
+                        <td>Represents</td>
+                        <td>Person</td>
+                        <td>Device</td>
+                    </tr>
+                    <tr>
+                        <td>Stored in Active Directory</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>GPO Section</td>
+                        <td>User Configuration</td>
+                        <td>Computer Configuration</td>
+                    </tr>
+                    <tr>
+                        <td>Applied When</td>
+                        <td>User logs in</td>
+                        <td>Computer boots</td>
+                    </tr>
+                    <tr>
+                        <td>Affects</td>
+                        <td>User behavior</td>
+                        <td>Machine behavior</td>
+                    </tr>
+                </table>
+
+                <h3>2.6 How GPOs Are Applied</h3>
+                <ol>
+                    <li>Computer authenticates using its Computer Account</li>
+                    <li>User authenticates using their User Account</li>
+                    <li>Computer GPOs are applied first</li>
+                    <li>User GPOs are applied next</li>
+                </ol>
+
+                <p><strong>GPO Processing Order:</strong> Local → Site → Domain
+                    → OU (LSDOU)</p>
+
+                <h3>2.7 Real-Life Example (School Network)</h3>
+
+                <h4>User Account (Student)</h4>
+                <ul>
+                    <li>Can log in on any school computer</li>
+                    <li>Receives restricted desktop</li>
+                    <li>No Control Panel access</li>
+                    <li>Mapped network drives</li>
+                </ul>
+
+                <h4>Computer Account (School Lab PC)</h4>
+                <ul>
+                    <li>USB ports disabled</li>
+                    <li>Automatic updates enabled</li>
+                    <li>Software installed automatically</li>
+                </ul>
+
+                <div class="image-link">
+                    <a href="Accounts.png"
+                        target="_blank">
+                        <img
+                            src="Accounts.png"
+                            alt="User and Computer Accounts in Active Directory Diagram"
+                            style="max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ccc;">
+                    </a>
+                    <p style="font-size: 0.9em; color: #555;">
+                        Click the image to view full size
+                    </p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>3. Sharing Networked Resources</h2>
+                <p>Network sharing allows multiple users to access the same
+                    resources.</p>
+                <ul>
+                    <li>Common shared resources: Files, Folders, Printers,
+                        Applications</li>
+                    <li>Steps to share a folder:
+                        <ol>
+                            <li>Right-click the folder</li>
+                            <li>Select Properties</li>
+                            <li>Go to Sharing tab</li>
+                            <li>Set permissions (Read, Write, Modify, Full
+                                Control)</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <h3>1️⃣ Sharing Networked Resources (Windows Server & GPO
+                    Management)</h3>
+                <p><strong>What are Networked Resources?</strong></p>
+                <p>Networked resources are system resources stored on a server
+                    and accessed by users or computers over a network.</p>
+                <ul>
+                    <li>Shared folders (files, documents)</li>
+                    <li>Printers</li>
+                    <li>Applications</li>
+                    <li>Network drives</li>
+                </ul>
+                <p>In Windows Server, these resources are typically hosted on
+                    File Servers or Print Servers and controlled using Active
+                    Directory + GPOs.</p>
+
+                <h4>How Windows Server Shares Resources</h4>
+                <p><strong>A. File Sharing</strong></p>
+                <p>Windows Server uses SMB (Server Message Block) protocol to
+                    share files.</p>
+                <p>A shared folder has two layers of control:</p>
+                <ul>
+                    <li>
+                        <strong>Share Permissions (network-level):</strong>
+                        These permissions control access to the folder over the
+                        network. They determine what remote users can do with
+                        the folder, such as read, write, or modify files, when
+                        connecting from another computer.
+                    </li>
+                    <li>
+                        <strong>NTFS Permissions (file-system-level):</strong>
+                        These permissions control access to the folder and its
+                        files at the local file system level. They provide more
+                        granular control than share permissions, allowing you to
+                        set specific rights like read, write, modify, or full
+                        control for individual users or groups, regardless of
+                        how they access the folder.
+                    </li>
+                </ul>
+
+                <p>🔐 Effective permission = Most restrictive combination</p>
+
+                <h4>B. Role of GPO in Sharing Resources</h4>
+                <p>GPO does not store files, but controls how users access
+                    shared resources:</p>
+                <ul>
+                    <li>Map network drives automatically</li>
+                    <li>Hide or restrict access to shared folders</li>
+                    <li>Control offline file access</li>
+                    <li>Enforce security on shared resources</li>
+                </ul>
+
+                <h4>Example (Very Important)</h4>
+                <p>In a school or company:</p>
+                <ul>
+                    <li>A shared folder exists: \\Server01\Students</li>
+                    <li>A GPO maps it as drive S: for students</li>
+                    <li>Only users in Students OU can see and access it</li>
+                </ul>
+                <p>This ensures:</p>
+                <ul>
+                    <li>✔ Centralized access</li>
+                    <li>✔ Security</li>
+                    <li>✔ Easy management</li>
+                </ul>
+
+                <h4>Why GPO is Important for Resource Sharing</h4>
+                <ul>
+                    <li>Without GPO: Admin must manually configure each PC</li>
+                    <li>With GPO: Access is automatic, permissions are
+                        consistent, changes apply instantly across the
+                        network</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>4. Administration of Objects</h2>
+                <p>In Active Directory, objects include Users, Computers,
+                    Groups, and Printers.</p>
+                <ul>
+                    <li>Tasks: Create, Delete, Modify, Move between OUs</li>
+                    <li>Tools: ADUC (Active Directory Users and Computers), GPMC
+                        (Group Policy Management Console)</li>
+                </ul>
+
+                <h3>2️⃣ Administration of Objects (Active Directory & GPO
+                    Context)</h3>
+                <p><strong>What Are Objects?</strong></p>
+                <p>An object is any item stored in the directory.</p>
+                <ul>
+                    <li>User accounts</li>
+                    <li>Computer accounts</li>
+                    <li>Groups</li>
+                    <li>Printers</li>
+                    <li>Shared folders</li>
+                    <li>Organizational Units (OUs)</li>
+                </ul>
+
+                <p><strong>Administration of Objects Means:</strong></p>
+                <ul>
+                    <li>Creating</li>
+                    <li>Modifying</li>
+                    <li>Deleting</li>
+                    <li>Securing</li>
+                    <li>Applying policies</li>
+                </ul>
+
+                <h4>Role of GPO in Object Administration</h4>
+                <p>GPO controls how objects behave:</p>
+
+                <p><strong>A. User Objects</strong></p>
+                <ul>
+                    <li>Restrict Control Panel</li>
+                    <li>Set desktop environment</li>
+                    <li>Enforce password policies</li>
+                    <li>Redirect folders</li>
+                    <li>Apply login scripts</li>
+                </ul>
+                <p>📌 Applied when: User logs in</p>
+
+                <p><strong>B. Computer Objects</strong></p>
+                <ul>
+                    <li>Configure firewall</li>
+                    <li>Control Windows updates</li>
+                    <li>Disable USB ports</li>
+                    <li>Install software</li>
+                    <li>Apply security baselines</li>
+                </ul>
+                <p>📌 Applied when: Computer starts</p>
+
+                <h4>Delegation of Administration (Very Important)</h4>
+                <p>Windows Server allows delegation:</p>
+                <ul>
+                    <li>Junior admins can manage specific objects without full
+                        admin rights</li>
+                    <li>Example: Teacher IT staff can reset student passwords
+                        but cannot modify servers</li>
+                </ul>
+                <p>This improves:</p>
+                <ul>
+                    <li>✔ Security</li>
+                    <li>✔ Accountability</li>
+                    <li>✔ Scalability</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>5. User Authentication Methods</h2>
+                <p>Authentication is the process of verifying identity before
+                    granting access to a computer, network, or resource.</p>
+
+                <h3>3️⃣ User Authentication Methods (Windows Server
+                    Environment)</h3>
+                <p><strong>What Is User Authentication?</strong></p>
+                <p>Authentication verifies: “Are you really who you claim to
+                    be?”</p>
+                <p>Windows Server uses centralized authentication via Active
+                    Directory Domain Services (AD DS).</p>
+
+                <p><strong>Common Authentication Factors:</strong></p>
+                <ul>
+                    <li>Something you know (password)</li>
+                    <li>Something you have (smart card, token)</li>
+                    <li>Something you are (biometrics)</li>
+                </ul>
+                <p>Windows Server mainly uses:</p>
+                <ul>
+                    <li>Username + password</li>
+                    <li>Smart cards</li>
+                    <li>Certificates</li>
+                    <li>MFA (with extensions)</li>
+                </ul>
+
+                <p><strong>Authentication Flow (Domain Login):</strong></p>
+                <ul>
+                    <li>User enters credentials</li>
+                    <li>Computer contacts Domain Controller</li>
+                    <li>Credentials are verified</li>
+                    <li>Access is granted</li>
+                    <li>GPOs are applied</li>
+                </ul>
+
+                <h3>5.1 LDAP (Lightweight Directory Access Protocol)</h3>
+                <ul>
+                    <li>
+                        <strong>Definition:</strong> LDAP is a protocol used to
+                        access and manage directory services, such as Active
+                        Directory (AD). It defines a standard method for
+                        querying and modifying directory information over a
+                        network.
+                    </li>
+                    <li>
+                        LDAP is commonly used
+                        to:
+                        <ul>
+                            <li>Check user login credentials during
+                                authentication</li>
+                            <li>Search for information about users, computers,
+                                or other resources</li>
+                            <li>Manage groups, permissions, and organizational
+                                structures in the directory</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="example">
+                    <strong>Analogy:</strong> A librarian checking a student’s
+                    ID to allow entry to the library.<br>
+                    <strong>Example:</strong> User logs in → system queries
+                    Active Directory via LDAP → access granted or denied
+                </div>
+
+                <p><strong>Role of LDAP in Windows Server:</strong></p>
+                <ul>
+                    <li>Locate user accounts</li>
+                    <li>Authenticate users</li>
+                    <li>Retrieve group membership</li>
+                    <li>Apply GPOs</li>
+                    <li>Search AD objects</li>
+                </ul>
+                <p>When a user logs in: Windows uses LDAP to find the user
+                    object in AD.</p>
+
+                <h3>5.2 RADIUS (Remote Authentication Dial-In User Service)</h3>
+                <ul>
+                    <li>
+                        <strong>Definition:</strong> RADIUS is a network
+                        protocol that provides centralized authentication,
+                        authorization, and accounting (AAA) for users who
+                        connect to a network service, such as Wi-Fi, VPN, or
+                        remote access.
+                    </li>
+                    <li>
+                        RADIUS is commonly used
+                        to:
+                        <ul>
+                            <li>Authenticate users attempting to access network
+                                resources</li>
+                            <li>Authorize user access based on roles or
+                                permissions</li>
+                            <li>Maintain accounting logs of user activity for
+                                auditing purposes</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="example">
+                    <strong>Analogy:</strong> A security guard checks your ID at
+                    the school gate before entry.<br>
+                    <strong>Example:</strong> Student connects to school Wi-Fi →
+                    RADIUS server verifies login → access allowed or denied
+                </div>
+
+                <p><strong>RADIUS in Windows Server:</strong></p>
+                <ul>
+                    <li>Windows Server provides RADIUS via Network Policy Server
+                        (NPS)</li>
+                    <li>NPS integrates with Active Directory, VPN servers, Wi-Fi
+                        access points, switches</li>
+                </ul>
+                <p>RADIUS performs the AAA Model:</p>
+                <ul>
+                    <li>Authentication – Who are you?</li>
+                    <li>Authorization – What are you allowed to access?</li>
+                    <li>Accounting – What did you do?</li>
+                </ul>
+
+                <h4>Relationship Between LDAP & RADIUS</h4>
+                <ul>
+                    <li>LDAP → Finds and verifies user objects</li>
+                    <li>RADIUS → Controls network access using AD accounts</li>
+                    <li>They work together, not against each other</li>
+                </ul>
+
+                <h4>🔚 Final Concept Map (Mental Picture)</h4>
+                <ul>
+                    <li>Active Directory → Stores objects</li>
+                    <li>LDAP → Finds and manages objects</li>
+                    <li>Authentication → Verifies users</li>
+                    <li>RADIUS → Controls network access</li>
+                    <li>GPO → Controls behavior of users and computers</li>
+                    <li>Shared Resources → Access controlled by AD + GPO</li>
+                </ul>
+
+                <!-- Image/diagram link added here -->
+                <div class="image-link">
+                    <a href="Auth-methods.png"
+                        target="_blank">
+                        <img
+                            src="Auth-methods.png"
+                            alt="Active Directory Authentication Concept Map"
+                            style="max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ccc;">
+                    </a>
+                    <p style="font-size: 0.9em; color: #555;">Click the image to
+                        view full size</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

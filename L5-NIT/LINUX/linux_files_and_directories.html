@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux File and Directory Management Notes</title>
+<style>
+    body {
+        font-family: "Calisto MT", Roboto, Arial, sans-serif;
+        background-color: #0f172a;
+        color: #e2e8f0;
+        margin: 0;
+        padding: 0;
+        line-height: 1.7;
+    }
+
+    header {
+        background: linear-gradient(90deg, #2563eb, #1e40af);
+        padding: 25px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    main {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #1e293b;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    section {
+        margin-bottom: 40px;
+        border-left: 4px solid #3b82f6;
+        padding-left: 15px;
+    }
+
+    h2 {
+        color: #3b82f6;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #93c5fd;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        border: 1px solid #334155;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #1e40af;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #273449;
+    }
+
+    tr:hover {
+        background-color: #334155;
+    }
+
+    .code, pre {
+        background-color: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 10px;
+        color: #93c5fd;
+        overflow-x: auto;
+        font-family: Consolas, monospace;
+    }
+
+    .tip {
+        background-color: #0ea5e9;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-weight: 500;
+    }
+
+    ul {
+        margin-left: 20px;
+    }
+
+    .tree {
+        font-family: Consolas, monospace;
+        background: #0f172a;
+        border: 1px solid #334155;
+        padding: 10px;
+        border-radius: 8px;
+        color: #a5f3fc;
+    }
+
+    footer {
+        background: #1e293b;
+        text-align: center;
+        padding: 15px;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        margin-top: 40px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🧩 Linux File and Directory Management Notes</h1>
+    <p>Ubuntu Linux OS — Creation, Structure, and Management</p>
+</header>
+
+<main>
+
+<section>
+    <h2>1. Creation of Linux Files and Directories</h2>
+    <p>In Ubuntu Linux OS, files and directories can be created using both command-line tools and graphical interfaces. System administrators mostly use the terminal.</p>
+
+    <h3>🧩 Creating Files</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>touch</td><td><code>touch myfile.txt</code></td><td>Creates an empty file or updates timestamp.</td></tr>
+        <tr><td>echo</td><td><code>echo "Hello Linux" > hello.txt</code></td><td>Creates a file and writes text into it.</td></tr>
+        <tr><td>cat</td><td><code>cat > notes.txt</code> (then type and press Ctrl+D)</td><td>Creates a file with typed content.</td></tr>
+        <tr><td>nano or vi</td><td><code>nano report.txt</code></td><td>Opens a text editor to create or edit files.</td></tr>
+    </table>
+
+    <h3>📁 Creating Directories</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>mkdir</td><td><code>mkdir myfolder</code></td><td>Creates a new directory.</td></tr>
+        <tr><td>mkdir -p</td><td><code>mkdir -p /home/user/docs/work</code></td><td>Creates nested directories automatically.</td></tr>
+    </table>
+
+    <div class="tip">🧭 Verify creation with <code>ls -l</code></div>
+</section>
+
+<section>
+    <h2>2. Description of Linux File System Hierarchy</h2>
+    <p>Ubuntu follows the Filesystem Hierarchy Standard (FHS), a consistent structure organizing directories logically.</p>
+
+    <table>
+        <tr><th>Directory</th><th>Description</th></tr>
+        <tr><td>/</td><td>Root directory — top of hierarchy.</td></tr>
+        <tr><td>/bin</td><td>Essential binaries (ls, cp, mv).</td></tr>
+        <tr><td>/boot</td><td>Boot loader files and kernel.</td></tr>
+        <tr><td>/etc</td><td>Configuration files.</td></tr>
+        <tr><td>/home</td><td>User home directories.</td></tr>
+        <tr><td>/var</td><td>Variable data (logs, mail, spool).</td></tr>
+        <tr><td>/usr</td><td>User programs and data.</td></tr>
+        <tr><td>/tmp</td><td>Temporary files.</td></tr>
+    </table>
+
+    <h3>🧱 Visual Representation</h3>
+    <pre class="tree">/
+├── bin
+├── boot
+├── dev
+├── etc
+├── home
+│   ├── user1
+│   └── user2
+├── lib
+├── opt
+├── root
+├── usr
+│   ├── bin
+│   ├── lib
+│   └── share
+└── var
+    ├── log
+    └── mail
+</pre>
+
+    <h3>🧩 What is a File System?</h3>
+    <p>A file system is the structure that defines how data is stored, accessed, and managed on a disk.</p>
+</section>
+
+<section>
+    <h2>3. Types of Linux File Systems</h2>
+    <h3>1️⃣ Native Linux File Systems</h3>
+    <table>
+        <tr><th>File System</th><th>Description / Features</th></tr>
+        <tr><td>ext2</td><td>Stable, no journaling.</td></tr>
+        <tr><td>ext3</td><td>Ext2 + journaling support.</td></tr>
+        <tr><td>ext4</td><td>Default in Ubuntu; supports large files, journaling.</td></tr>
+        <tr><td>XFS</td><td>High performance for enterprise.</td></tr>
+        <tr><td>Btrfs</td><td>Modern, supports snapshots and RAID.</td></tr>
+    </table>
+    <div class="tip">✅ Most common in Ubuntu: <strong>ext4</strong></div>
+
+    <h3>2️⃣ Non-Native File Systems</h3>
+    <table>
+        <tr><th>File System</th><th>Origin / Usage</th></tr>
+        <tr><td>FAT32 / exFAT</td><td>Used by Windows/USB drives; simple, widely compatible.</td></tr>
+        <tr><td>NTFS</td><td>Windows FS, supported via <code>ntfs-3g</code>.</td></tr>
+        <tr><td>HFS / APFS</td><td>Used by macOS systems.</td></tr>
+    </table>
+
+    <h3>3️⃣ Network File Systems</h3>
+    <table>
+        <tr><th>File System</th><th>Description</th></tr>
+        <tr><td>NFS</td><td>Shares files between Linux systems.</td></tr>
+        <tr><td>SMB/CIFS</td><td>Windows file-sharing protocol.</td></tr>
+    </table>
+
+    <h3>4️⃣ Virtual File Systems</h3>
+    <table>
+        <tr><th>File System</th><th>Description</th></tr>
+        <tr><td>procfs</td><td>Process and system info.</td></tr>
+        <tr><td>sysfs</td><td>Hardware and kernel info.</td></tr>
+        <tr><td>tmpfs</td><td>RAM-based temporary filesystem.</td></tr>
+    </table>
+
+    <h3>🧱 Summary</h3>
+    <table>
+        <tr><th>Category</th><th>Examples</th><th>Purpose</th></tr>
+        <tr><td>Native Linux FS</td><td>ext4, XFS</td><td>Main file storage</td></tr>
+        <tr><td>Non-Native FS</td><td>FAT32, NTFS</td><td>Cross-platform use</td></tr>
+        <tr><td>Network FS</td><td>NFS, SMB</td><td>Remote access</td></tr>
+        <tr><td>Virtual FS</td><td>procfs, sysfs</td><td>System info</td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>4. Managing Files and Directories</h2>
+
+    <h3>🧭 Viewing and Listing</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>ls</td><td><code>ls -l</code></td><td>List files and directories.</td></tr>
+        <tr><td>pwd</td><td><code>pwd</code></td><td>Show current working directory.</td></tr>
+    </table>
+
+    <h3>🔁 Copying, Moving, and Renaming</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>cp</td><td><code>cp file1.txt /home/user/</code></td><td>Copy files.</td></tr>
+        <tr><td>mv</td><td><code>mv old.txt new.txt</code></td><td>Move or rename files.</td></tr>
+    </table>
+
+    <h3>🗑️ Deleting</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>rm</td><td><code>rm file.txt</code></td><td>Delete file.</td></tr>
+        <tr><td>rm -r</td><td><code>rm -r folder</code></td><td>Delete directory recursively.</td></tr>
+    </table>
+
+    <h3>🔒 Permissions</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>chmod</td><td><code>chmod 755 script.sh</code></td><td>Change permissions.</td></tr>
+        <tr><td>chown</td><td><code>chown user:group file.txt</code></td><td>Change file ownership.</td></tr>
+    </table>
+
+    <h3>📦 Archiving & Compression</h3>
+    <table>
+        <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+        <tr><td>tar</td><td><code>tar -cvf archive.tar folder/</code></td><td>Create a tar archive.</td></tr>
+        <tr><td>gzip</td><td><code>gzip file.txt</code></td><td>Compress file.</td></tr>
+    </table>
+
+    <h3>🧠 Summary</h3>
+    <table>
+        <tr><th>Task</th><th>Command Example</th></tr>
+        <tr><td>Create file</td><td><code>touch file1.txt</code></td></tr>
+        <tr><td>Create directory</td><td><code>mkdir mydir</code></td></tr>
+        <tr><td>List files</td><td><code>ls -l</code></td></tr>
+        <tr><td>Delete</td><td><code>rm file.txt</code></td></tr>
+    </table>
+
+    <div class="tip">💡 Linux filenames are case-sensitive (File.txt ≠ file.txt)</div>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 Linux Administration Notes — Designed by iradukunda jmv</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Exchange Server Deployment Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fa;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            text-align: center;
+            /* font-style:oblique; */
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: #033665;
+            border-bottom: 3px solid #1b3a57;
+            padding-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ff6f61;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #0b6e4f;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #4b3bff;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        li::marker {
+            color: #ff6f61;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #fff8c6;
+            border-left: 5px solid #ff6f61;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .tip {
+            background: #d2f8d2;
+            border-left: 5px solid #0b6e4f;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .section:hover {
+            transform: scale(1.01);
+        }
+
+        code {
+            background: #eef2f7;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        a {
+            color: #4b3bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #ccc;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+
+    <!-- Small H1 -->
+    <h1 style="font-size:16px; font-weight:600; margin-bottom:6px;">
+        Mail Exchange Server Deployment
+    </h1>
+
+    <!-- Single Related Link -->
+    <div class="related-link">
+        <a href="summary.html" target="_blank">
+            View Related Content: Exchange Server Overview
+        </a>
+    </div>
+
+</div>
+
+<style>
+.header-section {
+    margin-bottom: 20px;
+}
+
+.related-link a {
+    font-size: 13px;
+    text-decoration: none;
+    color: #2563eb;
+    transition: 0.3s ease;
+}
+
+.related-link a:hover {
+    text-decoration: underline;
+}
+</style>
+
+    <div class="section">
+        <h2>1. Description of Mail Exchange Server</h2>
+        <p>A Mail Exchange Server is a software system that manages email communication within an organization, allowing users to send, receive, and store emails efficiently. Microsoft Exchange Server is the most widely used enterprise mail server.</p>
+        <p><strong>Key features include:</strong></p>
+        <ul>
+            <li>Email sending/receiving: Supports SMTP, IMAP, POP3 protocols.</li>
+            <li>Calendar & scheduling: Allows meeting invitations, reminders, and shared calendars.</li>
+            <li>Contacts and tasks management: Users can manage address books, tasks, and notes.</li>
+            <li>Security & compliance: Built-in spam filtering, malware protection, and data compliance.</li>
+            <li>Integration: Works with Microsoft Outlook and Outlook Web Access (OWA).</li>
+        </ul>
+        <p>In simple terms, Exchange Server acts as a central hub for all organizational email communication.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Selection of Mail Server Exchange Versions & Roles</h2>
+
+        <h3>2.1 Exchange Server Versions (Main/Basic)</h3>
+        <ul>
+            <li>Exchange Server 2016: Stable and widely used in enterprises; supports hybrid deployment with Office 365.</li>
+            <li>Exchange Server 2019: Latest version; requires Windows Server 2019 or later, with better performance and security enhancements.</li>
+        </ul>
+        <div class="note">Note: For basic deployment, Exchange Server 2016 is sufficient and easier to manage with GUI.</div>
+
+        <h3>2.2 Exchange Server Roles (Main/Basic)</h3>
+        <p>Exchange Server can have different roles, which define the server’s functions in email handling:</p>
+        <ul>
+            <li><strong>Mailbox Server (Mailbox Role)</strong>
+                <ul>
+                    <li>Stores user mailboxes, public folders, and application data.</li>
+                    <li>Handles all mailbox-related operations: sending, receiving, and storing emails.</li>
+                    <li>Main Function: Core storage and email delivery for users.</li>
+                </ul>
+            </li>
+            <li><strong>Hub Transport Server (Transport Role)</strong>
+                <ul>
+                    <li>Responsible for routing emails within the organization.</li>
+                    <li>Ensures messages reach the correct mailbox and applies transport rules (policies, filtering).</li>
+                    <li>Note: In Exchange 2016+, Hub Transport is integrated into the Mailbox role, so a separate server is often not required.</li>
+                </ul>
+            </li>
+            <li><strong>Edge Transport Server</strong>
+                <ul>
+                    <li>Positioned at the perimeter of the network (outside firewall).</li>
+                    <li>Handles all inbound and outbound mail with external networks, providing anti-spam and security features.</li>
+                    <li>Optional for basic deployments; often used in large enterprises.</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="note">Simplified Summary: For a basic Exchange deployment, you primarily need the Mailbox role, as it includes transport functionality in newer versions.</div>
+    </div>
+
+    <div class="section">
+        <h2>3. Installation Process of Mail Exchange Server (Using GUI)</h2>
+
+        <h3>3.1 Prerequisites</h3>
+        <ul>
+            <li>Windows Server 2016 or later installed.</li>
+            <li>.NET Framework 4.7.2 or higher: is a software framework by Microsoft installed on Windows Server that provides a runtime environment for running and developing applications.
+                <ul>
+                    <li>A runtime environment is a software layer that allows programs to run on a computer. It provides the necessary tools, libraries, and services that a program needs while it is running.</li>
+                    <li><strong>Role/Use:</strong> Exchange Server relies on .NET Framework to run its services, manage mailboxes, and support the Exchange Management GUI and backend processes.</li>
+                    <li><strong>Function:</strong> It ensures that Exchange applications, tools, and web interfaces work correctly on the server.</li>
+                    <li>In short: Without the required .NET Framework, Exchange Server cannot install or operate properly.</li>
+                </ul>
+            </li>
+            <li>Unified Communications Managed API (UCMA) for voice features (optional).</li>
+            <li>Windows Features Required (can install via Server Manager GUI):
+                <ul>
+                    <li>RSAT-ADDS (Active Directory Domain Services)</li>
+                    <li>Web Server (IIS)</li>
+                    <li>Windows Identity Foundation</li>
+                </ul>
+            </li>
+            <li>Ensure the server is joined to a domain (Active Directory).</li>
+        </ul>
+
+        <h3>3.2 Step-by-Step GUI Installation</h3>
+
+        <h4>Step 1: Prepare Active Directory</h4>
+        <ul>
+            <li>Insert the Exchange Server media and open the <code>setup.exe</code>.</li>
+            <li>Run Setup Wizard → choose “Prepare Active Directory” (if this is the first Exchange server).</li>
+            <li>Follow the GUI steps to:
+                <ul>
+                    <li>Extend the Active Directory schema.</li>
+                    <li>Prepare domain objects.</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="tip">Tip: These steps can also be done via GUI; the wizard guides you automatically.</div>
+
+        <h4>Step 2: Install Exchange Server Roles</h4>
+        <ul>
+            <li>Launch Exchange Setup Wizard from media.</li>
+            <li>Select “Install Exchange Server 2016/2019”.</li>
+            <li>Accept license agreement → Click Next.</li>
+            <li>Choose Mailbox Role (for basic deployment) → Click Next.</li>
+            <li>Edge Transport Role is optional; select if needed.</li>
+            <li>Choose installation path → Click Next.</li>
+        </ul>
+
+        <h4>Step 3: Configure Exchange Server</h4>
+        <ul>
+            <li>GUI will ask to configure settings such as:
+                <ul>
+                    <li>Organization name (e.g., “MyCompany Mail”)</li>
+                    <li>Client Access settings (Outlook Web Access URLs)</li>
+                </ul>
+            </li>
+            <li>Click Install → Wait for setup to complete.</li>
+            <li>Restart server if prompted.</li>
+        </ul>
+
+        <h3>3.3 Post-Installation Configuration (Using GUI)</h3>
+        <ul>
+            <li>Open Exchange Admin Center (EAC) via browser:
+                <ul>
+                    <li>URL: <a href="https://<servername>/ecp" target="_blank">https://&lt;servername&gt;/ecp</a></li>
+                </ul>
+            </li>
+            <li>Login with domain administrator account.</li>
+            <li>Configure the following via GUI:
+                <ul>
+                    <li>Mailbox creation → Add users and assign mailboxes.</li>
+                    <li>Accepted domains → Define email domains for your organization.</li>
+                    <li>Email policies and transport rules → Basic filtering and forwarding.</li>
+                    <li>Connectors → Configure inbound/outbound SMTP if Edge Transport is used.</li>
+                    <li>Certificates → Install SSL certificates for secure email access.</li>
+                </ul>
+            </li>
+            <li>Test sending/receiving emails using Outlook or OWA.</li>
+        </ul>
+    </div>
+
+        <div class="section" style="text-align: center;">
+        <h2>Reference Image</h2>
+        <a href="https://learn.microsoft.com/en-us/exchange/plan-and-deploy/deploy-new-installations/install-mailbox-role" target="_blank">
+            <img src="Mail-server.png" 
+                 alt="Mail Exchange Server Diagram" 
+                 style="max-width:100%; height:auto; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+        </a>
+        <p style="margin-top:10px; font-style:italic; color:#666;">Click the image to open the reference link.</p>
+    </div>
+
+
+    <div class="section">
+        <h2>4. Notes on GUI vs PowerShell</h2>
+        <ul>
+            <li>All steps above can be completed in GUI via setup wizard and Exchange Admin Center (EAC).</li>
+            <li>PowerShell (Exchange Management Shell) is optional but often used for bulk or advanced tasks.</li>
+            <li>For basic deployment and configuration, GUI is sufficient and easier to visualize.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

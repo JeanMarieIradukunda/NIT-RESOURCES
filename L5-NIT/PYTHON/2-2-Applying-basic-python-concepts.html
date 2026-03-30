@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Basics - ELS10 Notes</title>
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Calisto MT', serif, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            color: #2E8B57;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #aaa;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #2E8B57;
+            color: white;
+        }
+        code {
+            background-color: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 30px;
+        }
+        .section {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-left: 6px solid #4CAF50;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Python Basic Concepts</h1>
+    <p>Study Notes with Examples, Roles, and Real-Life Applications</p>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>1️⃣ Data Types</h2>
+        <p><strong>Definition:</strong> Data types define the kind of data a variable can hold and how Python handles it.</p>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Example</th>
+                <th>Description</th>
+            </tr>
+            <tr><td>int</td><td>5</td><td>Whole numbers</td></tr>
+            <tr><td>float</td><td>5.6</td><td>Decimal numbers</td></tr>
+            <tr><td>str</td><td>"Hello"</td><td>Text</td></tr>
+            <tr><td>bool</td><td>True</td><td>Logical values</td></tr>
+            <tr><td>list</td><td>[1,2,3]</td><td>Ordered collection</td></tr>
+            <tr><td>tuple</td><td>(1,2,3)</td><td>Immutable ordered items</td></tr>
+            <tr><td>dict</td><td>{"name":"John"}</td><td>Key-value pairs</td></tr>
+            <tr><td>set</td><td>{1,2,3}</td><td>Unordered unique items</td></tr>
+        </table>
+        <p><strong>Role:</strong> Organize memory, prevent errors, and guide operations on data.</p>
+        <p><strong>Real-life Example:</strong> Different containers for rice, water, and money.</p>
+        <pre><code>age = 25       # int
+name = "Alice"   # str
+price = 4.99     # float
+is_paid = True   # bool
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>2️⃣ Variables</h2>
+        <p><strong>Definition:</strong> A variable is a named container for storing data in a program.</p>
+        <p><strong>Rules to Declare:</strong></p>
+        <ul>
+            <li>Start with a letter or underscore</li>
+            <li>Can include letters, numbers, or underscores</li>
+            <li>Case-sensitive</li>
+            <li>No spaces or special characters</li>
+            <li>Use meaningful names</li>
+        </ul>
+        <p><strong>Modes of Variable Declaration:</strong></p>
+        <ul>
+            <li>Static: Value doesn’t change (<code>pi = 3.14</code>)</li>
+            <li>Dynamic: Value can change (<code>age = 20; age = 21</code>)</li>
+            <li>Global: Accessible everywhere (<code>global x</code>)</li>
+            <li>Local: Accessible inside function only</li>
+        </ul>
+        <p><strong>Real-life Example:</strong> Labels on containers (sugar, flour, rice).</p>
+        <pre><code>student_name = "Iradukunda"
+age = 20
+print("Student:", student_name, "Age:", age)
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>3️⃣ Comments</h2>
+        <p><strong>Definition:</strong> Comments are non-executable lines that explain code.</p>
+        <p><strong>Types:</strong></p>
+        <ul>
+            <li>Single-line: <code># This is a comment</code></li>
+            <li>Multi-line: <code>'''This is a multi-line comment'''</code></li>
+        </ul>
+        <p><strong>Role:</strong> Improves readability, helps debugging, explains complex logic.</p>
+        <p><strong>Real-life Example:</strong> Sticky notes or instructions on a machine.</p>
+        <pre><code># This program calculates area
+length = 10
+width = 5
+area = length * width
+"""The area is found by multiplying length and width."""
+print("Area =", area)
+        </code></pre>
+    </div>
+
+    <div class="section">
+        <h2>4️⃣ Operators</h2>
+        <p><strong>Definition:</strong> Operators are symbols used to perform calculations, comparisons, or logical operations.</p>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr><td>Arithmetic</td><td>Mathematical calculations</td><td>+ - * / %</td></tr>
+            <tr><td>Assignment</td><td>Assign values</td><td>= += -=</td></tr>
+            <tr><td>Comparison</td><td>Compare values</td><td>== != > < >= <=</td></tr>
+            <tr><td>Logical</td><td>Combine conditions</td><td>and, or, not</td></tr>
+            <tr><td>Bitwise</td><td>Work on binary bits</td><td>& | ^ << >></td></tr>
+            <tr><td>Membership</td><td>Check membership</td><td>in, not in</td></tr>
+            <tr><td>Identity</td><td>Compare memory location</td><td>is, is not</td></tr>
+        </table>
+        <p><strong>Role:</strong> Perform actions, comparisons, and logical decisions in code.</p>
+        <p><strong>Real-life Example:</strong> Math symbols used to calculate total price in a supermarket.</p>
+        <pre><code>a = 10
+b = 3
+print(a + b)          # 13
+print(a > b)          # True
+print(a > 5 and b < 5)  # True
+        </code></pre>
+    </div>
+
+</div>
+
+<footer>
+    PVC © 2025 - 2026 - GENPP502
+</footer>
+
+</body>
+</html>

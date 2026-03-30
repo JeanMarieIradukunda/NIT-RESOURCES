@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Programming Complete Notes</title>
+
+<style>
+    body{
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin:0;
+        background:#f4f6f9;
+        color:#222;
+        line-height:1.6;
+    }
+
+    header{
+        background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);
+        color:white;
+        padding:25px;
+        text-align:center;
+    }
+
+    section{
+        background:white;
+        width:90%;
+        max-width:1000px;
+        margin:25px auto;
+        padding:25px;
+        border-radius:12px;
+        box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    h2{
+        color:#2c5364;
+        border-left:6px solid #2c5364;
+        padding-left:10px;
+    }
+
+    h3{
+        margin-top:20px;
+        color:#1e3c72;
+    }
+
+    pre{
+        background:#1e1e1e;
+        color:#00ff99;
+        padding:15px;
+        border-radius:8px;
+        overflow-x:auto;
+        font-size:14px;
+    }
+
+    .output{
+        background:#f1f1f1;
+        padding:10px;
+        border-radius:6px;
+        font-family:monospace;
+    }
+
+    ul{
+        margin-left:20px;
+    }
+
+    .important{
+        background:#fff8e1;
+        padding:10px;
+        border-left:5px solid #ff9800;
+        margin:10px 0;
+    }
+
+    table{
+        border-collapse:collapse;
+        width:100%;
+        margin-top:10px;
+    }
+
+    table, th, td{
+        border:1px solid #ccc;
+    }
+
+    th, td{
+        padding:8px;
+        text-align:left;
+    }
+
+    footer{
+        text-align:center;
+        padding:20px;
+        background:#203a43;
+        color:white;
+        margin-top:30px;
+    }
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Complete C Programming Notes</h1>
+</header>
+
+<section>
+
+<h2>🔹 What Does \t Mean in C?</h2>
+
+<p><b>✅ \t = Tab Space</b></p>
+<p>It adds a horizontal space in the output.</p>
+<p>It moves the cursor to the next tab position (like pressing the Tab key on a keyboard).</p>
+
+<h3>📌 Example:</h3>
+<pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    printf("Name\tAge\tGrade\n");
+    printf("John\t15\tA\n");
+    printf("Mary\t16\tB\n");
+
+    return 0;
+}
+</pre>
+
+<h3>🖥 Output:</h3>
+<div class="output">
+Name    Age    Grade<br>
+John    15     A<br>
+Mary    16     B
+</div>
+
+<p>👉 \t makes the text aligned in columns.</p>
+
+<ul>
+<li>Tables</li>
+<li>Seating plans</li>
+<li>Reports</li>
+<li>Grids</li>
+</ul>
+
+</section>
+
+
+<section>
+
+<h2>🔹 What Does .2f Mean in C?</h2>
+
+<p><b>✅ .2f</b> is used in printf() to format decimal numbers.</p>
+
+<p>It means: Display a floating-point number with 2 digits after the decimal point.</p>
+
+<h3>📌 Example:</h3>
+
+<pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    float number = 5.6789;
+
+    printf("Number = %.2f", number);
+
+    return 0;
+}
+</pre>
+
+<h3>🖥 Output:</h3>
+<div class="output">
+Number = 5.68
+</div>
+
+<p>👉 It rounds the number to 2 decimal places.</p>
+
+<h3>🔹 Breaking It Down</h3>
+<ul>
+<li>% → Start of format specifier</li>
+<li>.2 → Show 2 digits after decimal</li>
+<li>f → Floating-point number</li>
+</ul>
+
+</section>
+
+
+<section>
+
+<h2>🔤 Types of Font Cases in Programming</h2>
+
+<h3>1️⃣ Uppercase</h3>
+<pre>
+HELLO
+CLASS
+TOTAL
+</pre>
+
+<p>Used for constants and macros.</p>
+
+<pre>
+#define MAX 100
+</pre>
+
+<h3>2️⃣ Lowercase</h3>
+<pre>
+hello
+class
+total
+</pre>
+
+<pre>
+int total;
+printf("Hello");
+</pre>
+
+<h3>3️⃣ Camel Case</h3>
+<pre>
+studentName
+totalMarks
+</pre>
+
+<h3>4️⃣ Pascal Case</h3>
+<pre>
+StudentName
+TotalMarks
+</pre>
+
+<h3>5️⃣ Snake Case</h3>
+<pre>
+student_name
+total_marks
+</pre>
+
+<h3>6️⃣ Kebab Case</h3>
+<pre>
+student-name
+</pre>
+
+<div class="important">
+<b>🔥 Important Concept: Case Sensitivity</b><br>
+In C programming:
+total, Total, TOTAL are different.
+</div>
+
+<pre>
+int total = 5;
+printf("%d", Total);  // ERROR!
+</pre>
+
+</section>
+
+
+<section>
+
+<h2>🔴 Common Structure Errors in C</h2>
+
+<h3>1️⃣ Missing Semicolon ;</h3>
+
+<pre>
+int x = 5
+printf("%d", x);
+</pre>
+
+<h3>2️⃣ Missing Curly Braces { }</h3>
+
+<pre>
+if(x > 5)
+{
+    printf("Hello");
+}
+</pre>
+
+<h3>3️⃣ Wrong Parentheses</h3>
+
+<pre>
+if(x > 5)
+</pre>
+
+<h3>4️⃣ Undeclared Variables</h3>
+
+<pre>
+int total;
+printf("%d", total);
+</pre>
+
+<h3>5️⃣ Case Sensitivity</h3>
+
+<pre>
+int total;
+int Total; // Different
+</pre>
+
+<h3>6️⃣ Infinite Loops</h3>
+
+<pre>
+while(i <= 5)
+{
+    printf("%d", i);
+}
+</pre>
+
+<h3>7️⃣ Wrong Format Specifiers</h3>
+
+<pre>
+int x = 10;
+printf("%f", x);
+</pre>
+
+<h3>8️⃣ Missing return 0;</h3>
+
+<pre>
+return 0;
+</pre>
+
+<h3>9️⃣ Using = Instead of ==</h3>
+
+<pre>
+if(x == 5)
+</pre>
+
+<h3>🔟 Wrong Loop Structure</h3>
+
+<pre>
+for(i = 0; i < 5; i++)
+{
+    printf("%d", i);
+}
+</pre>
+
+<h3>1️⃣1️⃣ Forgetting to Initialize Variables</h3>
+
+<pre>
+int total = 0;
+</pre>
+
+<h3>1️⃣2️⃣ Array Index Out of Range</h3>
+
+<pre>
+int arr[5];
+arr[4] = 10; // Valid
+</pre>
+
+</section>
+
+
+<section>
+
+<h2>🔥 Summary of Most Common Errors</h2>
+
+<table>
+<tr>
+<th>Error Type</th>
+<th>Problem</th>
+</tr>
+<tr>
+<td>Missing ;</td>
+<td>Statement not closed</td>
+</tr>
+<tr>
+<td>Missing {}</td>
+<td>Wrong block structure</td>
+</tr>
+<tr>
+<td>Undeclared variable</td>
+<td>Not defined</td>
+</tr>
+<tr>
+<td>Case error</td>
+<td>Wrong letter case</td>
+</tr>
+<tr>
+<td>Infinite loop</td>
+<td>Loop never stops</td>
+</tr>
+</table>
+
+</section>
+
+
+<section>
+<h2>🧠 Important Advice for Students</h2>
+
+<ul>
+<li>Always check semicolons</li>
+<li>Always check braces</li>
+<li>Match data types with format specifiers</li>
+<li>Initialize variables</li>
+<li>Test loops carefully</li>
+<li>Remember C is case-sensitive</li>
+</ul>
+
+</section>
+
+<footer>
+            GENCP302 - PADRI VJEKO CENTRE TSS
+</footer>
+
+</body>
+</html>

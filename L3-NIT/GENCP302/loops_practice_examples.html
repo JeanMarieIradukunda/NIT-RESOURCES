@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Loops Programs</title>
+
+    <style>
+        body {
+            font-family: "Cambria", Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2a5298;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .question {
+            background: #e8f0fe;
+            padding: 15px;
+            border-left: 5px solid #2a5298;
+            margin-bottom: 15px;
+        }
+
+        pre {
+            background-color: #002b36;
+            /* Solarized base03 */
+            color: #839496;
+            /* Default text */
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .keyword {
+            color: #268bd2;
+        }
+
+        .string {
+            color: #2aa198;
+        }
+
+        .number {
+            color: #d33682;
+        }
+
+        .comment {
+            color: #586e75;
+            font-style: italic;
+        }
+
+        .function {
+            color: #b58900;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #2a5298;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Nested Loops Programming Projects</h1>
+        <p>Questions and Solutions in C Programming</p>
+    </header>
+
+
+    <section>
+        <h2>🟢 1️⃣ Attendance Marking System</h2>
+
+        <div class="question">
+            <strong>Question:</strong>
+            Write a C program for 3 classes with 5 students each.
+            Input attendance (1=Present, 0=Absent).
+            Display total present students per class.
+            Use nested loops.
+        </div>
+
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int class, student;
+    int attendance;
+    int totalPresent;
+
+    for(class = 1; class <= 3; class++)
+    {
+        totalPresent = 0;
+
+        for(student = 1; student <= 5; student++)
+        {
+            printf("Enter attendance (1/0): ");
+            scanf("%d", &attendance);
+
+            if(attendance == 1)
+            {
+                totalPresent++;
+            }
+        }
+
+        printf("Total Present in Class %d = %d\n",
+               class, totalPresent);
+    }
+
+    return 0;
+}
+</pre>
+    </section>
+
+
+    <section>
+        <h2>🟢 2️⃣ Student Marks Recording</h2>
+
+        <div class="question">
+            <strong>Question:</strong>
+            5 students, 4 subjects each.
+            Input marks, calculate total and average.
+            Use nested loops.
+        </div>
+
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int student, subject;
+    float marks, total, average;
+
+    for(student = 1; student <= 5; student++)
+    {
+        total = 0;
+
+        for(subject = 1; subject <= 4; subject++)
+        {
+            scanf("%f", &marks);
+            total += marks;
+        }
+
+        average = total / 4;
+
+        printf("Total = %.2f\n", total);
+        printf("Average = %.2f\n", average);
+    }
+
+    return 0;
+}
+</pre>
+    </section>
+
+
+    <section>
+        <h2>🟢 3️⃣ Classroom Seating (Parts & Tables)</h2>
+
+        <div class="question">
+            <strong>Question:</strong>
+            3 parts in a classroom.
+            Each part has 7 tables.
+            Number tables starting from 1.
+            Use nested loops.
+        </div>
+
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int part, table;
+    int tableNumber = 1;
+
+    for(part = 1; part <= 3; part++)
+    {
+        printf("\n--- Part %d ---\n", part);
+
+        for(table = 1; table <= 7; table++)
+        {
+            printf("Table %d\t", tableNumber);
+            tableNumber++;
+        }
+
+        printf("\n");
+    }
+
+    return 0;
+}
+</pre>
+    </section>
+
+    <section>
+        <h2>🟢 4️⃣ School Timetable Generator</h2>
+
+        <div class="question">
+            <strong>Question:</strong>
+            5 days, 8 periods per day.
+            Input subject names and display timetable.
+            Use nested loops.
+        </div>
+
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    int day, period;
+    char subject[30];
+
+    for(day = 1; day <= 5; day++)
+    {
+        printf("\nDay %d:\n", day);
+
+        for(period = 1; period <= 8; period++)
+        {
+            scanf("%s", subject);
+            printf("Period %d: %s\n",
+                   period, subject);
+        }
+    }
+
+    return 0;
+}
+</pre>
+    </section>
+
+    <footer>
+        © 2026 | Nested Loops Programming Guide
+    </footer>
+
+    <script>
+        document.querySelectorAll("pre").forEach(block => {
+            let code = block.innerHTML;
+
+            // Comments
+            code = code.replace(/(\/\/.*)/g, '<span class="comment">$1</span>');
+
+            // Strings
+            code = code.replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>');
+
+            // Numbers
+            code = code.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+
+            // Keywords
+            const keywords = [
+                "int", "float", "double", "char", "for", "while", "if",
+                "else", "return", "include", "stdio"
+            ];
+
+            keywords.forEach(word => {
+                let regex = new RegExp("\\b" + word + "\\b", "g");
+                code = code.replace(regex, '<span class="keyword">' + word + '</span>');
+            });
+
+            block.innerHTML = code;
+        });
+    </script>
+
+</body>
+
+</html>

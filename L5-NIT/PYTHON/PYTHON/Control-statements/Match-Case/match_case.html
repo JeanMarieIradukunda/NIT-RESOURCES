@@ -1,0 +1,62 @@
+<!-- Menu Selection Using match-case -->
+<div class="card" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin: 20px; font-family: 'Consolas', monospace;">
+  <div class="card-header" style="background-color: #1E90FF; color: white; padding: 10px 15px; font-size: 1.2em; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+    📘 Python Example: Menu Selection Using <code>match case</code>
+  </div>
+  <div class="card-body" style="padding: 15px; background-color: #f9f9f9; color: #333;">
+    <p><b>Scenario:</b> A student selects an option from a school menu.</p>
+    
+    <ul>
+      <li><b>Step 1:</b> Define functions for each menu option:</li>
+      <pre style="background-color: #e8f4ff; padding: 10px; border-radius: 5px;">
+def view_home():
+    print("🏠 Welcome to the Home Page!")
+
+def show_profile():
+    print("👤 User Profile:")
+    print("Name: John Doe")
+    print("Email: john@example.com")
+
+def settings():
+    print("⚙️ Settings Menu: Change your preferences here.")
+
+def exit_program():
+    print("👋 Exiting the program... Goodbye!")
+      </pre>
+
+      <li><b>Step 2:</b> Display the menu:</li>
+      <pre style="background-color: #e8f4ff; padding: 10px; border-radius: 5px;">
+print("📱 MAIN MENU")
+print("1. Home")
+print("2. Show Profile")
+print("3. Settings")
+print("4. Exit")
+      </pre>
+
+      <li><b>Step 3:</b> Get user input and use <code>match-case</code>:</li>
+      <pre style="background-color: #e8f4ff; padding: 10px; border-radius: 5px;">
+choice = int(input("Enter your choice (1-4): "))
+
+match choice:
+    case 1:
+        view_home()
+    case 2:
+        show_profile()  # ← case 2: show_profile()
+    case 3:
+        settings()
+    case 4:
+        exit_program()
+    case _:
+        print("❌ Invalid option! Please select between 1 and 4.")
+      </pre>
+
+      <li><b>Step 4:</b> Example Output:</li>
+      <pre style="background-color: #fff3cd; padding: 10px; border-radius: 5px; border: 1px solid #ffeeba;">
+If user enters 2:
+👤 User Profile:
+Name: John Doe
+Email: john@example.com
+      </pre>
+    </ul>
+  </div>
+</div>

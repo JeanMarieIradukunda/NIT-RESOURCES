@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Recursive Functions Notes</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #ffffff;
+        line-height: 1.6;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    h1, h2, h3 {
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 30px;
+        color: #00e6ff;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.08);
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    ul {
+        margin-left: 20px;
+    }
+
+    code {
+        background: #111;
+        padding: 10px;
+        display: block;
+        border-radius: 8px;
+        overflow-x: auto;
+        color: #00ffcc;
+        margin-top: 10px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        overflow-x: auto;
+    }
+
+    .table th, .table td {
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: rgba(0, 230, 255, 0.2);
+    }
+
+    .highlight {
+        color: #00e6ff;
+        font-weight: 600;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 26px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🐍 PYTHON RECURSIVE FUNCTIONS</h1>
+
+<div class="card">
+    <h2>📘 What is Recursion?</h2>
+    <p>
+        A <span class="highlight">recursive function</span> is a function that calls itself to solve a problem.
+        It breaks a large problem into smaller versions until it reaches a stopping condition called the
+        <span class="highlight">base case</span>.
+    </p>
+</div>
+
+<div class="card">
+    <h2>🧠 Key Parts of Recursion</h2>
+    <ul>
+        <li><strong>Base Case</strong> – Stops the recursion.</li>
+        <li><strong>Recursive Case</strong> – The function calls itself.</li>
+    </ul>
+    <p>Without a base case, the program will run forever and cause an error.</p>
+</div>
+
+<div class="card">
+    <h2>📌 Example: Factorial</h2>
+    <p><strong>Formula:</strong></p>
+    <p>n! = n × (n-1) × (n-2) × ... × 1</p>
+
+<code>
+def factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(5))
+</code>
+
+<p><strong>Output:</strong> 120</p>
+</div>
+
+<div class="card">
+    <h2>🔄 How Factorial Works</h2>
+<code>
+factorial(5)
+= 5 × factorial(4)
+= 5 × 4 × factorial(3)
+= 5 × 4 × 3 × factorial(2)
+= 5 × 4 × 3 × 2 × factorial(1)
+= 120
+</code>
+</div>
+
+<div class="card">
+    <h2>⚡ When to Use Recursion</h2>
+    <ul>
+        <li>Tree structures 🌳</li>
+        <li>Mathematical problems</li>
+        <li>Searching algorithms</li>
+        <li>Factorials & Fibonacci</li>
+        <li>Divide-and-conquer problems</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>🔢 What is Fibonacci?</h2>
+    <p>
+        The Fibonacci sequence is a series where each number is the sum of the two previous numbers.
+    </p>
+    <p><strong>Sequence:</strong></p>
+    <p>0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
+</div>
+
+<div class="card">
+    <h2>📌 Fibonacci Formula</h2>
+    <p>F(n) = F(n-1) + F(n-2)</p>
+</div>
+
+<div class="card">
+    <h2>💻 Fibonacci Using Loop</h2>
+
+<code>
+def fibonacci(n):
+    a = 0
+    b = 1
+    for i in range(n):
+        print(a, end=" ")
+        a, b = b, a + b
+
+fibonacci(10)
+</code>
+</div>
+
+<div class="card">
+    <h2>🔁 Fibonacci Using Recursion</h2>
+
+<code>
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(6))
+</code>
+</div>
+
+<div class="card">
+    <h2>🌍 Where Fibonacci Appears</h2>
+    <ul>
+        <li>Mathematics</li>
+        <li>Computer Programming</li>
+        <li>Nature 🌿</li>
+        <li>Art & Design</li>
+        <li>Financial Analysis</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>🔄 Loops vs Recursive Functions</h2>
+
+<table class="table">
+    <tr>
+        <th>Feature</th>
+        <th>Loops</th>
+        <th>Recursion</th>
+    </tr>
+    <tr>
+        <td>Definition</td>
+        <td>Repeats using for/while</td>
+        <td>Function calls itself</td>
+    </tr>
+    <tr>
+        <td>Base Case</td>
+        <td>Not required</td>
+        <td>Required</td>
+    </tr>
+    <tr>
+        <td>Memory Usage</td>
+        <td>Less memory</td>
+        <td>More memory</td>
+    </tr>
+    <tr>
+        <td>Speed</td>
+        <td>Usually faster</td>
+        <td>Can be slower</td>
+    </tr>
+    <tr>
+        <td>Best For</td>
+        <td>Simple repetition</td>
+        <td>Tree & mathematical problems</td>
+    </tr>
+</table>
+</div>
+
+<div class="card">
+    <h2>🎯 In Simple Words</h2>
+    <p><strong>Loop →</strong> Repeats using a condition.</p>
+    <p><strong>Recursion →</strong> A function solving a problem by calling itself.</p>
+</div>
+
+<footer>
+    © 2026 | PADRI VJEKO CENTRE TSS
+</footer>
+
+</div>
+
+</body>
+</html>

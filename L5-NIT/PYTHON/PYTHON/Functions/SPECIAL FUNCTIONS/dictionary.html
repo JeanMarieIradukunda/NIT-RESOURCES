@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELS10: Python Dictionaries Notes</title>
+    <style>
+        body {
+            font-family: "Cambria", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f8ff;
+            color: #333;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0078D7, #00BCD4);
+            color: white;
+            text-align: center;
+            padding: 25px 10px;
+            border-bottom: 5px solid #005B99;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            color: #005B99;
+            border-left: 6px solid #0078D7;
+            padding-left: 10px;
+            margin-top: 25px;
+        }
+
+        .section {
+            background: white;
+            margin: 20px auto;
+            padding: 20px 25px;
+            border-radius: 15px;
+            max-width: 850px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition, .role, .example {
+            margin-bottom: 10px;
+        }
+
+        .definition b, .role b, .example b {
+            color: #0078D7;
+        }
+
+        code {
+            background: #eef3ff;
+            color: #d63384;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-family: Consolas, monospace;
+        }
+
+        pre {
+            background: #f0f4ff;
+            padding: 10px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+
+        .icon {
+            font-size: 1.2em;
+            margin-right: 6px;
+        }
+
+        footer {
+            background: #0078D7;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🐍 ELS10: Python Dictionaries - Study Notes</h1>
+    <p>Definition • Role • Real-life Examples</p>
+</header>
+
+<main>
+    <section class="section">
+        <h2>📘 A. Python Dictionaries</h2>
+        <p class="definition"><b>Definition:</b> A <b>dictionary</b> in Python is a collection of <b>key–value pairs</b>. Each key is unique and used to access its corresponding value.</p>
+        <pre><code>student = {"name": "Alice", "age": 18, "course": "ICT"}</code></pre>
+        <p class="role"><b>Role:</b> Used to store related data in key–value form, making it organized and accessible.</p>
+        <p class="example"><b>Real-life Example:</b> Like a real dictionary — you look up a <b>word (key)</b> to find its <b>meaning (value)</b>.</p>
+    </section>
+
+    <section class="section">
+        <h2>🔍 B. Access Items</h2>
+        <p class="definition"><b>Definition:</b> Accessing items means getting the value of a specific key.</p>
+        <pre><code>student = {"name": "Alice", "age": 18}
+print(student["name"])   # Output: Alice</code></pre>
+        <p class="role"><b>Role:</b> Retrieve stored information quickly by key name.</p>
+        <p class="example"><b>Real-life Example:</b> Looking up someone’s <b>phone number</b> in your <b>contacts</b> using their name.</p>
+    </section>
+
+    <section class="section">
+        <h2>✏️ C. Change Items</h2>
+        <p class="definition"><b>Definition:</b> Change the value of an existing key.</p>
+        <pre><code>student["age"] = 20</code></pre>
+        <p class="role"><b>Role:</b> Used when data updates over time, such as new age or score.</p>
+        <p class="example"><b>Real-life Example:</b> Updating a student’s age or email address in a school database.</p>
+    </section>
+
+    <section class="section">
+        <h2>➕ D. Add Items</h2>
+        <p class="definition"><b>Definition:</b> Add a new key–value pair to an existing dictionary.</p>
+        <pre><code>student["grade"] = "A"</code></pre>
+        <p class="role"><b>Role:</b> Expands data when new information becomes available.</p>
+        <p class="example"><b>Real-life Example:</b> Adding a new contact or phone number to your contact list.</p>
+    </section>
+
+    <section class="section">
+        <h2>❌ E. Remove Items</h2>
+        <p class="definition"><b>Definition:</b> Delete one or more key–value pairs.</p>
+        <pre><code>student.pop("age")   # Removes the item with key "age"</code></pre>
+        <p class="role"><b>Role:</b> Cleans up or manages memory by removing unnecessary data.</p>
+        <p class="example"><b>Real-life Example:</b> Removing a discontinued product from a shop’s stock list.</p>
+    </section>
+
+    <section class="section">
+        <h2>🔁 F. Loop Items</h2>
+        <p class="definition"><b>Definition:</b> Use a loop to go through all keys, values, or both.</p>
+        <pre><code>for key, value in student.items():
+    print(key, ":", value)</code></pre>
+        <p class="role"><b>Role:</b> Processes all data in a dictionary, like displaying or checking them.</p>
+        <p class="example"><b>Real-life Example:</b> Displaying all students and their marks in a report.</p>
+    </section>
+
+    <section class="section">
+        <h2>📋 G. Copy Items</h2>
+        <p class="definition"><b>Definition:</b> Make a duplicate of a dictionary without affecting the original.</p>
+        <pre><code>copy_student = student.copy()</code></pre>
+        <p class="role"><b>Role:</b> Prevents accidental changes to the original data when you need a backup.</p>
+        <p class="example"><b>Real-life Example:</b> Making a photocopy of a record before editing the original.</p>
+    </section>
+
+    <section class="section">
+        <h2>🧱 H. Nested Dictionaries</h2>
+        <p class="definition"><b>Definition:</b> A dictionary inside another dictionary.</p>
+        <pre><code>school = {
+    "student1": {"name": "Alice", "age": 18},
+    "student2": {"name": "Bob", "age": 19}
+}</code></pre>
+        <p class="role"><b>Role:</b> Organizes complex data structures like databases.</p>
+        <p class="example"><b>Real-life Example:</b> A school database with multiple students and their details.</p>
+    </section>
+
+    <section class="section">
+        <h2>⚙️ I. Dictionary Methods</h2>
+        <p class="definition"><b>Definition:</b> Built-in functions that help manage dictionary operations.</p>
+        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; text-align:left;">
+            <tr style="background:#0078D7; color:white;">
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+            <tr><td><code>dict.keys()</code></td><td>Returns all keys</td></tr>
+            <tr><td><code>dict.values()</code></td><td>Returns all values</td></tr>
+            <tr><td><code>dict.items()</code></td><td>Returns key-value pairs</td></tr>
+            <tr><td><code>dict.get(key)</code></td><td>Returns value safely</td></tr>
+            <tr><td><code>dict.pop(key)</code></td><td>Removes item by key</td></tr>
+            <tr><td><code>dict.clear()</code></td><td>Removes all items</td></tr>
+        </table>
+        <p class="role"><b>Role:</b> Make dictionary handling faster, simpler, and safer.</p>
+        <p class="example"><b>Real-life Example:</b> Like using shortcuts or tools in Microsoft Word to speed up editing.</p>
+    </section>
+</main>
+
+<footer>
+    <p>PVC © 2025 ELS10 Python Learning Explanations </p>
+</footer>
+
+</body>
+</html>

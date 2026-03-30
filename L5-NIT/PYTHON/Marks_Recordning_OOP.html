@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VS Code - Solarized Dark</title>
+
+        <style>
+/* =========================
+   SOLARIZED DARK THEME
+   ========================= */
+
+body {
+    margin: 0;
+    background-color: #002b36; /* Solarized base03 */
+    font-family: Consolas, "Courier New", monospace;
+    color: #839496; /* base0 */
+}
+
+/* VS Code Window */
+.vscode-window {
+    width: 90%;
+    margin: 40px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* Title Bar */
+.title-bar {
+    background-color: #073642; /* base02 */
+    padding: 10px 15px;
+    color: #93a1a1;
+    font-size: 14px;
+}
+
+/* Editor Area */
+.editor {
+    background-color: #002b36; /* base03 */
+    padding: 20px;
+    overflow-x: auto;
+    line-height: 1.5;
+    font-size: 15px;
+}
+
+/* Code Colors */
+.comment { color: #586e75; }     /* comments */
+.keyword { color: #268bd2; }     /* keywords */
+.classname { color: #b58900; }   /* classes */
+.function { color: #cb4b16; }    /* functions */
+.string { color: #2aa198; }      /* strings */
+.number { color: #d33682; }      /* numbers */
+.indent { margin-left: 20px; display: block; }
+.exercise {
+    background-color: #cfdfe3;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+</style>
+    </head>
+
+    <body>
+
+        <div class="vscode-window">
+
+            <div class="title-bar">
+                📄 marks_system.py — VS Code (Solarized Dark)
+            </div>
+
+            <div class="editor">
+                <pre>
+<span class="comment"># ==============================</span>
+<span class="comment"># MARKS RECORDING SYSTEM</span>
+<span class="comment"># USING OOP AND LIST</span>
+<span class="comment"># ==============================</span>
+
+<span class="keyword">class</span> <span class="classname">Students</span>:
+
+    <span class="keyword">def</span> <span class="function">__init__</span>(self, name, maths, kiny, kisw):
+        self.name = name
+        self.maths = maths
+        self.kiny = kiny
+        self.kisw = kisw
+
+    <span class="keyword">def</span> <span class="function">cal_total</span>(self):
+        total = self.maths + self.kiny + self.kisw
+        <span class="keyword">return</span> total
+
+    <span class="keyword">def</span> <span class="function">cal_average</span>(self):
+        total = self.cal_total()
+        average = total / <span class="number">3</span>
+        <span class="keyword">return</span> average
+
+    <span class="keyword">def</span> <span class="function">display_results</span>(self):
+        <span class="keyword">print</span>(<span class="string">"Student Name:"</span>, self.name)
+        <span class="keyword">print</span>(<span class="string">"Maths:"</span>, self.maths)
+        <span class="keyword">print</span>(<span class="string">"Kinyarwanda:"</span>, self.kiny)
+        <span class="keyword">print</span>(<span class="string">"Kiswahili:"</span>, self.kisw)
+        <span class="keyword">print</span>(<span class="string">"Total Marks:"</span>, self.cal_total())
+        <span class="keyword">print</span>(<span class="string">"Average:"</span>, self.cal_average())
+        <span class="keyword">print</span>(<span class="string">"------------------------"</span>)
+
+
+students_list = []
+
+<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>):
+
+    name = input(<span class="string">"Enter the names: "</span>)
+    maths = float(input(<span class="string">"How many marks for Maths: "</span>))
+    kiny = float(input(<span class="string">"How many marks for Kinyarwanda: "</span>))
+    kisw = float(input(<span class="string">"How many marks for Kiswahili: "</span>))
+
+    student = Students(name, maths, kiny, kisw)
+    students_list.append(student)
+
+<span class="keyword">for</span> student <span class="keyword">in</span> students_list:
+    student.display_results()
+</pre>
+
+                <div class="exercise">
+                    <strong>📘 Exercise: Bank Account System</strong><br><br>
+
+                    Write a Python program using Object-Oriented Programming
+                    (OOP) to create a simple Bank Account System that:<br><br>
+
+                    ✔ Uses a class called <strong>BankAccount</strong><br><br>
+
+                    ✔ Has the following attributes:<br>
+                    - account holder name<br>
+                    - account number<br>
+                    - balance<br><br>
+
+                    ✔ Includes the following methods:<br>
+                    - <strong>login()</strong> – to verify user credentials<br>
+                    - <strong>deposit()</strong> – to add money to the
+                    account<br>
+                    - <strong>withdraw()</strong> – to remove money (ensure
+                    balance is sufficient)<br>
+                    - <strong>check_balance()</strong> – to display current
+                    balance<br><br>
+
+                    ✔ The program should:<br>
+                    - Allow the user to log in<br>
+                    - Perform banking operations<br>
+                    - Display appropriate messages
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

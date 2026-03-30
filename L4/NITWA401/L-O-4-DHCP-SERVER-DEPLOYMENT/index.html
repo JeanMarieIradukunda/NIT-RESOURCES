@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Outcome 3: Deploy DHCP Services</title>
+
+    <style>
+        @font-face {
+            font-family: "Aptos";
+            src: url("Aptos.woff2") format("woff2");
+        }
+
+        body {
+            font-family: "Aptos", sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #bfc3cb, #191d24);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            margin: 20px auto;
+            padding: 25px;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #060b16;
+        }
+
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        .important {
+            background: #eef3ff;
+            padding: 10px;
+            border-left: 5px solid #2a5298;
+            margin: 10px 0;
+        }
+
+        code {
+            background: #f1f1f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #1e3c72;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Learning Outcome 3: Deploy DHCP Services (10 Hours)</h1>
+    </header>
+
+    <section>
+
+        <h2>1. Introduction to DHCP</h2>
+
+        <h3>What is DHCP?</h3>
+        <p>
+            DHCP (Dynamic Host Configuration Protocol) is a network service
+            that automatically assigns IP addresses and other network
+            settings to client computers.
+        </p>
+
+        <p>Instead of manually configuring each device, DHCP:</p>
+        <ul>
+            <li>Assigns IP addresses automatically</li>
+            <li>Reduces configuration errors</li>
+            <li>Prevents IP conflicts</li>
+            <li>Saves time in large networks</li>
+            <li>Provides centralized IP management</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>2. DHCP Operations (DORA Process)</h2>
+
+        <p>When a client connects to the network, DHCP uses the DORA
+            process:</p>
+
+        <h3>1. Discover</h3>
+        <ul>
+            <li>The client sends a broadcast message.</li>
+            <li>It searches for a DHCP server on the network.</li>
+            <li>This is the first step in obtaining an IP address.</li>
+        </ul>
+
+        <h3>2. Offer</h3>
+        <ul>
+            <li>The DHCP server responds with an IP address offer.</li>
+            <li>The server proposes network configuration details.</li>
+            <li>This includes:</li>
+            <li>IP Address</li>
+            <li>Subnet Mask</li>
+            <li>Default Gateway</li>
+            <li>DNS Server</li>
+        </ul>
+
+        <h3>3. Request</h3>
+        <ul>
+            <li>The client accepts the offered IP address.</li>
+            <li>It sends a request message to the DHCP server.</li>
+            <li>This confirms the selected IP address.</li>
+        </ul>
+
+        <h3>4. Acknowledgement (ACK)</h3>
+        <ul>
+            <li>The server confirms the assignment.</li>
+            <li>The IP address is officially leased to the client.</li>
+            <li>The client can now use the network.</li>
+        </ul>
+
+        <div class="important">
+            <h3>What is a Lease?</h3>
+            <p>
+                A lease is the time period a DHCP server allows a client to
+                use an IP address.
+            </p>
+            <p>
+                When the lease expires, the client must renew it.
+            </p>
+            <p>
+                This allows efficient IP address management.
+            </p>
+        </div>
+
+    </section>
+
+    <section>
+
+        <h2>3. Installation of DHCP Role (Using GUI)</h2>
+
+        <h3>Prerequisites</h3>
+        <ul>
+            <li>Windows Server must be installed</li>
+            <li>Server must have a static IP address</li>
+            <li>Server must be joined to a domain (Active Directory)</li>
+            <li>Administrator privileges required</li>
+        </ul>
+
+        <h3>Step-by-Step DHCP Installation (GUI Method)</h3>
+
+        <p><b>Step 1: Open Server Manager</b></p>
+        <ul>
+            <li>Click Start</li>
+            <li>Open Server Manager</li>
+        </ul>
+
+        <p><b>Step 2: Add Roles and Features</b></p>
+        <ul>
+            <li>Click Manage</li>
+            <li>Select Add Roles and Features</li>
+        </ul>
+
+        <p><b>Step 3: Installation Type</b></p>
+        <ul>
+            <li>Choose Role-based or feature-based installation</li>
+            <li>Click Next</li>
+        </ul>
+
+        <p><b>Step 4: Select Server</b></p>
+        <ul>
+            <li>Choose the local server</li>
+            <li>Click Next</li>
+        </ul>
+
+        <p><b>Step 5: Select DHCP Server Role</b></p>
+        <ul>
+            <li>Check DHCP Server</li>
+            <li>Click Add Features</li>
+            <li>Click Next</li>
+        </ul>
+
+        <p><b>Step 6: Install</b></p>
+        <ul>
+            <li>Click Install</li>
+            <li>Wait for completion</li>
+        </ul>
+
+        <p><b>Step 7: Post-Installation Configuration</b></p>
+        <ul>
+            <li>Click Complete DHCP Configuration</li>
+            <li>Authorize the DHCP server in Active Directory</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>4. DHCP Authorization</h2>
+
+        <h3>Why Authorization is Required</h3>
+        <ul>
+            <li>Prevents unauthorized (rogue) DHCP servers</li>
+            <li>Ensures only trusted servers assign IP addresses</li>
+            <li>Required in Active Directory environments</li>
+        </ul>
+
+        <p>
+            If not authorized, the DHCP service will not work properly.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>5. DHCP Configuration</h2>
+
+        <h3>A. Enable the DHCP Server</h3>
+        <ul>
+            <li>Open Server Manager</li>
+            <li>Go to Tools</li>
+            <li>Open DHCP</li>
+            <li>Ensure the service is started</li>
+        </ul>
+
+        <h3>B. Create and Configure a Scope</h3>
+
+        <h3>What is a Scope?</h3>
+        <p>
+            A Scope is a range of IP addresses that the DHCP server can
+            assign to clients.
+        </p>
+        <p>
+            Without a scope, DHCP cannot distribute IP addresses.
+        </p>
+
+        <h3>Scope Configuration Steps (GUI)</h3>
+        <ul>
+            <li><b>Step 1:</b> Open DHCP Console (Server Manager → Tools →
+                DHCP)</li>
+            <li><b>Step 2:</b> Create New Scope (Right-click IPv4 → New
+                Scope)</li>
+            <li><b>Step 3:</b> Set Scope Name (example: Office Network)</li>
+            <li><b>Step 4:</b> Set IP Address Range (Start IP: 192.168.1.10
+                / End IP: 192.168.1.100)</li>
+            <li><b>Step 5:</b> Set Subnet Mask (Example: 255.255.255.0)</li>
+            <li><b>Step 6:</b> Configure Exclusions (Optional)</li>
+            <li><b>Step 7:</b> Lease Duration</li>
+            <li><b>Step 8:</b> Activate Scope (Select Yes, I want to
+                activate this scope)</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>6. Configure Scope Options</h2>
+        <ul>
+            <li>Default Gateway</li>
+            <li>DNS Server</li>
+            <li>Domain Name</li>
+            <li>Optional: Reservations (using MAC Address)</li>
+        </ul>
+
+        <p>
+            These settings are automatically given to clients.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>7. Starting the DHCP Service</h2>
+        <ul>
+            <li>Open Services</li>
+            <li>Ensure DHCP Server is running</li>
+            <li>If not, click Start</li>
+        </ul>
+
+        <p>
+            The service must be running for clients to receive IP addresses.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>8. Testing DHCP Configuration</h2>
+
+        <h3>A. On the Client Computer</h3>
+
+        <p><b>Check IP Address</b></p>
+        <code>ipconfig /all</code>
+
+        <p>This shows:</p>
+        <ul>
+            <li>Assigned IP address</li>
+            <li>Subnet mask</li>
+            <li>Default gateway</li>
+            <li>DNS server</li>
+        </ul>
+
+        <p><b>Renew IP Address</b></p>
+        <code>ipconfig /renew</code>
+
+        <p><b>Release IP Address</b></p>
+        <code>ipconfig /release</code>
+
+        <h3>B. On the DHCP Server</h3>
+
+        <p><b>Check Active Leases</b></p>
+        <ul>
+            <li>Open DHCP Console</li>
+            <li>Go to IPv4 → Scope → Address Leases</li>
+            <li>Verify client appears in the list</li>
+        </ul>
+
+        <p><b>If the client appears:</b> ✔ DHCP is working correctly.</p>
+
+    </section>
+
+    <footer>
+        Windows Server Administration – DHCP Deployment Notes
+    </footer>
+
+</body>
+
+</html>

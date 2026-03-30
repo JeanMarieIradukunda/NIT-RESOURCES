@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Secure Auto-Graded Exam</title>
+    <style>
+body { font-family: Inter; background:#eef1f4; padding:20px; }
+.header { background:#dde4eb; padding:15px; border-radius:8px; margin-bottom:15px; }
+.header h2 { margin:5px 0; }
+.question { background:#fff; padding:15px; margin:15px 0; border-radius:8px; }
+#timer { font-size:20px; color:red; margin-top:10px; }
+#result { font-size:22px; font-weight:bold; margin-top:20px; }
+#warning { color:red; font-weight:bold; margin-top:10px; }
+.correct { color:green; font-weight:bold; }
+.incorrect { color:red; font-weight:bold; }
+button { padding:10px 20px; font-size:16px; margin-top:10px; }
+pre { background:#1e1e1e; color:#eaeaea; padding:12px; border-radius:6px; overflow:auto; }
+code { font-family: Consolas, monospace; }
+</style>
+
+    <script>
+/* ================= CONFIG ================= */
+const EXAM_MINUTES = 60; // 60 mins
+const MAX_VIOLATIONS = 3;
+const VIOLATION_PENALTY = 2;
+const FREE_REFRESHES = 1;
+const BONUS_MARKS = 2;
+
+const SCHOOL = "PADRI VJEKO CENTRE TSS";
+const CLASS = "L5-NIT";
+const MODULE = "GENPP502 - PYTHON PROGRAMMING";
+
+let STUDENT_NAME = "";
+let allowViolationCount = false;
+let initialLoadComplete = false;
+let violations = 0;
+
+
+const QUESTIONS = [
+
+  { id: "q1", text: "Which of the following lambda functions correctly multiplies two numbers?", options:[
+      {value:"A", text:"lambda x, y: x * y"},
+      {value:"B", text:"def multiply(x, y): return x * y"},
+      {value:"C", text:"lambda(x, y) { return x * y }"},
+      {value:"D", text:"function(x, y) -> x * y"}
+    ], answer:"A" },
+
+  { id: "q2", text: `What will the following code output?
+<pre><code class="language-python">
+double = lambda x: x * 2
+print(double(8))
+</code></pre>`, options:[
+      {value:"A", text:"16"},
+      {value:"B", text:"88"},
+      {value:"C", text:"8"},
+      {value:"D", text:"Error"}
+    ], answer:"A" },
+
+  { id: "q3", text: "Which statement about lambda functions is correct?", options:[
+      {value:"A", text:"They can contain multiple statements."},
+      {value:"B", text:"They are anonymous functions."},
+      {value:"C", text:"They can include loops directly."},
+      {value:"D", text:"They always return None."}
+    ], answer:"B" },
+
+  { id: "q4", text: `Fill in the blank to square all numbers in the list using a lambda and map:
+<pre><code class="language-python">
+numbers = [1, 2, 3, 4]
+squared = map(____, numbers)
+print(list(squared))
+</code></pre>`, options:[
+      {value:"A", text:"def square(x): x**2"},
+      {value:"B", text:"lambda x: x**2"},
+      {value:"C", text:"x**2"},
+      {value:"D", text:"function x: x**2"}
+    ], answer:"B" },
+
+  { id: "q5", text: "Which function is used to select only certain elements from a list using a condition?", options:[
+      {value:"A", text:"reduce()"},
+      {value:"B", text:"map()"},
+      {value:"C", text:"filter()"},
+      {value:"D", text:"sort()"}
+    ], answer:"C" },
+
+  { id: "q6", text: `What will this code output?
+<pre><code class="language-python">
+nums = [1, 2, 3, 4, 5, 6]
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)
+</code></pre>`, options:[
+      {value:"A", text:"[1, 3, 5]"},
+      {value:"B", text:"[2, 4, 6]"},
+      {value:"C", text:"[1, 2, 3, 4, 5, 6]"},
+      {value:"D", text:"[]"}
+    ], answer:"B" },
+
+  { id: "q7", text: `Identify the syntax error:
+<pre><code class="language-python">
+nums = [1, 2, 3]
+squared = map(lambda x x**2, nums)
+print(list(squared))
+</code></pre>`, options:[
+      {value:"A", text:"map cannot be used with lambda"},
+      {value:"B", text:"Missing colon ':' in lambda"},
+      {value:"C", text:"list() cannot be applied to map"},
+      {value:"D", text:"No error"}
+    ], answer:"B" },
+
+  { id: "q8", text: `Which line correctly sorts a list of tuples by the second element using a lambda?
+<pre><code class="language-python">
+lst = [(1, 'b'), (2, 'a'), (3, 'c')]
+____
+</code></pre>`, options:[
+      {value:"A", text:"sorted(lst, key=lambda x: x[1])"},
+      {value:"B", text:"sort(lst, key=lambda x[2])"},
+      {value:"C", text:"sorted(lst, key=x[1])"},
+      {value:"D", text:"lst.sort(lambda x: x[1])"}
+    ], answer:"A" },
+
+  { id: "q9", text: "Which of the following best describes a Python decorator?", options:[
+      {value:"A", text:"A function that returns a class"},
+      {value:"B", text:"A function that modifies another function"},
+      {value:"C", text:"A class that creates functions"},
+      {value:"D", text:"A special type of variable"}
+    ], answer:"B" },
+
+  { id: "q10", text: "Which symbol is used to apply a decorator to a Python function?", options:[
+      {value:"A", text:"#"},
+      {value:"B", text:"@"},
+      {value:"C", text:"$"},
+      {value:"D", text:"*"}
+    ], answer:"B" },
+
+  { id: "q11", text: `Fill in the blank to correctly define a decorator:
+<pre><code class="language-python">
+def my_decorator(func):
+    def wrapper():
+        print("Before function")
+        func()
+        print("After function")
+    return ____
+</code></pre>`, options:[
+      {value:"A", text:"func"},
+      {value:"B", text:"wrapper"},
+      {value:"C", text:"my_decorator"},
+      {value:"D", text:"None"}
+    ], answer:"B" },
+
+  { id: "q12", text: `What will the following code output?
+<pre><code class="language-python">
+def decorator(func):
+    def wrapper():
+        print("Hi")
+        func()
+    return wrapper
+
+@decorator
+def greet():
+    print("Hello")
+
+greet()
+</code></pre>`, options:[
+      {value:"A", text:"Hello"},
+      {value:"B", text:"Hi"},
+      {value:"C", text:"Hi Hello"},
+      {value:"D", text:"Hello Hi"}
+    ], answer:"C" },
+
+  { id: "q13", text: "Which of the following is true about decorators?", options:[
+      {value:"A", text:"They can only be applied to functions, not classes."},
+      {value:"B", text:"They allow code to be modified without changing the original function."},
+      {value:"C", text:"They are the same as lambda functions."},
+      {value:"D", text:"They must always return None."}
+    ], answer:"B" },
+
+  { id: "q14", text: `Identify the error in this code:
+<pre><code class="language-python">
+def decorator(func):
+    print("Before")
+    func()
+    print("After")
+</code></pre>`, options:[
+      {value:"A", text:"Missing function to return wrapper"},
+      {value:"B", text:"func() cannot be called"},
+      {value:"C", text:"Syntax error"},
+      {value:"D", text:"No error"}
+    ], answer:"A" },
+
+  { id: "q15", text: "Where must a decorator be written when applied to a function in Python?", options:[
+      {value:"A", text:"Inside the function body"},
+      {value:"B", text:"Above the function definition using @"},
+      {value:"C", text:"After the return statement"},
+      {value:"D", text:"Inside the parameter list"}
+    ], answer:"B" },
+
+  { id: "q16", text: "What does map() return in Python 3?", options:[
+      {value:"A", text:"A list"},
+      {value:"B", text:"A tuple"},
+      {value:"C", text:"An iterator"},
+      {value:"D", text:"A string"}
+    ], answer:"C" },
+
+  { id: "q17", text: `Which of the following correctly uses filter to remove negative numbers from a list?
+<pre><code class="language-python">
+filter(lambda x: x > 0, my_list)
+</code></pre>`, options:[
+      {value:"A", text:"filter(lambda x: x>0, my_list)"},
+      {value:"B", text:"filter(lambda x: x<0, my_list)"},
+      {value:"C", text:"map(lambda x: x>0, my_list)"},
+      {value:"D", text:"sort(my_list, key=lambda x: x>0)"}
+    ], answer:"A" },
+
+  { id: "q18", text: `How can you sort a list of dictionaries data by key 'age' in ascending order?
+<pre><code class="language-python">
+sorted(data, key=lambda x: x['age'])
+</code></pre>`, options:[
+      {value:"A", text:"sorted(data, key=lambda x: x['age'])"},
+      {value:"B", text:"sort(data, key=lambda x['age'])"},
+      {value:"C", text:"data.sort(key=lambda x.age)"},
+      {value:"D", text:"sorted(data, key='age')"}
+    ], answer:"A" },
+
+  { id: "q19", text: `What will the following code output?
+<pre><code class="language-python">
+nums = [3, 1, 4, 2]
+print(sorted(nums, reverse=True))
+</code></pre>`, options:[
+      {value:"A", text:"[1, 2, 3, 4]"},
+      {value:"B", text:"[4, 3, 2, 1]"},
+      {value:"C", text:"[3, 1, 4, 2]"},
+      {value:"D", text:"Error"}
+    ], answer:"B" },
+
+  { id: "q20", text: `Fill in the blank to print even numbers from a list:
+<pre><code class="language-python">
+numbers = [1, 2, 3, 4, 5, 6]
+evens = filter(____, numbers)
+print(list(evens))
+</code></pre>`, options:[
+      {value:"A", text:"lambda x: x % 2 == 0"},
+      {value:"B", text:"lambda x: x % 2 != 0"},
+      {value:"C", text:"x % 2 == 0"},
+      {value:"D", text:"map(lambda x: x % 2 == 0)"}
+    ], answer:"A" },
+
+  { id: "q21", text: `Identify the syntax error in this function:
+<pre><code class="language-python">
+def add_numbers(a, b)
+    return a + b
+</code></pre>`, options:[
+      {value:"A", text:"Missing colon ':' after function signature"},
+      {value:"B", text:"Missing return keyword"},
+      {value:"C", text:"Incorrect function name"},
+      {value:"D", text:"No error"}
+    ], answer:"A" },
+
+  { id: "q22", text: `Fill in the missing keyword to define a function:
+<pre><code class="language-python">
+____ my_function():
+    print("Hello")
+</code></pre>`, options:[
+      {value:"A", text:"def"},
+      {value:"B", text:"function"},
+      {value:"C", text:"lambda"},
+      {value:"D", text:"fun"}
+    ], answer:"A" },
+
+  { id: "q23", text: `Why does this lambda function cause an error?
+<pre><code class="language-python">
+f = lambda x: 
+    x + 1
+</code></pre>`, options:[
+      {value:"A", text:"Parentheses are missing around x"},
+      {value:"B", text:"Colon is missing"},
+      {value:"C", text:"Lambda cannot have a multi-line body or indentation"},
+      {value:"D", text:"return keyword is required"}
+    ], answer:"C" },
+
+  { id: "q24", text: `Detect the issue in this code:
+<pre><code class="language-python">
+nums = [1, 2, 3]
+squared = map(lambda x: x**2, nums)
+print(squared)
+</code></pre>`, options:[
+      {value:"A", text:"map cannot be used with lambda"},
+      {value:"B", text:"map returns an iterator; convert it to a list to see values"},
+      {value:"C", text:"Missing colon"},
+      {value:"D", text:"Syntax error"}
+    ], answer:"B" },
+
+  { id: "q25", text: `Which keyword is missing to properly define a decorator function?
+<pre><code class="language-python">
+def decorator(func):
+    def wrapper():
+        print("Start")
+        func()
+        print("End")
+    ____ 
+</code></pre>`, options:[
+      {value:"A", text:"func"},
+      {value:"B", text:"return wrapper"},
+      {value:"C", text:"return func"},
+      {value:"D", text:"pass"}
+    ], answer:"B" },
+
+  { id: "q26", text: "After wrapping a function, what does a Python decorator return?", options:[
+      {value:"A", text:"A number"},
+      {value:"B", text:"A modified function"},
+      {value:"C", text:"A list"},
+      {value:"D", text:"A loop"}
+    ], answer:"B" },
+
+  { id: "q27", text: "Which of the following statements about Python is correct?", options:[
+      {value:"A", text:"Lambda functions can have multiple expressions"},
+      {value:"B", text:"Decorators can be stacked on a single function"},
+      {value:"C", text:"map() modifies the original list"},
+      {value:"D", text:"filter() returns a list by default"}
+    ], answer:"B" },
+
+  { id: "q28", text: "Which statement about the @staticmethod decorator is true?", options:[
+      {value:"A", text:"It allows a function to access instance variables"},
+      {value:"B", text:"It does not receive the self parameter"},
+      {value:"C", text:"It requires inheritance to work"},
+      {value:"D", text:"It converts a function to a lambda"}
+    ], answer:"B" },
+
+  { id: "q29", text: `What is the output of this code?
+<pre><code class="language-python">
+nums = [1, 2, 3, 4, 5]
+print(list(map(lambda x: x*3, nums)))
+</code></pre>`, options:[
+      {value:"A", text:"[3, 6, 9, 12, 15]"},
+      {value:"B", text:"[1, 2, 3, 4, 5]"},
+      {value:"C", text:"[0, 3, 6, 9, 12]"},
+      {value:"D", text:"Error"}
+    ], answer:"A" },
+
+  { id: "q30", text: "What is the main purpose of a Python decorator?", options:[
+      {value:"A", text:"To repeat a loop faster"},
+      {value:"B", text:"To modify or extend the behavior of a function without changing its code"},
+      {value:"C", text:"To create anonymous functions"},
+      {value:"D", text:"To sort data automatically"}
+    ], answer:"B" }
+
+];
+
+/* ---------- REFRESH TRACKING ---------- */
+function handleRefreshTracking() {
+  let count = Number(sessionStorage.getItem("refreshCount") || "0");
+  count++;
+  sessionStorage.setItem("refreshCount", count);
+  if (count <= FREE_REFRESHES) return false;
+  return true;
+}
+
+/* ---------- UTILITY ---------- */
+function shuffleArray(array){
+  for (let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+/* ---------- NAME ---------- */
+function promptStudentName(){
+  let name="";
+  while(!name){
+    name = prompt("Enter your full name for the exam:");
+    if(name){
+      STUDENT_NAME = name.trim();
+      document.getElementById("student-name").innerText = STUDENT_NAME;
+      allowViolationCount = true;
+    }
+  }
+}
+
+/* ---------- BUILD EXAM ---------- */
+function buildExam(){
+  const container=document.getElementById("exam-container");
+  const shuffled=shuffleArray([...QUESTIONS]);
+  shuffled.forEach(q=>{
+    const div=document.createElement("div");
+    div.className="question";
+    div.innerHTML=`<b>${q.id.toUpperCase()}</b>: ${q.text}<br>`;
+    shuffleArray([...q.options]).forEach(opt=>{
+      const label=document.createElement("label");
+      label.innerHTML=`<input type="radio" name="${q.id}" value="${opt.value}"> ${opt.text}`;
+      div.appendChild(label);
+      div.appendChild(document.createElement("br"));
+    });
+    container.appendChild(div);
+  });
+}
+
+/* ---------- TIMER ---------- */
+let seconds = EXAM_MINUTES * 30;
+let timerInt;
+function tick(){
+  seconds--;
+  let m = Math.floor(seconds/60);
+  let s = seconds % 60;
+  document.getElementById("timer").innerText = `Time: ${m}:${s.toString().padStart(2,'0')}`;
+  if(seconds <= 0) submitExam();
+}
+
+/* ---------- FULLSCREEN ---------- */
+function fs(){ document.documentElement.requestFullscreen?.(); }
+
+/* ---------- VIOLATIONS ---------- */
+function violation(type){
+  if(!allowViolationCount || !initialLoadComplete) return;
+  violations++;
+  document.getElementById("warning").innerText=`Violation: ${type} (${violations}/${MAX_VIOLATIONS})`;
+  if(violations >= MAX_VIOLATIONS){
+    alert("Too many violations — exam ended");
+    submitExam();
+  }
+}
+
+/* ---------- SUBMIT ---------- */
+function submitExam(){
+  clearInterval(timerInt);
+  sessionStorage.removeItem("refreshCount");
+  let score=0;
+  const total=QUESTIONS.length;
+  let output=`<h1>Exam Submitted</h1>`;
+
+  QUESTIONS.forEach(q=>{
+    const sel=document.querySelector(`input[name="${q.id}"]:checked`);
+    const ans=sel?sel.value:"(No Answer)";
+    const ok=ans===q.answer;
+    if(ok) score++;
+    output+=`<div class="question">
+      <b>${q.id.toUpperCase()}</b><br>
+      Your Answer: <span class="${ok?'correct':'incorrect'}">${ans}</span><br>
+      Correct: <b>${q.answer}</b>
+    </div>`;
+  });
+
+  const penalty = violations * VIOLATION_PENALTY;
+  const afterPenalty = Math.max(score - penalty, 0);
+  const finalScore = Math.min(afterPenalty + BONUS_MARKS, total);
+
+  const header = `<div class="header">
+  <h2>Module: ${MODULE}</h2>
+  <h2>Class: ${CLASS}</h2>
+  <h2>School: ${SCHOOL}</h2>
+  <h2>Student: ${STUDENT_NAME}</h2>
+  <h2>Violations: ${violations}</h2>
+  <h2>Max Obtained: ${finalScore}/${total}</h2>
+  </div>`;
+
+  output = `<h1>Exam Submitted</h1>` + header + output;
+  output += `<br>Raw Score: ${score}/${total}<br>Penalty: -${penalty}<br>Bonus Added: +${BONUS_MARKS}<br>`;
+  output += `<div id="result">Final Score: ${finalScore}/${total}</div>`;
+  document.body.innerHTML=output;
+}
+
+/* ---------- SECURITY ---------- */
+function initSecurity(){
+  document.addEventListener("visibilitychange",()=>{ if(document.hidden) violation("TAB_SWITCH"); });
+  window.addEventListener("blur",()=> violation("WINDOW_BLUR"));
+  document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement) violation("EXIT_FULLSCREEN"); });
+  document.addEventListener("keydown",e=>{
+    if([123,116].includes(e.keyCode)) e.preventDefault();
+    if(e.ctrlKey && ["t","n","w","i","u","r"].includes(e.key.toLowerCase())){
+      e.preventDefault(); violation("SHORTCUT");
+    }
+  });
+  document.addEventListener("contextmenu",e=>e.preventDefault());
+  window.addEventListener("beforeunload",function(e){
+    if(allowViolationCount && initialLoadComplete){
+      if(handleRefreshTracking()) violation("PAGE_REFRESH_OR_CLOSE");
+    }
+    e.preventDefault();
+    e.returnValue="";
+  });
+}
+
+/* ---------- INIT ---------- */
+window.onload=()=>{
+  promptStudentName();
+  fs();
+  buildExam();
+  initSecurity();
+  timerInt=setInterval(tick,1000);
+  initialLoadComplete=true;
+};
+</script>
+  </head>
+
+  <body>
+    <h1>Secure Exam</h1>
+    <div class="header">
+      <h2>School: PADRI VJEKO CENTRE TSS</h2>
+      <h2>Class: L5-NIT</h2>
+      <h2>Module: GENPP502 - PYTHON PROGRAMMING</h2>
+      <h2>Student: <span id="student-name">(Enter Name)</span></h2>
+    </div>
+    <div id="timer"></div>
+    <div id="warning"></div>
+    <div id="exam-container"></div>
+    <button onclick="submitExam()">Submit Exam</button>
+  </body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loops and Arrays Programming Problems</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #ffffff;
+    }
+
+    header {
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 32px;
+        letter-spacing: 1px;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+    }
+
+    .section {
+        margin-bottom: 40px;
+    }
+
+    .section h2 {
+        border-left: 6px solid #00c6ff;
+        padding-left: 15px;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.08);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        transition: 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        background: rgba(255,255,255,0.12);
+    }
+
+    .card h3 {
+        margin-top: 0;
+        color: #00c6ff;
+    }
+
+    .algorithm {
+        background: rgba(0,0,0,0.3);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: rgba(0,0,0,0.4);
+        font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Programming Problems: Loops & Arrays</h1>
+</header>
+
+<div class="container">
+
+<!-- LOOPS SECTION -->
+<div class="section">
+<h2>A. Application of Loops</h2>
+
+<div class="card">
+<h3>1. For Loop</h3>
+<p><b>Problem:</b> Print all even numbers between 1 and 50.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Set i = 1 → Repeat while i ≤ 50 →  
+If i % 2 == 0, display i → Increment i → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>2. While Loop</h3>
+<p><b>Problem:</b> Calculate sum of numbers until user enters 0.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Initialize sum = 0 →  
+Input number → While number ≠ 0 →  
+Add number to sum → Input again →  
+Display sum → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>3. Do-While Loop</h3>
+<p><b>Problem:</b> Check if number is positive or negative until -1 is entered.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Repeat: Input number →  
+If number > 0 display "Positive" →  
+If number < 0 and not -1 display "Negative" →  
+Until number = -1 → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>4. Nested Loops (Pattern)</h3>
+<p><b>Problem:</b> Display star pattern.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Outer loop (1 to 5) →  
+Inner loop (1 to row number) → Print * →  
+New line → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>5. Nested Loops (Multiplication Table)</h3>
+<p><b>Problem:</b> Display tables from 1 to 10.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Outer loop (1 to 10) →  
+Inner loop (1 to 10) → Multiply values →  
+Display result → Stop
+</div>
+</div>
+
+</div>
+
+<!-- ARRAYS SECTION -->
+<div class="section">
+<h2>B. Application of Arrays</h2>
+
+<div class="card">
+<h3>6. One-Dimensional Array</h3>
+<p><b>Problem:</b> Store and display 5 integers.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Declare array of size 5 →  
+Input values using loop →  
+Display values → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>7. Reverse Array</h3>
+<p><b>Problem:</b> Store 10 integers and display in reverse.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Declare array size 10 →  
+Input values →  
+Display from last index to first → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>8. Initialize Array & Average</h3>
+<p><b>Problem:</b> Calculate average of {10,20,30,40,50}.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Initialize array →  
+Set sum = 0 →  
+Add all elements →  
+Average = sum / total elements →  
+Display result → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>9. Find Largest Element</h3>
+<p><b>Problem:</b> Find largest number in array.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Input array values →  
+Assume first value as largest →  
+Compare with others →  
+Update if larger found →  
+Display largest → Stop
+</div>
+</div>
+
+<div class="card">
+<h3>10. Two-Dimensional Array (3×3 Matrix)</h3>
+<p><b>Problem:</b> Declare and display matrix.</p>
+<div class="algorithm">
+<b>Algorithm:</b><br>
+Start → Declare 3×3 array →  
+Use nested loops to input values →  
+Use nested loops to display matrix →  
+Stop
+</div>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Programming Fundamentals – Loops & Arrays
+</footer>
+
+</body>
+</html>

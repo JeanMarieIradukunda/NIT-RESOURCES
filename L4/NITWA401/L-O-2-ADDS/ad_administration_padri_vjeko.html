@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Active Directory — PADRI VJEKO CENTRE TSS</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* Use Calisto MT if available, with sensible fallbacks */
+    :root{
+      --accent: #0d6efd; /* bootstrap primary */
+      --muted: #6c757d;
+      --card-bg: linear-gradient(135deg, rgba(13,110,253,0.06), rgba(102,16,242,0.03));
+    }
+    @font-face{
+      font-family: 'CalistoMTLocal';
+      src: local('Calisto MT'), local('CalistoMT');
+      font-weight: 400 700;
+      font-style: normal;
+    }
+    body{
+      font-family: CalistoMTLocal, 'Calisto MT', 'Trebuchet MS', Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg,#f8fafc 0%, #ffffff 60%);
+      color: #212529;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .hero{
+      background: linear-gradient(90deg, rgba(13,110,253,0.08), rgba(102,16,242,0.06));
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 6px 18px rgba(13,110,253,0.06);
+    }
+
+    .term-card{
+      border: 0;
+      border-radius: 12px;
+      background: var(--card-bg);
+      padding: 18px;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .term-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 30px rgba(13,110,253,0.07);} 
+
+    .badge-dept{ font-weight:600; letter-spacing:.3px; }
+
+    .glossary .card-body{ padding: 1rem 1rem; }
+
+    .summary-table th{ background: rgba(13,110,253,0.06); }
+
+    footer{ font-size:.9rem; color:var(--muted); }
+
+    /* responsive tweaks */
+    @media (max-width:576px){
+      .hero{ padding:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+      <div>
+        <h1 class="display-6 mb-1">Active Directory — <span class="text-primary">PADRI VJEKO CENTRE TSS</span></h1>
+        <p class="mb-0 text-muted">Glossary & Concepts for Windows Server administration — styled with <strong>Calisto MT</strong> & Bootstrap 5.</p>
+      </div>
+      <div class="text-end">
+        <span class="badge bg-primary badge-dept">Departments: NIT • FAD • WOT • BDC</span>
+        <div class="mt-2 text-muted">Labs: <span class="fw-semibold">LAB 5</span> &amp; <span class="fw-semibold">LAB 6</span></div>
+      </div>
+    </div>
+
+    <div class="hero mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2 class="mb-1">Designed definitions & school analogies</h2>
+          <p class="mb-0">Clear, friendly definitions paired with real-life analogies using the PADRI VJEKO school structure so students and admins can relate to core Active Directory concepts.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+          <a class="btn btn-outline-primary btn-sm me-2" href="#glossary"><i class="bi bi-book"></i> View Glossary</a>
+          <a class="btn btn-primary btn-sm" href="#summary"><i class="bi bi-list-check"></i> Summary Table</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PART 1: Key Terms -->
+    <section id="glossary" class="mb-5">
+      <h3 class="mb-3">🔹 PART 1: Definition of Key Terms</h3>
+
+      <div class="row g-3">
+
+        <!-- Card: Active Directory -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-primary"><i class="bi bi-server"></i></div>
+              <div>
+                <h5 class="mb-1">1. Active Directory (AD)</h5>
+                <small class="text-muted">Centralized directory & management system</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> Active Directory is a centralized database system in Windows Server that stores information about users, computers, printers, and other resources in a network. It helps administrators manage and organize these resources easily.</p>
+              <p><strong>Example (School Analogy):</strong> Think of <em>Active Directory</em> as the <strong>school registry office</strong> at <em>PADRI VJEKO CENTRE TSS</em>. It keeps all the records — teachers, students, departments, labs, and rules — in one place so the system manager can easily know <em>who is who</em> and <em>who has access to what</em>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Domain Controller -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-success"><i class="bi bi-lock"></i></div>
+              <div>
+                <h5 class="mb-1">2. Domain Controller (DC)</h5>
+                <small class="text-muted">Authentication & authorization server</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> A Domain Controller is a server that runs Active Directory and is responsible for authenticating and authorizing users and computers on the network.</p>
+              <p><strong>Example:</strong> Imagine the System Manager’s main server in LAB 5 that checks who logs in. When a student from the NIT department logs into a lab computer, the Domain Controller verifies their username and password before granting access — just like a <em>security gate</em> checking student IDs before letting them enter the lab.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- OU -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-warning"><i class="bi bi-diagram-3"></i></div>
+              <div>
+                <h5 class="mb-1">3. Organizational Unit (OU)</h5>
+                <small class="text-muted">Grouping container for management</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> An Organizational Unit is a container within Active Directory used to group users, computers, and other objects for easy management and policy application.</p>
+              <p><strong>Example:</strong> At PADRI VJEKO CENTRE TSS, each department (NIT, FAD, WOT, BDC) can be an <em>OU</em>. This allows the System Manager to manage user accounts, computers, and rules separately — for instance, applying different internet access rules to each department.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Catalog -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-info"><i class="bi bi-card-list"></i></div>
+              <div>
+                <h5 class="mb-1">4. Global Catalog (GC)</h5>
+                <small class="text-muted">Forest-wide searchable index</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> The Global Catalog is a distributed data repository that contains information about every object in an Active Directory forest, making it easier to locate resources quickly.</p>
+              <p><strong>Example:</strong> The GC is like the school’s <em>master student & staff list</em> that shows all students and teachers in every department. If someone searches for “John in WOT,” the GC can quickly locate him even if he’s in a different department or lab.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GPO -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-danger"><i class="bi bi-gear-fill"></i></div>
+              <div>
+                <h5 class="mb-1">5. Group Policy Object (GPO)</h5>
+                <small class="text-muted">Configuration & enforcement rules</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> A Group Policy Object is a collection of settings that control the working environment of user accounts and computer accounts.</p>
+              <p><strong>Example:</strong> At PADRI VJEKO CENTRE TSS, the System Manager creates a GPO to prevent students from installing new software or changing desktop backgrounds in LAB 6. It’s like a <em>school rulebook</em> that defines what students and teachers can or can’t do on the network.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AD DS -->
+        <div class="col-lg-6">
+          <div class="term-card">
+            <div class="d-flex align-items-start mb-2">
+              <div class="me-3 display-6 text-primary"><i class="bi bi-hdd-stack"></i></div>
+              <div>
+                <h5 class="mb-1">6. Active Directory Domain Services (AD DS)</h5>
+                <small class="text-muted">Core directory service engine</small>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <p><strong>Definition:</strong> AD DS is the core service of Active Directory that stores directory data and manages communication between users and domains, including login authentication and directory searches.</p>
+              <p><strong>Example:</strong> AD DS is like the main school database server that contains every department, class, and computer record. It allows the System Manager to authenticate users (staff and students) and control what they can access.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PART 2: Concepts -->
+    <section id="concepts" class="mb-5">
+      <h3 class="mb-3">🔹 PART 2: Active Directory Concepts</h3>
+
+      <div class="accordion" id="adConcepts">
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingDomain">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDomain" aria-expanded="false" aria-controls="collapseDomain">
+              1. Domain
+            </button>
+          </h2>
+          <div id="collapseDomain" class="accordion-collapse collapse" aria-labelledby="headingDomain" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Definition:</strong> A domain is a logical group of network objects (users, computers, printers) that share the same Active Directory database.</p>
+              <p><strong>Example:</strong> PADRI VJEKO CENTRE TSS might have a domain named <code>pvctss.local</code> that includes all computers and users from LAB 5, LAB 6, and all departments — managed centrally by the System Manager.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingDC">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDC" aria-expanded="false" aria-controls="collapseDC">
+              2. Domain Controller (DC)
+            </button>
+          </h2>
+          <div id="collapseDC" class="accordion-collapse collapse" aria-labelledby="headingDC" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>(Reinforced) A DC is the server that stores the Active Directory database and manages logins and permissions for the domain. Example: The main server in LAB 5 acts as a DC, verifying every login from LAB 6 computers too — ensuring all users follow the same domain rules.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingForest">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForest" aria-expanded="false" aria-controls="collapseForest">
+              3. Forest
+            </button>
+          </h2>
+          <div id="collapseForest" class="accordion-collapse collapse" aria-labelledby="headingForest" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Definition:</strong> A forest is the highest-level container in Active Directory that holds one or more domains with a shared schema and trust relationships.</p>
+              <p><strong>Example:</strong> If PADRI VJEKO CENTRE TSS expands and opens another branch called PADRI VJEKO COLLEGE, both schools’ domains (<code>pvctss.local</code> and <code>pvcoll.local</code>) can be part of one forest, allowing them to share resources securely.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTree" aria-expanded="false" aria-controls="collapseTree">
+              4. Tree
+            </button>
+          </h2>
+          <div id="collapseTree" class="accordion-collapse collapse" aria-labelledby="headingTree" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Definition:</strong> A tree is a collection of one or more domains in a contiguous namespace within a forest.</p>
+              <p><strong>Example:</strong> In the PADRI VJEKO forest, you can have <code>nit.pvctss.local</code> and <code>fad.pvctss.local</code>. They form a tree structure under the main domain <code>pvctss.local</code> — just like departments under one school.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOU">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOU" aria-expanded="false" aria-controls="collapseOU">
+              5. Organizational Units (OUs)
+            </button>
+          </h2>
+          <div id="collapseOU" class="accordion-collapse collapse" aria-labelledby="headingOU" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>Used to organize users, computers, and groups within a domain to apply policies efficiently. Example: Each department (NIT, FAD, WOT, BDC) is an OU managed by their own supervisor under the system manager.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingGC">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGC" aria-expanded="false" aria-controls="collapseGC">
+              6. Global Catalog (GC)
+            </button>
+          </h2>
+          <div id="collapseGC" class="accordion-collapse collapse" aria-labelledby="headingGC" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>Allows quick search across the entire forest for any object. Example: A teacher from FAD can easily find a student in WOT using the GC, without asking the WOT admin.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTrust">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTrust" aria-expanded="false" aria-controls="collapseTrust">
+              7. Trust Relationship
+            </button>
+          </h2>
+          <div id="collapseTrust" class="accordion-collapse collapse" aria-labelledby="headingTrust" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Definition:</strong> A trust is a link between two domains that allows users in one domain to access resources in another.</p>
+              <p><strong>Example:</strong> If <code>pvctss.local</code> trusts <code>pvcoll.local</code>, then a teacher from PADRI VJEKO COLLEGE can log in to computers in PADRI VJEKO CENTRE’s LAB 6 — just like mutual trust between two school branches.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingGPO">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGPO" aria-expanded="false" aria-controls="collapseGPO">
+              8. Group Policy (GPO)
+            </button>
+          </h2>
+          <div id="collapseGPO" class="accordion-collapse collapse" aria-labelledby="headingGPO" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>Allows the system manager to enforce rules such as password strength, software installation rights, or logon hours for students and staff.</p>
+              <p><strong>Example:</strong>
+                <ul>
+                  <li>GPO for LAB 5: Disable USB ports.</li>
+                  <li>GPO for LAB 6: Set wallpaper with school logo.</li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingUsers">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+              9. User Accounts
+            </button>
+          </h2>
+          <div id="collapseUsers" class="accordion-collapse collapse" aria-labelledby="headingUsers" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>Accounts created for individuals to log in and access resources within the domain. Example: Each student (e.g., <code>john.nit@pvctss.local</code>) has a user account to log in to any lab computer, store files, and use applications securely.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingComputers">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComputers" aria-expanded="false" aria-controls="collapseComputers">
+              10. Computer Accounts
+            </button>
+          </h2>
+          <div id="collapseComputers" class="accordion-collapse collapse" aria-labelledby="headingComputers" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p>These are accounts that represent each computer within the domain. Example: Each computer in LAB 5 and LAB 6 has a computer account (like <code>LAB5-PC01</code>, <code>LAB6-PC02</code>) registered in AD, just as each lab desk has its own unique inventory tag.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingGroups">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroups" aria-expanded="false" aria-controls="collapseGroups">
+              11. Security Groups & Distribution Groups
+            </button>
+          </h2>
+          <div id="collapseGroups" class="accordion-collapse collapse" aria-labelledby="headingGroups" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Security Groups:</strong> Used to assign permissions to shared resources (e.g., file access). <br>
+              <strong>Distribution Groups:</strong> Used mainly for email communication.</p>
+              <p><strong>Example:</strong>
+                <ul>
+                  <li><code>WOT Students</code> (Security) — can access the shared WOT department folder.</li>
+                  <li><code>All Staff</code> (Distribution) — used to send announcements via email.</li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingSchema">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSchema" aria-expanded="false" aria-controls="collapseSchema">
+              12. Schema
+            </button>
+          </h2>
+          <div id="collapseSchema" class="accordion-collapse collapse" aria-labelledby="headingSchema" data-bs-parent="#adConcepts">
+            <div class="accordion-body">
+              <p><strong>Definition:</strong> The schema defines the structure of objects and attributes in the Active Directory database.</p>
+              <p><strong>Example:</strong> In the school analogy, the schema is like the rules for the student and staff database — defining what fields exist for each (e.g., Student ID, Name, Department, Email). If you want to add a new attribute like “RFID_Card_Number,” you must modify the schema.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Summary Table -->
+    <section id="summary" class="mb-5">
+      <h3 class="mb-3">✅ Summary Table for Quick Review</h3>
+
+      <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover summary-table mb-0">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Real-life Example at PADRI VJEKO CENTRE TSS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>AD</td><td>School registry system</td></tr>
+            <tr><td>DC</td><td>Server verifying logins</td></tr>
+            <tr><td>OU</td><td>Each department (NIT, FAD, WOT, BDC)</td></tr>
+            <tr><td>GC</td><td>School-wide contact list</td></tr>
+            <tr><td>GPO</td><td>Rules applied to computers/users</td></tr>
+            <tr><td>AD DS</td><td>Main directory service engine</td></tr>
+            <tr><td>Domain</td><td><code>pvctss.local</code> (entire school network)</td></tr>
+            <tr><td>Forest</td><td>All PADRI VJEKO school networks together</td></tr>
+            <tr><td>Tree</td><td>Departments under main domain</td></tr>
+            <tr><td>Trust</td><td>Shared access between school branches</td></tr>
+            <tr><td>User Account</td><td>Student/staff login</td></tr>
+            <tr><td>Computer Account</td><td>Registered lab computer</td></tr>
+            <tr><td>Groups</td><td>Students/staff permission lists</td></tr>
+            <tr><td>Schema</td><td>Blueprint of directory data</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <footer class="pt-4 border-top">
+      <div class="d-flex justify-content-between align-items-center">
+        <small>Created for <strong>PADRI VJEKO CENTRE TSS</strong> — System Manager friendly guide.</small>
+        <div>
+          <small class="me-3 text-muted"><i class="bi bi-people-fill"></i> 2 labs • 100 PCs</small>
+          <a class="btn btn-sm btn-outline-secondary" href="#top"><i class="bi bi-arrow-up"></i> Top</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

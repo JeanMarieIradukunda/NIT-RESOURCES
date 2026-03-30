@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swapping, Tuple, Dictionary & Complex — Notes</title>
+  <style>
+    /* Use Courier New as requested */
+    html,
+    body {
+      font-family: 'Consolas';
+      background: #f7f7f7;
+      color: #111;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 32px auto;
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      line-height: 1.5;
+      margin: 8px 0;
+    }
+
+    pre {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 6px;
+      overflow: auto;
+    }
+
+    .note {
+      background: #fffbe6;
+      padding: 10px;
+      border-left: 4px solid #ffcc00;
+      margin: 10px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background: #f2f2f2;
+    }
+
+    ul {
+      margin: 6px 0 6px 20px;
+    }
+
+    .emoji {
+      margin-right: 6px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🧠Swapping, Tuple, Dictionary & Complex</h1>
+
+    <h2>🧩 Meaning of “Swapping” in Programming</h2>
+    <p>Swapping means <strong>exchanging the values</strong> of two variables. In other words — making variable
+      <code>A</code> take the value of <code>B</code>, and variable <code>B</code> take the value of <code>A</code>.</p>
+
+    <h2>💡 Example (Before and After Swapping)</h2>
+    <pre><code>a = 5
+b = 10
+
+# Before swapping:
+# a = 5
+# b = 10
+
+# Swap using Python tuple unpacking
+a, b = b, a
+
+# After swapping:
+# a = 10
+# b = 5
+</code></pre>
+
+    <h2>🧠 What Happened Here?</h2>
+    <p>The right side <code>(b, a)</code> creates a tuple of current values → <code>(10, 5)</code>. Python then assigns
+      those values to <code>(a, b)</code> on the left side. So <code>a</code> gets <code>10</code> and <code>b</code>
+      gets <code>5</code>.</p>
+
+    <h2>🧮 Why Is It Useful?</h2>
+    <ul>
+      <li>Sorting numbers or items (like in sorting algorithms).</li>
+      <li>Temporarily switching values between two variables.</li>
+    </ul>
+
+    <h2>🔧 Another Example (Step-by-step with Temporary Variable)</h2>
+    <pre><code>a = 5
+b = 10
+
+# Swap using a temporary variable
+temp = a
+a = b
+b = temp
+
+print(a, b)  # Output: 10 5
+</code></pre>
+
+    <div class="note">
+      <strong>✅ In short:</strong> Swapping means exchanging two values so that each variable takes the other’s value.
+    </div>
+
+    <hr>
+
+    <h2>🧠 1️⃣ Tuple</h2>
+    <h3>💬 What is a Tuple?</h3>
+    <p>A <strong>tuple</strong> is like a list, but it <strong>cannot be changed</strong> (we say it’s
+      <em>immutable</em>). That means — once you create it, you cannot add, remove, or change its items.</p>
+
+    <h3>🧩 Example</h3>
+    <pre><code># A tuple of student names
+students = ("Alice", "Bob", "John")
+print(students)
+
+# Output:
+# ('Alice', 'Bob', 'John')
+</code></pre>
+
+    <h3>⚙️ How to access tuple items</h3>
+    <pre><code>print(students[0])   # prints 'Alice'
+print(students[-1])  # prints 'John'
+</code></pre>
+
+    <h3>🧰 Uses of Tuple</h3>
+    <ul>
+      <li>When you want to store <strong>fixed data</strong> that should not change.</li>
+      <li>Tuples use less memory than lists, so they are more efficient.</li>
+      <li>Good for read-only data.</li>
+    </ul>
+
+    <h3>🌍 Real-Life Examples</h3>
+    <pre><code># Days of the week
+days = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+# Coordinates on a map (x, y)
+point = (10, 20)
+
+# Storing constant information like (country code, country name)
+country = ("RW", "Rwanda")
+</code></pre>
+
+    <hr>
+
+    <h2>🧠 2️⃣ Dictionary</h2>
+    <h3>💬 What is a Dictionary?</h3>
+    <p>A <strong>dictionary</strong> stores data in <strong>key-value pairs</strong>. Think of it like a real-life
+      dictionary — you look up a <em>word</em> (key) to find its <em>meaning</em> (value).</p>
+
+    <h3>🧩 Example</h3>
+    <pre><code>student = {
+    "name": "Alice",
+    "age": 20,
+    "course": "Computer Science"
+}
+
+# Here:
+# "name" is the key, and "Alice" is the value.
+</code></pre>
+
+    <h3>⚙️ Accessing values</h3>
+    <pre><code>print(student["name"])   # prints Alice
+
+# Adding new data
+student["grade"] = "A"
+
+# Changing a value
+student["age"] = 21
+</code></pre>
+
+    <h3>🧰 Uses of Dictionary</h3>
+    <ul>
+      <li>When you need to store related data together.</li>
+      <li>When you want to find information quickly using a <strong>key</strong>.</li>
+      <li>Very useful in real-world applications like managing databases or APIs.</li>
+    </ul>
+
+    <h3>🌍 Real-Life Examples</h3>
+    <pre><code># Student record
+student = {"id": 1, "name": "Alice", "marks": 85}
+
+# Contact list
+contact = {"name": "John", "phone": "0789-123-456"}
+
+# Product details
+product = {"name": "Laptop", "price": 950.0, "in_stock": True}
+</code></pre>
+
+    <hr>
+
+    <h2>🧠 3️⃣ Complex (Complex Numbers)</h2>
+    <h3>💬 What is a Complex Number?</h3>
+    <p>A <strong>complex number</strong> has two parts: a <strong>real part</strong> and an <strong>imaginary
+        part</strong>. In Python, you write it like this:</p>
+    <pre><code>z = 3 + 4j
+</code></pre>
+    <p>Here: <code>3</code> → Real part, <code>4j</code> → Imaginary part (notice the letter <code>j</code>, not
+      <code>i</code> as in math)</p>
+
+    <h3>⚙️ Accessing parts</h3>
+    <pre><code>print(z.real)  # Output: 3.0
+print(z.imag)  # Output: 4.0
+</code></pre>
+
+    <h3>Math with complex numbers</h3>
+    <pre><code>a = 2 + 3j
+b = 1 + 4j
+print(a + b)  # Output: (3+7j)
+</code></pre>
+
+    <h3>🧰 Uses of Complex Numbers</h3>
+    <ul>
+      <li>In engineering, physics, and mathematics for calculations involving waves, electricity, or signals.</li>
+      <li>Used in scientific computing, such as electrical circuit analysis or control systems.</li>
+    </ul>
+
+    <h3>🌍 Real-Life Examples</h3>
+    <ul>
+      <li>Electrical engineering: AC calculations use complex numbers to represent voltage and current.</li>
+      <li>Robotics: complex numbers can represent rotation and movement.</li>
+      <li>Data science: used in Fourier Transforms (audio and image processing).</li>
+    </ul>
+
+    <hr>
+
+    <h2>✅ Summary Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>Looks Like</th>
+          <th>Can Change?</th>
+          <th>Main Use</th>
+          <th>Real-Life Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tuple</td>
+          <td>("red", "blue", "green")</td>
+          <td>❌ No</td>
+          <td>Store fixed data</td>
+          <td>Days of the week</td>
+        </tr>
+        <tr>
+          <td>Dictionary</td>
+          <td>{"name": "Alice", "age": 20}</td>
+          <td>✅ Yes</td>
+          <td>Store key-value pairs</td>
+          <td>Student record</td>
+        </tr>
+        <tr>
+          <td>Complex</td>
+          <td>3 + 4j</td>
+          <td>✅ Yes</td>
+          <td>Math/Science calculations</td>
+          <td>Electrical signals</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="display: flex; justify-content: center; align-items: center; text-align: center; margin-top: 18px;">
+      <p>✨GENPP502 - ✨PVC@2025-2026✨</p>
+    </div>
+
+  </div>
+</body>
+
+</html>

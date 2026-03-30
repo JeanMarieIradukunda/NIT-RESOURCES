@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Decorators Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background-color: #1899bc;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1, h2, h3 {
+            color: #0b6414;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        .note {
+            background-color: #fffbcc;
+            border-left: 6px solid #ffeb3b;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Decorators Notes</h1>
+    </header>
+    <main>
+        <section>
+            <h2>A. Definition & Explanation</h2>
+            <p><strong>Definition:</strong> A decorator in Python is a function that modifies the behavior of another function without changing its code. Decorators allow you to add functionality to a function dynamically.</p>
+
+            <h3>How it works:</h3>
+            <ul>
+                <li>A decorator wraps another function.</li>
+                <li>The <code>@decorator_name</code> syntax is a shorthand for passing a function to the decorator.</li>
+            </ul>
+
+            <h3>Basic Example:</h3>
+            <pre>
+def simple_decorator(func):
+    def wrapper():
+        print("Before the function runs")
+        func()
+        print("After the function runs")
+    return wrapper
+
+@simple_decorator  # Apply decorator to say_hello
+def say_hello():
+    print("Hello!")
+
+say_hello()
+
+# Output:
+# Before the function runs
+# Hello!
+# After the function runs
+            </pre>
+
+            <p><strong>Explanation:</strong> <br>
+            <em>say_hello</em> is passed to <em>simple_decorator</em>. <em>wrapper()</em> runs before and after the original function. The original function code is untouched, but its behavior is enhanced.</p>
+        </section>
+
+        <section>
+            <h2>B. Uses and Applications (When to Use)</h2>
+            <p>Decorators are useful when you want to add functionality to functions without changing them directly:</p>
+            <ul>
+                <li><strong>Logging:</strong> Keep track of function calls and outputs.</li>
+                <li><strong>Authentication & Authorization:</strong> Check user permissions before running a function.</li>
+                <li><strong>Performance Monitoring:</strong> Measure how long a function takes to run.</li>
+                <li><strong>Caching / Memoization:</strong> Store results of expensive function calls.</li>
+                <li><strong>Validation:</strong> Check input values before executing the function.</li>
+            </ul>
+            <p>Example: Instead of repeating logging in every function, you can use one decorator for all functions.</p>
+        </section>
+
+        <section>
+            <h2>C. Real-Life Examples</h2>
+
+            <h3>Logging Function Execution:</h3>
+            <pre>
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        print(f"Function {func.__name__} is running")
+        result = func(*args, **kwargs)
+        print(f"Function {func.__name__} finished")
+        return result
+    return wrapper
+
+@log_decorator
+def load_homepage():
+    print("Homepage loaded")
+
+load_homepage()
+
+# Output:
+# Function load_homepage is running
+# Homepage loaded
+# Function load_homepage finished
+            </pre>
+
+            <h3>Checking User Authentication:</h3>
+            <pre>
+def require_login(func):
+    def wrapper(user_logged_in):
+        if user_logged_in:
+            return func()
+        else:
+            return "Access Denied. Please login."
+    return wrapper
+
+@require_login
+def view_profile():
+    return "User Profile Page"
+
+print(view_profile(True))   # User Profile Page
+print(view_profile(False))  # Access Denied. Please login.
+            </pre>
+
+            <h3>Measuring Execution Time:</h3>
+            <pre>
+import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end - start:.4f} seconds to execute")
+        return result
+    return wrapper
+
+@timer
+def compute_sum(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+compute_sum(1000000)
+            </pre>
+
+            <div class="note">
+                ✅ <strong>Key Takeaways for Beginners:</strong><br>
+                - Decorators wrap functions to enhance or modify behavior.<br>
+                - They are reusable, clean, and reduce repetitive code.<br>
+                - Common use cases: logging, authentication, performance measurement, caching.
+            </div>
+        </section>
+    </main>
+</body>
+</html>

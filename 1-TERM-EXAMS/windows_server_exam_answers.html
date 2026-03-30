@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>School Comprehensive Assessment</title>
+
+    <!-- ICON LIBRARY -->
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+    body {
+        font-family: 'Calisto MT', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        background: #f2f2f2;
+        scroll-behavior: smooth;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 260px;
+        background: #1e1e2f;
+        color: #fff;
+        height: 100vh;
+        position: fixed;
+        overflow-y: auto;
+        padding: 20px;
+        transition: 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .sidebar a {
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        margin: 5px 0;
+        background: #2e2e42;
+        border-radius: 5px;
+        transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+        background: #4a4a6a;
+    }
+
+    /* Toggle Button (Mobile) */
+    .menu-btn {
+        display: none;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background: #1e1e2f;
+        color: #fff;
+        border: none;
+        padding: 10px 12px;
+        border-radius: 5px;
+        font-size: 18px;
+        z-index: 1000;
+    }
+
+    /* Main Content */
+    .content {
+        margin-left: 300px;
+        padding: 20px;
+        width: calc(100% - 260px);
+        transition: 0.3s ease;
+    }
+
+    .header-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+        background: #1e1e2f;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    th {
+        background: #eee;
+    }
+
+    ul {
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Adjustments */
+    @media(max-width: 900px) {
+        .sidebar {
+            left: -260px;
+        }
+        .sidebar.open {
+            left: 0;
+        }
+        .menu-btn {
+            display: block;
+        }
+        .content {
+            margin-left: 0;
+            width: 100%;
+        }
+    }
+</style>
+  </head>
+
+  <body>
+
+    <!-- MOBILE MENU BUTTON -->
+    <button class="menu-btn" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <h2><i class="fas fa-list-check"></i> Menu</h2>
+
+      <a href="#instructions"><i class="fas fa-file-alt"></i> Instructions</a>
+
+      <strong>SECTION A</strong>
+      <a href="#mcq"><i class="fas fa-check-circle"></i> MCQs</a>
+      <a href="#tf"><i class="fas fa-toggle-on"></i> True / False</a>
+      <a href="#match"><i class="fas fa-link"></i> Matching</a>
+      <a href="#open"><i class="fas fa-pen-to-square"></i> Open Questions</a>
+
+      <strong>Open Question Navigation</strong>
+      <a href="#open1"><i class="fas fa-book"></i> AD Key Terms</a>
+      <a href="#open2"><i class="fas fa-network-wired"></i> ADDS Deployment</a>
+      <a href="#open3"><i class="fas fa-user-shield"></i> DC Promotion</a>
+      <a href="#open4"><i class="fas fa-server"></i> Server Manager</a>
+      <a href="#open5"><i class="fas fa-desktop"></i> Installation</a>
+      <a href="#open6"><i class="fas fa-gear"></i> GPO Types</a>
+      <a href="#open7"><i class="fas fa-cubes"></i> Role vs Features</a>
+
+      <strong>SECTION B</strong>
+      <a href="#scenario1"><i class="fas fa-database"></i> Physical Server</a>
+      <a href="#scenario2"><i class="fas fa-cloud"></i> Virtual Server</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <div class="header-box">
+        <h2>SCHOOL COMPREHENSIVE ASSESSMENT</h2>
+        <p><strong>Sector:</strong> ICT & Multimedia</p>
+        <p><strong>RTQF Level:</strong> 4</p>
+        <p><strong>Trades:</strong> Networking and Internet Technology</p>
+        <p class="bg-success"><strong>Marks:</strong> 80 </p>
+        <p><strong>Duration:</strong> 3 Hours</p>
+      </div>
+
+      <h3 id="instructions">INSTRUCTIONS TO CANDIDATES:</h3>
+      <p>Answer all questions in Section A and Section B.</p>
+
+      <div class="section-title" id="section-a">SECTION A (65 Marks)</div>
+
+      <!-- MCQ SECTION -->
+      <h3 id="mcq">A. MULTIPLE CHOICE QUESTIONS (10 Marks)</h3>
+      <table>
+        <tr><th>Q#</th><th>Answer</th></tr>
+        <tr><td>1</td><td>b) Server operating system</td></tr>
+        <tr><td>2</td><td>a) A minimal installation without GUI</td></tr>
+        <tr><td>3</td><td>d) Server Manager</td></tr>
+        <tr><td>4</td><td>c) Virtualization platform</td></tr>
+        <tr><td>5</td><td>c) Dashboard</td></tr>
+        <tr><td>6</td><td>a) Managing hardware and software settings</td></tr>
+        <tr><td>7</td><td>a) Stand-alone OS</td></tr>
+        <tr><td>8</td><td>b) Mounting servers and networking equipment</td></tr>
+        <tr><td>9</td><td>b) Uninterruptible Power Supply</td></tr>
+        <tr><td>10</td><td>c) Physical network connections</td></tr>
+      </table>
+
+      <!-- TRUE/FALSE -->
+      <h3 id="tf">B. TRUE / FALSE (10 Marks)</h3>
+      <table>
+        <tr><th>Q#</th><th>Answer</th></tr>
+        <tr><td>1</td><td>False</td></tr>
+        <tr><td>2</td><td>True</td></tr>
+        <tr><td>3</td><td>True</td></tr>
+        <tr><td>4</td><td>True</td></tr>
+        <tr><td>5</td><td>True</td></tr>
+        <tr><td>6</td><td>True</td></tr>
+        <tr><td>7</td><td>True</td></tr>
+        <tr><td>8</td><td>True</td></tr>
+        <tr><td>9</td><td>False</td></tr>
+        <tr><td>10</td><td>True</td></tr>
+      </table>
+
+      <!-- MATCHING -->
+      <h3 id="match">C. MATCHING (10 Marks)</h3>
+      <table>
+        <tr><th>Column A</th><th>Column B</th><th>Answer</th></tr>
+        <tr><td>Hyper-V</td><td>Virtualization platform</td><td>1 → d</td></tr>
+        <tr><td>Server Core</td><td>Minimal OS installation</td><td>2 →
+            a</td></tr>
+        <tr><td>UPS</td><td>Power protection device</td><td>3 → b</td></tr>
+        <tr><td>Static IP</td><td>Fixed IP address</td><td>4 → c</td></tr>
+        <tr><td>RAM</td><td>Temporary memory</td><td>5 → f</td></tr>
+        <tr><td>Server Manager</td><td>Management tool</td><td>6 → e</td></tr>
+        <tr><td>Rack Enclosure</td><td>Server housing</td><td>7 → g</td></tr>
+        <tr><td>Control Panel</td><td>System settings</td><td>8 → h</td></tr>
+        <tr><td>Stand-alone OS</td><td>Single-device OS</td><td>9 → i</td></tr>
+        <tr><td>Network Sharing</td><td>Resource visibility</td><td>10 →
+            j</td></tr>
+      </table>
+
+      <!-- OPEN QUESTIONS -->
+      <h3 id="open">D. OPEN QUESTIONS (35 Marks)</h3>
+
+      <h4 id="open1">1. AD Key Terms (5 Marks)</h4>
+      <ul class="small">
+        <li><strong>AD (Active Directory):</strong> A Microsoft directory
+          service that stores information about users, computers, groups, and
+          other resources, and helps manage network authentication and
+          authorization.</li>
+
+        <li><strong>DC (Domain Controller):</strong> A server that hosts Active
+          Directory Domain Services (ADDS), authenticates users, enforces
+          security policies, and manages access to network resources.</li>
+
+        <li><strong>OU (Organizational Unit):</strong> A container within Active
+          Directory used to organize users, computers, groups, and other
+          objects, allowing administrators to apply policies and delegate
+          control.</li>
+
+        <li><strong>GPO (Group Policy Object):</strong> A set of rules and
+          configurations used to control and manage user and computer settings
+          across the domain—such as password policies, desktop configuration,
+          and software restrictions.</li>
+
+        <li><strong>Global Catalog (GC):</strong> A distributed data repository
+          stored on domain controllers that provides fast searches for objects
+          across the entire forest and helps in user logon by validating
+          universal group membership.</li>
+      </ul>
+
+      <h4 id="open2">2. ADDS Deployment (6 Marks)</h4>
+      <ul class="small">
+        <li><strong>Add Domain Controller:</strong> Installs an additional
+          domain controller in an existing domain to increase redundancy, load
+          balancing, and improve authentication performance.</li>
+
+        <li><strong>Add New Domain:</strong> Creates a new domain within an
+          existing forest. This is used when organizations need separate
+          administrative boundaries or different security policies.</li>
+
+        <li><strong>Add New Forest:</strong> Creates a completely new Active
+          Directory forest. This is chosen when no existing AD infrastructure is
+          available or when a fully independent directory structure is
+          required.</li>
+      </ul>
+
+      <h4 id="open3">3. Reasons for Server Promotion (5 Marks)</h4>
+      <ul>
+        <li><strong>Central management:</strong> Promoting a server allows it to
+          manage users, computers, and resources centrally within the domain,
+          simplifying administration.</li>
+
+        <li><strong>Authentication:</strong> The promoted server can
+          authenticate users and devices, ensuring that only authorized accounts
+          can access network resources.</li>
+
+        <li><strong>Policies:</strong> The server can enforce Group Policy
+          Objects (GPOs) to control user and computer settings across the
+          domain.</li>
+
+        <li><strong>Replication:</strong> Promoting a server ensures that
+          directory data is replicated between domain controllers, maintaining
+          consistency and redundancy.</li>
+
+        <li><strong>Security:</strong> A promoted server can apply security
+          settings, monitor access, and provide a secure environment for domain
+          resources.</li>
+      </ul>
+
+      <h4 id="open4">4. Server Manager vs Control Panel (4 Marks)</h4>
+      <ul>
+        <li><strong>Server Manager:</strong> A Windows Server tool used to
+          install, configure, and manage server roles and features, monitor
+          server performance, and perform administrative tasks across multiple
+          servers.</li>
+
+        <li><strong>Control Panel:</strong> A Windows interface for configuring
+          system settings on a single machine, such as network settings,
+          hardware, user accounts, and basic system configurations. It is not
+          used for domain-wide server management.</li>
+      </ul>
+
+      <h4 id="open5">5. Windows Server Installation (8 Marks)</h4>
+      <ul class="small">
+        <li><strong>A. Types:</strong>
+          <ul>
+            <li><strong>Full GUI:</strong> A Windows Server installation with a
+              graphical user interface, allowing easy management using GUI-based
+              tools and applications. Suitable for beginners or environments
+              that require visual management.</li>
+            <li><strong>Server Core:</strong> A minimal installation without a
+              graphical interface, optimized for performance and security.
+              Managed mainly through command-line tools, PowerShell, or remote
+              administration.</li>
+          </ul>
+        </li>
+        <li><strong>B. Static IP:</strong> Assigning a fixed IP address to the
+          server to ensure reliable network communication, access to services,
+          and proper integration within the domain environment.</li>
+        <li><strong>C. Ping Test:</strong> Using the <code>ping</code> command
+          to check network connectivity between the server and other devices,
+          ensuring the server can communicate properly on the network.</li>
+      </ul>
+
+      <h4 id="open6">6. GPO Definition and Types (5 Marks)</h4>
+      <p class="small"><strong>GPO (Group Policy Object):</strong> A set of
+        rules and configurations used in Active Directory to control the
+        behavior and security of users and computers within a domain. GPOs help
+        enforce consistent settings across multiple devices.</p>
+      <ul class="small">
+        <li><strong>Local GPO:</strong> Applies only to the individual computer
+          on which it is configured. Used for managing settings on a single
+          machine without affecting other computers in the domain.</li>
+        <li><strong>Domain GPO:</strong> Applied to users and computers within
+          an Active Directory domain. It allows centralized management of
+          security policies, software installation, and user environment
+          settings across multiple machines.</li>
+        <li><strong>Starter GPO:</strong> A template that contains predefined
+          policy settings. It can be used to quickly create new GPOs with
+          consistent configurations, reducing setup time and ensuring
+          standardization.</li>
+      </ul>
+
+      <h4 id="open7">7. Role vs Feature (2 Marks)</h4>
+      <ul class="small">
+        <li><strong>Role:</strong> A primary function or service provided by a
+          Windows Server, such as DNS Server, DHCP Server, or Active Directory
+          Domain Services. Roles define what the server does in the
+          network.</li>
+        <li><strong>Feature:</strong> An optional component that supports server
+          roles or enhances functionality, such as .NET Framework, Failover
+          Clustering, or Telnet Client. Features are not essential for the
+          server’s main purpose but add additional capabilities.</li>
+      </ul>
+
+      <div class="section-title">SECTION B — Scenario-Based Questions (15
+        Marks)</div>
+
+      <!-- Scenario 1 -->
+      <div class="card" id="scenario1">
+        <h3>Scenario 1: Physical Server Installation</h3>
+        <ul class="small">
+          <li><strong>Prepare ISO media:</strong> Obtain or download the Windows
+            Server ISO file and create bootable media (USB/DVD) to start the
+            installation.</li>
+          <li><strong>Choose GUI/Core:</strong> Decide between a Full GUI
+            installation for graphical management or Server Core for minimal,
+            command-line-based setup.</li>
+          <li><strong>Connect hardware:</strong> Ensure the server hardware
+            (CPU, RAM, storage, NIC) is properly installed and connected to
+            power and network.</li>
+          <li><strong>Assign IP:</strong> Configure a static IP address to
+            ensure stable network communication and domain connectivity.</li>
+          <li><strong>Test connectivity:</strong> Use commands like
+            <code>ping</code> to verify network communication with other devices
+            or servers.</li>
+        </ul>
+      </div>
+
+      <!-- Scenario 2 -->
+      <div class="card" id="scenario2">
+        <h3>Scenario 2: Virtual Server Installation</h3>
+        <ul class="small">
+          <li><strong>Mount ISO:</strong> Attach the Windows Server ISO to the
+            virtual machine’s virtual CD/DVD drive for installation.</li>
+          <li><strong>Create VM:</strong> Configure the virtual machine with
+            appropriate CPU cores, memory, and storage resources for optimal
+            performance.</li>
+          <li><strong>Setup vNIC:</strong> Configure the virtual network
+            interface card to provide network connectivity to the VM.</li>
+          <li><strong>Assign IP:</strong> Set a static or DHCP-assigned IP to
+            ensure the VM can communicate with the network and domain.</li>
+          <li><strong>Test ping:</strong> Use the <code>ping</code> command to
+            verify connectivity between the VM and other devices or servers in
+            the network.</li>
+        </ul>
+      </div>
+
+      <script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
+</script>
+
+    </body>
+  </html>

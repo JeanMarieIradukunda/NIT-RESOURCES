@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Closures Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background-color: #28405a;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1, h2, h3 {
+            color: #1053ef;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e8f0fe;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        .note {
+            background-color: #fffbcc;
+            border-left: 6px solid #ffeb3b;
+            padding: 0.8rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Closures Notes</h1>
+    </header>
+    <main>
+        <section>
+            <h2>A. Definition & Explanation</h2>
+            <p><strong>Definition:</strong> A closure in Python is a function that remembers values from its enclosing scope, even after the outer function has finished executing. It “closes over” variables from its parent function.</p>
+            
+            <h3>How it works:</h3>
+            <ul>
+                <li>An outer function defines some variables.</li>
+                <li>An inner function uses these variables.</li>
+                <li>Even if the outer function finishes, the inner function remembers the variables.</li>
+            </ul>
+            
+            <h3>Example:</h3>
+            <pre>
+def outer_function(x):
+    def inner_function(y):
+        return x + y  # inner function remembers x
+    return inner_function
+
+add_five = outer_function(5)  # returns inner_function
+print(add_five(10))  # Output: 15
+            </pre>
+
+            <p><strong>Explanation:</strong> <br>
+            <em>outer_function(5)</em> runs and returns <em>inner_function</em>. Even though <em>outer_function</em> is done, <em>inner_function</em> remembers that x = 5. This memory of x is what makes it a closure.</p>
+        </section>
+
+        <section>
+            <h2>B. Uses and Applications (When to Use)</h2>
+            <ul>
+                <li><strong>Data hiding / Encapsulation:</strong> Variables from the outer function are not accessible globally, protecting them from accidental changes.</li>
+                <li><strong>Maintaining state without global variables:</strong> Useful for counters or settings that need to “remember” past values.</li>
+                <li><strong>Avoiding global variables:</strong> Keeps your program clean and modular.</li>
+                <li><strong>Functional programming patterns:</strong> Often used with decorators or callback functions.</li>
+            </ul>
+
+            <h3>Example (State maintenance):</h3>
+            <pre>
+def counter():
+    count = 0
+    def increment():
+        nonlocal count
+        count += 1
+        return count
+    return increment
+
+visitor_counter = counter()
+print(visitor_counter())  # Output: 1
+print(visitor_counter())  # Output: 2
+            </pre>
+        </section>
+
+        <section>
+            <h2>C. Real-Life Examples</h2>
+
+            <h3>Creating a Counter for Website Visits:</h3>
+            <pre>
+def visit_counter():
+    count = 0
+    def increment():
+        nonlocal count
+        count += 1
+        return f"Total visits: {count}"
+    return increment
+
+counter = visit_counter()
+print(counter())  # Total visits: 1
+print(counter())  # Total visits: 2
+            </pre>
+
+            <h3>Implementing User-Specific Settings:</h3>
+            <pre>
+def user_settings(user_name):
+    settings = {"theme": "light", "notifications": True}
+    def get_settings():
+        return f"{user_name}'s settings: {settings}"
+    return get_settings
+
+user1 = user_settings("Alice")
+print(user1())  # Alice's settings: {'theme': 'light', 'notifications': True}
+            </pre>
+
+            <h3>Tracking Login Attempts in a System:</h3>
+            <pre>
+def login_tracker():
+    attempts = 0
+    def attempt():
+        nonlocal attempts
+        attempts += 1
+        return f"Login attempts: {attempts}"
+    return attempt
+
+tracker = login_tracker()
+print(tracker())  # Login attempts: 1
+print(tracker())  # Login attempts: 2
+            </pre>
+
+            <div class="note">
+                ✅ <strong>Key Takeaways for Beginners:</strong><br>
+                - Closures remember values from their outer function.<br>
+                - Useful for state maintenance, data hiding, and avoiding global variables.<br>
+                - Can be applied to counters, user settings, and tracking attempts in programs.
+            </div>
+        </section>
+    </main>
+</body>
+</html>

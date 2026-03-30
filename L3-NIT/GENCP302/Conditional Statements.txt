@@ -1,0 +1,46 @@
+
+		CONDITIONAL STATEMENTS
+
+A conditional statement in C is a way for a program to make decisions. 
+It allows the program to execute certain parts of code only if a specific condition is true, and optionally execute other code if the condition is false.
+
+	3 basic types of conditional statements
+	---------------------------------------
+ 1. if statement ---> Executes a block of code if the condition is true.
+The condition in an if statement is a logical test — an expression that checks whether something is true or false.
+
+Syntax
+if (condition) {
+  // block of code to be executed if the condition is true
+}
+
+2. else statement --> Use the else statement to specify a block of code to be executed if the condition is false.
+
+Syntax
+if (condition) {
+  // block of code to be executed if the condition is true
+} else {
+  // block of code to be executed if the condition is false
+}
+-------------------------------------------------------------------
+Question 1: Age Eligibility
+Write a C program that asks the user to enter their age.
+
+If the age is 18 or older, print:
+"✅ You are eligible to vote."
+
+Otherwise, print:
+"❌ You are not eligible to vote yet."
+
+📘 Hint: Use if (age >= 18)
+
+Question 2: Even or Odd
+Write a C program that asks the user to enter an integer.
+
+If the number is even, print:
+"The number is even."
+
+Otherwise, print:
+"The number is odd."
+
+📘 Hint: Even numbers have a remainder of 0 when divided by 2 (num % 2 == 0)
