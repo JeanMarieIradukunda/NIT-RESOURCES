@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>C Programming Group Presentation Setup</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root{
+            --primary:#0d6efd;
+            --secondary:#6610f2;
+            --dark:#0f172a;
+            --light:#f8fafc;
+            --success:#198754;
+            --warning:#ffc107;
+        }
+
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body{
+            background: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+        .hero{
+            min-height: 70vh;
+            background:
+                linear-gradient(rgba(5,10,25,.85), rgba(5,10,25,.92)),
+                url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero h1{
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .hero p{
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        .floating-card{
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        /* NAVBAR */
+        .navbar{
+            background: rgba(15,23,42,.9)!important;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand{
+            font-weight: 700;
+        }
+
+        /* SECTION */
+        .section-title{
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .section-title::after{
+            content:'';
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(to right,var(--primary),var(--secondary));
+            position: absolute;
+            left:0;
+            bottom:-10px;
+            border-radius: 50px;
+        }
+
+        /* CARDS */
+        .task-card{
+            border:none;
+            border-radius: 20px;
+            transition: .4s ease;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,.05);
+            height: 100%;
+        }
+
+        .task-card:hover{
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.1);
+        }
+
+        .task-header{
+            padding: 25px;
+            color:white;
+            background: linear-gradient(135deg,var(--primary),var(--secondary));
+        }
+
+        .task-header h5{
+            margin:0;
+            font-weight: 600;
+        }
+
+        .task-body{
+            padding: 25px;
+        }
+
+        .badge-custom{
+            background: rgba(13,110,253,.1);
+            color: var(--primary);
+            margin: 5px;
+            padding: 8px 14px;
+            border-radius: 50px;
+            font-size: .8rem;
+        }
+
+        /* TABLE */
+        .table-container{
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.05);
+        }
+
+        table{
+            vertical-align: middle!important;
+        }
+
+        /* TIMELINE */
+        .timeline{
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .timeline::before{
+            content:'';
+            position:absolute;
+            left:15px;
+            top:0;
+            width:4px;
+            height:100%;
+            background: var(--primary);
+        }
+
+        .timeline-item{
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+
+        .timeline-dot{
+            position:absolute;
+            left:0;
+            top:5px;
+            width:35px;
+            height:35px;
+            border-radius:50%;
+            background: linear-gradient(to right,var(--primary),var(--secondary));
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:14px;
+        }
+
+        /* FOOTER */
+        footer{
+            background: var(--dark);
+            color:white;
+            padding:40px 0;
+        }
+
+        /* SCROLL TOP */
+        .scroll-top{
+            position: fixed;
+            right:20px;
+            bottom:20px;
+            width:50px;
+            height:50px;
+            border:none;
+            border-radius:50%;
+            background: linear-gradient(to right,var(--primary),var(--secondary));
+            color:white;
+            display:none;
+            z-index: 999;
+        }
+
+        /* SEARCH */
+        .search-box{
+            border-radius: 50px;
+            padding: 14px 20px;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="bi bi-code-slash"></i> C Programming Projects
+        </a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#works">Group Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="#checklist">Checklist</a></li>
+                <li class="nav-item"><a class="nav-link" href="#guidelines">Guidelines</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+                <h1 class="mb-4">
+                    Practical Group Work Questions on C Programming
+                </h1>
+
+                <p class="mb-4">
+                    Modern project-based learning activities designed to strengthen
+                    students’ skills in problem solving, algorithms, flowcharts,
+                    programming logic, structured programming, and teamwork.
+                </p>
+
+                <a href="#works" class="btn btn-primary btn-lg px-4">
+                    Explore Projects
+                </a>
+            </div>
+
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="floating-card">
+
+                    <h5 class="mb-4">
+                        <i class="bi bi-list-check"></i>
+                        Students Must:
+                    </h5>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent text-white border-secondary">
+                            Understand and analyze the problem
+                        </li>
+
+                        <li class="list-group-item bg-transparent text-white border-secondary">
+                            Draw the problem flowchart
+                        </li>
+
+                        <li class="list-group-item bg-transparent text-white border-secondary">
+                            Design the algorithm
+                        </li>
+
+                        <li class="list-group-item bg-transparent text-white border-secondary">
+                            Write the C program
+                        </li>
+
+                        <li class="list-group-item bg-transparent text-white border-secondary">
+                            Use arrays, loops, functions & control statements
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SEARCH -->
+<section class="py-5 bg-white shadow-sm">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <input type="text" id="searchInput" class="form-control search-box"
+                    placeholder="Search group work...">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- GROUP WORKS -->
+<section class="py-5" id="works">
+    <div class="container">
+
+        <h2 class="section-title">Group Work Activities</h2>
+
+        <div class="row g-4 mt-2">
+
+            <!-- CARD 1 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header">
+                        <h5>
+                            <i class="bi bi-mortarboard-fill"></i>
+                            Student Marks Management System
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Design a C program that stores student marks,
+                            calculates averages, and assigns grades.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Arrays</span>
+                            <span class="badge-custom">Functions</span>
+                            <span class="badge-custom">Loops</span>
+                            <span class="badge-custom">Control Statements</span>
+                        </div>
+
+                        <button class="btn btn-outline-primary w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details1">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details1">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Input marks for 10 students</li>
+                                <li class="list-group-item">Calculate averages</li>
+                                <li class="list-group-item">Assign grades</li>
+                                <li class="list-group-item">Display pass/fail students</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header bg-success">
+                        <h5>
+                            <i class="bi bi-cash-stack"></i>
+                            Employee Salary Processing
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Build a salary system that calculates employee earnings,
+                            taxes, and net salaries.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Arrays</span>
+                            <span class="badge-custom">Functions</span>
+                            <span class="badge-custom">Loops</span>
+                        </div>
+
+                        <button class="btn btn-outline-success w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details2">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details2">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Store employee names</li>
+                                <li class="list-group-item">Calculate gross salary</li>
+                                <li class="list-group-item">Deduct tax</li>
+                                <li class="list-group-item">Display net salary</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header bg-dark">
+                        <h5>
+                            <i class="bi bi-book-half"></i>
+                            Library Book Management
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Develop a program for storing, searching,
+                            and managing library books.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Searching</span>
+                            <span class="badge-custom">Loops</span>
+                            <span class="badge-custom">Arrays</span>
+                        </div>
+
+                        <button class="btn btn-outline-dark w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details3">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details3">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Store book titles</li>
+                                <li class="list-group-item">Search books</li>
+                                <li class="list-group-item">Show availability</li>
+                                <li class="list-group-item">Display reports</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header bg-warning text-dark">
+                        <h5>
+                            <i class="bi bi-calendar-check"></i>
+                            Attendance Monitoring System
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Record student attendance and identify students
+                            with low attendance.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Arrays</span>
+                            <span class="badge-custom">Functions</span>
+                            <span class="badge-custom">Reports</span>
+                        </div>
+
+                        <button class="btn btn-outline-warning w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details4">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details4">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Record attendance</li>
+                                <li class="list-group-item">Count attendance days</li>
+                                <li class="list-group-item">Generate reports</li>
+                                <li class="list-group-item">Identify low attendance</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header bg-danger">
+                        <h5>
+                            <i class="bi bi-bank"></i>
+                            Banking Transaction System
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Create a banking system for deposits,
+                            withdrawals, and balance checking.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Menu Driven</span>
+                            <span class="badge-custom">Functions</span>
+                            <span class="badge-custom">Loops</span>
+                        </div>
+
+                        <button class="btn btn-outline-danger w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details5">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details5">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Deposit money</li>
+                                <li class="list-group-item">Withdraw money</li>
+                                <li class="list-group-item">Check balances</li>
+                                <li class="list-group-item">Validate transactions</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="col-lg-4 group-item">
+                <div class="task-card">
+
+                    <div class="task-header bg-info">
+                        <h5>
+                            <i class="bi bi-cart4"></i>
+                            Supermarket Sales Management
+                        </h5>
+                    </div>
+
+                    <div class="task-body">
+
+                        <p>
+                            Build a sales recording system for products,
+                            quantities, and total sales reports.
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge-custom">Arrays</span>
+                            <span class="badge-custom">Reports</span>
+                            <span class="badge-custom">Functions</span>
+                        </div>
+
+                        <button class="btn btn-outline-info w-100"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#details6">
+                            View Requirements
+                        </button>
+
+                        <div class="collapse mt-3" id="details6">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">Store products</li>
+                                <li class="list-group-item">Calculate total sales</li>
+                                <li class="list-group-item">Highest selling product</li>
+                                <li class="list-group-item">Generate reports</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="py-5 bg-white" id="checklist">
+    <div class="container">
+
+        <h2 class="section-title">Presentation Checklist</h2>
+
+        <div class="table-container table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Criteria</th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>Problem Understanding</td>
+                        <td>Clear explanation of the problem</td>
+                        <td><span class="badge bg-primary">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Flowchart Clarity</td>
+                        <td>Correct symbols and logical flow</td>
+                        <td><span class="badge bg-primary">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Algorithm Design</td>
+                        <td>Logical and organized algorithm</td>
+                        <td><span class="badge bg-primary">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>4</td>
+                        <td>Use of Control Statements</td>
+                        <td>Proper use of if, else, switch</td>
+                        <td><span class="badge bg-primary">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>5</td>
+                        <td>Program Execution</td>
+                        <td>Correct outputs and execution</td>
+                        <td><span class="badge bg-success">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>6</td>
+                        <td>Documentation</td>
+                        <td>Code comments and explanations</td>
+                        <td><span class="badge bg-success">10</span></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">
+                            Total
+                        </td>
+
+                        <td>
+                            <span class="badge bg-danger fs-6">
+                                100 Marks
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</section>
+
+<!-- GUIDELINES -->
+<section class="py-5" id="guidelines">
+    <div class="container">
+
+        <h2 class="section-title">Presentation Guidelines</h2>
+
+        <div class="timeline mt-5">
+
+            <div class="timeline-item">
+                <div class="timeline-dot">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+
+                <h5>Introduce Group Members</h5>
+                <p>
+                    Every member should participate and explain their contribution.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot">
+                    <i class="bi bi-diagram-3"></i>
+                </div>
+
+                <h5>Present Flowcharts & Algorithms</h5>
+                <p>
+                    Explain the logic and flow of the solution clearly.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot">
+                    <i class="bi bi-terminal"></i>
+                </div>
+
+                <h5>Demonstrate Program Execution</h5>
+                <p>
+                    Show how the program works with sample outputs.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot">
+                    <i class="bi bi-chat-dots"></i>
+                </div>
+
+                <h5>Answer Questions Confidently</h5>
+                <p>
+                    Respond accurately to questions from teachers and classmates.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container text-center">
+
+        <h4 class="mb-3">
+            C Programming Practical Projects
+        </h4>
+
+        <p class="mb-0">
+            Designed to improve problem solving, structured programming,
+            collaboration, and presentation skills.
+        </p>
+
+    </div>
+</footer>
+
+<!-- SCROLL BUTTON -->
+<button class="scroll-top" id="scrollBtn">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    // SEARCH FILTER
+    const searchInput = document.getElementById('searchInput');
+    const groupItems = document.querySelectorAll('.group-item');
+
+    searchInput.addEventListener('keyup', function(){
+
+        let value = this.value.toLowerCase();
+
+        groupItems.forEach(item => {
+
+            let text = item.textContent.toLowerCase();
+
+            if(text.includes(value)){
+                item.style.display = 'block';
+            }else{
+                item.style.display = 'none';
+            }
+
+        });
+
+    });
+
+    // SCROLL TO TOP
+    const scrollBtn = document.getElementById('scrollBtn');
+
+    window.addEventListener('scroll', () => {
+
+        if(window.scrollY > 300){
+            scrollBtn.style.display = 'block';
+        }else{
+            scrollBtn.style.display = 'none';
+        }
+
+    });
+
+    scrollBtn.addEventListener('click', () => {
+
+        window.scrollTo({
+            top:0,
+            behavior:'smooth'
+        });
+
+    });
+
+    // ACTIVE NAV LINK
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+        sections.forEach(section => {
+
+            const sectionTop = section.offsetTop;
+
+            if(pageYOffset >= sectionTop - 150){
+                current = section.getAttribute("id");
+            }
+
+        });
+
+        navLinks.forEach(link => {
+
+            link.classList.remove("active");
+
+            if(link.getAttribute("href").includes(current)){
+                link.classList.add("active");
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

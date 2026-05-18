@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Program Debugging Notes</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: linear-gradient(120deg, #0f172a, #1e293b);
+        color: #e2e8f0;
+    }
+
+    .container {
+        max-width: 1000px;
+    }
+
+    .card {
+        background: #111827;
+        border: 1px solid #334155;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .accordion-button {
+        background: #1f2937;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: #2563eb;
+        color: #fff;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        background: #0b1220;
+        color: #e5e7eb;
+        padding: 20px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.6;
+        overflow-x: auto;
+    }
+
+    h1 {
+        font-weight: 700;
+        text-align: center;
+        margin: 30px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container py-5">
+
+<h1>🧠 Program Debugging Notes</h1>
+
+<div class="accordion" id="notesAccordion">
+
+<!-- SECTION A -->
+<div class="accordion-item card mb-3">
+    <h2 class="accordion-header">
+        <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#a1">
+            Introduction
+        </button>
+    </h2>
+    <div id="a1" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+<pre>
+🧠 LEARNING OUTCOME 3: PERFORM PROGRAM DEBUGGING
+
+Debugging is the process of finding and fixing errors in a program so it works correctly.
+
+When writing C programs, we usually go through three main steps:
+
+Identify errors
+Compile the program
+Test and debug the program
+</pre>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B -->
+<div class="accordion-item card mb-3">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#b1">
+            1. Identification of Errors
+        </button>
+    </h2>
+    <div id="b1" class="accordion-collapse collapse">
+        <div class="accordion-body">
+<pre>
+1. 🔍 IDENTIFICATION OF ERRORS
+✅ What is an error?
+
+An error is a mistake in a program that prevents it from working correctly or producing the expected output.
+
+📌 Types of Errors in C Programming
+1. Syntax Errors
+
+These are mistakes in the grammar of C language.
+
+👉 Example:
+
+#include <stdio.h>
+
+int main() {
+    printf("Hello World")   // missing semicolon
+    return 0;
+}
+
+❌ Problem: Missing ;
+💡 Fix: Add semicolon
+
+printf("Hello World");
+2. Runtime Errors
+
+These happen while the program is running.
+
+👉 Example:
+
+int a = 10, b = 0;
+printf("%d", a / b);
+
+❌ Problem: Division by zero
+💡 Fix: Ensure denominator is not zero
+
+if (b != 0)
+    printf("%d", a / b);
+3. Logical Errors
+
+Program runs but gives wrong results.
+
+👉 Example:
+
+int a = 5, b = 3;
+int sum = a - b;  // wrong logic
+printf("%d", sum);
+
+❌ Expected: 8
+❌ Output: 2
+💡 Fix:
+
+int sum = a + b;
+🛠 Techniques of Correcting Errors
+Read error messages carefully
+Check spelling and symbols
+Use printf() to trace values
+Break program into small parts
+Review logic step by step
+</pre>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C -->
+<div class="accordion-item card mb-3">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#c1">
+            2. Compilation of the C Program
+        </button>
+    </h2>
+    <div id="c1" class="accordion-collapse collapse">
+        <div class="accordion-body">
+<pre>
+2. ⚙️ COMPILATION OF THE C PROGRAM
+📌 What is compilation?
+
+Compilation is the process of turning C code into machine code (0s and 1s) that the computer understands.
+
+🔄 Steps of Compilation
+Write program (.c file)
+Preprocessing (handles #include)
+Compilation (checks syntax)
+Linking (connects libraries)
+Execution (runs program)
+💻 Types of Compilers
+1. GCC (GNU Compiler Collection)
+Most popular C compiler
+Used in Linux, Windows (via MinGW)
+
+👉 Example:
+
+gcc program.c -o program
+2. Turbo C Compiler
+Old compiler
+Used in basic learning environments
+3. Clang Compiler
+Modern compiler
+Fast and gives clear error messages
+🧪 Compilation Techniques
+1. Single File Compilation
+gcc main.c -o main
+2. Compile with Warnings
+gcc -Wall main.c -o main
+
+👉 Helps detect possible mistakes
+
+3. Debug Mode Compilation
+gcc -g main.c -o main
+
+👉 Used for debugging with tools like GDB
+</pre>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION D -->
+<div class="accordion-item card mb-3">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#d1">
+            3. Test of the C Program
+        </button>
+    </h2>
+    <div id="d1" class="accordion-collapse collapse">
+        <div class="accordion-body">
+<pre>
+3. 🧪 TEST OF THE C PROGRAM
+📌 What is testing?
+
+Testing means running the program with different inputs to make sure it works correctly.
+
+🎯 Design of Effective Test Cases
+
+A test case includes:
+
+Input
+Expected output
+Actual output
+📌 Example Program:
+int add(int a, int b) {
+    return a + b;
+}
+🧪 Test Cases:
+Input (a, b)	Expected Output
+2, 3	5
+0, 0	0
+-1, 1	0
+🧠 Good Test Case Design Rules
+Test normal values (e.g., 5 + 3)
+Test boundary values (e.g., 0, -1)
+Test extreme values (very large numbers)
+Test wrong input (if possible)
+</pre>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION E -->
+<div class="accordion-item card mb-3">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#e1">
+            Debugging Techniques & Summary
+        </button>
+    </h2>
+    <div id="e1" class="accordion-collapse collapse">
+        <div class="accordion-body">
+<pre>
+🐞 DEBUGGING TECHNIQUES
+
+Debugging means finding and fixing errors in a program.
+
+🔧 Common Debugging Techniques
+1. Using printf Debugging
+
+Add print statements to check values.
+
+printf("Value of a = %d\n", a);
+2. Step-by-Step Execution
+
+Run program line by line mentally or using debugger tools.
+
+3. Using Debugger Tools (like GDB)
+
+Allows you to:
+
+Pause program
+Check variables
+Run step by step
+4. Commenting Code
+
+Disable parts of code to isolate error:
+
+// printf("This line is disabled");
+5. Code Review
+
+Carefully re-read code or ask someone else to check it.
+
+📌 SUMMARY
+Errors in C: Syntax, Runtime, Logical
+Compilation: Converts C code into machine code
+Compilers: GCC, Clang, Turbo C
+Testing: Using input/output cases to verify correctness
+Debugging: Finding and fixing program errors using tools and techniques
+</pre>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Simple enhancement: smooth scroll to opened section
+document.querySelectorAll('.accordion-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        setTimeout(() => {
+            btn.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+    });
+});
+</script>
+
+</body>
+</html>
