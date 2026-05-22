@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deploy Web Services Notes</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- AOS Animation -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0d6efd;
+      --secondary: #6610f2;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --success: #198754;
+      --warning: #ffc107;
+      --danger: #dc3545;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #eef3f9;
+      color: #212529;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0d6efd, #6610f2);
+      color: white;
+      padding: 120px 20px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      top: -150px;
+      right: -150px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 70%;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      border-radius: 20px;
+    }
+
+    .note-card {
+      border: none;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .note-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .card-header-custom {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 18px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .sub-heading {
+      color: var(--primary);
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .example-box {
+      background: #f1f5ff;
+      border-left: 5px solid var(--primary);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .code-box {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 30px 10px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .badge-custom {
+      background: linear-gradient(135deg, #198754, #20c997);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: linear-gradient(135deg, #dbeafe, #ede9fe);
+      color: #0f172a;
+      font-weight: bold;
+    }
+
+    .floating-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 1.4rem;
+      z-index: 999;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .timeline {
+      border-left: 4px solid var(--primary);
+      padding-left: 20px;
+      margin-left: 10px;
+    }
+
+    .timeline-item {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-server"></i> Web Services Notes
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#intro">Introduction</a></li>
+          <li class="nav-item"><a class="nav-link" href="#installation">Installation</a></li>
+          <li class="nav-item"><a class="nav-link" href="#configure">Configuration</a></li>
+          <li class="nav-item"><a class="nav-link" href="#security">Security</a></li>
+          <li class="nav-item"><a class="nav-link" href="#deployment">Deployment</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testing">Testing</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero text-center">
+    <div class="container position-relative">
+      <span class="badge-custom mb-3 d-inline-block">Windows Server 2016 and Later</span>
+      <h1 data-aos="fade-up">Learning Outcome 5:<br>Deploy Web Services</h1>
+      <p class="mt-4" data-aos="fade-up" data-aos-delay="200">
+        Professional study notes covering web concepts, IIS installation, web server configuration,
+        security access control, deployment methods, and web application testing.
+      </p>
+    </div>
+  </section>
+
+  <div class="container py-5">
+
+    <!-- INTRODUCTION -->
+    <section id="intro" class="mb-5">
+      <h2 class="section-title">Introduction to Web, Website, Webpage, and Web Server</h2>
+
+      <div class="row g-4 mt-3">
+
+        <div class="col-md-6" data-aos="fade-up">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-globe"></i> Web
+            </div>
+            <div class="card-body">
+              <p>
+                The web (World Wide Web) is a system that allows people to access information through the internet using browsers like Google Chrome or Mozilla Firefox.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong> Searching information on Google or opening YouTube.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-window"></i> Website
+            </div>
+            <div class="card-body">
+              <p>
+                A website is a collection of webpages connected together under one domain name.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong>
+                <ul>
+                  <li>YouTube</li>
+                  <li>Wikipedia</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-file-earmark-text"></i> Webpage
+            </div>
+            <div class="card-body">
+              <p>
+                A webpage is a single page on a website.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong> The “About Us” page on a school website.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-hdd-network"></i> Web Server
+            </div>
+            <div class="card-body">
+              <p>
+                A web server is a computer or software that stores websites and delivers webpages to users through the internet or local network.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong> Internet Information Services running on Windows Server 2016.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section id="installation" class="mb-5">
+      <h2 class="section-title">5.1 Installation of Web Server</h2>
+
+      <div class="accordion mt-4" id="accordionInstallation">
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+              Describing Web Server Software
+            </button>
+          </h2>
+
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionInstallation">
+            <div class="accordion-body">
+
+              <h5 class="sub-heading">1. Apache HTTP Server</h5>
+              <ul>
+                <li>Free and open-source web server</li>
+                <li>Commonly used on Linux and Windows</li>
+                <li>Supports PHP websites</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong> Hosting a school website using Apache.
+              </div>
+
+              <h5 class="sub-heading">2. Internet Information Services (IIS)</h5>
+              <ul>
+                <li>Web server developed by Microsoft</li>
+                <li>Works with Windows Server</li>
+                <li>Supports ASP.NET applications</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong> Hosting company websites on Windows Server 2016.
+              </div>
+
+              <h5 class="sub-heading">3. Nginx</h5>
+              <ul>
+                <li>Fast and lightweight web server</li>
+                <li>Good for high-traffic websites</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong> Used by streaming and social media platforms.
+              </div>
+
+              <h5 class="sub-heading">4. LiteSpeed Web Server</h5>
+              <ul>
+                <li>High-performance web server</li>
+                <li>Faster than Apache in some cases</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong> Used by hosting companies.
+              </div>
+
+              <h5 class="sub-heading">5. Apache Tomcat</h5>
+              <ul>
+                <li>Used for Java web applications</li>
+                <li>Supports JSP and Servlets</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong> Hosting Java-based student management systems.
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4 g-4">
+
+        <div class="col-md-6" data-aos="zoom-in">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-cpu"></i> Hardware Requirements
+            </div>
+            <div class="card-body">
+              <p>Before installing a web server, ensure the computer has:</p>
+              <ul>
+                <li>Processor (CPU)</li>
+                <li>RAM memory</li>
+                <li>Hard disk storage</li>
+                <li>Network connection</li>
+              </ul>
+              <div class="example-box">
+                <strong>Example:</strong>
+                <ul>
+                  <li>4 GB RAM</li>
+                  <li>50 GB free storage</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="100">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-windows"></i> Software Requirements
+            </div>
+            <div class="card-body">
+              <ul>
+                <li>Windows Server 2016 or later</li>
+                <li>Updated drivers</li>
+                <li>Network configuration</li>
+                <li>Administrator privileges</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note-card mt-4" data-aos="fade-up">
+        <div class="card-header-custom">
+          <i class="bi bi-download"></i> Perform Installation Process (IIS)
+        </div>
+        <div class="card-body">
+          <h5 class="sub-heading">Steps to Install IIS on Windows Server 2016</h5>
+
+          <div class="timeline mt-4">
+            <div class="timeline-item">Open Server Manager</div>
+            <div class="timeline-item">Click Add Roles and Features</div>
+            <div class="timeline-item">Select Web Server (IIS)</div>
+            <div class="timeline-item">Click Next</div>
+            <div class="timeline-item">Click Install</div>
+            <div class="timeline-item">Wait for installation to finish</div>
+          </div>
+
+          <div class="example-box mt-4">
+            <strong>Result:</strong> IIS web server becomes ready for hosting websites.
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- CONFIGURE -->
+    <section id="configure" class="mb-5">
+      <h2 class="section-title">5.2 Configure Web Server (IIS)</h2>
+
+      <div class="row g-4 mt-3">
+
+        <div class="col-md-6">
+          <div class="note-card h-100" data-aos="fade-right">
+            <div class="card-header-custom">
+              <i class="bi bi-folder-fill"></i> Real Host
+            </div>
+            <div class="card-body">
+              <p>
+                A real host is a website that uses a real physical folder on a server to store and display website files directly.
+              </p>
+              <p>
+                It means the website content is stored in an actual directory on the computer hosting the web server.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong>
+                <div class="code-box mt-2">
+                  C:\inetpub\wwwroot\schoolsite
+                </div>
+                on a Windows Server running Internet Information Services.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="note-card h-100" data-aos="fade-left">
+            <div class="card-header-custom">
+              <i class="bi bi-diagram-3-fill"></i> Virtual Host
+            </div>
+            <div class="card-body">
+              <p>
+                A virtual host is a method used by a web server to host multiple websites on one server using different domain names, IP addresses, or port numbers.
+              </p>
+              <p>
+                It allows one physical server to serve many websites independently.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong>
+                <ul>
+                  <li>school.local</li>
+                  <li>library.local</li>
+                  <li>company.local</li>
+                </ul>
+                even though all websites are running on the same server.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note-card mt-4" data-aos="fade-up">
+        <div class="card-header-custom">
+          <i class="bi bi-globe2"></i> Host Website
+        </div>
+        <div class="card-body">
+
+          <h5 class="sub-heading">Add Website in IIS</h5>
+          <div class="timeline mt-3">
+            <div class="timeline-item">Open IIS Manager</div>
+            <div class="timeline-item">Right-click Sites</div>
+            <div class="timeline-item">Click Add Website</div>
+          </div>
+
+          <h5 class="sub-heading">Site Name</h5>
+          <p>The name used to identify the website in IIS.</p>
+          <div class="example-box">
+            <strong>Example:</strong> School Website
+          </div>
+
+          <h5 class="sub-heading">Physical Path</h5>
+          <p>Location of website files on the server.</p>
+          <div class="example-box">
+            <strong>Example:</strong>
+            <div class="code-box mt-2">
+              C:\inetpub\wwwroot\school
+            </div>
+          </div>
+
+          <h5 class="sub-heading">Test Connectivity</h5>
+          <p>Open a browser and type:</p>
+          <ul>
+            <li>http://localhost</li>
+            <li>Server IP address</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Example:</strong>
+            <div class="code-box mt-2">
+              http://192.168.1.10
+            </div>
+            If the webpage opens successfully, the website is working.
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECURITY -->
+    <section id="security" class="mb-5">
+      <h2 class="section-title">5.3 Implement Security Access Control</h2>
+
+      <div class="row g-4 mt-3">
+
+        <div class="col-md-6">
+          <div class="note-card h-100" data-aos="zoom-in">
+            <div class="card-header-custom">
+              <i class="bi bi-shield-lock-fill"></i> SSL (Secure Sockets Layer)
+            </div>
+            <div class="card-body">
+              <p>
+                SSL is a security technology that encrypts data sent between a user’s web browser and a web server to protect information from unauthorized access.
+              </p>
+
+              <p>
+                SSL helps keep sensitive information such as passwords, usernames, and payment details secure during communication.
+              </p>
+
+              <p>Websites using SSL normally start with:</p>
+              <div class="code-box">https://</div>
+
+              <p class="mt-3">instead of:</p>
+              <div class="code-box">http://</div>
+
+              <div class="example-box mt-3">
+                <strong>Example:</strong> Online banking and e-commerce websites use SSL certificates to secure user data.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="note-card h-100" data-aos="zoom-in" data-aos-delay="100">
+            <div class="card-header-custom">
+              <i class="bi bi-bug-fill"></i> Antimalware
+            </div>
+            <div class="card-body">
+              <p>
+                Antimalware is software designed to detect, prevent, and remove harmful programs such as viruses, worms, spyware, ransomware, and other malicious software from a computer or server.
+              </p>
+
+              <p>
+                It helps protect systems, files, and networks from cyber threats.
+              </p>
+
+              <div class="example-box">
+                <strong>Example:</strong> Microsoft Defender scans and protects Windows Server from malware attacks.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row g-4 mt-4">
+
+        <div class="col-md-4">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-key-fill"></i> Make Password Uncrackable
+            </div>
+            <div class="card-body">
+              <p>Use strong passwords containing:</p>
+              <ul>
+                <li>Uppercase letters</li>
+                <li>Lowercase letters</li>
+                <li>Numbers</li>
+                <li>Symbols</li>
+              </ul>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                <div class="code-box mt-2">Scho0l@2026</div>
+              </div>
+
+              <div class="example-box mt-3 border-danger">
+                <strong>Avoid weak passwords like:</strong>
+                <div class="code-box mt-2">123456</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-arrow-repeat"></i> Update Website
+            </div>
+            <div class="card-body">
+              <p>
+                Regular updates fix errors and improve security.
+              </p>
+              <div class="example-box">
+                <strong>Example:</strong> Updating plugins and web applications.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-database-fill-check"></i> Do Regular Backup
+            </div>
+            <div class="card-body">
+              <p>
+                Backup helps recover files after failure or attack.
+              </p>
+
+              <p><strong>Types of backup:</strong></p>
+              <ul>
+                <li>Full backup</li>
+                <li>Incremental backup</li>
+              </ul>
+
+              <div class="example-box">
+                <strong>Example:</strong> Saving website files to external storage every week.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DEPLOYMENT -->
+    <section id="deployment" class="mb-5">
+      <h2 class="section-title">5.4 Deploying Web Application</h2>
+
+      <div class="note-card" data-aos="fade-up">
+        <div class="card-header-custom">
+          <i class="bi bi-cloud-upload-fill"></i> Deployment
+        </div>
+        <div class="card-body">
+          <p>
+            Deployment is the process of making a web application or website available for users by installing, configuring, and publishing it on a server.
+          </p>
+
+          <p>
+            Deployment includes transferring application files, configuring settings, and testing the application so users can access it through a browser.
+          </p>
+
+          <div class="example-box">
+            <strong>Example:</strong>
+            Uploading a school management system to a Windows web server so students and teachers can use it online.
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-4">
+
+        <div class="col-md-4">
+          <div class="note-card h-100" data-aos="flip-left">
+            <div class="card-header-custom">
+              <i class="bi bi-person-workspace"></i> 1. Manual Deployment
+            </div>
+            <div class="card-body">
+              <p>
+                Files are copied manually to the server.
+              </p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Copying website files using USB or Remote Desktop.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="note-card h-100" data-aos="flip-left" data-aos-delay="100">
+            <div class="card-header-custom">
+              <i class="bi bi-git"></i> 2. Version Control
+            </div>
+            <div class="card-body">
+              <p>
+                Tracks changes in application files.
+              </p>
+
+              <p><strong>Common tool:</strong><br>Git</p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Developers upload code to GitHub before deployment.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="note-card h-100" data-aos="flip-left" data-aos-delay="200">
+            <div class="card-header-custom">
+              <i class="bi bi-box-seam-fill"></i> 3. Containerization
+            </div>
+            <div class="card-body">
+              <p>
+                Applications run inside containers for easier deployment.
+              </p>
+
+              <p><strong>Common tool:</strong><br>Docker</p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Running a web application inside a Docker container.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="note-card mt-4" data-aos="fade-up">
+        <div class="card-header-custom">
+          <i class="bi bi-check-circle-fill"></i> Test the Deployment
+        </div>
+        <div class="card-body">
+          <p>After deployment:</p>
+          <ul>
+            <li>Open the application in browser</li>
+            <li>Check links and pages</li>
+            <li>Verify database connection</li>
+          </ul>
+
+          <div class="example-box">
+            <strong>Example:</strong>
+            Testing login page and dashboard.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTING -->
+    <section id="testing">
+      <h2 class="section-title">5.5 Test Web Application</h2>
+
+      <div class="note-card mt-4" data-aos="fade-up">
+        <div class="card-header-custom">
+          <i class="bi bi-activity"></i> Monitoring Tools
+        </div>
+        <div class="card-body">
+          <p>
+            Tools used to observe server and application performance.
+          </p>
+
+          <p><strong>Examples:</strong></p>
+          <ul>
+            <li>Task Manager</li>
+            <li>Performance Monitor</li>
+            <li>IIS Logs</li>
+          </ul>
+
+          <p><strong>They help detect:</strong></p>
+          <ul>
+            <li>Errors</li>
+            <li>High CPU usage</li>
+            <li>Network problems</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-4">
+
+        <div class="col-md-3">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-shield-fill-check"></i> Security
+            </div>
+            <div class="card-body">
+              <p>
+                Protect the application from attacks and unauthorized access.
+              </p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Firewall and antivirus software.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-speedometer2"></i> Performance
+            </div>
+            <div class="card-body">
+              <p>
+                Ensure the website works fast and efficiently.
+              </p>
+
+              <p><strong>Methods:</strong></p>
+              <ul>
+                <li>Remove unused files</li>
+                <li>Optimize images</li>
+                <li>Upgrade RAM</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-diagram-2-fill"></i> Scalability
+            </div>
+            <div class="card-body">
+              <p>
+                Ability of the application to support more users.
+              </p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Adding another server when website traffic increases.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="note-card h-100">
+            <div class="card-header-custom">
+              <i class="bi bi-file-earmark-text-fill"></i> Documentation
+            </div>
+            <div class="card-body">
+              <p>
+                Written information about installation, configuration, and maintenance.
+              </p>
+
+              <div class="example-box">
+                <strong>Example:</strong>
+                Administrator guide showing how to restart IIS or restore backup.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+<!-- Footer -->
+<footer class="footer py-4">
+  <div class="container">
+    <div class="row align-items-center text-center text-md-start">
+
+      <!-- Left -->
+      <div class="col-md-6 mb-3 mb-md-0">
+        <h4 class="fw-bold mb-1">
+          <i class="bi bi-mortarboard-fill me-2"></i>
+          PADRI VJEKO CENTRE
+        </h4>
+        <p class="mb-0 fs-6">
+          Academic Year: <strong>2025/2026</strong>
+        </p>
+      </div>
+
+      <!-- Right -->
+      <div class="col-md-6 text-md-end">
+        <h5 class="fw-semibold mb-1">
+          <i class="bi bi-person-workspace me-2"></i>
+          Prepared By
+        </h5>
+        <p class="mb-0 fs-6">
+          <strong>Trainer Name:</strong> Jean Marie Vianney IRADUKUNDA
+        </p>
+      </div>
+
+    </div>
+
+    <hr class="border-light opacity-25 my-3">
+
+    <div class="text-center">
+      <small class="text-light">
+        © 2025/2026 PADRI VJEKO CENTRE — All Rights Reserved
+      </small>
+    </div>
+  </div>
+</footer>
+
+  <!-- Scroll Top Button -->
+  <button class="floating-btn" id="scrollTopBtn">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.style.display = 'block';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
