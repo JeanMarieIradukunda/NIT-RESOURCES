@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python OOP Rules & Guidelines</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&family=Pacifico&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #111827, #1e293b);
+      color: white;
+      min-height: 100vh;
+      padding: 40px 15px;
+    }
+
+    .main-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .main-title h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .main-title p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+    }
+
+    .handwritten {
+      font-family: 'Pacifico', cursive;
+      color: #facc15;
+      font-size: 1.4rem;
+    }
+
+    .rule-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      height: 100%;
+      transition: 0.4s;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .rule-card:hover {
+      transform: translateY(-8px);
+      border-color: #38bdf8;
+      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.3);
+    }
+
+    .rule-number {
+      width: 50px;
+      height: 50px;
+      background: #38bdf8;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .rule-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #f8fafc;
+    }
+
+    .code-box {
+      background: #0f172a;
+      border-left: 5px solid #38bdf8;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+
+    pre {
+      margin: 0;
+      color: #f8fafc;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+    }
+
+    .correct {
+      color: #22c55e;
+      font-weight: 600;
+      margin-top: 15px;
+    }
+
+    .wrong {
+      color: #ef4444;
+      font-weight: 600;
+      margin-top: 15px;
+    }
+
+    .extra-note {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(250, 204, 21, 0.1);
+      border-left: 4px solid #facc15;
+      border-radius: 10px;
+      color: #fde68a;
+      font-size: 0.95rem;
+    }
+
+    .golden-rule {
+      margin-top: 60px;
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      padding: 40px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .golden-rule h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .golden-rule p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .footer-note {
+
+      /* Hand written Font styles */
+      font-family: 'Pacifico', cursive;
+      text-align: center;
+      margin-top: 50px;
+      color: #94a3b8;
+    }
+
+    .badge-custom {
+      background: #22c55e;
+      color: white;
+      font-size: 0.8rem;
+      padding: 7px 14px;
+      border-radius: 30px;
+    }
+
+    @media(max-width:768px) {
+      .main-title h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="main-title">
+      <div class="handwritten">Python Object-Oriented Programming</div>
+      <h1>Classes & Objects Rules / Guidelines</h1>
+      <p>
+        Complete modern notes for understanding Python OOP Classes, Objects,
+        Methods, Constructors, Inheritance, Encapsulation and more.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- RULE 1 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">1</div>
+          <div class="rule-title">Class Naming Rule</div>
+
+          <p>Use Capital letters for class names.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>class Student:</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>class student:</pre>
+          </div>
+
+          <div class="extra-note">
+            Class names usually use PascalCase in Python OOP.
+            This improves readability and follows Python conventions.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 2 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">2</div>
+          <div class="rule-title">Method Naming Rule</div>
+
+          <p>Use small letters for method names.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>def study(self):</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>def Study(self):</pre>
+          </div>
+
+          <div class="extra-note">
+            Python methods commonly use lowercase or snake_case naming style.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 3 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">3</div>
+          <div class="rule-title">self Rule</div>
+
+          <p>self must be the first parameter in instance methods.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>def study(self):</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>def study():</pre>
+          </div>
+
+          <div class="extra-note">
+            self represents the current object itself and allows access
+            to attributes and methods inside the class.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 4 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">4</div>
+          <div class="rule-title">Object Creation Rule</div>
+
+          <p>To use a class, create an object.</p>
+
+          <div class="code-box">
+            <pre>object_name = ClassName()
+
+student1 = Student()</pre>
+          </div>
+
+          <div class="extra-note">
+            Objects are real instances created from classes.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 5 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">5</div>
+          <div class="rule-title">Constructor Rule (__init__())</div>
+
+          <p>__init__() runs automatically when object is created.</p>
+
+          <div class="code-box">
+            <pre>class Student:
+    def __init__(self):
+        print("Object created")</pre>
+          </div>
+
+          <div class="extra-note">
+            Constructors initialize object data automatically.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 6 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">6</div>
+          <div class="rule-title">Argument Matching Rule</div>
+
+          <p>
+            Arguments passed during object creation must match
+            __init__() parameters.
+          </p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>class Student:
+    def __init__(self, name):
+        self.name = name
+
+student1 = Student("John")</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>student1 = Student()</pre>
+          </div>
+
+          <div class="code-box mt-3">
+            <pre>TypeError</pre>
+          </div>
+
+          <div class="extra-note">
+            Missing required arguments causes errors during object creation.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 7 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">7</div>
+          <div class="rule-title">Attribute Rule</div>
+
+          <p>Use self.attribute to create object variables.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>self.name = name</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>name = name</pre>
+          </div>
+
+          <div class="extra-note">
+            Without self, the variable becomes local and cannot
+            be accessed outside the method.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 8 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">8</div>
+          <div class="rule-title">Accessing Attributes Rule</div>
+
+          <p>Use dot notation (.)</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>student1.name</pre>
+          </div>
+
+          <div class="extra-note">
+            Dot notation is used to access object attributes and methods.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 9 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">9</div>
+          <div class="rule-title">Calling Methods Rule</div>
+
+          <p>Methods are called using objects.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>student1.study()</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>study()</pre>
+          </div>
+
+          <div class="extra-note">
+            Methods belong to objects, so they must be called through objects.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 10 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">10</div>
+          <div class="rule-title">Indentation Rule</div>
+
+          <p>All class contents must be indented.</p>
+
+          <div class="correct">✅ Correct</div>
+          <div class="code-box">
+            <pre>class Student:
+    def study(self):
+        print("Study")</pre>
+          </div>
+
+          <div class="wrong">❌ Wrong</div>
+          <div class="code-box">
+            <pre>class Student:
+def study(self):
+print("Study")</pre>
+          </div>
+
+          <div class="extra-note">
+            Python uses indentation to define blocks of code.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 11 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">11</div>
+          <div class="rule-title">One Object ≠ Another Object Rule</div>
+
+          <div class="code-box">
+            <pre>student1 = Student("John")
+student2 = Student("Alice")</pre>
+          </div>
+
+          <p class="mt-3">
+            student1 and student2 are different objects.
+          </p>
+
+          <div class="extra-note">
+            Each object stores its own independent data.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 12 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">12</div>
+          <div class="rule-title">Method Access Rule</div>
+
+          <div class="code-box">
+            <pre>class Student:
+    def __init__(self, name):
+        self.name = name
+
+    def show(self):
+        print(self.name)</pre>
+          </div>
+
+          <div class="extra-note">
+            Methods can access attributes through self.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 13 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">13</div>
+          <div class="rule-title">Class Variables Rule</div>
+
+          <div class="code-box">
+            <pre>class Student:
+    school = "RCA"</pre>
+          </div>
+
+          <div class="mt-3 code-box">
+            <pre>Student.school</pre>
+          </div>
+
+          <div class="extra-note">
+            Class variables are shared among all objects of the class.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 14 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">14</div>
+          <div class="rule-title">Private Variable Rule</div>
+
+          <div class="code-box">
+            <pre>self.__password = "1234"</pre>
+          </div>
+
+          <div class="extra-note">
+            Double underscore (__) helps hide sensitive variables.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 15 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">15</div>
+          <div class="rule-title">Inheritance Rule</div>
+
+          <div class="code-box">
+            <pre>class Person:
+    def speak(self):
+        print("Hello")
+
+class Student(Person):
+    pass</pre>
+          </div>
+
+          <div class="extra-note">
+            Child classes inherit methods and properties from parent classes.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 16 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">16</div>
+          <div class="rule-title">Method Overriding Rule</div>
+
+          <div class="code-box">
+            <pre>class Animal:
+    def sound(self):
+        print("Animal sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Bark")</pre>
+          </div>
+
+          <div class="extra-note">
+            Overriding allows child classes to provide their own implementation.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 17 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">17</div>
+          <div class="rule-title">Encapsulation Rule</div>
+
+          <div class="code-box">
+            <pre>self.__balance</pre>
+          </div>
+
+          <div class="extra-note">
+            Encapsulation protects data from direct external modification.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 18 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">18</div>
+          <div class="rule-title">Object-Oriented Principle Rule</div>
+
+          <div class="code-box">
+            <pre>Encapsulation
+Inheritance
+Polymorphism
+Abstraction</pre>
+          </div>
+
+          <div class="extra-note">
+            These are the four major pillars of Object-Oriented Programming.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 19 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">19</div>
+          <div class="rule-title">Constructor Optional Rule</div>
+
+          <div class="code-box">
+            <pre>class Student:
+    pass</pre>
+          </div>
+
+          <p class="mt-3">
+            But you cannot pass arguments unless __init__() exists.
+          </p>
+
+          <div class="extra-note">
+            A constructor is optional, but useful for initializing data.
+          </div>
+        </div>
+      </div>
+
+      <!-- RULE 20 -->
+      <div class="col-lg-6">
+        <div class="rule-card">
+          <div class="rule-number">20</div>
+          <div class="rule-title">Error Prevention Rules</div>
+
+          <div class="code-box">
+            <pre>✔ Use self
+✔ Match arguments correctly
+✔ Indent properly
+✔ Create object before calling methods
+✔ Use self.attribute
+✔ Use dot notation (.)
+✔ Keep class names Capitalized
+✔ Keep method names lowercase</pre>
+          </div>
+
+          <div class="extra-note">
+            Following these rules helps avoid common Python OOP errors.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GOLDEN RULE -->
+    <div class="golden-rule mt-5">
+      <span class="badge-custom">MOST IMPORTANT</span>
+
+      <h2 class="mt-3">Golden Rule of OOP</h2>
+
+      <p><strong>CLASS</strong> → creates → <strong>OBJECT</strong></p>
+
+      <p><strong>OBJECT</strong> → uses → <strong>METHODS & ATTRIBUTES</strong></p>
+
+      <div class="code-box mt-4 text-start">
+        <pre>class Car:
+    def drive(self):
+        print("Driving")
+
+car1 = Car()
+
+car1.drive()</pre>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <!-- PADRI VJEKO SCHOOL FOOTER WITH COPYRIGHT INFORMATION INCLUDED(IN NIT DEPARTMENT) -->
+      &copy; 2024 Padri Vjeko School. All rights reserved. | Created by NIT Department
+    </div>
+
+  </div>
+
+</body>
+
+</html>
