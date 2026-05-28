@@ -1,113 +1,136 @@
 ﻿<!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
+
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>NICI301</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NICI301</title>
 
-<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' rel='stylesheet'>
-<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-    min-height: 100vh;
-    padding: 40px;
-}
-.dashboard-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 35px 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-}
-.dashboard-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-.dashboard-header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-}
-.folder-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-}
-.folder-card {
-    text-decoration: none;
-    border-radius: 16px;
-    padding: 25px 20px;
-    text-align: center;
-    transition: all 0.25s ease;
-    color: #111827;
-}
-.folder-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
-}
-.folder-card i {
-    font-size: 52px;
-    margin-bottom: 12px;
-}
-.folder-title {
-    font-weight: 700;
-    font-size: 1.05rem;
-}
-.folder-meta {
-    font-size: 0.85rem;
-    color: #374151;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: radial-gradient(circle at top, #eef2ff, #f8fafc);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
 
-/* COLORS */
-.exams { background:#fde68a; }
-.courses { background:#bfdbfe; }
-.classes { background:#bbf7d0; }
-.resources { background:#e9d5ff; }
+        .dashboard {
+            max-width: 1100px;
+            margin: auto;
+            background: #ffffffcc;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+        }
 
-.exams i { color:#92400e; }
-.courses i { color:#1e40af; }
-.classes i { color:#065f46; }
-.resources i { color:#6b21a8; }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
 
-@media (max-width: 992px) {
-    .folder-row { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 576px) {
-    .folder-row { grid-template-columns: 1fr; }
-}
-</style>
+        .title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            border-radius: 18px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 0.25s ease;
+            color: #111827;
+            min-height: 150px;
+        }
+
+        .card-link:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .card-link i {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* COLORS */
+        .doc { background: #e0f2fe; }
+        .lo4 { background: #dcfce7; }
+        .lo5 { background: #fef3c7; }
+
+        .doc i { color: #0369a1; }
+        .lo4 i { color: #166534; }
+        .lo5 i { color: #92400e; }
+
+        @media (max-width: 992px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 576px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class='dashboard-card'>
-    <div class='dashboard-header'>
-        <h1>NICI301</h1>
-        <a href='../' class='btn btn-primary btn-sm mb-3'>
-    <i class='bi bi-arrow-left-circle'></i> Parent Directory
-</a>
-    </div>
+    <div class="dashboard">
 
-    <div class='parent-header mb-3 p-3 rounded' style='background:#f0f9ff; display:flex; align-items:center; gap:12px;'>
-    <a href='../' style='text-decoration:none; color:#1e40af; font-weight:600; display:flex; align-items:center; gap:6px;'>
-        <i class='bi bi-arrow-left-circle-fill' style='font-size:1.5rem;'></i> Parent Directory
-    </a>
-</div><div class='folder-row'>
-        <a href='NITCI[1].docx' class='folder-card resources'>
-    <i class='bi bi-file-earmark-fill'></i>
-    <div class='folder-title'>NITCI[1]</div>
-    <div class='folder-meta'>DOCX Â· 128 KB</div>
-</a>
+        <div class="topbar">
+            <div class="title">NICI301</div>
+
+            <a href="../" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-arrow-left-circle"></i> Parent Directory
+            </a>
+        </div>
+
+        <div class="grid">  
+
+            <!-- DOCUMENT -->
+            <a href="NITCI[1].docx" class="card-link doc">
+                <i class="bi bi-file-earmark-text-fill"></i>
+                <div class="card-title">LO1 AND LO2</div>
+            </a>
+
+            <!-- LO4 -->
+            <a href="LO4.HTML" class="card-link lo4">
+                <i class="bi bi-camera-video-fill"></i>
+                <div class="card-title">LO4: Operate CCTV System</div>
+            </a>
+
+            <!-- LO5 -->
+            <a href="LO5.HTML" class="card-link lo5">
+                <i class="bi bi-shield-check"></i>
+                <div class="card-title">LO5: Test CCTV System</div>
+            </a>
+
+        </div>
+
     </div>
-</div>
 
 </body>
-</html>
 
+</html>
