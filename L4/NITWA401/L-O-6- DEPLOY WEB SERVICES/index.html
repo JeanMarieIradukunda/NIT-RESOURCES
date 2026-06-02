@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,249 +16,251 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
 
-<style>
-  :root {
-    --primary: #0d6efd;
-    --secondary: #6610f2;
-    --dark: #0f172a;
-    --light: #f8fafc;
-    --success: #198754;
-    --warning: #ffc107;
-    --danger: #dc3545;
+  <style>
+    :root {
+      --primary: #0d6efd;
+      --secondary: #6610f2;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --success: #198754;
+      --warning: #ffc107;
+      --danger: #dc3545;
 
-    /* Fonts */
-    --body-font: 'Nunito', sans-serif;
-    --hand-font: 'Patrick Hand', cursive;
-  }
-
-  * {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: var(--body-font);
-    background: #eef3f9;
-    color: #212529;
-    overflow-x: hidden;
-    line-height: 1.8;
-    font-size: 1.05rem;
-  }
-
-  .navbar {
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
-  }
-
-  .navbar-brand {
-    font-family: var(--hand-font);
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-    color: #fff !important;
-  }
-
-  .hero {
-    background: linear-gradient(135deg, #0d6efd, #6610f2);
-    color: white;
-    padding: 120px 20px 100px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-    top: -150px;
-    right: -150px;
-  }
-
-  .hero h1 {
-    font-family: var(--hand-font);
-    font-size: 3.5rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: auto;
-    font-weight: 600;
-  }
-
-  .section-title {
-    font-family: var(--hand-font);
-    font-size: 2.3rem;
-    color: var(--dark);
-    margin-bottom: 20px;
-    position: relative;
-    display: inline-block;
-    letter-spacing: 1px;
-  }
-
-  .section-title::after {
-    content: '';
-    width: 70%;
-    height: 4px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    border-radius: 20px;
-  }
-
-  .note-card {
-    border: none;
-    border-radius: 22px;
-    background: white;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    overflow: hidden;
-  }
-
-  .note-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-  }
-
-  .card-header-custom {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 18px;
-    font-size: 1.4rem;
-    font-family: var(--hand-font);
-    letter-spacing: 1px;
-  }
-
-  .sub-heading {
-    font-family: var(--hand-font);
-    color: var(--primary);
-    font-size: 1.6rem;
-    margin-top: 20px;
-    letter-spacing: 0.5px;
-  }
-
-  .example-box {
-    background: #f1f5ff;
-    border-left: 5px solid var(--primary);
-    padding: 18px;
-    border-radius: 12px;
-    margin-top: 10px;
-    font-size: 1.02rem;
-  }
-
-  .code-box {
-    background: #0f172a;
-    color: #ffffff;
-    padding: 14px 18px;
-    border-radius: 12px;
-    font-family: Consolas, monospace;
-    overflow-x: auto;
-    font-size: 0.95rem;
-  }
-
-  ul li {
-    margin-bottom: 10px;
-  }
-
-  .footer {
-    background: var(--dark);
-    color: white;
-    padding: 35px 10px;
-    text-align: center;
-    margin-top: 60px;
-  }
-
-  .footer h5 {
-    font-family: var(--hand-font);
-    font-size: 1.8rem;
-  }
-
-  .badge-custom {
-    background: linear-gradient(135deg, #198754, #20c997);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 700;
-  }
-
-  .accordion-button {
-    font-weight: 700;
-  }
-
-  .accordion-button:not(.collapsed) {
-    background: linear-gradient(135deg, #dbeafe, #ede9fe);
-    color: #0f172a;
-  }
-
-  .floating-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    font-size: 1.4rem;
-    z-index: 999;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
-  }
-
-  .floating-btn:hover {
-    transform: scale(1.08);
-  }
-
-  .timeline {
-    border-left: 4px solid var(--primary);
-    padding-left: 20px;
-    margin-left: 10px;
-  }
-
-  .timeline-item {
-    margin-bottom: 20px;
-    position: relative;
-  }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -31px;
-    top: 5px;
-    width: 15px;
-    height: 15px;
-    background: var(--primary);
-    border-radius: 50%;
-  }
-
-  strong {
-    color: #111827;
-  }
-
-  @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2.4rem;
+      /* Fonts */
+      --body-font: 'Nunito', sans-serif;
+      --hand-font: 'Patrick Hand', cursive;
     }
 
-    .section-title {
-      font-size: 1.9rem;
+    * {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-size: 1rem;
+      font-family: var(--body-font);
+      background: #eef3f9;
+      color: #212529;
+      overflow-x: hidden;
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
-  }
-</style>
+
+    .navbar {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      font-family: var(--hand-font);
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: #fff !important;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0d6efd, #6610f2);
+      color: white;
+      padding: 120px 20px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+      top: -150px;
+      right: -150px;
+    }
+
+    .hero h1 {
+      font-family: var(--hand-font);
+      font-size: 3.5rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: auto;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: var(--hand-font);
+      font-size: 2.3rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 70%;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      border-radius: 20px;
+    }
+
+    .note-card {
+      border: none;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .note-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header-custom {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 18px;
+      font-size: 1.4rem;
+      font-family: var(--hand-font);
+      letter-spacing: 1px;
+    }
+
+    .sub-heading {
+      font-family: var(--hand-font);
+      color: var(--primary);
+      font-size: 1.6rem;
+      margin-top: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .example-box {
+      background: #f1f5ff;
+      border-left: 5px solid var(--primary);
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 10px;
+      font-size: 1.02rem;
+    }
+
+    .code-box {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-family: Consolas, monospace;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 35px 10px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .footer h5 {
+      font-family: var(--hand-font);
+      font-size: 1.8rem;
+    }
+
+    .badge-custom {
+      background: linear-gradient(135deg, #198754, #20c997);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .accordion-button {
+      font-weight: 700;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: linear-gradient(135deg, #dbeafe, #ede9fe);
+      color: #0f172a;
+    }
+
+    .floating-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 1.4rem;
+      z-index: 999;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease;
+    }
+
+    .floating-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .timeline {
+      border-left: 4px solid var(--primary);
+      padding-left: 20px;
+      margin-left: 10px;
+    }
+
+    .timeline-item {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 5px;
+      width: 15px;
+      height: 15px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    strong {
+      color: #111827;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .section-title {
+        font-size: 1.9rem;
+      }
+
+      body {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -311,7 +314,8 @@
             </div>
             <div class="card-body">
               <p>
-                The web (World Wide Web) is a system that allows people to access information through the internet using browsers like Google Chrome or Mozilla Firefox.
+                The web (World Wide Web) is a system that allows people to access information through the internet using
+                browsers like Google Chrome or Mozilla Firefox.
               </p>
               <div class="example-box">
                 <strong>Example:</strong> Searching information on Google or opening YouTube.
@@ -363,7 +367,8 @@
             </div>
             <div class="card-body">
               <p>
-                A web server is a computer or software that stores websites and delivers webpages to users through the internet or local network.
+                A web server is a computer or software that stores websites and delivers webpages to users through the
+                internet or local network.
               </p>
               <div class="example-box">
                 <strong>Example:</strong> Internet Information Services running on Windows Server 2016.
@@ -451,18 +456,36 @@
               <i class="bi bi-cpu"></i> Hardware Requirements
             </div>
             <div class="card-body">
-              <p>Before installing a web server, ensure the computer has:</p>
+              <p>
+                Before installing a web server on a Windows Server 2016 Domain Controller,
+                ensure the computer meets the minimum hardware requirements.
+              </p>
+
+              <h6><strong>Minimum Requirements</strong></h6>
               <ul>
-                <li>Processor (CPU)</li>
-                <li>RAM memory</li>
-                <li>Hard disk storage</li>
-                <li>Network connection</li>
+                <li><strong>Processor:</strong> 1.4 GHz 64-bit CPU</li>
+                <li><strong>RAM:</strong> 2 GB (Server with Desktop Experience)</li>
+                <li><strong>Storage:</strong> 32 GB minimum (40–50 GB recommended)</li>
+                <li><strong>Network:</strong> 1 Gbps Ethernet adapter recommended</li>
+                <li><strong>Display:</strong> 1024 × 768 resolution or higher</li>
               </ul>
+
+              <h6><strong>Recommended for a Small Web Server</strong></h6>
+              <ul>
+                <li>Dual-core 2.0 GHz processor or higher</li>
+                <li>4 GB RAM or more</li>
+                <li>50 GB free storage or more</li>
+                <li>Stable LAN/Internet connection</li>
+              </ul>
+
               <div class="example-box">
-                <strong>Example:</strong>
+                <strong>Example Server Specifications:</strong>
                 <ul>
+                  <li>Dual-core processor</li>
                   <li>4 GB RAM</li>
                   <li>50 GB free storage</li>
+                  <li>Static IP address</li>
+                  <li>Windows Server 2016 Domain Controller</li>
                 </ul>
               </div>
             </div>
@@ -475,11 +498,53 @@
               <i class="bi bi-windows"></i> Software Requirements
             </div>
             <div class="card-body">
+              <p>
+                The following software and network configurations are required before
+                installing and configuring IIS.
+              </p>
+
               <ul>
-                <li>Windows Server 2016 or later</li>
-                <li>Updated drivers</li>
-                <li>Network configuration</li>
+                <li>Windows Server 2016 installed and updated</li>
                 <li>Administrator privileges</li>
+                <li>Internet Information Services (IIS) role enabled</li>
+                <li>TCP/IP configured with a static IP address</li>
+                <li>DNS configured correctly</li>
+                <li>Updated drivers and system patches</li>
+              </ul>
+
+              <h6><strong>Firewall Configuration</strong></h6>
+              <ul>
+                <li>Allow HTTP (Port 80)</li>
+                <li>Allow HTTPS (Port 443)</li>
+              </ul>
+
+              <h6><strong>IIS Role Services</strong></h6>
+              <ul>
+                <li><strong>Web Server</strong></li>
+                <li><strong>Common HTTP Features</strong>
+                  <ul>
+                    <li>Default Document</li>
+                    <li>Static Content</li>
+                    <li>HTTP Errors</li>
+                  </ul>
+                </li>
+                <li><strong>Application Development</strong> (if needed)
+                  <ul>
+                    <li>ASP.NET</li>
+                    <li>.NET Extensibility</li>
+                  </ul>
+                </li>
+                <li><strong>Security</strong>
+                  <ul>
+                    <li>Request Filtering</li>
+                    <li>Windows Authentication</li>
+                  </ul>
+                </li>
+                <li><strong>Management Tools</strong>
+                  <ul>
+                    <li>IIS Management Console</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
@@ -524,7 +589,8 @@
             </div>
             <div class="card-body">
               <p>
-                A real host is a website that uses a real physical folder on a server to store and display website files directly.
+                A real host is a website that uses a real physical folder on a server to store and display website files
+                directly.
               </p>
               <p>
                 It means the website content is stored in an actual directory on the computer hosting the web server.
@@ -547,7 +613,8 @@
             </div>
             <div class="card-body">
               <p>
-                A virtual host is a method used by a web server to host multiple websites on one server using different domain names, IP addresses, or port numbers.
+                A virtual host is a method used by a web server to host multiple websites on one server using different
+                domain names, IP addresses, or port numbers.
               </p>
               <p>
                 It allows one physical server to serve many websites independently.
@@ -627,11 +694,13 @@
             </div>
             <div class="card-body">
               <p>
-                SSL is a security technology that encrypts data sent between a user’s web browser and a web server to protect information from unauthorized access.
+                SSL is a security technology that encrypts data sent between a user’s web browser and a web server to
+                protect information from unauthorized access.
               </p>
 
               <p>
-                SSL helps keep sensitive information such as passwords, usernames, and payment details secure during communication.
+                SSL helps keep sensitive information such as passwords, usernames, and payment details secure during
+                communication.
               </p>
 
               <p>Websites using SSL normally start with:</p>
@@ -641,7 +710,8 @@
               <div class="code-box">http://</div>
 
               <div class="example-box mt-3">
-                <strong>Example:</strong> Online banking and e-commerce websites use SSL certificates to secure user data.
+                <strong>Example:</strong> Online banking and e-commerce websites use SSL certificates to secure user
+                data.
               </div>
             </div>
           </div>
@@ -654,7 +724,8 @@
             </div>
             <div class="card-body">
               <p>
-                Antimalware is software designed to detect, prevent, and remove harmful programs such as viruses, worms, spyware, ransomware, and other malicious software from a computer or server.
+                Antimalware is software designed to detect, prevent, and remove harmful programs such as viruses, worms,
+                spyware, ransomware, and other malicious software from a computer or server.
               </p>
 
               <p>
@@ -751,11 +822,13 @@
         </div>
         <div class="card-body">
           <p>
-            Deployment is the process of making a web application or website available for users by installing, configuring, and publishing it on a server.
+            Deployment is the process of making a web application or website available for users by installing,
+            configuring, and publishing it on a server.
           </p>
 
           <p>
-            Deployment includes transferring application files, configuring settings, and testing the application so users can access it through a browser.
+            Deployment includes transferring application files, configuring settings, and testing the application so
+            users can access it through a browser.
           </p>
 
           <div class="example-box">
@@ -793,7 +866,8 @@
             <div class="card-body">
 
               <p>
-                Antimalware is software designed to detect, prevent, and remove harmful programs such as viruses, worms, spyware, ransomware, and other malicious software from a computer or server.
+                Antimalware is software designed to detect, prevent, and remove harmful programs such as viruses, worms,
+                spyware, ransomware, and other malicious software from a computer or server.
               </p>
 
               <p>
@@ -965,44 +1039,44 @@
 
   </div>
 
-<!-- Footer -->
-<footer class="footer py-4">
-  <div class="container">
-    <div class="row align-items-center text-center text-md-start">
+  <!-- Footer -->
+  <footer class="footer py-4">
+    <div class="container">
+      <div class="row align-items-center text-center text-md-start">
 
-      <!-- Left -->
-      <div class="col-md-6 mb-3 mb-md-0">
-        <h4 class="fw-bold mb-1">
-          <i class="bi bi-mortarboard-fill me-2"></i>
-          PADRI VJEKO CENTRE
-        </h4>
-        <p class="mb-0 fs-6">
-          Academic Year: <strong>2025/2026</strong>
-        </p>
+        <!-- Left -->
+        <div class="col-md-6 mb-3 mb-md-0">
+          <h4 class="fw-bold mb-1">
+            <i class="bi bi-mortarboard-fill me-2"></i>
+            PADRI VJEKO CENTRE
+          </h4>
+          <p class="mb-0 fs-6">
+            Academic Year: <strong>2025/2026</strong>
+          </p>
+        </div>
+
+        <!-- Right -->
+        <div class="col-md-6 text-md-end">
+          <h5 class="fw-semibold mb-1">
+            <i class="bi bi-person-workspace me-2"></i>
+            Prepared By
+          </h5>
+          <p class="mb-0 fs-6">
+            <strong>Trainer Name:</strong> Jean Marie Vianney IRADUKUNDA
+          </p>
+        </div>
+
       </div>
 
-      <!-- Right -->
-      <div class="col-md-6 text-md-end">
-        <h5 class="fw-semibold mb-1">
-          <i class="bi bi-person-workspace me-2"></i>
-          Prepared By
-        </h5>
-        <p class="mb-0 fs-6">
-          <strong>Trainer Name:</strong> Jean Marie Vianney IRADUKUNDA
-        </p>
+      <hr class="border-light opacity-25 my-3">
+
+      <div class="text-center">
+        <small class="text-light">
+          © 2025/2026 PADRI VJEKO CENTRE — All Rights Reserved
+        </small>
       </div>
-
     </div>
-
-    <hr class="border-light opacity-25 my-3">
-
-    <div class="text-center">
-      <small class="text-light">
-        © 2025/2026 PADRI VJEKO CENTRE — All Rights Reserved
-      </small>
-    </div>
-  </div>
-</footer>
+  </footer>
 
   <!-- Scroll Top Button -->
   <button class="floating-btn" id="scrollTopBtn">
@@ -1040,4 +1114,5 @@
   </script>
 
 </body>
+
 </html>
