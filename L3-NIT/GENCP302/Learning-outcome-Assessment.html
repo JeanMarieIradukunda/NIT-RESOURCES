@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENCP302 Assessment Viewer</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================
+       GLOBAL BASE STYLE
+    ========================== */
+
+        body {
+            margin: 0;
+            background: #f4f6f9;
+            /* soft academic paper background */
+            color: #1f2937;
+            font-family: 'Roboto', sans-serif;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* Disable text selection (exam mode) */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* =========================
+       HEADER (Formal Academic Look)
+    ========================== */
+
+        .header {
+            background: linear-gradient(135deg, #1e2a38, #2c3e50);
+            padding: 28px 20px;
+            text-align: center;
+            border-bottom: 4px solid #d4af37;
+            /* subtle gold academic accent */
+            color: #ffffff;
+        }
+
+        .header h1 {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 30px;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .header h2 {
+            font-size: 14px;
+            margin-top: 6px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* =========================
+       CONTAINER
+    ========================== */
+
+        .container-box {
+            padding: 25px;
+        }
+
+        /* =========================
+       CARDS (Exam Sections)
+    ========================== */
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            color: #111827;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card-header {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* =========================
+       QUESTIONS
+    ========================== */
+
+        .question {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        /* =========================
+       CODE BLOCKS
+    ========================== */
+
+        pre {
+            background: #0f172a;
+            padding: 14px;
+            border-radius: 8px;
+            color: #a7f3d0;
+            overflow-x: auto;
+            font-size: 14px;
+            border-left: 4px solid #22c55e;
+        }
+
+        /* =========================
+       BADGES / LABELS
+    ========================== */
+
+        .badge {
+            background: #1d4ed8;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* =========================
+       FOOTER
+    ========================== */
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.7;
+            padding: 14px;
+            color: #374151;
+        }
+
+        /* =========================
+       OPTIONAL: REMOVE OUTLINE FOCUS
+    ========================== */
+
+        button,
+        input,
+        textarea {
+            outline: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>PADRI VJEKO CENTRE TSS</h1>
+        <h2>LEVEL 3 NIT | GENCP302 – C PROGRAMMING FUNDAMENTALS</h2>
+        <h2>LO3 INDIVIDUAL ASSESSMENT (VISUAL VIEW ONLY)</h2>
+    </div>
+
+    <div class="container-box container">
+
+        <!-- PART I -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                PART I: OBJECTIVE QUESTIONS (30 Marks)
+            </div>
+            <div class="card-body">
+
+                <h5>A. Multiple Choice (15 × 1 Mark)</h5>
+                <div class="question">1. What is debugging in C programming?<br>A. Writing a program<br>B. Finding and
+                    fixing errors<br>C. Compiling<br>D. Executing</div>
+                <div class="question">2. Which is the first step when developing a C program?<br>A. Testing<br>B.
+                    Compilation<br>C. Identifying errors<br>D. Linking</div>
+                <div class="question">3. Compilation converts C code into:<br>A. English<br>B. Assembly<br>C. Machine
+                    code<br>D. Pseudocode</div>
+                <div class="question">4. Which compilation stage handles #include directives?<br>A. Linking<br>B.
+                    Compilation<br>C. Execution<br>D. Preprocessing</div>
+                <div class="question">5. Which stage checks the syntax of a C program?<br>A. Linking<br>B.
+                    Compilation<br>C. Execution<br>D. Testing</div>
+                <div class="question">6. Which stage connects libraries?<br>A. Execution<br>B. Compilation<br>C.
+                    Linking<br>D. Preprocessing</div>
+                <div class="question">7. Which compiler is most popular and commonly used in Linux?<br>A. Turbo C<br>B.
+                    Clang<br>C. GCC<br>D. Visual C</div>
+                <div class="question">8. Which compiler is described as modern and fast?<br>A. GCC<br>B. Turbo C<br>C.
+                    Clang<br>D. DOS Compiler</div>
+                <div class="question">9. Which command compiles a single file named main.c?<br>A. gcc -g main.c<br>B.
+                    gcc main.c -o main<br>C. gcc -Wall<br>D. gcc run</div>
+                <div class="question">10. What is the purpose of the -Wall option?<br>A. Run<br>B. Link<br>C. Show
+                    warnings<br>D. Delete errors</div>
+                <div class="question">11. Which option is used for debug mode compilation?<br>A. -Wall<br>B. -o<br>C.
+                    -g<br>D. -c</div>
+                <div class="question">12. Testing means?<br>A. Variables<br>B. Running program inputs<br>C. Writing
+                    code<br>D. Installing compilers</div>
+                <div class="question">13. A test case normally contains:<br>A. Input/Expected/Actual<br>B. Compiler
+                    tools<br>C. Variables<br>D. Headers</div>
+                <div class="question">14. Which debugging technique uses print statements to display variable
+                    values?<br>A. Code review<br>B. Debugger<br>C. printf debugging<br>D. Linking</div>
+                <div class="question">15. Which one of the following is a debugging tool?<br>A. Eclipse<br>B.
+                    NetBeans<br>C. GDB<br>D. CodeBlocks</div>
+
+                <!-- =========================
+     B. TRUE / FALSE (MATCHED VERSION)
+========================== -->
+
+                <hr>
+
+                <h5 class="mt-3">B. True / False Questions (10 × 1 Mark)</h5>
+                <p class="text-muted">Write True (T) or False (F)</p>
+
+                <div class="question">16. Debugging means finding and fixing errors in a program. ____</div>
+                <div class="question">17. Compilation converts machine code into C code. ____</div>
+                <div class="question">18. Preprocessing handles #include directives. ____</div>
+                <div class="question">19. GCC is a C compiler. ____</div>
+                <div class="question">20. Clang is described as an old compiler in the notes. ____</div>
+                <div class="question">21. Testing involves running a program using different inputs. ____</div>
+                <div class="question">22. A good test case should include expected output. ____</div>
+                <div class="question">23. Boundary values such as 0 and -1 should be tested. ____</div>
+                <div class="question">24. Commenting code can help isolate errors. ____</div>
+                <div class="question">25. Code review is a debugging technique. ____</div>
+
+
+                <!-- =========================
+     C. FILL IN BLANKS (MATCHED VERSION)
+========================== -->
+
+                <hr>
+
+                <h5 class="mt-3">C. Fill in the Blank Questions (5 × 1 Mark)</h5>
+
+                <div class="question">26. Debugging is the process of finding and fixing __________ in a program.</div>
+                <div class="question">27. Compilation converts C code into __________ code.</div>
+                <div class="question">28. The compiler option used to show warnings is __________.</div>
+                <div class="question">29. A modern compiler known for fast compilation and clear error messages is
+                    __________.</div>
+                <div class="question">30. The debugger tool mentioned in the notes is __________.</div>
+
+            </div>
+        </div>
+
+        <!-- PART II -->
+        <div class="card mb-3">
+            <div class="card-header bg-success text-white">
+                PART II: PROGRAM DEBUGGING (20 Marks)
+            </div>
+            <div class="card-body">
+
+                <h5>Question 31</h5>
+                <pre>
+#include <stdio.h>
+
+int main()
+{
+    printf("Hello World")
+    return 0;
+}
+            </pre>
+                a) Identify error type<br>
+                b) Explain why<br>
+                c) Correct program
+
+                <hr>
+
+                <h5>Question 32</h5>
+                <pre>
+#include <stdio.h>
+
+int main()
+{
+    int a = 10, b = 5;
+    int sum;
+
+    sum = a - b;
+
+    printf("Sum = %d", sum);
+
+    return 0;
+}
+            </pre>
+                a) Identify error type<br>
+                b) Explain why<br>
+                c) Correct program
+
+                <hr>
+
+                <h5>Question 33</h5>
+                <pre>
+#include <stdio.h>
+
+int main()
+{
+    int a = 10;
+    int b = 0;
+
+    printf("%d", a / b);
+
+    return 0;
+}
+            </pre>
+                a) Identify error type<br>
+                b) Explain why<br>
+                c) Correct program
+
+            </div>
+        </div>
+
+        <div class="footer">
+            © GENCP302 Assessment Viewer | Visual Mode Only
+        </div>
+
+    </div>
+
+    <script>
+        /* FULLSCREEN ATTEMPT */
+        document.documentElement.requestFullscreen?.();
+
+        /* DISABLE RIGHT CLICK */
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        /* DISABLE COPY / PASTE / CUT */
+        document.addEventListener('copy', e => e.preventDefault());
+        document.addEventListener('paste', e => e.preventDefault());
+        document.addEventListener('cut', e => e.preventDefault());
+
+        /* BLOCK DEV TOOLS SHORTCUTS (best effort only) */
+        document.addEventListener('keydown', function (e) {
+            if (
+                e.key === "F12" ||
+                (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+                (e.ctrlKey && e.key === "U") ||
+                (e.ctrlKey && e.key === "S")
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
