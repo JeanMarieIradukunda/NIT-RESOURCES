@@ -224,11 +224,6 @@
                 <div class="question">24. Commenting code can help isolate errors. ____</div>
                 <div class="question">25. Code review is a debugging technique. ____</div>
 
-
-                <!-- =========================
-     C. FILL IN BLANKS (MATCHED VERSION)
-========================== -->
-
                 <hr>
 
                 <h5 class="mt-3">C. Fill in the Blank Questions (5 × 1 Mark)</h5>
@@ -316,18 +311,119 @@ int main()
     </div>
 
     <script>
-        /* FULLSCREEN ATTEMPT */
-        document.documentElement.requestFullscreen?.();
+        /* =========================
+           FULLSCREEN SYSTEM (RELIABLE)
+        ========================== */
 
-        /* DISABLE RIGHT CLICK */
+        function enterFullScreen() {
+            const el = document.documentElement;
+
+            if (el.requestFullscreen) {
+                el.requestFullscreen();
+            } else if (el.webkitRequestFullscreen) {
+                el.webkitRequestFullscreen();
+            } else if (el.msRequestFullscreen) {
+                el.msRequestFullscreen();
+            }
+        }
+
+        /* =========================
+           ATTEMPT TRACKING SYSTEM
+        ========================== */
+
+        let attempts = parseInt(sessionStorage.getItem("fs_attempts")) || 0;
+        const MAX_ATTEMPTS = 3;
+
+        /* =========================
+           LOCK SCREEN FUNCTION
+        ========================== */
+
+        function lockExam() {
+            document.body.innerHTML = `
+        <div style="
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            background:#111827;
+            color:white;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            font-family:Arial;
+            text-align:center;
+            z-index:999999;
+        ">
+            <h1 style="color:#ef4444;">ACCESS BLOCKED</h1>
+            <p>You exceeded the allowed fullscreen exit limit.</p>
+            <p><b>Exam terminated for security reasons.</b></p>
+        </div>
+    `;
+        }
+
+        /* =========================
+           START OVERLAY
+        ========================== */
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            if (attempts >= MAX_ATTEMPTS) {
+                lockExam();
+                return;
+            }
+
+            const overlay = document.createElement("div");
+
+            overlay.innerHTML = `
+        <div style="
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            background:#0f172a;
+            color:white;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            z-index:999999;
+            text-align:center;
+            font-family:Arial;
+        ">
+            <h2>Assessment Ready</h2>
+            <p>Click below to start in full-screen mode</p>
+            <p style="color:#fbbf24;">Attempts left: ${MAX_ATTEMPTS - attempts}</p>
+            <button id="startExamBtn" style="
+                padding:12px 20px;
+                background:#2563eb;
+                color:white;
+                border:none;
+                border-radius:8px;
+                font-size:16px;
+                cursor:pointer;
+            ">
+                Start Exam
+            </button>
+        </div>
+    `;
+
+            document.body.appendChild(overlay);
+
+            document.getElementById("startExamBtn").addEventListener("click", () => {
+                enterFullScreen();
+                overlay.remove();
+            });
+        });
+
+
+        /* =========================
+           SECURITY RESTRICTIONS
+        ========================== */
+
         document.addEventListener('contextmenu', e => e.preventDefault());
-
-        /* DISABLE COPY / PASTE / CUT */
         document.addEventListener('copy', e => e.preventDefault());
         document.addEventListener('paste', e => e.preventDefault());
         document.addEventListener('cut', e => e.preventDefault());
 
-        /* BLOCK DEV TOOLS SHORTCUTS (best effort only) */
         document.addEventListener('keydown', function (e) {
             if (
                 e.key === "F12" ||
@@ -339,8 +435,31 @@ int main()
                 return false;
             }
         });
-    </script>
 
+
+        /* =========================
+           FULLSCREEN EXIT DETECTION
+        ========================== */
+
+        document.addEventListener("fullscreenchange", () => {
+
+            if (!document.fullscreenElement) {
+
+                attempts++;
+                sessionStorage.setItem("fs_attempts", attempts);
+
+                if (attempts >= MAX_ATTEMPTS) {
+                    lockExam();
+                } else {
+                    alert(
+                        "Fullscreen exited!\n" +
+                        "Warning " + attempts + "/" + MAX_ATTEMPTS +
+                        "\nRemaining attempts: " + (MAX_ATTEMPTS - attempts)
+                    );
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
