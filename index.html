@@ -8,759 +8,345 @@
 
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Flex:wght@300;400;600;800&display=swap"
-        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Sacramento&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --blue: #00f2fe;
-            --green: #0f9d58;
-            --yellow: #f9ab00;
-            --purple: #a142f4;
-            --pink: #e81ab1;
-            --bg1: #060b19;
-            --bg2: #0c142c;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --text: #ffffff;
-            --muted: rgba(255, 255, 255, 0.65);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Inter, Roboto Flex, sans-serif;
-        }
-
-        html,
-        body {
-            overflow-x: hidden;
-            scrollbar-width: none;
-            /* Firefox */
-            -ms-overflow-style: none;
-            /* IE/Edge */
-        }
-
-        html::-webkit-scrollbar,
-        body::-webkit-scrollbar {
-            display: none;
+            --primary-font: 'Plus Jakarta Sans', sans-serif;
+            --display-font: 'Space Grotesk', sans-serif;
+            --handwritten-signature: 'Sacramento', cursive;
+            --handwritten-casual: 'Caveat', cursive;
+            
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
-            font-family: 'Patrick Hand', cursive, Inter, 'Roboto Flex', sans-serif;
-            color: var(--text);
+            font-family: var(--primary-font);
+            background-color: #6a9fd3;
+            color: #0f172a;
             overflow-x: hidden;
-            background: radial-gradient(circle at top right, rgba(26, 115, 232, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at bottom left, rgba(232, 26, 177, 0.12) 0%, transparent 50%),
-                linear-gradient(180deg, var(--bg1), var(--bg2));
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            letter-spacing: -0.01em;
         }
 
-
-        .handwritten {
-            font-family: 'Patrick Hand', cursive, Inter, 'Roboto Flex', sans-serif;
-            font-size: 1.2rem;
+        h1, h2, h3, h4, .display-4, .brand {
+            font-family: var(--display-font);
+            letter-spacing: -0.03em;
         }
 
-        * {
-            font-family: 'Patrick Hand', cursive, Inter, 'Roboto Flex', sans-serif;
-        }
-
-        /* ===== SPACE BACKGROUND ===== */
-        .stars {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: -1;
-        }
-
-        .stars::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png');
-            animation: moveStars 160s linear infinite;
-            opacity: 0.25;
-        }
-
-        @keyframes moveStars {
-            from {
-                transform: translate(0, 0);
-            }
-
-            to {
-                transform: translate(-500px, -500px);
-            }
-        }
-
-        /* ===== TOPBAR ===== */
+        /* Modernized Topbar with Glassmorphism */
         .topbar {
+            background: rgba(230, 237, 240, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(6, 11, 25, 0.75);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 30px;
-            border-bottom: 1px solid var(--glass-border);
+            z-index: 1020;
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.8px;
-            font-size: 1.1rem;
-        }
-
-        .brand img {
-            width: 36px;
-            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
-        }
-
-        .search-container {
-            flex: 1;
-            max-width: 480px;
-            margin: 0 30px;
-            position: relative;
-        }
-
-        .search-container input {
-            width: 100%;
-            padding: 10px 20px 10px 45px;
-            border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            outline: none;
-            background: rgba(255, 255, 255, 0.07);
-            color: white;
-            transition: all .3s ease;
-        }
-
-        .search-container input:focus {
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-            background: rgba(255, 255, 255, 0.12);
-            border-color: var(--blue);
-        }
-
-        .search-container i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--muted);
-        }
-
-        .audio-control {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.3s ease;
-        }
-
-        .audio-control:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--blue);
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            text-align: center;
-            padding: 45px 20px 15px;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--blue), var(--purple), var(--pink));
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: floatTitle 6s ease-in-out infinite;
         }
 
-        @keyframes floatTitle {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-6px);
-            }
+        /* Handwritten Accent Styling */
+        .instructor-signature {
+            font-family: var(--handwritten-signature);
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #2563eb;
+            vertical-align: middle;
+            margin-left: 0.25rem;
         }
 
-        .header p {
-            color: var(--muted);
-            font-size: 1.1rem;
-            margin-top: 6px;
-            letter-spacing: 1px;
+        /* Main Header Customizations */
+        .header h1 {
+            background: linear-gradient(180deg, #0f172a 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .chips {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 20px;
+        /* Pill Badges refinement */
+        .chips .badge {
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 0.6rem 1rem !important;
+            border-radius: 50px !important;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            transition: var(--transition-smooth);
         }
 
-        .chip {
-            background: var(--glass);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .chips .badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: #cbd5e1 !important;
         }
 
-        /* ===== MAIN CONTENT ===== */
-        .main-content {
-            flex: 1;
-        }
-
-        .dashboard-container {
-            max-width: 1300px;
-            margin: 30px auto;
-            padding: 0 24px;
-        }
-
-        .dashboard-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 992px) {
-            .dashboard-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        /* Video Banner Upgrade */
         .media-banner-card {
-            background: var(--glass);
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            overflow: hidden;
-            position: relative;
-            height: 380px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .media-banner-card video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            opacity: 0.45;
+            height: 420px !important;
+            border-radius: 24px !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .video-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(6, 11, 25, 0.95) 20%, rgba(6, 11, 25, 0.2));
-            z-index: 2;
+            background: linear-gradient(0deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(15, 23, 42, 0) 100%);
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 30px;
         }
 
-        /* ===== TELEMETRY METRICS ===== */
-        .telemetry-card {
-            background: rgba(12, 20, 44, 0.75);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            backdrop-filter: blur(15px);
-        }
-
-        .metric-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .metric-box:last-child {
-            margin-bottom: 0;
-        }
-
-        .pulse-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #0f9d58;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px #0f9d58;
-            animation: pulseGlow 1.5s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            from {
-                transform: scale(0.9);
-                opacity: 0.6;
-            }
-
-            to {
-                transform: scale(1.2);
-                opacity: 1;
-                box-shadow: 0 0 16px #0f9d58;
-            }
-        }
-
-        /* ===== PORTAL GRID ===== */
-        .section-title {
-            font-size: 1.4rem;
+        .video-overlay .badge {
+            letter-spacing: 0.05em;
             font-weight: 700;
-            margin-bottom: 20px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Modern Grid Cards */
+        .portal-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 20px !important;
+            background: #ffffff;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--card-shadow);
+            border-color: #cbd5e1;
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card .card-img-top {
+            transition: var(--transition-smooth);
+        }
+
+        .portal-card:hover .card-img-top {
+            transform: scale(1.08);
+        }
+
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-left: 4px solid var(--blue);
-            padding-left: 12px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .card-link {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .card {
-            background: var(--glass);
-            border-radius: 18px;
-            padding: 0;
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(18px);
-            transition: all .35s cubic-bezier(0.4, 0, 0.2, 1);
+            justify-content: center;
+            margin: -32px auto 16px auto;
             position: relative;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .card-media-wrapper {
-            width: 100%;
-            height: 140px;
-            overflow: hidden;
-            position: relative;
-            background: #000;
-        }
-
-        .card-media-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.75;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-media-wrapper img {
-            transform: scale(1.1);
-            opacity: 0.95;
-        }
-
-        .card-body-content {
-            padding: 22px;
-            position: relative;
-            z-index: 3;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, transparent, rgba(0, 242, 254, 0.15), rgba(161, 66, 244, 0.15), transparent);
-            opacity: 0;
-            transition: 0.5s;
             z-index: 2;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            background: #ffffff;
+            border: 4px solid #ffffff;
+            transition: var(--transition-smooth);
         }
 
-        .card:hover::before {
-            opacity: 1;
+        .portal-card:hover .icon-circle {
+            transform: scale(1.1) rotate(5deg);
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0, 242, 254, 0.5);
-            box-shadow: 0 12px 24px rgba(0, 242, 254, 0.15);
+        /* Custom Theme Accents per Level */
+        .accent-exams { background-color: #fffbeb !important; color: #d97706 !important; border: 1px solid #fde68a !important;}
+        .accent-l3 { background-color: #eff6ff !important; color: #2563eb !important; border: 1px solid #bfdbfe !important;}
+        .accent-l4 { background-color: #f0fdf4 !important; color: #16a34a !important; border: 1px solid #bbf7d0 !important;}
+        .accent-l5 { background-color: #ecfeff !important; color: #0891b2 !important; border: 1px solid #cffafe !important;}
+
+        /* Modern Dashed Border Elements */
+        .border-dashed {
+            border-style: dashed !important;
+            border-width: 2px !important;
+            border-color: #cbd5e1 !important;
+            border-radius: 20px !important;
+            background: #ffffff;
         }
 
-        .icon {
-            font-size: 38px;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
-        }
-
-        .title {
-            font-weight: 700;
-            font-size: 1.15rem;
-            margin-bottom: 4px;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: var(--muted);
-        }
-
-        .blue {
-            color: var(--blue);
-        }
-
-        .green {
-            color: var(--green);
-        }
-
-        .yellow {
-            color: var(--yellow);
-        }
-
-        .purple {
-            color: var(--purple);
-        }
-
-        .pink {
-            color: var(--pink);
-        }
-
-        .empty {
-            text-align: center;
-            color: var(--muted);
-            display: none;
-            padding: 40px;
-            background: var(--glass);
-            border-radius: 18px;
-            border: 1px dashed var(--glass-border);
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.2;
-            pointer-events: none;
-            animation: floatUp 12s infinite linear;
-        }
-
-        @keyframes floatUp {
-            from {
-                transform: translateY(100vh) scale(1);
-                opacity: 0.2;
-            }
-
-            to {
-                transform: translateY(-10vh) scale(1.2);
-                opacity: 0;
-            }
-        }
-
-        /* ===== INSTITUTIONAL FOOTER ===== */
+        /* Footer styling */
         footer {
-            margin-top: auto;
-            background: rgba(6, 11, 25, 0.85);
-            backdrop-filter: blur(15px);
-            border-top: 1px solid var(--glass-border);
-            padding: 20px;
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.85rem;
+            background: #0f172a !important;
+            color: #94a3b8 !important;
+            border-top: none !important;
+        }
+        
+        footer p { margin-bottom: 0.5rem; }
+        footer .school-stamp {
+            font-family: var(--handwritten-signature);
+            font-size: 2rem;
+            color: #f8fafc;
+            display: block;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* Keyframes Animations */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="stars"></div>
-
-    <!-- Top Navigation System -->
-    <div class="topbar">
-        <div class="brand">
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Logo">
-            PADRI VJEKO CENTRE TSS
-        </div>
-
-        <div>
-            <button class="audio-control" id="audioToggle">
-                <i class="bi bi-volume-up-fill"></i> <span>Sono: ON</span>
-            </button>
+    <div class="topbar d-flex justify-content-between align-items-center p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="brand d-flex align-items-center gap-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Logo" style="width: 32px;">
+                Padri Vjeko Centre TSS
+            </div>
+            <div class="system-status d-none d-md-flex align-items-center gap-2 small text-muted">
+                <span class="d-inline-block bg-success rounded-circle" style="width: 8px; height: 8px;"></span>
+                Node Terminal Active
+            </div>
         </div>
     </div>
 
-    <!-- Main Dynamic Interface Dashboard -->
-    <div class="main-content">
-        <div class="header">
-            <h1>Academic Resources Command Center</h1>
-            <p>NIT – Department of Networking & Internet Technology</p>
+    <div class="main-content container my-5">
+        <div class="header text-center mb-5">
+            <h1 class="display-4 fw-bold mb-2">Academic Resources Command Center</h1>
+            <p class="text-muted fs-5 mb-4">NIT – Department of Networking & Internet Technology</p>
 
-            <div class="chips">
-                <div class="chip"><i class="bi bi-person-badge-fill blue"></i> Instructor: Juaen Marie</div>
-                <div class="chip"><i class="bi bi-calendar3 yellow"></i> Academic Year: 2025-2026</div>
-                <div class="chip"><i class="bi bi-geo-alt-fill pink"></i> Location: Kivumu, Rwanda</div>
-                <div class="chip"><i class="bi bi-cpu purple"></i> Infrastructure: Full-Stack Architecture</div>
+            <div class="chips d-flex justify-content-center flex-wrap gap-2 mt-3">
+                <div class="badge text-dark"><i class="bi bi-person-badge-fill text-primary me-2"></i>Instructor: <span class="instructor-signature">Juaen Marie</span></div>
+                <div class="badge text-dark"><i class="bi bi-calendar3 text-warning me-2"></i>Academic Year: 2025-2026</div>
+                <div class="badge text-dark"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Location: Kivumu, Rwanda</div>
+                <div class="badge text-dark"><i class="bi bi-cpu text-info me-2"></i>Infrastructure: Full-Stack Architecture</div>
             </div>
         </div>
 
         <div class="dashboard-container">
-            <div class="dashboard-row">
-                <!-- Resolved broken video nesting tag here -->
-                <div class="media-banner-card">
-                    <video autoplay loop muted playsinline
-                        poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200">
-                        <source
-                            src="https://assets.mixkit.co/videos/preview/mixkit-man-holding-a-smartphone-next-to-a-computer-41761-large.mp4"
-                            type="video/mp4">
-                    </video>
+            <div class="row g-4 mb-5">
+                <div class="col-12">
+                    <div class="media-banner-card position-relative overflow-hidden bg-black">
+                        <video autoplay loop muted playsinline class="w-100 h-100 position-absolute top-0 start-0" style="object-fit: cover; opacity: 0.65;">
+                            <source src="ict_room.mp4" type="video/mp4">
+                            <source src="ict_room.mp4" type="video/quicktime">
+                            <source src="https://assets.mixkit.co/videos/preview/mixkit-man-holding-a-smartphone-next-to-a-computer-41761-large.mp4" type="video/mp4">
+                        </video>
 
-                    <div class="video-overlay">
-                        <span class="badge bg-success mb-2 align-self-start">
-                            <span class="pulse-dot me-1"
-                                style="background:#fff; box-shadow:none; width:6px; height:6px;"></span>
-                            LIVE SMART LAB FEED
-                        </span>
-                        <h3 class="fw-bold text-white mb-1">SMART ICT Classroom</h3>
-                        <p class="text-white-50 m-0 small">Interactive digital learning environment showing real-time
-                            student engagement, computing exercises, and hands-on networking lessons.</p>
-                    </div>
-                </div>
-
-                <!-- Telemetry Readout Engine Node -->
-                <div class="telemetry-card">
-                    <div>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="m-0 fw-bold"><i class="bi bi-terminal-fill blue me-2"></i>Node Status</h5>
-                            <span class="small text-success"><span class="pulse-dot me-1"></span> Connected</span>
+                        <div class="video-overlay position-absolute bottom-0 start-0 p-4 p-md-5 text-white">
+                            <div>
+                                <!-- <span class="badge bg-success mb-3"><i class="bi bi-broadcast me-1"></i> AUTOMATED LOCAL LAB STREAM</span> -->
+                                <h2 class="fw-bold mb-2">SMART ICT ROOM</h2>
+                                <p class="text-white-50 m-0 max-w-xl entry-paragraph small col-lg-8">Interactive digital learning environment showing real-time student engagement, computing exercises, and hands-on networking lessons running directly via departmental workspace nodes.</p>
+                            </div>
                         </div>
-                        <hr class="my-2 opacity-20" style="color:#fff;">
-
-                        <div class="metric-box">
-                            <span class="subtitle"><i class="bi bi-router me-2 blue"></i>Core Gateway Ping</span>
-                            <span class="fw-bold text-white" id="pingMetric">14 ms</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="subtitle"><i class="bi bi-cpu-fill me-2 purple"></i>Data Server Load</span>
-                            <span class="fw-bold text-white" id="loadMetric">42%</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="subtitle"><i class="bi bi-cloud-arrow-down-fill me-2 green"></i>Live
-                                Bandwidth</span>
-                            <span class="fw-bold text-white" id="bandwidthMetric">84.2 Mbps</span>
-                        </div>
-                    </div>
-                    <div class="text-center pt-2">
-                        <small class="text-muted" style="font-size:11px;">Polling Database Update: <span
-                                id="timestampBox">00:00:00</span></small>
                     </div>
                 </div>
             </div>
 
-            <h4 class="section-title"><i class="bi bi-folder-symlink purple"></i> Academic Resource Portals</h4>
+            <h4 class="border-start border-primary border-4 ps-3 mb-4 fw-bold"><i class="bi bi-folder-symlink text-primary me-2"></i>Academic Resource Portals</h4>
 
-            <!-- Resource Gateway Module Matrix Grid -->
-            <div class="grid" id="grid">
-                <a class="card-link" href="1-TERM-EXAMS/">
-                    <div class="card" data-name="term exams assessments tests">
-                        <div class="card-media-wrapper">
-                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=400"
-                                alt="Term Exams">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4" id="grid">
+                
+                <div class="col">
+                    <a class="text-decoration-none text-dark" href="1-TERM-EXAMS/">
+                        <div class="card h-100 portal-card shadow-sm">
+                            <div class="card-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=400" class="card-img-top" alt="Term Exams" style="height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="icon-circle accent-exams">
+                                <i class="bi bi-journal-text fs-3"></i>
+                            </div>
+                            <div class="card-body text-center pt-0 px-3 pb-4">
+                                <h5 class="card-title fw-bold">Term Exams</h5>
+                                <p class="card-text text-muted small">Assessments, Blueprints & Grading Keys</p>
+                            </div>
                         </div>
-                        <div class="card-body-content">
-                            <div class="icon yellow"><i class="bi bi-journal-text"></i></div>
-                            <div class="title">Term Exams</div>
-                            <div class="subtitle">Assessments, Blueprints & Grading Keys</div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
-                <a class="card-link" href="L3-NIT/">
-                    <div class="card" data-name="level 3 nit courses materials basics">
-                        <div class="card-media-wrapper">
-                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400"
-                                alt="Level 3 NIT">
+                <div class="col">
+                    <a class="text-decoration-none text-dark" href="L3-NIT/">
+                        <div class="card h-100 portal-card shadow-sm">
+                            <div class="card-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400" class="card-img-top" alt="Level 3 NIT" style="height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="icon-circle accent-l3">
+                                <i class="bi bi-mortarboard-fill fs-3"></i>
+                            </div>
+                            <div class="card-body text-center pt-0 px-3 pb-4">
+                                <h5 class="card-title fw-bold">Level 3 NIT</h5>
+                                <p class="card-text text-muted small">Foundations & Basic Course Materials</p>
+                            </div>
                         </div>
-                        <div class="card-body-content">
-                            <div class="icon blue"><i class="bi bi-mortarboard-fill"></i></div>
-                            <div class="title">Level 3 NIT</div>
-                            <div class="subtitle">Foundations & Basic Course Materials</div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
-                <a class="card-link" href="L4/">
-                    <div class="card" data-name="level 4 nit class resources routing switching">
-                        <div class="card-media-wrapper">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=400"
-                                alt="Level 4 NIT">
+                <div class="col">
+                    <a class="text-decoration-none text-dark" href="L4/">
+                        <div class="card h-100 portal-card shadow-sm">
+                            <div class="card-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=400" class="card-img-top" alt="Level 4 NIT" style="height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="icon-circle accent-l4">
+                                <i class="bi bi-layers-fill fs-3"></i>
+                            </div>
+                            <div class="card-body text-center pt-0 px-3 pb-4">
+                                <h5 class="card-title fw-bold">Level 4 NIT</h5>
+                                <p class="card-text text-muted small">Intermediate Routing Protocols</p>
+                            </div>
                         </div>
-                        <div class="card-body-content">
-                            <div class="icon green"><i class="bi bi-layers-fill"></i></div>
-                            <div class="title">Level 4 NIT</div>
-                            <div class="subtitle">Intermediate Routing Protocols</div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
-                <a class="card-link" href="L5-NIT/">
-                    <div class="card" data-name="level 5 nit advanced materials engineering security">
-                        <div class="card-media-wrapper">
-                            <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=400"
-                                alt="Level 5 NIT">
+                <div class="col">
+                    <a class="text-decoration-none text-dark" href="L5-NIT/">
+                        <div class="card h-100 portal-card shadow-sm">
+                            <div class="card-img-wrapper">
+                                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=400" class="card-img-top" alt="Level 5 NIT" style="height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="icon-circle accent-l5">
+                                <i class="bi bi-collection-fill fs-3"></i>
+                            </div>
+                            <div class="card-body text-center pt-0 px-3 pb-4">
+                                <h5 class="card-title fw-bold">Level 5 NIT</h5>
+                                <p class="card-text text-muted small">Advanced Engineering & Systems Security</p>
+                            </div>
                         </div>
-                        <div class="card-body-content">
-                            <div class="icon purple"><i class="bi bi-collection-fill"></i></div>
-                            <div class="title">Level 5 NIT</div>
-                            <div class="subtitle">Advanced Engineering & Systems Security</div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
 
-            <!-- Fallback Blank Search Query Engine DOM Component -->
-            <div class="empty" id="empty">
-                <i class="bi bi-exclamation-triangle-fill pink" style="font-size:40px;"></i>
+            <div class="text-center p-5 border border-dashed rounded mt-5 d-none" id="empty">
+                <i class="bi bi-exclamation-triangle text-danger display-5"></i>
                 <h5 class="mt-3 fw-bold">No Resource Nodes Match Query</h5>
-                <p class="text-muted small mb-0">Verify syntax spelling or clean standard string variables constraints.
-                </p>
+                <p class="text-muted small mb-0">Verify syntax spelling or clean standard string variables constraints.</p>
             </div>
         </div>
     </div>
 
-    <!-- Production Footer Block -->
-    <footer>
+    <footer class="py-5 mt-5 text-center">
         <div class="container">
-            <p class="mb-1">&copy; 2026 Padri Vjeko Centre TSS. All Intellectual Rights Reserved.</p>
-            <p class="text-muted mb-0" style="font-size: 11px;">Kivumu, Rwanda | Managed by Networking & Internet
-                Technology Faculty.</p>
+            <p class="mb-2 text-white-50">&copy; 2026 Padri Vjeko Centre TSS. All Intellectual Rights Reserved.</p>
+            <p class="small text-muted mb-0">Kivumu, Rwanda | Technical Infrastructure Managed by Networking & Internet Technology Faculty.</p>
+            <span class="school-stamp">Padri Vjeko Centre</span>
         </div>
     </footer>
 
-    <!-- Native JavaScript Engine Initializations -->
-    <script>
-        // --- SONO AUDIO ENGINE (NATIVE WEB AUDIO API SYNTHESIZER) ---
-        let audioEnabled = true;
-        const audioBtn = document.getElementById("audioToggle");
-        let audioCtx = null;
-
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        function playSound(freq, type, duration) {
-            if (!audioEnabled) return;
-            try {
-                initAudio();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch (e) { console.log("Audio Engine Init Wait..."); }
-        }
-
-        audioBtn.addEventListener("click", () => {
-            audioEnabled = !audioEnabled;
-            if (audioEnabled) {
-                audioBtn.innerHTML = '<i class="bi bi-volume-up-fill"></i> <span>Sono: ON</span>';
-                audioBtn.style.borderColor = "var(--blue)";
-                playSound(523.25, "sine", 0.15);
-            } else {
-                audioBtn.innerHTML = '<i class="bi bi-volume-mute-fill"></i> <span>Sono: OFF</span>';
-                audioBtn.style.borderColor = "var(--glass-border)";
-            }
-        });
-
-        // --- FULL STACK TELEMETRY ENGINE SIMULATION ---
-        function updateMetrics() {
-            const currentPing = Math.floor(Math.random() * (22 - 8) + 8) + " ms";
-            const currentLoad = Math.floor(Math.random() * (65 - 30) + 30) + "%";
-            const currentBandwidth = (Math.random() * (98.5 - 72.1) + 72.1).toFixed(1) + " Mbps";
-
-            document.getElementById("pingMetric").innerText = currentPing;
-            document.getElementById("loadMetric").innerText = currentLoad;
-            document.getElementById("bandwidthMetric").innerText = currentBandwidth;
-
-            const now = new Date();
-            document.getElementById("timestampBox").innerText = now.toTimeString().split(' ')[0];
-
-            playSound(880, "sine", 0.03);
-        }
-        setInterval(updateMetrics, 4500);
-        updateMetrics();
-
-        // --- ATTACH SOUNDS TO CARD HOVERS & CLICKS ---
-        document.querySelectorAll(".card").forEach(item => {
-            item.addEventListener("mouseenter", () => {
-                playSound(440, "sine", 0.08);
-            });
-            item.addEventListener("click", () => {
-                playSound(660, "sine", 0.2);
-            });
-        });
-
-        // --- HARDWARE-ACCELERATED COSMIC SPACE PARTICLES ---
-        const particleCount = 30;
-        for (let i = 0; i < particleCount; i++) {
-            let particle = document.createElement("div");
-            particle.className = "particle";
-            particle.style.left = Math.random() * 100 + "vw";
-            particle.style.top = Math.random() * 100 + "vh";
-            particle.style.animationDuration = (8 + Math.random() * 12) + "s";
-            particle.style.animationDelay = (-Math.random() * 10) + "s";
-            document.body.appendChild(particle);
-        }
-    </script>
 </body>
-
 </html>
