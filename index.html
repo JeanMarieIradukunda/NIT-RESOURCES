@@ -1,471 +1,390 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Resources Portal | PADRI VJEKO CENTRE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Academic Dashboard | PADRI VJEKO</title>
 
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
 
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Flex:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Bootstrap + Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+:root{
+    --blue:#e81ab1;
+    --green:#0f9d58;
+    --yellow:#f9ab00;
+    --purple:#a142f4;
+    --bg1:#0b1020;
+    --bg2:#111a33;
+    --glass:rgba(255,255,255,0.08);
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.7);
+}
 
-        /* ===== BODY ===== */
-        body {
-            font-family: "Inter", system-ui, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-            color: #1f2937;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Roboto Flex,sans-serif;
+}
 
-        /* ===== CONTAINER ===== */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+body{
+    color:var(--text);
+    overflow-x:hidden;
+    background: radial-gradient(circle at top, #1a73e8 0%, transparent 40%),
+                radial-gradient(circle at bottom, #42c2f4 0%, transparent 50%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+}
 
-        /* ===== HEADER ===== */
-        .portal-header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: slideDown 0.6s ease-out;
-        }
+/* ===== ANIMATED SPACE BACKGROUND ===== */
+.stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:transparent;
+    z-index:-1;
+}
+.stars::before,
+.stars::after{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:transparent url('https://www.transparenttextures.com/patterns/stardust.png');
+    animation:moveStars 120s linear infinite;
+    opacity:0.3;
+}
+@keyframes moveStars{
+    from{transform:translate(0,0);}
+    to{transform:translate(-500px,-500px);}
+}
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
+/* ===== TOP BAR ===== */
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:10;
+    backdrop-filter:blur(18px);
+    background:rgba(10,15,30,0.6);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 22px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    letter-spacing:0.5px;
+}
 
-        .portal-header h2 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            opacity: 0.95;
-        }
+.brand img{
+    width:34px;
+    filter:drop-shadow(0 0 6px rgba(26,115,232,0.6));
+}
 
-        .portal-header h1 {
-            font-family: "Playfair Display", serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin: 10px 0 15px;
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+.search{
+    flex:1;
+    max-width:520px;
+    margin:0 20px;
+    position:relative;
+}
 
-        .portal-header p {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-        }
+.search input{
+    width:100%;
+    padding:12px 42px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,0.2);
+    outline:none;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
 
-        /* ===== INFO BAR ===== */
-        .info-bar {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
+.search input:focus{
+    box-shadow:0 0 0 3px rgba(26,115,232,0.4);
+    background:rgba(255,255,255,0.12);
+}
 
-        .info-item {
-            font-size: 0.95rem;
-            color: #1f2937;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 18px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
+.search i{
+    position:absolute;
+    left:14px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+}
 
-        .info-item i {
-            color: #667eea;
-            font-size: 1.1rem;
-        }
+/* ===== HEADER ===== */
+.header{
+    text-align:center;
+    padding:60px 20px 20px;
+}
 
-        .info-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-        }
+.header h1{
+    font-size:2.8rem;
+    font-weight:800;
+    background:linear-gradient(90deg,#1a9ce8,#f4aa42,#0f9d58);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:floatTitle 6s ease-in-out infinite;
+}
 
-        /* ===== SEARCH BAR ===== */
-        .search-container {
-            max-width: 500px;
-            margin: 40px auto 50px;
-            position: relative;
-        }
+@keyframes floatTitle{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+}
 
-        .search-bar {
-            width: 100%;
-            padding: 14px 20px 14px 45px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            color: #1f2937;
-        }
+.header p{
+    color:var(--muted);
+    margin-top:8px;
+}
 
-        .search-bar::placeholder {
-            color: #9ca3af;
-        }
+/* ===== CHIPS ===== */
+.chips{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:18px;
+}
 
-        .search-bar:focus {
-            outline: none;
-            background: white;
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-            transform: scale(1.02);
-        }
+.chip{
+    background:var(--glass);
+    padding:10px 14px;
+    border-radius:30px;
+    font-size:13px;
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+}
 
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #667eea;
-            font-size: 1.1rem;
-            pointer-events: none;
-        }
+/* ===== GRID ===== */
+.grid{
+    max-width:1100px;
+    margin:40px auto;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
 
-        /* ===== GRID FOLDERS ===== */
-        .folder-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 26px;
-            width: 100%;
-            animation: fadeIn 0.8s ease-out 0.2s both;
-        }
+/* ===== CARD ===== */
+.card-link{
+    text-decoration:none;
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+.card{
+    background:var(--glass);
+    border-radius:18px;
+    padding:26px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(18px);
+    transition:all .35s ease;
+    position:relative;
+    overflow:hidden;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    background:linear-gradient(45deg,transparent,#1a73e8,#a142f4,transparent);
+    opacity:0;
+    transition:0.5s;
+}
 
-        .folder-card {
-            text-decoration: none;
-            border-radius: 20px;
-            padding: 35px 25px;
-            text-align: center;
-            border: none;
-            color: #1f2937;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 180px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-        }
+.card:hover::before{
+    opacity:1;
+    animation:glow 2s linear infinite;
+}
 
-        .folder-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: all 0.5s ease;
-        }
+@keyframes glow{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(360deg);}
+}
 
-        .folder-card:hover::before {
-            top: -10%;
-            right: -10%;
-        }
+.card:hover{
+    transform:translateY(-10px) scale(1.02);
+}
 
-        .folder-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-        }
+.icon{
+    font-size:44px;
+    margin-bottom:10px;
+}
 
-        .folder-card i {
-            font-size: 50px;
-            margin-bottom: 16px;
-            transition: all 0.35s ease;
-            position: relative;
-            z-index: 1;
-        }
+.title{
+    font-weight:700;
+}
 
-        .folder-card:hover i {
-            transform: translateY(-6px) rotate(5deg) scale(1.15);
-        }
+.subtitle{
+    font-size:13px;
+    color:var(--muted);
+}
 
-        .folder-title {
-            font-family: "Playfair Display", serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            position: relative;
-            z-index: 1;
-            line-height: 1.4;
-        }
+/* COLORS */
+.blue{color:var(--blue)}
+.green{color:var(--green)}
+.yellow{color:var(--yellow)}
+.purple{color:var(--purple)}
 
-        /* ===== COLOR THEMES ===== */
-        .exams {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        }
+/* EMPTY */
+.empty{
+    text-align:center;
+    color:var(--muted);
+    display:none;
+    margin-top:30px;
+}
 
-        .exams i {
-            color: #b45309;
-        }
+/* floating particles */
+.particle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:0.3;
+    animation:float 10s infinite linear;
+}
 
-        .courses {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-        }
+@keyframes float{
+    from{transform:translateY(0);}
+    to{transform:translateY(-1000px);}
+}
 
-        .courses i {
-            color: #1e40af;
-        }
-
-        .classes {
-            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-        }
-
-        .classes i {
-            color: #065f46;
-        }
-
-        .resources {
-            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-        }
-
-        .resources i {
-            color: #6b21a8;
-        }
-
-        /* ===== EMPTY STATE ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: rgba(255, 255, 255, 0.8);
-            display: none;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.6;
-        }
-
-        .empty-state p {
-            font-size: 1.1rem;
-            opacity: 0.8;
-        }
-
-        /* ===== MEDIA ===== */
-        @media (max-width: 768px) {
-            .portal-header h1 {
-                font-size: 2.5rem;
-            }
-
-            .folder-row {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 18px;
-            }
-
-            .folder-card {
-                padding: 25px 18px;
-                min-height: 160px;
-            }
-
-            .folder-card i {
-                font-size: 40px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .portal-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .portal-header h2 {
-                font-size: 0.85rem;
-            }
-
-            .portal-header p {
-                font-size: 0.95rem;
-            }
-
-            .folder-row {
-                grid-template-columns: 1fr;
-            }
-
-            .folder-card {
-                padding: 20px;
-            }
-
-            .info-item {
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+/* responsive */
+@media(max-width:600px){
+    .header h1{font-size:2rem;}
+}
+</style>
 </head>
 
 <body>
-    <div class="main-container">
-        <div class="portal-header">
-            <h2>Padri Vjeko Centre</h2>
-            <h1>Academic Resources Portal</h1>
-            <p>Department of NIT – Networking & Internet Technology</p>
 
-            <div class="info-bar">
-                <div class="instructor-card">
-                    <div class="icon">
-                        <i class="bi bi-person-workspace"></i>
-                    </div>
+<div class="stars"></div>
 
-                    <div class="instructor-details">
-                        <span class="role">Lead Instructor</span>
-                        <span class="name">Juaen Marie Vianney
-                            IRADUKUNDA</span>
-                    </div>
-                </div>
-
-                <style>
-                    .instructor-card {
-                        display: flex;
-                        align-items: center;
-                        gap: 14px;
-                        padding: 14px 18px;
-
-                        background: rgba(255, 255, 255, 0.15);
-                        backdrop-filter: blur(10px);
-                        -webkit-backdrop-filter: blur(10px);
-
-                        border-radius: 14px;
-                        border: 1px solid rgba(255, 255, 255, 0.25);
-
-                        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-
-                        max-width: 420px;
-                        font-family: system-ui, Segoe UI, Roboto, sans-serif;
-                    }
-
-                    .instructor-card .icon {
-                        font-size: 26px;
-                        color: #0d6efd;
-                        background: rgba(13, 110, 253, 0.12);
-                        padding: 10px;
-                        border-radius: 10px;
-                    }
-
-                    .instructor-details {
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    .role {
-                        font-size: 13px;
-                        color: #6c757d;
-                        font-weight: 500;
-                        letter-spacing: 0.4px;
-                    }
-
-                    .name {
-                        font-size: 17px;
-                        font-weight: 600;
-                        color: #212529;
-                    }
-                </style>
-            </div>
-        </div>
-
-        <div class="search-container">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" id="searchInput" class="search-bar" placeholder="Search academic sections...">
-        </div>
-
-        <div class="folder-row" id="folderContainer">
-            <a href="1-TERM-EXAMS/" class="folder-card exams"
-                data-name="term exams">
-                <i class="bi bi-journal-text"></i>
-                <div class="folder-title">Term 1 Exams</div>
-            </a>
-
-            <a href="L3-NIT/" class="folder-card courses" data-name="level 3 nit">
-                <i class="bi bi-mortarboard-fill"></i>
-                <div class="folder-title">Level 3 – NIT</div>
-            </a>
-
-            <a href="L4/" class="folder-card classes" data-name="level 4">
-                <i class="bi bi-layers-fill"></i>
-                <div class="folder-title">Level 4 – NIT</div>
-            </a>
-
-            <a href="L5-NIT/" class="folder-card resources" data-name="level 5 nit">
-                <i class="bi bi-collection-fill"></i>
-                <div class="folder-title">Level 5 – NIT</div>
-            </a>
-
-        </div>
-
-        <div class="empty-state" id="emptyState">
-            <i class="bi bi-search"></i>
-            <p>No results found for your search</p>
-        </div>
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="brand">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+        PADRI VJEKO CENTRE TSS
     </div>
 
-    <script>
-        const searchInput = document.getElementById("searchInput");
-        const folders = document.querySelectorAll(".folder-card");
-        const emptyState = document.getElementById("emptyState");
+    <!-- <div class="search">
+        <i class="bi bi-search"></i>
+        <input id="search" placeholder="Search classes, exams, resources...">
+    </div> -->
 
-        searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase();
-            let visibleCount = 0;
+    <div>
+        <i class="bi bi-grid-3x3-gap"></i>
+    </div>
+</div>
 
-            folders.forEach(folder => {
-                const isVisible = folder.dataset.name.includes(query);
-                folder.style.display = isVisible ? "flex" : "none";
-                if (isVisible) visibleCount++;
-            });
+<!-- HEADER -->
+<div class="header">
+    <h1>Academic Dashboard</h1>
+    <p>NIT – Networking & Internet Technology</p>
 
-            emptyState.style.display = visibleCount === 0 ? "block" : "none";
-        });
-    </script>
+    <div class="chips">
+        <div class="chip"><i class="bi bi-person"></i> Instructor: Juaen Marie</div>
+        <div class="chip"><i class="bi bi-calendar"></i> 2026 Academic Year</div>
+        <div class="chip"><i class="bi bi-geo-alt"></i> PADRI VJEKO CENTRE</div>
+    </div>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid">
+
+    <a class="card-link" href="1-TERM-EXAMS/">
+        <div class="card" data-name="term exams">
+            <div class="icon yellow"><i class="bi bi-journal-text"></i></div>
+            <div class="title">Term Exams</div>
+            <div class="subtitle">Assessments & Tests</div>
+        </div>
+    </a>
+
+    <a class="card-link" href="L3-NIT/">
+        <div class="card" data-name="level 3 nit">
+            <div class="icon blue"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="title">Level 3 NIT</div>
+            <div class="subtitle">Courses & Materials</div>
+        </div>
+    </a>
+
+    <a class="card-link" href="L4/">
+        <div class="card" data-name="level 4">
+            <div class="icon green"><i class="bi bi-layers-fill"></i></div>
+            <div class="title">Level 4 NIT</div>
+            <div class="subtitle">Class Resources</div>
+        </div>
+    </a>
+
+    <a class="card-link" href="L5-NIT/">
+        <div class="card" data-name="level 5 nit">
+            <div class="icon purple"><i class="bi bi-collection-fill"></i></div>
+            <div class="title">Level 5 NIT</div>
+            <div class="subtitle">Advanced Materials</div>
+        </div>
+    </a>
+
+</div>
+
+<div class="empty" id="empty">
+    <i class="bi bi-search" style="font-size:30px;"></i>
+    <p>No results found</p>
+</div>
+
+<script>
+const search=document.getElementById("search");
+const cards=document.querySelectorAll(".card");
+const empty=document.getElementById("empty");
+
+search.addEventListener("input", () => {
+    let q = search.value.toLowerCase().trim();
+    let count = 0;
+
+    cards.forEach(card => {
+        const parent = card.parentElement;
+
+        // 🔍 Extract ALL searchable content
+        const title = card.querySelector(".title")?.innerText.toLowerCase() || "";
+        const subtitle = card.querySelector(".subtitle")?.innerText.toLowerCase() || "";
+        const dataset = card.dataset.name?.toLowerCase() || "";
+        const link = parent.getAttribute("href")?.toLowerCase() || "";
+
+        // 🔥 combine everything into one searchable string
+        const fullText = `${title} ${subtitle} ${dataset} ${link}`;
+
+        // smarter match (deep search)
+        const match = fullText.includes(q);
+
+        parent.style.display = match ? "block" : "none";
+
+        if (match) count++;
+    });
+
+    empty.style.display = count ? "none" : "block";
+});
+
+/* floating particles */
+for(let i=0;i<25;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"vw";
+    p.style.top=Math.random()*100+"vh";
+    p.style.animationDuration=(5+Math.random()*10)+"s";
+    document.body.appendChild(p);
+}
+</script>
+
 </body>
-
 </html>
