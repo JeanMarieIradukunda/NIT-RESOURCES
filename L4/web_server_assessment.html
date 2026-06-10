@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Online Exam Icon Image Link -->
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+  <title>Online Exam Portal</title>
+  <!-- Optional icon libraries (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0a0f1e;
+      --navy-mid: #111827;
+      --navy-card: #1a2233;
+      --navy-border: #243048;
+      --slate: #8899bb;
+      --slate-light: #c4cfdf;
+      --white: #f0f4ff;
+      --accent: #3b82f6;
+      --accent-dim: #1d4ed8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+      --warn-dark: #b45309;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #a78bfa);
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ===== WARNING OVERLAY ===== */
+    #warningOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      background: rgba(239, 68, 68, 0.12);
+      border: 4px solid var(--danger);
+      pointer-events: none;
+      animation: warningFlash 0.4s ease;
+    }
+
+    @keyframes warningFlash {
+      0% {
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      70% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* ===== WARNING BANNER (persistent, shows count) ===== */
+    #warningBanner {
+      display: none;
+      position: fixed;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9997;
+      background: rgba(239, 68, 68, 0.95);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 4px 24px rgba(239, 68, 68, 0.4);
+      letter-spacing: 0.02em;
+      text-align: center;
+      animation: slideDown2 0.3s ease;
+    }
+
+    @keyframes slideDown2 {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* ===== MARKS DEDUCT POPUP ===== */
+    #deductPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+      background: var(--navy-card);
+      border: 2px solid var(--danger);
+      border-radius: 16px;
+      padding: 28px 36px;
+      text-align: center;
+      min-width: 300px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    #deductPopup .deduct-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    #deductPopup h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+
+    #deductPopup p {
+      font-size: 13px;
+      color: var(--slate-light);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    #deductPopup .deduct-score {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--danger);
+      margin: 10px 0;
+    }
+
+    #deductPopup .deduct-total {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--slate);
+    }
+
+    #deductPopup button {
+      margin-top: 16px;
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    #deductPopup button:hover {
+      background: #b91c1c;
+    }
+
+    /* ===== TERMINATION SCREEN ===== */
+    #terminationScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--navy);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 32px;
+    }
+
+    #terminationScreen .term-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    #terminationScreen h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--danger);
+      margin-bottom: 12px;
+    }
+
+    #terminationScreen p {
+      font-size: 15px;
+      color: var(--slate-light);
+      max-width: 420px;
+      line-height: 1.6;
+    }
+
+    #terminationScreen .term-stats {
+      margin-top: 28px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      padding: 20px 32px;
+      display: flex;
+      gap: 32px;
+    }
+
+    #terminationScreen .term-stat {
+      text-align: center;
+    }
+
+    #terminationScreen .term-stat .val {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--danger);
+    }
+
+    #terminationScreen .term-stat .lbl {
+      font-size: 11px;
+      color: var(--slate);
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ===== LOGIN ===== */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      padding: 20px;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo .logo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      border-radius: 16px;
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .login-logo h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .login-logo p {
+      font-size: 13px;
+      color: var(--slate);
+      margin-top: 4px;
+    }
+
+    .login-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .login-card label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 8px;
+    }
+
+    .login-card input {
+      width: 100%;
+      background: var(--navy-mid);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: var(--white);
+      font-family: var(--sans);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-card input:focus {
+      border-color: var(--accent);
+    }
+
+    .attempt-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      margin-bottom: 20px;
+    }
+
+    .attempt-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--navy-border);
+      transition: background 0.3s;
+    }
+
+    .attempt-dot.used {
+      background: var(--danger);
+    }
+
+    .btn-login {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-login:hover {
+      background: var(--accent-dim);
+    }
+
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .login-error {
+      font-size: 13px;
+      color: var(--danger);
+      text-align: center;
+      margin-top: 14px;
+      min-height: 18px;
+    }
+
+    .login-meta {
+      text-align: center;
+      font-size: 12px;
+      color: var(--slate);
+      margin-top: 20px;
+    }
+
+    /* ===== LOCKOUT ===== */
+    #lockoutScreen {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+    }
+
+    .lockout-box {
+      text-align: center;
+      max-width: 340px;
+      padding: 40px 32px;
+      background: var(--navy-card);
+      border: 1px solid var(--danger);
+      border-radius: 16px;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .lockout-box .lock-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .lockout-box h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .lockout-box p {
+      font-size: 14px;
+      color: var(--slate);
+    }
+
+    #lockCountdown {
+      font-family: var(--mono);
+      font-size: 28px;
+      color: var(--danger);
+      margin: 20px 0;
+    }
+
+    /* ===== EXAM SHELL ===== */
+    #examContainer {
+      display: none;
+      min-height: 100vh;
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 15, 30, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-left {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .topbar-left h2 {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lo-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-top: 3px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .topbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .topbar-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .topbar-btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-fullscreen {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-fullscreen:hover {
+      background: rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-toggle {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warn);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-toggle:hover {
+      background: rgba(245, 158, 11, 0.25);
+    }
+
+    .btn-toggle.active {
+      background: var(--warn);
+      color: #000;
+    }
+
+    /* ===== WARNINGS CHIP in topbar ===== */
+    .warnings-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--mono);
+      transition: background 0.3s;
+    }
+
+    .warnings-chip.pulse {
+      animation: chipPulse 0.6s ease;
+    }
+
+    @keyframes chipPulse {
+
+      0%,
+      100% {
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+      50% {
+        background: rgba(239, 68, 68, 0.35);
+      }
+    }
+
+    .teacher-panel {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+
+    .teacher-panel input {
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 13px;
+      font-family: var(--sans);
+      width: 130px;
+      outline: none;
+    }
+
+    .teacher-panel input::placeholder {
+      color: var(--slate);
+    }
+
+    .btn-unlock {
+      background: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-unlock:hover {
+      background: #b91c1c;
+    }
+
+    .btn-unlock.unlocked {
+      background: var(--success);
+      cursor: default;
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 12px;
+      color: var(--slate);
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-item strong {
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .stat-item strong.deducted {
+      color: var(--danger);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--navy-border);
+    }
+
+    /* ===== VIOLATION LOG ===== */
+    #violationLog {
+      display: none;
+      background: rgba(239, 68, 68, 0.06);
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 10px 24px;
+      font-size: 11px;
+      color: var(--slate);
+    }
+
+    #violationLog .vlog-label {
+      color: var(--danger);
+      font-weight: 700;
+      margin-bottom: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    #violationLog ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    #violationLog ul li {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--slate-light);
+    }
+
+    /* ===== EXAM BODY ===== */
+    .exam-body {
+      padding: 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .info-banner {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--slate-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .info-banner .info-icon {
+      font-size: 16px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* WARNING RULES BANNER */
+    .warn-rules-banner {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #fde68a;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* ===== SECTION ===== */
+    .section-block {
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .section-name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--navy-border);
+    }
+
+    .part-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--slate);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--navy-border);
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .q-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.08);
+    }
+
+    .q-body {
+      padding: 18px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .q-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .q-content {
+      flex: 1;
+    }
+
+    .q-text {
+      font-size: 15px;
+      color: var(--white);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .q-marks {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--slate);
+      margin-bottom: 12px;
+    }
+
+    .q-options {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .q-options li {
+      background: var(--navy-mid);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 14px;
+      color: var(--slate-light);
+    }
+
+    /* ===== ANSWER BOX ===== */
+    .answer-box {
+      display: none;
+      border-top: 1px solid var(--navy-border);
+      padding: 14px 20px;
+      background: rgba(16, 185, 129, 0.06);
+      border-left: 3px solid var(--success);
+    }
+
+    .answer-box.visible {
+      display: block;
+      animation: slideDown 0.2s ease;
+    }
+
+    .answer-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 6px;
+    }
+
+    .answer-text {
+      font-size: 14px;
+      color: #a7f3d0;
+      line-height: 1.65;
+    }
+
+    .answer-box.blurred .answer-text {
+      filter: blur(6px);
+      user-select: none;
+    }
+
+    /* ===== TOAST ===== */
+    .toast-wrap {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--white);
+      min-width: 260px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      animation: fadeUp 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.success {
+      border-left: 3px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 3px solid var(--danger);
+    }
+
+    .toast.info {
+      border-left: 3px solid var(--accent);
+    }
+
+    .toast.warn {
+      border-left: 3px solid var(--warn);
+    }
+
+    .toast.hiding {
+      animation: fadeOut 0.3s ease forwards;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .topbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 14px;
+        gap: 8px;
+      }
+
+      .teacher-panel input {
+        width: 100px;
+      }
+
+      .exam-body {
+        padding: 16px;
+      }
+
+      .stats-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 14px;
+      }
+
+      .topbar-left h2 {
+        font-size: 12px;
+      }
+    }
+
+    @media print {
+
+      .topbar,
+      .stats-bar,
+      .teacher-panel,
+      .toast-wrap,
+      #scroll-progress,
+      #warningBanner,
+      #deductPopup,
+      #terminationScreen,
+      #violationLog {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="scroll-progress"></div>
+  <div id="warningOverlay"></div>
+
+  <!-- ===== DEDUCT POPUP ===== -->
+  <div id="deductPopup">
+    <div class="deduct-icon">⚠️</div>
+    <h3>Warning Issued</h3>
+    <p id="deductReason">Violation detected.</p>
+    <div class="deduct-score" id="deductAmount">−3 marks</div>
+    <div class="deduct-total" id="deductRunning"></div>
+    <button onclick="closeDeductPopup()">Acknowledge</button>
+  </div>
+
+  <!-- ===== TERMINATION SCREEN ===== -->
+  <div id="terminationScreen" style="display:none;">
+    <div class="term-icon">🚫</div>
+    <h1>Exam Terminated</h1>
+    <p>You have accumulated too many violations. Your exam session has been ended by the security system. Please contact
+      your invigilator.</p>
+    <div class="term-stats" id="termStats"></div>
+  </div>
+
+  <!-- ===== LOGIN ===== -->
+  <div id="loginScreen">
+    <div class="login-wrap">
+      <div class="login-logo">
+        <div class="logo-icon">📋</div>
+        <h1>Exam Portal</h1>
+        <p>Secure Online Assessment Viewer</p>
+      </div>
+      <div class="login-card">
+        <label>Student Access Code</label>
+        <input type="password" id="passwordInput" placeholder="Enter your access code" autocomplete="off">
+        <div class="attempt-bar" id="attemptBar">
+          <div class="attempt-dot" id="d1"></div>
+          <div class="attempt-dot" id="d2"></div>
+          <div class="attempt-dot" id="d3"></div>
+          <div class="attempt-dot" id="d4"></div>
+          <div class="attempt-dot" id="d5"></div>
+        </div>
+        <button class="btn-login" id="loginBtn" onclick="attemptLogin()">Access Exam</button>
+        <p class="login-error" id="loginMsg"></p>
+      </div>
+      <p class="login-meta">Read-only viewer · No data stored · Secure session</p>
+    </div>
+  </div>
+
+  <!-- ===== LOCKOUT ===== -->
+  <div id="lockoutScreen" style="display:none; min-height:100vh; align-items:center; justify-content:center;">
+    <div class="lockout-box">
+      <div class="lock-icon">🔒</div>
+      <h2>Access Locked</h2>
+      <p>Too many failed attempts. Please wait before trying again.</p>
+      <div id="lockCountdown">5:00</div>
+      <p style="font-size:12px; color:var(--slate);">Contact your invigilator if you need assistance.</p>
+    </div>
+  </div>
+
+  <!-- ===== EXAM ===== -->
+  <div id="examContainer">
+
+    <div class="topbar">
+      <div class="topbar-left">
+        <h2 id="examTitle"></h2>
+        <div class="lo-badge">Learning Outcome 5 · Deploy Web Services</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn btn-fullscreen" onclick="enterFullscreen()">⛶ Exam Mode</button>
+
+        <!-- WARNINGS CHIP -->
+        <div class="warnings-chip" id="warningsChip" title="Warnings & mark deductions">
+          <span>⚠️</span>
+          <span id="warnCountDisplay">0</span> warnings ·
+          <span id="warnMarksDisplay" style="color:#fca5a5;">−0 marks</span>
+        </div>
+
+        <button class="topbar-btn btn-toggle" id="toggleBtn" onclick="toggleAnswers()">👁 Show Answers</button>
+
+        <div class="teacher-panel">
+          <span style="font-size:12px; color:var(--slate);">🔑</span>
+          <input type="password" id="teacherPass" placeholder="Teacher password"
+            onkeydown="if(event.key==='Enter') unlockAnswers()" autocomplete="off">
+          <button class="btn-unlock" id="unlockBtn" onclick="unlockAnswers()">Unlock</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stat-item">📄 <span>Total Marks:</span> <strong id="statMarks"></strong></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">📉 <span>Deducted:</span> <strong id="statDeducted" class="deducted">0</strong></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">✅ <span>Net Score:</span> <strong id="statNet"></strong></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">❓ <span>Questions:</span> <strong id="statQuestions"></strong></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">⚠️ <span>Warnings:</span> <strong id="statWarnCount" style="color:var(--warn);">0 /
+          5</strong></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="statAnswers" style="display:none;">
+        ✅ <span>Answers Visible:</span> <strong id="statAnswerCount"></strong>
+      </div>
+    </div>
+
+    <!-- VIOLATION LOG -->
+    <div id="violationLog">
+      <div class="vlog-label">⚠ Violation Log</div>
+      <ul id="violationList"></ul>
+    </div>
+
+    <div class="exam-body">
+      <div class="info-banner">
+        <span class="info-icon">ℹ️</span>
+        <span><strong>Instructions:</strong> Read all questions carefully. Write your answers on paper. This is a
+          view-only exam — no input is collected.</span>
+      </div>
+      <div class="warn-rules-banner">
+        <span class="info-icon">⚠️</span>
+        <span>
+          <strong>Integrity Policy:</strong> Each security violation (tab switch, DevTools, right-click, copy attempt,
+          window blur, etc.) issues a
+          <strong style="color:#fcd34d;">warning and deducts 3 marks</strong> from your total score.
+          After <strong style="color:#fca5a5;">5 warnings</strong> your exam is permanently terminated.
+        </span>
+      </div>
+      <div id="examContent"></div>
+    </div>
+
+  </div>
+
+  <div id="warningBanner" style="display:none;"></div>
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script>
+    // ============================================================
+    //  CONFIG
+    // ============================================================
+    const MAX_ATTEMPTS = 5;
+    const LOCK_SECONDS = 300;
+    const SESSION_LIMIT = 90 * 60 * 1000;
+    const DEDUCT_PER_WARN = 3;
+    const MAX_WARNINGS = 5;
+
+    const _AUTH = Object.freeze({ s: btoa("web_quiz3"), t: btoa("trainer789") });
+
+    let loginAttempts = 0;
+    let lockoutTimer = null;
+    let answersUnlocked = false;
+    let answersVisible = false;
+    let warningCount = 0;
+    let totalDeducted = 0;
+    let examActive = false;
+    let violationLog = [];
+    let deductPopupOpen = false;
+    let warningBannerTimer = null;
+
+    // ============================================================
+    //  AUDIO ENGINE  (Web Audio API beeps – no external files)
+    // ============================================================
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
+
+    function ensureAudio() {
+      if (!audioCtx) audioCtx = new AudioCtx();
+    }
+
+    function playBeep(type = 'warn') {
+      ensureAudio();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'warn') {
+        // Two-tone warning beep
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(660, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.4);
+      } else if (type === 'terminate') {
+        // Descending alarm
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(900, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(200, audioCtx.currentTime + 0.8);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.8);
+      } else if (type === 'login') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else if (type === 'error') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.25);
+      }
+    }
+
+    // ============================================================
+    //  WARNING SYSTEM
+    // ============================================================
+    function issueWarning(reason) {
+      if (!examActive) return;
+      if (deductPopupOpen) return; // prevent stacking
+
+      warningCount++;
+      totalDeducted += DEDUCT_PER_WARN;
+      violationLog.push({ n: warningCount, reason, time: new Date().toLocaleTimeString() });
+
+      playBeep('warn');
+      flashOverlay();
+      updateWarningUI();
+      showViolationLog();
+      showWarningBanner(reason);
+
+      if (warningCount >= MAX_WARNINGS) {
+        setTimeout(terminateExam, 1800);
+        return;
+      }
+
+      // Show deduct popup
+      showDeductPopup(reason);
+    }
+
+    function showDeductPopup(reason) {
+      deductPopupOpen = true;
+      document.getElementById('deductReason').textContent = reason;
+      document.getElementById('deductAmount').textContent = `−${DEDUCT_PER_WARN} marks deducted`;
+      document.getElementById('deductRunning').textContent =
+        `Total deducted: ${totalDeducted} marks  |  Warnings: ${warningCount} / ${MAX_WARNINGS}`;
+      document.getElementById('deductPopup').style.display = 'block';
+    }
+
+    function closeDeductPopup() {
+      deductPopupOpen = false;
+      document.getElementById('deductPopup').style.display = 'none';
+    }
+
+    function flashOverlay() {
+      const ov = document.getElementById('warningOverlay');
+      ov.style.display = 'block';
+      setTimeout(() => { ov.style.display = 'none'; }, 450);
+    }
+
+    function showWarningBanner(reason) {
+      clearTimeout(warningBannerTimer);
+      const b = document.getElementById('warningBanner');
+      const remaining = MAX_WARNINGS - warningCount;
+      b.innerHTML = `⚠️ Warning ${warningCount}/${MAX_WARNINGS}: ${reason} — <strong>−${DEDUCT_PER_WARN} marks</strong> deducted. ${remaining > 0 ? remaining + ' warning(s) left before termination.' : 'EXAM TERMINATED.'}`;
+      b.style.display = 'block';
+      warningBannerTimer = setTimeout(() => { b.style.display = 'none'; }, 7000);
+    }
+
+    function updateWarningUI() {
+      const base = examData.totalMarks;
+      const net = Math.max(0, base - totalDeducted);
+
+      document.getElementById('warnCountDisplay').textContent = warningCount;
+      document.getElementById('warnMarksDisplay').textContent = `−${totalDeducted} marks`;
+      document.getElementById('statDeducted').textContent = totalDeducted;
+      document.getElementById('statNet').textContent = net;
+      document.getElementById('statWarnCount').textContent = `${warningCount} / ${MAX_WARNINGS}`;
+
+      // Pulse chip
+      const chip = document.getElementById('warningsChip');
+      chip.classList.remove('pulse');
+      void chip.offsetWidth;
+      chip.classList.add('pulse');
+    }
+
+    function showViolationLog() {
+      const logDiv = document.getElementById('violationLog');
+      const logList = document.getElementById('violationList');
+      logDiv.style.display = 'block';
+      logList.innerHTML = violationLog
+        .map(v => `<li>#${v.n} · ${v.time} · ${v.reason}</li>`)
+        .join('');
+    }
+
+    function terminateExam() {
+      examActive = false;
+      playBeep('terminate');
+
+      const ts = document.getElementById('terminationScreen');
+      ts.style.display = 'flex';
+      ts.style.flexDirection = 'column';
+
+      document.getElementById('termStats').innerHTML = `
+      <div class="term-stat"><div class="val">${warningCount}</div><div class="lbl">Violations</div></div>
+      <div class="term-stat"><div class="val">${totalDeducted}</div><div class="lbl">Marks Deducted</div></div>
+      <div class="term-stat"><div class="val">${Math.max(0, examData.totalMarks - totalDeducted)}</div><div class="lbl">Net Score</div></div>
+    `;
+    }
+
+    // ============================================================
+    //  EXAM DATA
+    // ============================================================
+    const examData = {
+      title: "Learning Outcome 5 – Deploy Web Services Assessment",
+      totalMarks: 80,
+      sections: [
+        {
+          name: "PART I", marks: 50,
+          parts: [
+            {
+              title: "A. Multiple Choice Questions (20 Marks)",
+              questions: [
+                {
+                  q: "What is the World Wide Web (WWW)?", marks: 2,
+                  options: ["A computer operating system", "A system for accessing information through the internet using browsers", "A database server", "A local network device"],
+                  answer: "A system for accessing information through the internet using browsers"
+                },
+                {
+                  q: "Which of the following is an example of a website?", marks: 2,
+                  options: ["About Us page", "Windows Server 2016", "YouTube", "IIS Console"],
+                  answer: "YouTube"
+                },
+                {
+                  q: "Which web server software is developed by Microsoft?", marks: 2,
+                  options: ["Apache HTTP Server", "Nginx", "LiteSpeed", "IIS"],
+                  answer: "IIS"
+                },
+                {
+                  q: "Which web server is commonly used for Java web applications?", marks: 2,
+                  options: ["Apache Tomcat", "IIS", "LiteSpeed", "Nginx"],
+                  answer: "Apache Tomcat"
+                },
+                {
+                  q: "What is the minimum RAM required for Windows Server 2016 with Desktop Experience?", marks: 2,
+                  options: ["1 GB", "2 GB", "4 GB", "8 GB"],
+                  answer: "2 GB"
+                },
+                {
+                  q: "Which port must be allowed through the firewall for HTTPS traffic?", marks: 2,
+                  options: ["21", "25", "80", "443"],
+                  answer: "443"
+                },
+                {
+                  q: "What is the first step when installing IIS on Windows Server 2016?", marks: 2,
+                  options: ["Click Install", "Open IIS Manager", "Open Server Manager", "Restart the server"],
+                  answer: "Open Server Manager"
+                },
+                {
+                  q: "What is the main purpose of SSL?", marks: 2,
+                  options: ["Compress website files", "Encrypt communication between browser and server", "Increase storage space", "Create backups"],
+                  answer: "Encrypt communication between browser and server"
+                },
+                {
+                  q: "Which tool is commonly used for version control?", marks: 2,
+                  options: ["Docker", "IIS Logs", "Git", "Task Manager"],
+                  answer: "Git"
+                },
+                {
+                  q: "What does scalability mean in a web application?", marks: 2,
+                  options: ["Ability to create backups", "Ability to support more users when demand increases", "Ability to update passwords", "Ability to encrypt data"],
+                  answer: "Ability to support more users when demand increases"
+                }
+              ]
+            },
+            {
+              title: "B. True or False Questions (10 Marks)",
+              questions: [
+                { q: "A webpage is a collection of multiple websites.", marks: 2, answer: "False" },
+                { q: "Nginx is known for handling high-traffic websites efficiently.", marks: 2, answer: "True" },
+                { q: "A virtual host allows multiple websites to run on one server.", marks: 2, answer: "True" },
+                { q: "Weak passwords such as '123456' are recommended for security.", marks: 2, answer: "False" },
+                { q: "Documentation helps administrators manage and maintain web servers.", marks: 2, answer: "True" }
+              ]
+            },
+            {
+              title: "C. Fill in the Blanks (20 Marks)",
+              questions: [
+                { q: "A __________ is a collection of webpages connected under one domain name.", marks: 2, answer: "Website" },
+                { q: "The software developed by Microsoft for hosting websites is called __________.", marks: 2, answer: "IIS" },
+                { q: "The default website folder in IIS is commonly located in __________.", marks: 2, answer: "C:\\inetpub\\wwwroot" },
+                { q: "HTTP traffic uses Port __________.", marks: 2, answer: "80" },
+                { q: "HTTPS traffic uses Port __________.", marks: 2, answer: "443" },
+                { q: "A website that stores files in an actual physical directory is called a __________ host.", marks: 2, answer: "Real" },
+                { q: "SSL-secured websites normally begin with __________.", marks: 2, answer: "https://" },
+                { q: "Microsoft Defender is an example of __________ software.", marks: 2, answer: "Antimalware" },
+                { q: "__________ is a containerization tool used for deploying applications.", marks: 2, answer: "Docker" },
+                { q: "__________ Monitor is a tool used to observe server performance.", marks: 2, answer: "Performance" }
+              ]
+            }
+          ]
+        },
+        {
+          name: "PART II", marks: 30,
+          parts: [
+            {
+              title: "Open Questions (30 Marks)",
+              questions: [
+                {
+                  q: "Differentiate between a website and a webpage.", marks: 6,
+                  answer: "A website is a collection of webpages under one domain name. A webpage is a single page within that website. Example: Wikipedia is a website; one Wikipedia article is a webpage."
+                },
+                {
+                  q: "Explain any three web server software and their uses.", marks: 6,
+                  answer: "Apache HTTP Server – Open-source web server for PHP websites. IIS – Microsoft web server for Windows and ASP.NET applications. Nginx – Fast web server suitable for high-traffic websites. Apache Tomcat – Hosts Java web applications. (Any three)"
+                },
+                {
+                  q: "Describe the steps used to install IIS on Windows Server 2016.", marks: 6,
+                  answer: "1. Open Server Manager. 2. Click Add Roles and Features. 3. Select Web Server (IIS). 4. Click Next. 5. Click Install. 6. Wait for installation to complete."
+                },
+                {
+                  q: "Explain four methods used to improve web server security.", marks: 6,
+                  answer: "Use SSL certificates, install antimalware software, create strong passwords, regularly update software, and perform regular backups. (Any four methods)"
+                },
+                {
+                  q: "After deploying a web application, what activities should be performed during testing?", marks: 6,
+                  answer: "Open the application in a browser, check all links and webpages, verify database connectivity, monitor server performance, check security measures, and ensure the application can support users efficiently."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // ============================================================
+    //  HASH
+    // ============================================================
+    async function hashStr(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // ============================================================
+    //  LOGIN
+    // ============================================================
+    async function attemptLogin() {
+      if (loginAttempts >= MAX_ATTEMPTS) return;
+      ensureAudio(); // unlock audio on user gesture
+
+      const btn = document.getElementById('loginBtn');
+      const input = document.getElementById('passwordInput').value;
+      btn.disabled = true; btn.textContent = 'Verifying…';
+
+      const hashed = await hashStr(input);
+      const correctHash = await hashStr(atob(_AUTH.s));
+      await new Promise(r => setTimeout(r, 400));
+
+      if (hashed === correctHash) {
+        playBeep('login');
+        showToast('✅ Access granted. Welcome.', 'success');
+        setTimeout(() => {
+          document.getElementById('loginScreen').style.display = 'none';
+          document.getElementById('examContainer').style.display = 'block';
+          renderExam();
+          examActive = true;
+          startSessionTimer();
+        }, 400);
+      } else {
+        playBeep('error');
+        loginAttempts++;
+        updateAttemptDots();
+        const rem = MAX_ATTEMPTS - loginAttempts;
+        if (loginAttempts >= MAX_ATTEMPTS) {
+          startLockout();
+        } else {
+          document.getElementById('loginMsg').textContent = `Incorrect code. ${rem} attempt${rem !== 1 ? 's' : ''} remaining.`;
+          btn.disabled = false; btn.textContent = 'Access Exam';
+        }
+      }
+      document.getElementById('passwordInput').value = '';
+    }
+
+    function updateAttemptDots() {
+      for (let i = 1; i <= MAX_ATTEMPTS; i++) {
+        const dot = document.getElementById('d' + i);
+        if (dot) dot.classList.toggle('used', i <= loginAttempts);
+      }
+    }
+
+    function startLockout() {
+      document.getElementById('loginScreen').style.display = 'none';
+      const ls = document.getElementById('lockoutScreen');
+      ls.style.display = 'flex';
+      let remaining = LOCK_SECONDS;
+      const el = document.getElementById('lockCountdown');
+      lockoutTimer = setInterval(() => {
+        remaining--;
+        const m = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const s = (remaining % 60).toString().padStart(2, '0');
+        el.textContent = `${m}:${s}`;
+        if (remaining <= 0) {
+          clearInterval(lockoutTimer);
+          loginAttempts = 0; updateAttemptDots();
+          ls.style.display = 'none';
+          document.getElementById('loginScreen').style.display = 'flex';
+          document.getElementById('loginMsg').textContent = '';
+          document.getElementById('loginBtn').disabled = false;
+          document.getElementById('loginBtn').textContent = 'Access Exam';
+        }
+      }, 1000);
+    }
+
+    // ============================================================
+    //  SESSION
+    // ============================================================
+    function startSessionTimer() {
+      setTimeout(() => {
+        showToast('⏰ Session expired. Logging out.', 'error', 6000);
+        setTimeout(() => location.reload(), 6500);
+      }, SESSION_LIMIT);
+    }
+
+    // ============================================================
+    //  RENDER EXAM
+    // ============================================================
+    function countAllQuestions() {
+      return examData.sections.reduce((t, s) =>
+        t + s.parts.reduce((t2, p) => t2 + p.questions.length, 0), 0);
+    }
+
+    function renderExam() {
+      const base = examData.totalMarks;
+      document.getElementById('examTitle').textContent = examData.title;
+      document.getElementById('statMarks').textContent = base;
+      document.getElementById('statNet').textContent = base;
+      document.getElementById('statDeducted').textContent = 0;
+      document.getElementById('statQuestions').textContent = countAllQuestions();
+
+      const container = document.getElementById('examContent');
+      container.innerHTML = '';
+      let globalQ = 0;
+
+      examData.sections.forEach((section, si) => {
+        const secDiv = document.createElement('div');
+        secDiv.className = 'section-block';
+        secDiv.innerHTML = `
+        <div class="section-header">
+          <div class="section-tag">S${si + 1}</div>
+          <div class="section-name">${section.name} <span style="font-size:13px;color:var(--slate);font-weight:400;">(${section.marks} Marks)</span></div>
+          <div class="section-line"></div>
+        </div>`;
+
+        section.parts.forEach(part => {
+          const partDiv = document.createElement('div');
+          partDiv.style.marginBottom = '28px';
+          partDiv.innerHTML = `<div class="part-title">${part.title}</div>`;
+
+          part.questions.forEach((q) => {
+            globalQ++;
+            const opts = q.options
+              ? `<ul class="q-options">${q.options.map((o, oi) =>
+                `<li><span style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-right:8px;">${['A', 'B', 'C', 'D'][oi]}.</span>${o}</li>`
+              ).join('')}</ul>` : '';
+
+            const card = document.createElement('div');
+            card.className = 'q-card';
+            card.innerHTML = `
+            <div class="q-body">
+              <div class="q-num">Q${globalQ}</div>
+              <div class="q-content">
+                <div class="q-text">${q.q}</div>
+                <div class="q-marks">${q.marks} mark${q.marks !== 1 ? 's' : ''}</div>
+                ${opts}
+              </div>
+            </div>
+            <div class="answer-box">
+              <div class="answer-label">✓ Model Answer</div>
+              <div class="answer-text">${q.answer}</div>
+            </div>`;
+            partDiv.appendChild(card);
+          });
+
+          secDiv.appendChild(partDiv);
+        });
+        container.appendChild(secDiv);
+      });
+    }
+
+    // ============================================================
+    //  ANSWERS TOGGLE
+    // ============================================================
+    function toggleAnswers() {
+      if (!answersUnlocked) {
+        showToast('🔑 Enter the teacher password to unlock answers.', 'error');
+        document.getElementById('teacherPass').focus();
+        return;
+      }
+      answersVisible = !answersVisible;
+      document.querySelectorAll('.answer-box').forEach(b => b.classList.toggle('visible', answersVisible));
+      const btn = document.getElementById('toggleBtn');
+      btn.textContent = answersVisible ? '🙈 Hide Answers' : '👁 Show Answers';
+      btn.classList.toggle('active', answersVisible);
+      const stat = document.getElementById('statAnswers');
+      const cnt = document.getElementById('statAnswerCount');
+      if (answersVisible) { stat.style.display = 'flex'; cnt.textContent = countAllQuestions(); }
+      else stat.style.display = 'none';
+    }
+
+    async function unlockAnswers() {
+      const btn = document.getElementById('unlockBtn');
+      if (answersUnlocked) return;
+      const input = document.getElementById('teacherPass').value;
+      if (!input) { showToast('Enter the teacher password first.', 'error'); return; }
+      btn.textContent = '…'; btn.disabled = true;
+
+      const hashed = await hashStr(input);
+      const correct = await hashStr(atob(_AUTH.t));
+      await new Promise(r => setTimeout(r, 350));
+
+      if (hashed === correct) {
+        answersUnlocked = true;
+        btn.textContent = '✓ Unlocked';
+        btn.classList.add('unlocked');
+        document.getElementById('teacherPass').value = '';
+        document.getElementById('teacherPass').disabled = true;
+        showToast('✅ Answers unlocked. Teacher mode active.', 'success');
+        playBeep('login');
+        toggleAnswers();
+      } else {
+        btn.disabled = false; btn.textContent = 'Unlock';
+        showToast('❌ Incorrect teacher password.', 'error');
+        playBeep('error');
+        document.getElementById('teacherPass').value = '';
+      }
+    }
+
+    // ============================================================
+    //  FULLSCREEN
+    // ============================================================
+    function enterFullscreen() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      showToast('⛶ Entered exam mode. Press Esc to exit.', 'info', 3000);
+    }
+
+    // ============================================================
+    //  SECURITY EVENTS
+    // ============================================================
+
+    // Tab switch / visibility change
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && examActive) {
+        issueWarning('Tab switched or window minimised');
+        document.querySelectorAll('.answer-text').forEach(el => el.style.filter = 'blur(8px)');
+      } else if (!document.hidden && examActive) {
+        if (answersVisible && answersUnlocked) {
+          document.querySelectorAll('.answer-text').forEach(el => el.style.filter = '');
+        }
+      }
+    });
+
+    // Window blur (switching apps)
+    let blurWarningThrottle = false;
+    window.addEventListener('blur', () => {
+      if (!examActive || blurWarningThrottle) return;
+      blurWarningThrottle = true;
+      issueWarning('Window lost focus / app switch detected');
+      setTimeout(() => { blurWarningThrottle = false; }, 5000);
+    });
+
+    // Page exit warning
+    window.addEventListener('beforeunload', (e) => {
+      if (!examActive) return;
+      const msg = 'Leaving will reset your exam session.';
+      e.preventDefault(); e.returnValue = msg; return msg;
+    });
+
+    // Keyboard lockdown
+    document.addEventListener('keydown', (e) => {
+      // F5 / Ctrl+R – NO REFRESH
+      if (e.key === 'F5' || (e.ctrlKey && e.key.toLowerCase() === 'r')) {
+        e.preventDefault();
+        if (examActive) issueWarning('Refresh attempt (F5 / Ctrl+R)');
+        else showToast('⛔ Refresh is disabled.', 'error');
+        return;
+      }
+      // DevTools
+      if ((e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase())) || e.key === 'F12') {
+        e.preventDefault();
+        if (examActive) issueWarning('Developer tools open attempt');
+        return;
+      }
+      // View Source
+      if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault();
+        if (examActive) issueWarning('View Source attempt (Ctrl+U)');
+        return;
+      }
+      // Save page
+      if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        if (examActive) issueWarning('Page save attempt (Ctrl+S)');
+        return;
+      }
+      // Copy
+      if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        if (examActive) issueWarning('Copy attempt (Ctrl+C)');
+        return;
+      }
+      // Print
+      if (e.ctrlKey && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        if (examActive) issueWarning('Print attempt (Ctrl+P)');
+        return;
+      }
+      // Screenshot (PrintScreen)
+      if (e.key === 'PrintScreen') {
+        e.preventDefault();
+        if (examActive) issueWarning('Screenshot attempt (PrintScreen)');
+        return;
+      }
+    });
+
+    // Right-click
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      if (examActive) issueWarning('Right-click / context menu attempt');
+    });
+
+    // Copy via clipboard
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+      if (examActive) issueWarning('Text copy attempt detected');
+    });
+
+    // DevTools width detection
+    (function () {
+      let devOpen = false;
+      setInterval(() => {
+        const threshold = 160;
+        const w = window.outerWidth - window.innerWidth;
+        const h = window.outerHeight - window.innerHeight;
+        if ((w > threshold || h > threshold) && !devOpen) {
+          devOpen = true;
+          if (examActive) issueWarning('DevTools panel opened');
+          if (answersVisible && answersUnlocked) {
+            document.querySelectorAll('.answer-text').forEach(el => el.style.filter = 'blur(8px)');
+          }
+        } else if (w <= threshold && h <= threshold && devOpen) {
+          devOpen = false;
+          if (answersVisible && answersUnlocked) {
+            document.querySelectorAll('.answer-text').forEach(el => el.style.filter = '');
+          }
+        }
+      }, 1000);
+    })();
+
+    // ============================================================
+    //  SCROLL PROGRESS
+    // ============================================================
+    window.addEventListener('scroll', () => {
+      const el = document.getElementById('scroll-progress');
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      el.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+    });
+
+    // ============================================================
+    //  TOAST
+    // ============================================================
+    function showToast(msg, type = 'info', duration = 3500) {
+      const wrap = document.getElementById('toastWrap');
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.textContent = msg;
+      wrap.appendChild(t);
+      setTimeout(() => {
+        t.classList.add('hiding');
+        setTimeout(() => t.remove(), 300);
+      }, duration);
+    }
+
+    // ============================================================
+    //  ENTER KEY on login
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const pi = document.getElementById('passwordInput');
+      if (pi) pi.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
+    });
+  </script>
+</body>
+
+</html>
