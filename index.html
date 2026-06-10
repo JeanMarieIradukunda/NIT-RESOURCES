@@ -59,6 +59,27 @@
             z-index: 1020;
         }
 
+        /* Hide scrollbars globally across the dashboard while retaining functionality */
+        html,
+        body,
+        .dashboard-container,
+        #grid,
+        .modal-body {
+            -ms-overflow-style: none;
+            /* Internet Explorer and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        .dashboard-container::-webkit-scrollbar,
+        #grid::-webkit-scrollbar,
+        .modal-body::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, and Opera */
+        }
+
         .brand {
             font-size: 1.2rem;
             text-transform: uppercase;
