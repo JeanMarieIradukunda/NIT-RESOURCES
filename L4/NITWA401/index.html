@@ -1,217 +1,659 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>NITWA401 – Windows Server Administration</title>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NITWA401 – Windows Server Administration</title>
 
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-            rel="stylesheet">
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet" />
 
-        <style>
+    <style>
+        /* ── TOKENS ────────────────────────────────────────────── */
+        :root {
+            --bg: #0b0f1a;
+            --surface: #111827;
+            --surface2: #1a2235;
+            --border: #1f2d45;
+            --accent: #3b82f6;
+            --accent2: #60a5fa;
+            --glow: rgba(59, 130, 246, .18);
+            --text: #e5eaf5;
+            --muted: #6b7a99;
+            --folder: #facc15;
+            --html: #fb923c;
+            --red: #f87171;
+            --green: #34d399;
+        }
+
+        /* ── BASE ───────────────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #f3f6fb;
-            padding: 40px 20px;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        /* HEADER */
-        .dashboard-header {
+        /* ── NOISE + GRID TEXTURE ───────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(59, 130, 246, .04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, .04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HERO HEADER ────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 60px 24px 40px;
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .dashboard-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 10px;
-        }
-
-        /* BACK BUTTON */
-        .back-btn {
+        .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            text-decoration: none;
-            color: #1e40af;
+            background: rgba(59, 130, 246, .12);
+            border: 1px solid rgba(59, 130, 246, .3);
+            border-radius: 100px;
+            padding: 5px 14px;
+            font-size: .75rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--accent2);
+            margin-bottom: 20px;
         }
 
-        .back-btn i {
-            font-size: 1.4rem;
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -.02em;
+            line-height: 1.15;
+            margin-bottom: 12px;
         }
 
-        /* SEARCH BAR */
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: .95rem;
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        /* ── BACK BUTTON ────────────────────────────────────────── */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 500;
+            padding: 7px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            transition: all .2s;
+            margin-bottom: 32px;
+        }
+
+        .back-btn:hover {
+            color: var(--text);
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, .08);
+        }
+
+        /* ── SEARCH ─────────────────────────────────────────────── */
+        .search-wrap {
+            position: relative;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
         #searchInput {
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto 30px auto;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 10px;
-            border: 1px solid #d1d5db;
-            font-size: 1rem;
+            padding: 13px 16px 13px 44px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: .95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
         }
 
-        /* CENTRAL CARD */
-        .list-card {
-            max-width: 700px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        #searchInput::placeholder {
+            color: var(--muted);
         }
 
-        /* BULLET LIST AS GRID */
-        .list-card ul {
-            list-style: none;
-            padding-left: 0;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px 20px;
-            /* row-gap column-gap */
+        #searchInput:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--glow);
         }
 
-        .list-card li {
-            padding: 12px 10px;
-            border-bottom: 1px solid #e5e7eb;
+        /* ── STATS BAR ──────────────────────────────────────────── */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding: 20px 0 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-pill {
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: background 0.2s;
+            gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: .82rem;
+            color: var(--muted);
+            font-weight: 500;
         }
 
-        .list-card li:hover {
-            background: #f3f4f6;
-            border-radius: 8px;
+        .stat-pill i {
+            font-size: .9rem;
         }
 
-        .list-card li i {
-            font-size: 24px;
+        .stat-pill .num {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        /* ── GRID ───────────────────────────────────────────────── */
+        .file-grid {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 14px;
+        }
+
+        /* ── CARD ───────────────────────────────────────────────── */
+        .file-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: var(--text);
+            cursor: pointer;
+            transition: transform .18s, border-color .18s, box-shadow .18s, background .18s;
+            animation: fadeUp .4s ease both;
+        }
+
+        .file-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 28px rgba(59, 130, 246, .18), 0 0 0 1px rgba(59, 130, 246, .15);
+            background: var(--surface2);
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .file-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* stagger delay for cards */
+        .file-card:nth-child(1) {
+            animation-delay: .04s;
+        }
+
+        .file-card:nth-child(2) {
+            animation-delay: .08s;
+        }
+
+        .file-card:nth-child(3) {
+            animation-delay: .12s;
+        }
+
+        .file-card:nth-child(4) {
+            animation-delay: .16s;
+        }
+
+        .file-card:nth-child(5) {
+            animation-delay: .20s;
+        }
+
+        .file-card:nth-child(6) {
+            animation-delay: .24s;
+        }
+
+        .file-card:nth-child(7) {
+            animation-delay: .28s;
+        }
+
+        .file-card:nth-child(8) {
+            animation-delay: .32s;
+        }
+
+        .file-card:nth-child(9) {
+            animation-delay: .36s;
+        }
+
+        .file-card:nth-child(10) {
+            animation-delay: .40s;
+        }
+
+        .file-card:nth-child(11) {
+            animation-delay: .44s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── ICON BOX ───────────────────────────────────────────── */
+        .icon-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
             flex-shrink: 0;
         }
 
-        .list-card a {
-            color: #111827;
-            text-decoration: none;
-            font-weight: 600;
+        .icon-box.folder {
+            background: rgba(250, 204, 21, .1);
+            color: var(--folder);
+        }
+
+        .icon-box.html {
+            background: rgba(251, 146, 60, .1);
+            color: var(--html);
+        }
+
+        .icon-box.pdf {
+            background: rgba(248, 113, 113, .1);
+            color: var(--red);
+        }
+
+        .icon-box.txt {
+            background: rgba(52, 211, 153, .1);
+            color: var(--green);
+        }
+
+        /* ── CARD TEXT ──────────────────────────────────────────── */
+        .card-text {
             flex: 1;
+            min-width: 0;
         }
 
-        .list-card a:hover {
-            text-decoration: underline;
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: .92rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 3px;
         }
 
-        /* ICON COLORS */
-        .folder i {
-            color: #919e08;
+        .card-sub {
+            font-size: .74rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-weight: 500;
         }
 
-        .pdf i {
-            color: #dc2626;
+        .card-arrow {
+            color: var(--muted);
+            font-size: 1rem;
+            transition: transform .2s, color .2s;
+            flex-shrink: 0;
         }
 
-        .html i {
-            color: #ea580c;
+        .file-card:hover .card-arrow {
+            transform: translateX(4px);
+            color: var(--accent2);
         }
 
-        .txt i {
-            color: #16a34a;
+        /* ── EMPTY STATE ────────────────────────────────────────── */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+            display: none;
         }
 
-        /* RESPONSIVE */
-        @media(max-width:576px) {
-            .list-card ul {
+        .empty-state i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: .4;
+        }
+
+        /* ── SECTION LABEL ──────────────────────────────────────── */
+        .section-label {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-top: 8px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── FOOTER ─────────────────────────────────────────────── */
+        .page-footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+            font-size: .78rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── GLOW ACCENT TOP ────────────────────────────────────── */
+        .glow-top {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, .18), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── RESPONSIVE ─────────────────────────────────────────── */
+        @media (max-width: 576px) {
+            .file-grid {
                 grid-template-columns: 1fr;
-                /* single column on small screens */
             }
 
-            .list-card li {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-                border-bottom: 1px solid #e5e7eb;
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .file-card {
+                animation: none;
+                transition: none;
             }
         }
     </style>
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div class="dashboard-header">
-            <!-- BACK BUTTON -->
-            <a href="../" class="back-btn"><i
-                    class="bi bi-arrow-left-circle-fill"></i> Parent
-                Directory</a>
+    <div class="glow-top"></div>
 
-            <!-- TOPIC TITLE -->
-            <h1>NITWA401 – Windows Server Administration</h1>
+    <!-- ── HERO ───────────────────────────────────────────────── -->
+    <header class="hero">
+        <a href="../" class="back-btn">
+            <i class="bi bi-arrow-left-short"></i> Parent Directory
+        </a>
 
-            <!-- SEARCH BAR -->
-            <input type="text" id="searchInput"
-                placeholder="Search files or folders...">
+        <div class="hero-badge">
+            <i class="bi bi-hdd-network-fill"></i> NITWA401
         </div>
 
-        <div class="list-card">
-            <ul id="fileList">
-                <!-- Folders -->
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="INSTALLATION STEPS/">INSTALLATION STEPS</a>
-                </li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-2-ADDS/">ADDS</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-3-MAIL-SERVER-EXCHANGE/">L-O-2-MAIL-SERVER-EXCHANGE</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-4-DHCP-SERVER-DEPLOYMENT/">L-O-3-DHCP-SERVER</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="LO-5-DNS-SERVER-DEPLOYMENT/">LO-4-DNS-SERVER</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-6- DEPLOY WEB SERVICES/">L-O-5 DEPLOY WEB SERVICES</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-7/">L-O-6 DEPLOY FTP SERVICES</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="L-O-8/">L-O-8</a></li>
-                <li class="folder"><i class="bi bi-folder-fill"></i><a
-                        href="SERVER ADMINISTRATION/">SERVER
-                        ADMINISTRATION</a></li>
-                <li class="folder">
-                    <i class="bi bi-file-earmark-text-fill"></i>
-                    <a href="DNS-GROUP-DISCUSSION.HTML">DNS</a>
-                </li>
-                <li class="folder">
-                    <i class="bi bi-file-earmark-text-fill"></i>
-                    <a href="Modal-questions.html">Modal-Questions</a>
-                </li>
-            </ul>
+        <h1>Windows Server<br><span>Administration</span></h1>
+        <p>Browse course materials, lecture notes, and lab guides below.</p>
+
+        <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" placeholder="Search folders &amp; files…" autocomplete="off"
+                spellcheck="false" />
+        </div>
+    </header>
+
+    <!-- ── STATS BAR ──────────────────────────────────────────── -->
+    <div class="stats-bar">
+        <div class="stat-pill"><i class="bi bi-folder-fill" style="color:var(--folder)"></i><span class="num"
+                id="folderCount">9</span> Folders</div>
+        <div class="stat-pill"><i class="bi bi-file-earmark-code-fill" style="color:var(--html)"></i><span class="num"
+                id="fileCount">2</span> Files</div>
+        <div class="stat-pill"><i class="bi bi-grid-3x3-gap-fill" style="color:var(--accent2)"></i><span class="num"
+                id="visibleCount">11</span> Total</div>
+    </div>
+
+    <!-- ── FILE GRID ──────────────────────────────────────────── -->
+    <main class="file-grid" id="fileGrid" role="list">
+
+        <div class="section-label" data-label="folders"><i class="bi bi-folder2-open"></i> Folders</div>
+
+        <a class="file-card" href="INSTALLATION STEPS/" role="listitem" data-name="installation steps">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">Installation Steps</div>
+                <div class="card-sub">Folder</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="L-O-2-ADDS/" role="listitem" data-name="adds active directory domain services">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">ADDS</div>
+                <div class="card-sub">Active Directory Domain Services</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="L-O-3-MAIL-SERVER-EXCHANGE/" role="listitem" data-name="mail server exchange">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">Mail Server – Exchange</div>
+                <div class="card-sub">Folder</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="L-O-4-DHCP-SERVER-DEPLOYMENT/" role="listitem" data-name="dhcp server deployment">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">DHCP Server</div>
+                <div class="card-sub">Server Deployment</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="LO-5-DNS-SERVER-DEPLOYMENT/" role="listitem" data-name="dns server deployment">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">DNS Server</div>
+                <div class="card-sub">Server Deployment</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="L-O-6- DEPLOY WEB SERVICES/" role="listitem" data-name="deploy web services iis">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">Web Services</div>
+                <div class="card-sub">IIS Deployment</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="LO6/" role="listitem" data-name="ftp services deployment">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">FTP Services</div>
+                <div class="card-sub">FTP Deployment</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="L-O-7/" role="listitem" data-name="l-o-8 module 8">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">L-O-7</div>
+                <div class="card-sub">Folder</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="SERVER ADMINISTRATION/" role="listitem" data-name="server administration management">
+            <div class="icon-box folder"><i class="bi bi-folder-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">Server Administration</div>
+                <div class="card-sub">Folder</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <div class="section-label" data-label="files"><i class="bi bi-file-earmark-code"></i> Files</div>
+
+        <a class="file-card" href="DNS-GROUP-DISCUSSION.HTML" role="listitem" data-name="dns group discussion html">
+            <div class="icon-box html"><i class="bi bi-file-earmark-code-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">DNS Group Discussion</div>
+                <div class="card-sub">HTML Document</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <a class="file-card" href="Modal-questions.html" role="listitem" data-name="modal questions html practice">
+            <div class="icon-box html"><i class="bi bi-file-earmark-code-fill"></i></div>
+            <div class="card-text">
+                <div class="card-title">Modal Questions</div>
+                <div class="card-sub">HTML Document</div>
+            </div>
+            <i class="bi bi-chevron-right card-arrow"></i>
+        </a>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+            <i class="bi bi-search"></i>
+            <strong>No results found</strong>
+            <p class="mt-1 mb-0" style="font-size:.85rem">Try a different search term.</p>
         </div>
 
-        <script>
-        // SEARCH FILTER
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('keyup', function () {
-            const filter = searchInput.value.toLowerCase();
-            const items = document.querySelectorAll('#fileList li');
+    </main>
 
-            items.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                if (text.includes(filter)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
+    <!-- ── FOOTER ─────────────────────────────────────────────── -->
+    <footer class="page-footer">
+        NITWA401 &mdash; Windows Server Administration &nbsp;|&nbsp; Course Materials
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const input = document.getElementById('searchInput');
+        const grid = document.getElementById('fileGrid');
+        const emptyState = document.getElementById('emptyState');
+        const visibleEl = document.getElementById('visibleCount');
+
+        const TOTAL_FOLDERS = 9;
+        const TOTAL_FILES = 2;
+
+        function filterCards(query) {
+            const q = query.trim().toLowerCase();
+            const cards = grid.querySelectorAll('.file-card');
+            const labels = grid.querySelectorAll('.section-label');
+            let visible = 0;
+
+            cards.forEach(card => {
+                const name = card.dataset.name || '';
+                const show = !q || name.includes(q);
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
             });
+
+            // hide section labels if no query (they stay); hide if no cards match
+            if (q) {
+                labels.forEach(l => l.style.display = 'none');
+            } else {
+                labels.forEach(l => l.style.display = '');
+            }
+
+            emptyState.style.display = visible === 0 ? 'block' : 'none';
+            visibleEl.textContent = q ? visible : (TOTAL_FOLDERS + TOTAL_FILES);
+        }
+
+        input.addEventListener('input', () => filterCards(input.value));
+
+        // Keyboard: Escape clears search
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && document.activeElement !== input) return;
+            if (e.key === 'Escape') { input.value = ''; filterCards(''); input.blur(); }
+            if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
         });
     </script>
-
-    </body>
+</body>
 
 </html>
