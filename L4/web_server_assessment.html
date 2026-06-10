@@ -1032,8 +1032,8 @@
   <!-- ===== TERMINATION SCREEN ===== -->
   <div id="terminationScreen" style="display:none;">
     <div class="term-icon">🚫</div>
-    <h1>Exam Terminated</h1>
-    <p>You have accumulated too many violations. Your exam session has been ended by the security system. Please contact
+    <h1>Assessment Terminated</h1>
+    <p>You have accumulated too many violations. Your assessment session has been ended by the security system. Please contact
       your invigilator.</p>
     <div class="term-stats" id="termStats"></div>
   </div>
@@ -1043,7 +1043,7 @@
     <div class="login-wrap">
       <div class="login-logo">
         <div class="logo-icon">📋</div>
-        <h1>Exam Portal</h1>
+        <h1>Assessment Portal</h1>
         <p>Secure Online Assessment Viewer</p>
       </div>
       <div class="login-card">
@@ -1083,7 +1083,7 @@
         <div class="lo-badge">Learning Outcome 5 · Deploy Web Services</div>
       </div>
       <div class="topbar-actions">
-        <button class="topbar-btn btn-fullscreen" onclick="enterFullscreen()">⛶ Exam Mode</button>
+        <button class="topbar-btn btn-fullscreen" onclick="enterFullscreen()">⛶ Assessment Mode</button>
 
         <!-- WARNINGS CHIP -->
         <div class="warnings-chip" id="warningsChip" title="Warnings & mark deductions">
@@ -1131,7 +1131,7 @@
       <div class="info-banner">
         <span class="info-icon">ℹ️</span>
         <span><strong>Instructions:</strong> Read all questions carefully. Write your answers on paper. This is a
-          view-only exam — no input is collected.</span>
+          view-only assessment — no input is collected.</span>
       </div>
       <div class="warn-rules-banner">
         <span class="info-icon">⚠️</span>
@@ -1151,9 +1151,7 @@
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script>
-    // ============================================================
-    //  CONFIG
-    // ============================================================
+
     const MAX_ATTEMPTS = 5;
     const LOCK_SECONDS = 300;
     const SESSION_LIMIT = 90 * 60 * 1000;
