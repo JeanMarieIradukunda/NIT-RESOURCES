@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="favicon.png" />
+  <title>Secure Assessment Portal — Web &amp; FTP Server Deployment</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS  —  Secure Terminal Palette
+    ════════════════════════════════════════════ */
+    :root {
+      --ink:       #0b0f1a;
+      --ink-mid:   #121828;
+      --ink-card:  #19213a;
+      --ink-raised:#1f2a45;
+      --border:    #2a3760;
+      --border-hi: #3d5296;
+      --muted:     #6a7fa8;
+      --body:      #c8d3e8;
+      --bright:    #eef2ff;
+
+      --blue:      #4a7cf6;
+      --blue-dim:  #1e4fc9;
+      --cyan:      #22d3ee;
+      --green:     #0fd98a;
+      --amber:     #f6a94a;
+      --red:       #f24b4b;
+      --violet:    #9f7aea;
+
+      --mono:  'IBM Plex Mono', monospace;
+      --sans:  'IBM Plex Sans', sans-serif;
+      --serif: 'IBM Plex Serif', serif;
+
+      --radius-sm: 6px;
+      --radius:    10px;
+      --radius-lg: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--ink);
+      color: var(--body);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ── WARNING OVERLAY ── */
+    #warningOverlay {
+      display: none; position: fixed; inset: 0; z-index: 9998;
+      background: rgba(242,75,75,0.1); border: 3px solid var(--red);
+      pointer-events: none; animation: ovFlash 0.45s ease;
+    }
+    @keyframes ovFlash { 0%{opacity:0} 35%{opacity:1} 65%{opacity:1} 100%{opacity:0} }
+
+    /* ── WARNING BANNER ── */
+    #warningBanner {
+      display: none; position: fixed; top: 72px; left: 50%;
+      transform: translateX(-50%); z-index: 9997;
+      background: rgba(242,75,75,0.96); color: #fff;
+      padding: 10px 28px; border-radius: var(--radius);
+      font-size: 13px; font-weight: 700; text-align: center;
+      box-shadow: 0 6px 28px rgba(242,75,75,0.45);
+      animation: bnrSlide 0.3s ease;
+    }
+    @keyframes bnrSlide { from{opacity:0;transform:translateX(-50%) translateY(-12px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+    /* ── DEDUCT POPUP ── */
+    #deductPopup {
+      display: none; position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%,-50%); z-index: 10000;
+      background: var(--ink-card); border: 2px solid var(--red);
+      border-radius: var(--radius-lg); padding: 32px 40px;
+      text-align: center; min-width: 320px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+      animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn { from{opacity:0;transform:translate(-50%,-50%) scale(0.8)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+    #deductPopup .di { font-size: 40px; margin-bottom: 12px; }
+    #deductPopup h3 { font-size: 18px; font-weight: 700; color: var(--red); margin-bottom: 8px; }
+    #deductPopup p  { font-size: 13px; color: var(--body); line-height: 1.55; margin-bottom: 12px; }
+    #deductPopup .ds { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--red); margin: 10px 0; }
+    #deductPopup .dt { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    #deductPopup button {
+      margin-top: 18px; background: var(--red); color: #fff;
+      border: none; border-radius: var(--radius-sm); padding: 10px 28px;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s;
+    }
+    #deductPopup button:hover { background: #c0392b; }
+
+    /* ── TERMINATION SCREEN ── */
+    #terminationScreen {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      background: var(--ink); align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 40px;
+    }
+    #terminationScreen .ti { font-size: 72px; margin-bottom: 24px; }
+    #terminationScreen h1 { font-family: var(--serif); font-size: 30px; color: var(--red); margin-bottom: 14px; }
+    #terminationScreen p  { font-size: 15px; color: var(--body); max-width: 440px; line-height: 1.65; }
+    .term-stats { margin-top: 32px; background: var(--ink-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 40px; display: flex; gap: 40px; }
+    .term-stat .val { font-family: var(--mono); font-size: 32px; font-weight: 700; color: var(--red); }
+    .term-stat .lbl { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ════════════════════════════════
+       LOGIN
+    ════════════════════════════════ */
+    #loginScreen {
+      min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; padding: 24px;
+    }
+    .lw { width: 100%; max-width: 440px; animation: fadeUp 0.45s ease both; }
+
+    .login-header { text-align: center; margin-bottom: 32px; }
+    .login-header .badge-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 62px; height: 62px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: 18px; font-size: 28px; margin-bottom: 16px;
+    }
+    .login-header h1 { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--bright); }
+    .login-header p  { font-size: 13px; color: var(--muted); margin-top: 5px; }
+
+    .login-card {
+      background: var(--ink-card); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px;
+    }
+
+    /* READ-ONLY POLICY BLOCK */
+    .policy-block {
+      background: rgba(242,75,75,0.07); border: 1px solid rgba(242,75,75,0.35);
+      border-radius: var(--radius); padding: 14px 16px; margin-bottom: 24px;
+    }
+    .policy-block .pb-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .policy-block ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .policy-block ul li { font-size: 12px; color: var(--body); line-height: 1.5; padding-left: 16px; position: relative; }
+    .policy-block ul li::before { content: "›"; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+    .lc-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block;
+    }
+    .lc-input {
+      width: 100%; background: var(--ink-mid); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 13px 16px;
+      font-size: 15px; color: var(--bright); font-family: var(--sans);
+      outline: none; transition: border-color 0.2s;
+    }
+    .lc-input:focus { border-color: var(--blue); }
+
+    .attempt-row { display: flex; gap: 7px; margin-top: 12px; margin-bottom: 22px; }
+    .adot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); transition: background 0.3s; }
+    .adot.used { background: var(--red); }
+
+    .btn-enter {
+      width: 100%; background: var(--blue); color: #fff; border: none;
+      border-radius: var(--radius); padding: 14px;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: background 0.2s, transform 0.1s; font-family: var(--sans);
+    }
+    .btn-enter:hover { background: var(--blue-dim); }
+    .btn-enter:active { transform: scale(0.98); }
+    .btn-enter:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .login-err { font-size: 13px; color: var(--red); text-align: center; margin-top: 14px; min-height: 18px; }
+    .login-foot { text-align: center; font-size: 11px; color: var(--muted); margin-top: 20px; letter-spacing: 0.03em; }
+
+    /* ── LOCKOUT ── */
+    #lockoutScreen {
+      display: none; min-height: 100vh; align-items: center; justify-content: center;
+    }
+    .lockout-box {
+      text-align: center; max-width: 360px; padding: 44px 36px;
+      background: var(--ink-card); border: 1px solid var(--red); border-radius: var(--radius-lg);
+      animation: fadeUp 0.4s ease both;
+    }
+    .lockout-box .li { font-size: 44px; margin-bottom: 18px; }
+    .lockout-box h2 { font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--bright); }
+    .lockout-box p  { font-size: 14px; color: var(--muted); }
+    #lockCountdown { font-family: var(--mono); font-size: 36px; color: var(--red); margin: 22px 0; }
+
+    /* ════════════════════════════════
+       EXAM SHELL
+    ════════════════════════════════ */
+    #examContainer { display: none; min-height: 100vh; }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,15,26,0.97); backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px; height: 66px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .topbar-brand { flex: 1; min-width: 0; }
+    .topbar-brand h2 {
+      font-family: var(--serif); font-size: 14px; font-weight: 600;
+      color: var(--bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .topbar-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+    .badge-sm {
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border-radius: 5px; padding: 2px 8px;
+    }
+    .badge-blue  { background: rgba(74,124,246,0.15); color: var(--blue);  border: 1px solid rgba(74,124,246,0.3); }
+    .badge-green { background: rgba(15,217,138,0.12); color: var(--green); border: 1px solid rgba(15,217,138,0.3); }
+    .badge-red   { background: rgba(242,75,75,0.12);  color: var(--red);   border: 1px solid rgba(242,75,75,0.3);  }
+    .badge-amber { background: rgba(246,169,74,0.12); color: var(--amber); border: 1px solid rgba(246,169,74,0.3); }
+
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+    .tb-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 13px; border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+      font-family: var(--sans); white-space: nowrap; transition: all 0.2s;
+    }
+    .tb-btn:hover  { transform: translateY(-1px); }
+    .tb-btn:active { transform: scale(0.97); }
+    .btn-fs   { background: rgba(15,217,138,0.12); color: var(--green); border: 1px solid rgba(15,217,138,0.3); }
+    .btn-fs:hover { background: rgba(15,217,138,0.22); }
+    .btn-tog  { background: rgba(246,169,74,0.12); color: var(--amber); border: 1px solid rgba(246,169,74,0.3); }
+    .btn-tog:hover { background: rgba(246,169,74,0.22); }
+    .btn-tog.active { background: var(--amber); color: #000; border-color: var(--amber); }
+
+    .warn-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(242,75,75,0.1); color: var(--red);
+      border: 1px solid rgba(242,75,75,0.3);
+      border-radius: var(--radius-sm); padding: 6px 12px;
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      transition: background 0.3s;
+    }
+    .warn-chip.pulse { animation: cpulse 0.6s ease; }
+    @keyframes cpulse { 0%,100%{background:rgba(242,75,75,0.1)} 50%{background:rgba(242,75,75,0.32)} }
+
+    .teacher-panel {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--ink-raised); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 6px 10px;
+    }
+    .teacher-panel input {
+      background: transparent; border: none; color: var(--bright);
+      font-size: 13px; font-family: var(--sans); width: 140px; outline: none;
+    }
+    .teacher-panel input::placeholder { color: var(--muted); }
+    .btn-unlock {
+      background: var(--red); color: #fff; border: none;
+      border-radius: var(--radius-sm); padding: 6px 13px;
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-unlock:hover { background: #c0392b; }
+    .btn-unlock.unlocked { background: var(--green); color: #000; cursor: default; }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--ink-mid); border-bottom: 1px solid var(--border);
+      padding: 10px 28px; display: flex; align-items: center;
+      gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--muted);
+    }
+    .si { display: flex; align-items: center; gap: 7px; }
+    .si strong { color: var(--bright); font-family: var(--mono); font-size: 13px; }
+    .si strong.ded { color: var(--red); }
+    .sdiv { width: 1px; height: 16px; background: var(--border); }
+
+    /* READ-ONLY BANNER */
+    .ro-banner {
+      background: linear-gradient(90deg, rgba(74,124,246,0.12), rgba(159,122,234,0.10));
+      border-bottom: 1px solid var(--border-hi);
+      padding: 11px 28px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px; color: var(--body);
+    }
+    .ro-banner .ro-icon { font-size: 15px; flex-shrink: 0; }
+    .ro-banner strong { color: var(--bright); }
+
+    /* VIOLATION LOG */
+    #violationLog {
+      display: none; background: rgba(242,75,75,0.05);
+      border-bottom: 1px solid rgba(242,75,75,0.2);
+      padding: 10px 28px; font-size: 11px; color: var(--muted);
+    }
+    #violationLog .vl-label { color: var(--red); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.07em; }
+    #violationLog ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+    #violationLog ul li {
+      background: rgba(242,75,75,0.1); border: 1px solid rgba(242,75,75,0.25);
+      border-radius: var(--radius-sm); padding: 2px 9px;
+      font-family: var(--mono); font-size: 10px; color: var(--body);
+    }
+
+    /* ════════════════════════════════
+       EXAM BODY
+    ════════════════════════════════ */
+    .exam-body { padding: 32px 28px; max-width: 920px; margin: 0 auto; }
+
+    /* EXAM HEADER CARD */
+    .exam-header-card {
+      background: var(--ink-card); border: 1px solid var(--border-hi);
+      border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 28px;
+      position: relative; overflow: hidden;
+    }
+    .exam-header-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan), var(--violet));
+    }
+    .ehc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .ehc-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--bright); line-height: 1.3; }
+    .ehc-sub   { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .ehc-marks-badge {
+      font-family: var(--mono); font-size: 28px; font-weight: 700;
+      color: var(--cyan); white-space: nowrap;
+      background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.25);
+      border-radius: var(--radius); padding: 8px 18px; text-align: center;
+    }
+    .ehc-marks-badge span { display: block; font-size: 10px; color: var(--muted); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+    .instructions-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;
+    }
+    @media(max-width:640px) { .instructions-grid { grid-template-columns: 1fr; } }
+    .ig-block {
+      background: var(--ink-raised); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px;
+    }
+    .ig-block .igt { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .ig-block ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .ig-block ul li { font-size: 12px; color: var(--body); padding-left: 16px; position: relative; line-height: 1.5; }
+    .ig-block ul li::before { content: "▸"; position: absolute; left: 0; font-size: 10px; }
+    .igt-blue   { color: var(--blue); }
+    .igt-red    { color: var(--red); }
+    .igt-green  { color: var(--green); }
+    .igt-amber  { color: var(--amber); }
+    li.rule::before { color: var(--amber); }
+
+    /* INTEGRITY ALERT */
+    .integrity-alert {
+      background: rgba(242,75,75,0.07); border: 1px solid rgba(242,75,75,0.35);
+      border-radius: var(--radius); padding: 14px 18px; margin-top: 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .integrity-alert .ia-icon { font-size: 20px; flex-shrink: 0; }
+    .integrity-alert p { font-size: 12px; color: var(--body); line-height: 1.6; }
+    .integrity-alert p strong { color: var(--red); }
+
+    /* SECTION HEADER */
+    .section-block { margin-bottom: 44px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .section-tag {
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; padding: 5px 12px; border-radius: var(--radius-sm);
+    }
+    .st-a { background: linear-gradient(135deg, var(--blue), var(--violet)); }
+    .st-b { background: linear-gradient(135deg, var(--green) 0%, #0891b2 100%); }
+    .st-c { background: linear-gradient(135deg, var(--amber), var(--red)); }
+    .section-name {
+      font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--bright);
+    }
+    .section-name span { font-size: 13px; color: var(--muted); font-weight: 400; font-family: var(--sans); }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+    .part-title {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* QUESTION CARD */
+    .q-card {
+      background: var(--ink-card); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 10px; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .q-card:hover { border-color: var(--border-hi); box-shadow: 0 4px 18px rgba(74,124,246,0.08); }
+    .q-body { padding: 18px 20px; display: flex; gap: 16px; align-items: flex-start; }
+    .q-num {
+      font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--blue);
+      background: rgba(74,124,246,0.12); border: 1px solid rgba(74,124,246,0.25);
+      border-radius: var(--radius-sm); padding: 3px 9px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .q-content { flex: 1; }
+    .q-text { font-size: 15px; color: var(--bright); line-height: 1.65; margin-bottom: 10px; }
+    .q-marks { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+    .q-marks .mk-val { color: var(--cyan); font-weight: 700; }
+
+    .q-options { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .q-options li {
+      background: var(--ink-mid); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 9px 14px;
+      font-size: 14px; color: var(--body); transition: border-color 0.15s;
+    }
+    .q-options li:hover { border-color: var(--border-hi); }
+    .q-options li .ol { font-family: var(--mono); font-size: 11px; color: var(--blue); margin-right: 9px; }
+
+    /* ANSWER BOX */
+    .answer-box {
+      display: none; border-top: 1px solid var(--border);
+      padding: 14px 20px; background: rgba(15,217,138,0.05);
+      border-left: 3px solid var(--green);
+    }
+    .answer-box.visible { display: block; animation: slideDown 0.2s ease; }
+    .ans-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+    .ans-text  { font-size: 14px; color: #04010a; line-height: 1.7; white-space: pre-line; }
+
+    /* TOAST */
+    .toast-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast {
+      background: var(--ink-raised); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px 16px;
+      font-size: 13px; color: var(--bright); min-width: 270px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+      animation: fadeUp 0.3s ease; display: flex; align-items: center; gap: 10px;
+    }
+    .toast.success { border-left: 3px solid var(--green); }
+    .toast.error   { border-left: 3px solid var(--red); }
+    .toast.info    { border-left: 3px solid var(--blue); }
+    .toast.warn    { border-left: 3px solid var(--amber); }
+    .toast.hiding  { animation: fadeOut 0.3s ease forwards; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeOut { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(8px)} }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+
+    /* RESPONSIVE */
+    @media(max-width:640px) {
+      .topbar { flex-wrap: wrap; height: auto; padding: 12px 14px; gap: 8px; }
+      .exam-body { padding: 16px; }
+      .ehc-marks-badge { font-size: 22px; }
+    }
+    @media print {
+      .topbar, .stats-bar, .teacher-panel, .toast-wrap,
+      #scroll-progress, #warningBanner, #deductPopup,
+      #terminationScreen, #violationLog, .ro-banner { display: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="scroll-progress"></div>
+<div id="warningOverlay"></div>
+
+<!-- DEDUCT POPUP -->
+<div id="deductPopup">
+  <div class="di">⚠️</div>
+  <h3>Integrity Violation</h3>
+  <p id="deductReason">Violation detected.</p>
+  <div class="ds" id="deductAmount">−2 marks</div>
+  <div class="dt" id="deductRunning"></div>
+  <button onclick="closeDeductPopup()">Acknowledge &amp; Continue</button>
+</div>
+
+<!-- TERMINATION SCREEN -->
+<div id="terminationScreen" style="display:none;">
+  <div class="ti">🚫</div>
+  <h1>Assessment Terminated</h1>
+  <p>You have exceeded the maximum number of integrity violations. Your session has been permanently closed. Please report to your invigilator immediately.</p>
+  <div class="term-stats" id="termStats"></div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="lw">
+    <div class="login-header">
+      <div class="badge-wrap">📋</div>
+      <h1>Secure Assessment Portal</h1>
+      <p>Web &amp; FTP Server Deployment · Academic Year 2025–2026</p>
+    </div>
+
+    <div class="login-card">
+
+      <!-- READ-ONLY POLICY -->
+      <div class="policy-block">
+        <div class="pb-title"><i class="fa-solid fa-triangle-exclamation"></i> Read-Only / View-Only Notice</div>
+        <ul>
+          <li>This interface is strictly <strong>read-only</strong>. No answers are collected here.</li>
+          <li>All answers must be submitted via the <strong>designated assessment platform</strong>.</li>
+          <li>Attempting to copy, screenshot, or save content is a violation and will be logged.</li>
+          <li>Unauthorised access or sharing of this portal is a disciplinary offence.</li>
+        </ul>
+      </div>
+
+      <label class="lc-label">Student Access Code</label>
+      <input class="lc-input" type="password" id="passwordInput" placeholder="Enter your access code" autocomplete="off" />
+      <div class="attempt-row" id="attemptBar">
+        <div class="adot" id="d1"></div>
+        <div class="adot" id="d2"></div>
+        <div class="adot" id="d3"></div>
+        <div class="adot" id="d4"></div>
+        <div class="adot" id="d5"></div>
+      </div>
+      <button class="btn-enter" id="loginBtn" onclick="attemptLogin()">
+        <i class="fa-solid fa-lock-open"></i> Access Assessment
+      </button>
+      <p class="login-err" id="loginMsg"></p>
+    </div>
+    <p class="login-foot">READ-ONLY VIEWER · NO DATA STORED · SECURE SESSION</p>
+  </div>
+</div>
+
+<!-- LOCKOUT SCREEN -->
+<div id="lockoutScreen" style="display:none; min-height:100vh; align-items:center; justify-content:center;">
+  <div class="lockout-box">
+    <div class="li">🔒</div>
+    <h2>Access Suspended</h2>
+    <p>Too many failed attempts. Please wait before retrying.</p>
+    <div id="lockCountdown">5:00</div>
+    <p style="font-size:12px; margin-top:8px;">Contact your invigilator if you require assistance.</p>
+  </div>
+</div>
+
+<!-- EXAM CONTAINER -->
+<div id="examContainer">
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <h2 id="examTitle"></h2>
+      <div class="topbar-meta">
+        <span class="badge-sm badge-blue">WEB &amp; FTP ASSESSMENT</span>
+        <span class="badge-sm badge-red" id="readOnlyBadge">VIEW ONLY</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="tb-btn btn-fs" onclick="enterFullscreen()">
+        <i class="fa-solid fa-expand"></i> Exam Mode
+      </button>
+      <div class="warn-chip" id="warningsChip">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="warnCountDisplay">0</span> warn ·
+        <span id="warnMarksDisplay" style="color:#fca5a5;">−0 pts</span>
+      </div>
+      <button class="tb-btn btn-tog" id="toggleBtn" onclick="toggleAnswers()">
+        <i class="fa-solid fa-eye"></i> Show Answers
+      </button>
+      <div class="teacher-panel">
+        <i class="fa-solid fa-key" style="color:var(--muted); font-size:12px;"></i>
+        <input type="password" id="teacherPass" placeholder="Instructor password"
+               onkeydown="if(event.key==='Enter') unlockAnswers()" autocomplete="off" />
+        <button class="btn-unlock" id="unlockBtn" onclick="unlockAnswers()">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="si"><i class="fa-solid fa-file-lines" style="color:var(--blue)"></i> <span>Total Marks:</span> <strong id="statMarks"></strong></div>
+    <div class="sdiv"></div>
+    <div class="si"><i class="fa-solid fa-circle-minus" style="color:var(--red)"></i> <span>Deducted:</span> <strong id="statDeducted" class="ded">0</strong></div>
+    <div class="sdiv"></div>
+    <div class="si"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> <span>Net Score:</span> <strong id="statNet"></strong></div>
+    <div class="sdiv"></div>
+    <div class="si"><i class="fa-solid fa-circle-question" style="color:var(--cyan)"></i> <span>Questions:</span> <strong id="statQuestions"></strong></div>
+    <div class="sdiv"></div>
+    <div class="si"><i class="fa-solid fa-triangle-exclamation" style="color:var(--amber)"></i> <span>Warnings:</span> <strong id="statWarnCount" style="color:var(--amber);">0 / 5</strong></div>
+    <div class="sdiv"></div>
+    <div class="si" id="statAnswers" style="display:none;">
+      <i class="fa-solid fa-eye" style="color:var(--green)"></i> <span>Answers Visible:</span> <strong id="statAnswerCount"></strong>
+    </div>
+  </div>
+
+  <div class="ro-banner">
+    <span class="ro-icon">🔒</span>
+    <p><strong>READ-ONLY / VIEW-ONLY:</strong> This portal displays assessment questions for reference only. <strong>No answers are submitted here.</strong> All responses must be recorded on your answer sheet or submitted through the designated assessment platform. Violations are logged and affect your final score.</p>
+  </div>
+
+  <div id="violationLog">
+    <div class="vl-label">⚠ Integrity Violation Log</div>
+    <ul id="violationList"></ul>
+  </div>
+
+  <div class="exam-body">
+
+    <div id="examHeaderCard"></div>
+
+    <div id="examContent"></div>
+  </div>
+</div>
+
+<div id="warningBanner" style="display:none;"></div>
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+
+const EXAM_CFG = Object.freeze({
+  MAX_ATTEMPTS:    5,
+  LOCK_SECONDS:    300,
+  SESSION_LIMIT:   90 * 60 * 1000,
+  DEDUCT_PER_WARN: 2,
+  MAX_WARNINGS:    5,
+  AUTH: Object.freeze({ s: btoa("NIT_L4_EX"), t: btoa("Trainer_321") })
+});
+
+const EXAM = {
+  title:       "WEB SERVER & FTP SERVER DEPLOYMENT",
+  subject:     "Systems Administration & Network Engineering",
+  duration:    "2 Hours 30 Minutes",
+  totalMarks:  100,
+  sections: [
+
+    {
+      id:   "A",
+      name: "Section A — Multiple Choice Questions",
+      marks: 20,
+      tagClass: "st-a",
+      parts: [
+        {
+          title: "Select the single most correct option for each question. (1 mark each)",
+          questions: [
+            {
+              q: "Which of the following best describes the World Wide Web (WWW)?",
+              marks: 1,
+              options: ["A dedicated computer operating system for servers","A system that enables access to information over the internet via web browsers","A type of local area network used within organisations","A proprietary Microsoft database management system"],
+              answer: "A system that enables access to information over the internet via web browsers"
+            },
+            {
+              q: "Which web server software is developed and maintained by Microsoft?",
+              marks: 1,
+              options: ["Apache HTTP Server","Nginx","LiteSpeed","Internet Information Services (IIS)"],
+              answer: "Internet Information Services (IIS)"
+            },
+            {
+              q: "On which TCP port does standard HTTPS traffic operate?",
+              marks: 1,
+              options: ["21","80","110","443"],
+              answer: "443"
+            },
+            {
+              q: "What is the primary purpose of an SSL/TLS certificate on a web server?",
+              marks: 1,
+              options: ["To compress website files for faster delivery","To encrypt communication between the client browser and the server","To increase available disk storage on the server","To automatically create and restore data backups"],
+              answer: "To encrypt communication between the client browser and the server"
+            },
+            {
+              q: "Which web server is most commonly used for hosting Java-based web applications?",
+              marks: 1,
+              options: ["Nginx","IIS","Apache Tomcat","LiteSpeed"],
+              answer: "Apache Tomcat"
+            },
+            {
+              q: "What does the acronym FTP stand for?",
+              marks: 1,
+              options: ["File Transfer Process","Fast Transfer Protocol","Folder Transfer Protocol","File Transfer Protocol"],
+              answer: "File Transfer Protocol"
+            },
+            {
+              q: "Which FTP permission specifically allows a user to upload and modify files on the server?",
+              marks: 1,
+              options: ["Read","Execute","Write","Delete"],
+              answer: "Write"
+            },
+            {
+              q: "Which open-source FTP client application is most widely used in enterprise environments?",
+              marks: 1,
+              options: ["Cyberduck","WinSCP","FileZilla","IIS Manager"],
+              answer: "FileZilla"
+            },
+            {
+              q: "Why is Passive FTP mode preferred over Active FTP mode in modern network environments?",
+              marks: 1,
+              options: ["It accelerates download speeds significantly","It increases the server's available storage","It allows FTP connections to function through firewalls and NAT","It disables server-side logging for privacy"],
+              answer: "It allows FTP connections to function through firewalls and NAT"
+            },
+            {
+              q: "Through which Windows Server role or feature is the FTP service installed on Windows Server 2016?",
+              marks: 1,
+              options: ["Active Directory Domain Services","DNS Server","Internet Information Services (IIS)","DHCP Server"],
+              answer: "Internet Information Services (IIS)"
+            },
+            {
+              q: "What is the minimum RAM required to install Windows Server 2016 with Desktop Experience?",
+              marks: 1,
+              options: ["512 MB","1 GB","2 GB","4 GB"],
+              answer: "2 GB"
+            },
+            {
+              q: "Which step is performed first when adding the IIS role on Windows Server 2016?",
+              marks: 1,
+              options: ["Click Install in the confirmation dialog","Launch IIS Manager from Administrative Tools","Open Server Manager from the taskbar","Restart the server to apply changes"],
+              answer: "Open Server Manager from the taskbar"
+            },
+            {
+              q: "What does the concept of scalability mean in the context of a web application?",
+              marks: 1,
+              options: ["The ability to create automated data backups","The ability to accommodate increased user demand without degrading performance","The ability to reset administrator passwords remotely","The ability to encrypt data at rest"],
+              answer: "The ability to accommodate increased user demand without degrading performance"
+            },
+            {
+              q: "Which of the following is the default web root directory path when IIS is installed on Windows Server?",
+              marks: 1,
+              options: ["C:\\Apache\\htdocs","C:\\inetpub\\wwwroot","C:\\Windows\\System32\\web","D:\\WebRoot\\public_html"],
+              answer: "C:\\inetpub\\wwwroot"
+            },
+            {
+              q: "Which FTP permission is considered a significant security risk and is rarely enabled in production environments?",
+              marks: 1,
+              options: ["Read","Write","Execute","Modify"],
+              answer: "Execute"
+            },
+            {
+              q: "Which FTP client application supports FTP, SFTP, and SCP protocols?",
+              marks: 1,
+              options: ["FileZilla","Cyberduck","WinSCP","IIS Manager"],
+              answer: "WinSCP"
+            },
+            {
+              q: "Which of the following correctly describes the purpose of the FTP root directory?",
+              marks: 1,
+              options: ["It stores the server's core operating system files","It serves as the primary shared folder accessible by FTP users","It houses FTP client installation files","It manages network printer configurations"],
+              answer: "It serves as the primary shared folder accessible by FTP users"
+            },
+            {
+              q: "Which of the following data categories are typically recorded in FTP server logs?",
+              marks: 1,
+              options: ["Login attempts only","File uploads and downloads only","System errors only","Login attempts, file transfers, and system errors"],
+              answer: "Login attempts, file transfers, and system errors"
+            },
+            {
+              q: "Which distributed version control tool is most commonly used by development teams to manage source code?",
+              marks: 1,
+              options: ["Docker","IIS Log Viewer","Git","Task Manager"],
+              answer: "Git"
+            },
+            {
+              q: "HTTP traffic operates on which default TCP port?",
+              marks: 1,
+              options: ["21","25","80","443"],
+              answer: "80"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      id:   "B",
+      name: "Section B — True or False",
+      marks: 20,
+      tagClass: "st-b",
+      parts: [
+        {
+          title: "State whether each of the following statements is TRUE or FALSE. (2 marks each)",
+          questions: [
+            { q: "A webpage is defined as a single document displayed in a browser, whereas a website is a collection of webpages grouped under a single domain name.", marks: 2, answer: "True" },
+            { q: "Nginx is widely recognised for its ability to efficiently handle high-concurrency and high-traffic web environments.", marks: 2, answer: "True" },
+            { q: "Virtual hosting enables multiple distinct websites to operate simultaneously on a single physical server.", marks: 2, answer: "True" },
+            { q: "Using simple, easily remembered passwords such as '123456' is considered an acceptable security practice for production servers.", marks: 2, answer: "False — Strong, complex passwords are mandatory for production server security." },
+            { q: "Maintaining thorough documentation assists systems administrators in effectively managing, troubleshooting, and auditing web servers.", marks: 2, answer: "True" },
+            { q: "Passive FTP mode is primarily designed to block or prevent remote users from connecting to the FTP server.", marks: 2, answer: "False — Passive FTP mode is designed to facilitate connections through firewalls and NAT." },
+            { q: "FileZilla is classified as an FTP client application rather than a web server.", marks: 2, answer: "True" },
+            { q: "FTP server logs can be used by administrators to investigate and identify unauthorised file access or deletion activities.", marks: 2, answer: "True" },
+            { q: "The Read permission on an FTP server allows users to upload new files to the server directory.", marks: 2, answer: "False — The Read permission only allows users to view and download files; Write permission is required for uploads." },
+            { q: "Containerisation tools such as Docker simplify the deployment and portability of web applications across different server environments.", marks: 2, answer: "True" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id:   "C",
+      name: "Section C — Fill in the Blanks",
+      marks: 20,
+      tagClass: "st-c",
+      parts: [
+        {
+          title: "Complete each statement with the correct technical term or value. (2 marks each)",
+          questions: [
+            { q: "A __________ is a collection of related webpages accessible under a single domain name on the internet.", marks: 2, answer: "Website" },
+            { q: "The default web root directory used by IIS on Windows Server is located at __________.", marks: 2, answer: "C:\\inetpub\\wwwroot" },
+            { q: "Websites secured with SSL/TLS certificates are identified in the address bar because their URLs begin with __________.", marks: 2, answer: "https://" },
+            { q: "The FTP permission that allows users to view and download files from a server directory is the __________ permission.", marks: 2, answer: "Read" },
+            { q: "FTP connections that are designed to traverse firewalls and NAT devices use __________ mode.", marks: 2, answer: "Passive" },
+            { q: "The most widely used free and open-source FTP client application is __________.", marks: 2, answer: "FileZilla" },
+            { q: "Microsoft __________ is a built-in endpoint security solution that provides antimalware protection on Windows Server.", marks: 2, answer: "Defender" },
+            { q: "The __________ Monitor tool is used by administrators to observe real-time server resource utilisation, including CPU and memory.", marks: 2, answer: "Performance" },
+            { q: "The FTP service in Windows Server 2016 is installed as a component within the __________ server role.", marks: 2, answer: "IIS (Internet Information Services)" },
+            { q: "A web hosting configuration that associates a website with an actual physical directory on disk is referred to as a __________ host.", marks: 2, answer: "Real (or Physical)" }
+          ]
+        }
+      ]
+    },
+
+    {
+      id:   "D",
+      name: "Section D — Structured / Open Questions",
+      marks: 40,
+      tagClass: "st-a",
+      parts: [
+        {
+          title: "Answer ALL five questions. Write your responses on your answer sheet. (8 marks each)",
+          questions: [
+            {
+              q: "Identify and explain any four distinct web server software solutions, clearly stating their primary use cases and the environments in which each is most appropriately deployed.",
+              marks: 8,
+              answer: "Any four from the following (2 marks each):\n\n• Apache HTTP Server — Open-source, cross-platform web server. Most commonly deployed to host PHP-based websites and applications. Highly configurable with extensive module support.\n\n• Internet Information Services (IIS) — Microsoft's proprietary web server, integrated with Windows Server. Best suited for hosting ASP.NET applications and Microsoft-ecosystem web services.\n\n• Nginx — High-performance, event-driven web server and reverse proxy. Preferred for high-traffic, high-concurrency environments; also used as a load balancer.\n\n• Apache Tomcat — Open-source application server purpose-built for Java Servlet and JSP-based web applications. Widely used in enterprise Java development.\n\n• LiteSpeed — Commercial web server known for speed and efficiency. Compatible with Apache configuration files and well-suited for shared hosting environments."
+            },
+            {
+              q: "Describe the step-by-step procedure for installing the IIS web server role on Windows Server 2016 and configuring the default website to serve a custom HTML page.",
+              marks: 8,
+              answer: "Installation Steps (4 marks):\n1. Open Server Manager from the taskbar.\n2. Click 'Add Roles and Features' to launch the wizard.\n3. Select 'Role-based or Feature-based Installation' and choose the local server.\n4. Under Server Roles, expand 'Web Server (IIS)' and select the required sub-components.\n5. Review the confirmation screen and click 'Install'. Allow the installation to complete.\n\nConfiguration Steps (4 marks):\n6. Open IIS Manager from Administrative Tools or Server Manager.\n7. Expand the server node and select 'Default Web Site'.\n8. Navigate to C:\\inetpub\\wwwroot and create or upload a custom index.html file.\n9. In IIS Manager, set the default document to index.html under 'Default Document'.\n10. Open a browser on the server and navigate to http://localhost to verify the custom page loads correctly."
+            },
+            {
+              q: "Explain the three FTP access permissions available in Windows Server 2016, including the specific actions each permission authorises and the associated security considerations.",
+              marks: 8,
+              answer: "• Read Permission (2 marks + 1 security note):\nAllows users to list directory contents, view, and download files from the FTP server. Users with Read-only access cannot modify or upload any data. This is the safest permission level and is appropriate for most standard users who only need to retrieve files.\n\n• Write Permission (2 marks + 1 security note):\nAllows users to upload new files, create directories, and modify or replace existing files on the server. Write access should be granted selectively and only to trusted users, as it enables changes to server content. Misuse can lead to unauthorised data modification.\n\n• Execute Permission (1 mark + 2 security notes):\nAllows users to run executable files, scripts, or programs stored on the FTP server. Execute permission is rarely enabled in production environments due to significant security risks — a malicious actor could upload and execute harmful scripts, potentially compromising the entire server. Its use should be avoided unless there is an explicit, controlled requirement."
+            },
+            {
+              q: "After deploying a web application to a production server, outline the key post-deployment testing and validation activities that a systems administrator should perform to ensure the application is functional, secure, and performing optimally.",
+              marks: 8,
+              answer: "Candidates should address the following areas (1–2 marks each, up to 8):\n\n• Functional Testing: Open the application in multiple browsers and verify all pages load correctly. Test all hyperlinks, forms, and navigation elements to ensure there are no broken links or errors.\n\n• Database Connectivity: Confirm that the application can successfully connect to its database by performing a test transaction or query. Verify data is being read and written correctly.\n\n• Security Verification: Confirm SSL/TLS is active and the URL shows https://. Test that administrator and user credentials are enforced. Check firewall rules and verify that unnecessary ports are closed.\n\n• Performance Monitoring: Use Performance Monitor or similar tools to observe CPU, RAM, and disk utilisation under load. Identify and resolve any bottlenecks.\n\n• Error and Log Review: Inspect IIS error logs and application event logs for any warnings or critical errors generated during the initial deployment.\n\n• Scalability Check: Perform a basic load test to confirm the application responds acceptably under simulated concurrent users.\n\n• Backup Verification: Confirm that automated backup procedures are active and that a recent backup can be successfully restored."
+            },
+            {
+              q: "Describe four effective methods used to harden and improve the security of a web server and an FTP server. For each method, explain what it involves, why it is necessary, and the specific threat it mitigates.",
+              marks: 8,
+              answer: "Any four of the following (2 marks each):\n\n• SSL/TLS Certificates: Installing a valid SSL/TLS certificate encrypts all data transmitted between the server and clients. This prevents man-in-the-middle (MITM) attacks and eavesdropping on sensitive data such as login credentials.\n\n• Strong Password Policy: Enforcing complex, unique passwords for all server and FTP accounts prevents brute-force and dictionary attacks. Weak or default credentials are among the most exploited vulnerabilities in production environments.\n\n• Antimalware Software: Deploying endpoint security software (e.g., Microsoft Defender) protects the server from malware infections, ransomware, and virus uploads via the FTP service.\n\n• Regular Software Updates and Patching: Keeping IIS, the OS, and all server software up to date closes known security vulnerabilities that attackers actively exploit.\n\n• Principle of Least Privilege: Assigning users only the minimum FTP permissions required for their role (e.g., Read-only where Write is not needed) limits the potential damage from compromised accounts or insider threats.\n\n• Firewall Configuration: Configuring the Windows Firewall to allow only necessary ports (e.g., 80, 443, 21) and blocking all unused ports reduces the attack surface of the server.\n\n• Regular Data Backups: Maintaining scheduled, tested backups ensures that data can be recovered in the event of a ransomware attack, accidental deletion, or system failure."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+let loginAttempts = 0, lockoutTimer = null;
+let answersUnlocked = false, answersVisible = false;
+let warningCount = 0, totalDeducted = 0, examActive = false;
+let violationLog = [], deductPopupOpen = false, warnBannerTimer = null;
+
+const ACtx = window.AudioContext || window.webkitAudioContext;
+let actx;
+function ensureAudio() { if (!actx) actx = new ACtx(); }
+function beep(type) {
+  ensureAudio();
+  const o = actx.createOscillator(), g = actx.createGain();
+  o.connect(g); g.connect(actx.destination);
+  const t = actx.currentTime;
+  if (type === 'warn') {
+    o.type = 'square'; o.frequency.setValueAtTime(880,t); o.frequency.setValueAtTime(660,t+0.15);
+    g.gain.setValueAtTime(0.22,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.4);
+    o.start(t); o.stop(t+0.4);
+  } else if (type === 'terminate') {
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(900,t); o.frequency.linearRampToValueAtTime(200,t+0.8);
+    g.gain.setValueAtTime(0.28,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.8);
+    o.start(t); o.stop(t+0.8);
+  } else if (type === 'ok') {
+    o.type = 'sine'; o.frequency.setValueAtTime(523,t); o.frequency.setValueAtTime(659,t+0.1);
+    g.gain.setValueAtTime(0.14,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.3);
+    o.start(t); o.stop(t+0.3);
+  } else if (type === 'err') {
+    o.type = 'square'; o.frequency.setValueAtTime(200,t);
+    g.gain.setValueAtTime(0.18,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.25);
+    o.start(t); o.stop(t+0.25);
+  }
+}
+
+function issueWarning(reason) {
+  if (!examActive || deductPopupOpen) return;
+  warningCount++;
+  totalDeducted += EXAM_CFG.DEDUCT_PER_WARN;
+  violationLog.push({ n: warningCount, reason, time: new Date().toLocaleTimeString() });
+  beep('warn'); flashOverlay(); updateWarnUI(); showViolLog(); showWarnBanner(reason);
+  if (warningCount >= EXAM_CFG.MAX_WARNINGS) { setTimeout(terminateExam, 1800); return; }
+  showDeductPopup(reason);
+}
+function showDeductPopup(reason) {
+  deductPopupOpen = true;
+  document.getElementById('deductReason').textContent = reason;
+  document.getElementById('deductAmount').textContent = `−${EXAM_CFG.DEDUCT_PER_WARN} marks deducted`;
+  document.getElementById('deductRunning').textContent =
+    `Total deducted: ${totalDeducted} marks  |  Warnings: ${warningCount} / ${EXAM_CFG.MAX_WARNINGS}`;
+  document.getElementById('deductPopup').style.display = 'block';
+}
+function closeDeductPopup() {
+  deductPopupOpen = false;
+  document.getElementById('deductPopup').style.display = 'none';
+}
+function flashOverlay() {
+  const ov = document.getElementById('warningOverlay');
+  ov.style.display = 'block';
+  setTimeout(() => ov.style.display = 'none', 460);
+}
+function showWarnBanner(reason) {
+  clearTimeout(warnBannerTimer);
+  const b = document.getElementById('warningBanner');
+  const rem = EXAM_CFG.MAX_WARNINGS - warningCount;
+  b.innerHTML = `⚠️ Warning ${warningCount}/${EXAM_CFG.MAX_WARNINGS}: ${reason} — <strong>−${EXAM_CFG.DEDUCT_PER_WARN} marks</strong> deducted. ${rem > 0 ? rem + ' violation(s) remaining before termination.' : 'EXAM TERMINATED.'}`;
+  b.style.display = 'block';
+  warnBannerTimer = setTimeout(() => b.style.display = 'none', 7000);
+}
+function updateWarnUI() {
+  const net = Math.max(0, EXAM.totalMarks - totalDeducted);
+  document.getElementById('warnCountDisplay').textContent = warningCount;
+  document.getElementById('warnMarksDisplay').textContent = `−${totalDeducted} pts`;
+  document.getElementById('statDeducted').textContent = totalDeducted;
+  document.getElementById('statNet').textContent = net;
+  document.getElementById('statWarnCount').textContent = `${warningCount} / ${EXAM_CFG.MAX_WARNINGS}`;
+  const chip = document.getElementById('warningsChip');
+  chip.classList.remove('pulse'); void chip.offsetWidth; chip.classList.add('pulse');
+}
+function showViolLog() {
+  document.getElementById('violationLog').style.display = 'block';
+  document.getElementById('violationList').innerHTML =
+    violationLog.map(v => `<li>#${v.n} · ${v.time} · ${v.reason}</li>`).join('');
+}
+function terminateExam() {
+  examActive = false; beep('terminate');
+  const ts = document.getElementById('terminationScreen');
+  ts.style.display = 'flex'; ts.style.flexDirection = 'column';
+  document.getElementById('termStats').innerHTML = `
+    <div class="term-stat"><div class="val">${warningCount}</div><div class="lbl">Violations</div></div>
+    <div class="term-stat"><div class="val">${totalDeducted}</div><div class="lbl">Marks Deducted</div></div>
+    <div class="term-stat"><div class="val">${Math.max(0,EXAM.totalMarks-totalDeducted)}</div><div class="lbl">Net Score</div></div>`;
+}
+
+async function hashStr(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function attemptLogin() {
+  if (loginAttempts >= EXAM_CFG.MAX_ATTEMPTS) return;
+  ensureAudio();
+  const btn = document.getElementById('loginBtn');
+  const val = document.getElementById('passwordInput').value;
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying…';
+  const h = await hashStr(val);
+  const c = await hashStr(atob(EXAM_CFG.AUTH.s));
+  await new Promise(r => setTimeout(r, 450));
+  if (h === c) {
+    beep('ok'); toast('✅ Access granted. Welcome to the assessment.', 'success');
+    setTimeout(() => {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('examContainer').style.display = 'block';
+      renderExam(); examActive = true; startSession();
+    }, 420);
+  } else {
+    beep('err'); loginAttempts++; updateDots();
+    const rem = EXAM_CFG.MAX_ATTEMPTS - loginAttempts;
+    if (loginAttempts >= EXAM_CFG.MAX_ATTEMPTS) { startLockout(); }
+    else {
+      document.getElementById('loginMsg').textContent = `Incorrect access code. ${rem} attempt${rem!==1?'s':''} remaining.`;
+      btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Access Assessment';
+    }
+  }
+  document.getElementById('passwordInput').value = '';
+}
+function updateDots() {
+  for (let i = 1; i <= EXAM_CFG.MAX_ATTEMPTS; i++) {
+    const d = document.getElementById('d'+i);
+    if (d) d.classList.toggle('used', i <= loginAttempts);
+  }
+}
+function startLockout() {
+  document.getElementById('loginScreen').style.display = 'none';
+  const ls = document.getElementById('lockoutScreen'); ls.style.display = 'flex';
+  let rem = EXAM_CFG.LOCK_SECONDS;
+  const el = document.getElementById('lockCountdown');
+  lockoutTimer = setInterval(() => {
+    rem--;
+    el.textContent = `${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')}`;
+    if (rem <= 0) {
+      clearInterval(lockoutTimer); loginAttempts = 0; updateDots();
+      ls.style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('loginMsg').textContent = '';
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Access Assessment';
+    }
+  }, 1000);
+}
+function startSession() {
+  setTimeout(() => { toast('⏰ Session expired. Reloading.','error',6000); setTimeout(()=>location.reload(),6500); }, EXAM_CFG.SESSION_LIMIT);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function countQs() {
+  return EXAM.sections.reduce((t,s) => t + s.parts.reduce((t2,p) => t2+p.questions.length,0),0);
+}
+
+function renderExam() {
+  const base = EXAM.totalMarks;
+  document.getElementById('examTitle').textContent = EXAM.title;
+  document.getElementById('statMarks').textContent = base;
+  document.getElementById('statNet').textContent = base;
+  document.getElementById('statDeducted').textContent = 0;
+  document.getElementById('statQuestions').textContent = countQs();
+
+  // Header card
+  document.getElementById('examHeaderCard').innerHTML = `
+    <div class="exam-header-card">
+      <div class="ehc-top">
+        <div>
+          <div class="ehc-title">${EXAM.title}</div>
+          <div class="ehc-sub">${EXAM.subject} &nbsp;·&nbsp; Academic Year 2025–2026</div>
+        </div>
+        <div class="ehc-marks-badge">${EXAM.totalMarks}<span>Total Marks</span></div>
+      </div>
+
+      <div class="instructions-grid">
+        <div class="ig-block">
+          <div class="igt igt-blue"><i class="fa-solid fa-circle-info"></i> &nbsp;Exam Information</div>
+          <ul>
+            <li>Duration: <strong>${EXAM.duration}</strong></li>
+            <li>Total Marks: <strong>${EXAM.totalMarks}</strong></li>
+            <li>Total Questions: <strong>${countQs()}</strong></li>
+            <li>Sections: A (MCQ) · B (T/F) · C (Fill) · D (Open)</li>
+          </ul>
+        </div>
+        <div class="ig-block">
+          <div class="igt igt-green"><i class="fa-solid fa-clipboard-list"></i> &nbsp;General Instructions</div>
+          <ul>
+            <li>Read all questions carefully before answering.</li>
+            <li>Write your answers on the official answer sheet provided.</li>
+            <li>Begin each section on a new page.</li>
+            <li>This portal is <strong>read-only</strong>. Do not attempt to copy or print.</li>
+          </ul>
+        </div>
+        <div class="ig-block">
+          <div class="igt igt-amber"><i class="fa-solid fa-scale-balanced"></i> &nbsp;Mark Allocation</div>
+          <ul>
+            <li class="rule">Section A — MCQ: 20 × 1 mark = <strong>20 marks</strong></li>
+            <li class="rule">Section B — True/False: 10 × 2 marks = <strong>20 marks</strong></li>
+            <li class="rule">Section C — Fill in Blank: 10 × 2 marks = <strong>20 marks</strong></li>
+            <li class="rule">Section D — Open Questions: 5 × 8 marks = <strong>40 marks</strong></li>
+          </ul>
+        </div>
+        <div class="ig-block">
+          <div class="igt igt-red"><i class="fa-solid fa-shield-halved"></i> &nbsp;Integrity Policy</div>
+          <ul>
+            <li class="rule">Tab switching, app switching, or window blur = <strong>−2 marks</strong></li>
+            <li class="rule">DevTools, right-click, or copy attempts = <strong>−2 marks</strong></li>
+            <li class="rule">Screenshot or print attempts = <strong>−2 marks</strong></li>
+            <li class="rule"><strong>5 violations</strong> result in immediate session termination.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="integrity-alert">
+        <span class="ia-icon">🔒</span>
+        <p><strong>READ-ONLY / VIEW-ONLY NOTICE:</strong> This assessment interface is strictly for viewing questions. <strong>No answers are collected through this portal.</strong> All responses must be written on the official answer sheet or submitted through the designated online platform as instructed by your invigilator. Any attempt to copy, screenshot, print, or extract content from this interface constitutes an academic integrity violation and will be logged, reported, and may result in disqualification.</p>
+      </div>
+    </div>`;
+
+  const container = document.getElementById('examContent');
+  container.innerHTML = '';
+  let globalQ = 0;
+
+  EXAM.sections.forEach((sec, si) => {
+    const secDiv = document.createElement('div');
+    secDiv.className = 'section-block';
+    secDiv.innerHTML = `
+      <div class="section-header">
+        <div class="section-tag ${sec.tagClass}">${sec.id}</div>
+        <div class="section-name">${sec.name} <span>(${sec.marks} Marks)</span></div>
+        <div class="section-line"></div>
+      </div>`;
+
+    sec.parts.forEach(part => {
+      const pd = document.createElement('div');
+      pd.style.marginBottom = '28px';
+      pd.innerHTML = `<div class="part-title">${part.title}</div>`;
+
+      // Shuffle MCQ options only (not the questions themselves, to preserve numbering)
+      part.questions.forEach(q => {
+        globalQ++;
+        const opts = q.options
+          ? `<ul class="q-options">${
+              shuffle(q.options.map((o,oi)=>({o,orig:oi}))).map(({o}) => {
+                const letter = ['A','B','C','D'][q.options.indexOf(o)];
+                return `<li><span class="ol">${letter}.</span>${o}</li>`;
+              }).join('')
+            }</ul>` : '';
+
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-body">
+            <div class="q-num">Q${globalQ}</div>
+            <div class="q-content">
+              <div class="q-text">${q.q}</div>
+              <div class="q-marks"><span class="mk-val">[${q.marks} mark${q.marks!==1?'s':''}]</span></div>
+              ${opts}
+            </div>
+          </div>
+          <div class="answer-box">
+            <div class="ans-label">✓ Model Answer</div>
+            <div class="ans-text">${q.answer}</div>
+          </div>`;
+        pd.appendChild(card);
+      });
+      secDiv.appendChild(pd);
+    });
+    container.appendChild(secDiv);
+  });
+}
+
+function toggleAnswers() {
+  if (!answersUnlocked) {
+    toast('🔑 Enter the instructor password to unlock answers.','error');
+    document.getElementById('teacherPass').focus(); return;
+  }
+  answersVisible = !answersVisible;
+  document.querySelectorAll('.answer-box').forEach(b => b.classList.toggle('visible', answersVisible));
+  const btn = document.getElementById('toggleBtn');
+  btn.innerHTML = answersVisible
+    ? '<i class="fa-solid fa-eye-slash"></i> Hide Answers'
+    : '<i class="fa-solid fa-eye"></i> Show Answers';
+  btn.classList.toggle('active', answersVisible);
+  const sa = document.getElementById('statAnswers');
+  if (answersVisible) { sa.style.display='flex'; document.getElementById('statAnswerCount').textContent=countQs(); }
+  else sa.style.display='none';
+}
+async function unlockAnswers() {
+  const btn = document.getElementById('unlockBtn');
+  if (answersUnlocked) return;
+  const val = document.getElementById('teacherPass').value;
+  if (!val) { toast('Enter the instructor password first.','error'); return; }
+  btn.textContent = '…'; btn.disabled = true;
+  const h = await hashStr(val), c = await hashStr(atob(EXAM_CFG.AUTH.t));
+  await new Promise(r => setTimeout(r, 380));
+  if (h === c) {
+    answersUnlocked = true;
+    btn.textContent = '✓ Unlocked'; btn.classList.add('unlocked');
+    document.getElementById('teacherPass').value = '';
+    document.getElementById('teacherPass').disabled = true;
+    toast('✅ Answers unlocked. Instructor mode active.','success'); beep('ok'); toggleAnswers();
+  } else {
+    btn.disabled=false; btn.textContent='Unlock';
+    toast('❌ Incorrect instructor password.','error'); beep('err');
+    document.getElementById('teacherPass').value='';
+  }
+}
+
+function enterFullscreen() {
+  const el = document.documentElement;
+  (el.requestFullscreen||el.webkitRequestFullscreen).call(el);
+  toast('⛶ Exam mode active. Press Esc to exit.','info',3000);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && examActive) {
+    issueWarning('Tab switched or window minimised');
+    document.querySelectorAll('.ans-text').forEach(el => el.style.filter='blur(9px)');
+  } else if (!document.hidden && examActive && answersVisible && answersUnlocked) {
+    document.querySelectorAll('.ans-text').forEach(el => el.style.filter='');
+  }
+});
+let blurThrottle = false;
+window.addEventListener('blur', () => {
+  if (!examActive || blurThrottle) return;
+  blurThrottle = true;
+  issueWarning('Window lost focus / application switch detected');
+  setTimeout(() => blurThrottle = false, 5000);
+});
+window.addEventListener('beforeunload', e => {
+  if (!examActive) return;
+  const m='Leaving will terminate your exam session.'; e.preventDefault(); e.returnValue=m; return m;
+});
+document.addEventListener('keydown', e => {
+  if (e.key==='F5'||(e.ctrlKey&&e.key.toLowerCase()==='r')) {
+    e.preventDefault(); if (examActive) issueWarning('Page refresh attempt (F5 / Ctrl+R)'); return;
+  }
+  if ((e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()))||e.key==='F12') {
+    e.preventDefault(); if (examActive) issueWarning('Developer Tools open attempt'); return;
+  }
+  if (e.ctrlKey&&e.key.toLowerCase()==='u') { e.preventDefault(); if(examActive) issueWarning('View Source attempt (Ctrl+U)'); return; }
+  if (e.ctrlKey&&e.key.toLowerCase()==='s') { e.preventDefault(); if(examActive) issueWarning('Page save attempt (Ctrl+S)'); return; }
+  if (e.ctrlKey&&e.key.toLowerCase()==='c') { e.preventDefault(); if(examActive) issueWarning('Copy attempt (Ctrl+C)'); return; }
+  if (e.ctrlKey&&e.key.toLowerCase()==='p') { e.preventDefault(); if(examActive) issueWarning('Print attempt (Ctrl+P)'); return; }
+  if (e.key==='PrintScreen') { e.preventDefault(); if(examActive) issueWarning('Screenshot attempt (PrintScreen)'); return; }
+});
+document.addEventListener('contextmenu', e => { e.preventDefault(); if(examActive) issueWarning('Right-click / context menu attempt'); });
+document.addEventListener('copy', e => { e.preventDefault(); if(examActive) issueWarning('Clipboard copy attempt detected'); });
+(function() {
+  let devOpen = false;
+  setInterval(() => {
+    const th=160, w=window.outerWidth-window.innerWidth, h=window.outerHeight-window.innerHeight;
+    if ((w>th||h>th)&&!devOpen) {
+      devOpen=true; if(examActive) issueWarning('DevTools panel opened');
+      if(answersVisible&&answersUnlocked) document.querySelectorAll('.ans-text').forEach(el=>el.style.filter='blur(9px)');
+    } else if (w<=th&&h<=th&&devOpen) {
+      devOpen=false;
+      if(answersVisible&&answersUnlocked) document.querySelectorAll('.ans-text').forEach(el=>el.style.filter='');
+    }
+  }, 1000);
+})();
+
+window.addEventListener('scroll', () => {
+  const sp = document.getElementById('scroll-progress');
+  const dh = document.body.scrollHeight - window.innerHeight;
+  sp.style.width = dh > 0 ? (window.scrollY/dh*100)+'%' : '0%';
+});
+
+function toast(msg, type='info', dur=3600) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`; t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => { t.classList.add('hiding'); setTimeout(()=>t.remove(),300); }, dur);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const pi = document.getElementById('passwordInput');
+  if (pi) pi.addEventListener('keydown', e => { if(e.key==='Enter') attemptLogin(); });
+});
+</script>
+</body>
+</html>

@@ -1,436 +1,741 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<style>
+  :root {
+    --acc-blue: #185FA5;
+    --bg-blue: #E6F1FB;
+    --acc-green: #0F6E56;
+    --bg-green: #E1F5EE;
+    --acc-amber: #BA7517;
+    --bg-amber: #FAEEDA;
+    --acc-red: #A32D2D;
+    --bg-red: #FCEBEB;
+    --acc-purple: #534AB7;
+    --bg-purple: #EEEDFE;
+    --acc-teal: #1D9E75;
+    --bg-teal: #E1F5EE;
+    --bg: #0f172a;
+    --surface: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.09);
+    --muted: #94a3b8;
+    --text: #e2e8f0;
+    --heading: #f8fafc;
+  }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="L4 Module Dashboard — Level 4 computing resources and assessments">
-  <meta name="theme-color" content="#0f172a">
-  <title>L4 Module Dashboard</title>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 28px 14px 50px;
+  }
 
-  <style>
-    :root {
-      --accent-blue: #185FA5;
-      --accent-green: #0F6E56;
-      --accent-amber: #BA7517;
-      --accent-red: #A32D2D;
-      --bg-blue: #E6F1FB;
-      --bg-green: #E1F5EE;
-      --bg-amber: #FAEEDA;
-      --bg-red: #FCEBEB;
-      --surface: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.09);
-      --muted: #94a3b8;
-      --text: #e2e8f0;
-      --heading: #f8fafc;
+  .shell {
+    max-width: 1060px;
+    margin: 0 auto;
+  }
+
+  /* topbar */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .topbar h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--heading);
+    letter-spacing: -.02em;
+  }
+
+  .topbar h1 span {
+    color: #38bdf8;
+  }
+
+  .clock-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .78rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 13px;
+    color: var(--muted);
+  }
+
+  .clock-pill strong {
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dateline {
+    font-size: .8rem;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  /* back */
+  .back-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .8rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: color .2s, border-color .2s;
+  }
+
+  .back-bar:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, .25);
+  }
+
+  /* stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+
+  .stat-label {
+    font-size: .7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 5px;
+  }
+
+  .stat-val {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--heading);
+    line-height: 1;
+  }
+
+  .stat-val.sm {
+    font-size: .88rem;
+    line-height: 1.4;
+  }
+
+  /* search */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 18px;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 14px 9px 38px;
+    color: var(--text);
+    font-size: .82rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+
+  .search-wrap input::placeholder {
+    color: var(--muted);
+  }
+
+  .search-wrap input:focus {
+    border-color: rgba(56, 189, 248, .4);
+  }
+
+  .search-wrap .si {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* filter pills */
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .fpill {
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .fpill.active,
+  .fpill:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, .3);
+    background: rgba(255, 255, 255, .12);
+  }
+
+  /* section label */
+  .sec-label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* grid */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+
+  /* card */
+  .mod-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 18px 18px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+    position: relative;
+  }
+
+  .mod-card:hover {
+    transform: translateY(-5px);
+    color: var(--heading);
+  }
+
+  .mod-card.blue:hover {
+    border-color: var(--acc-blue);
+    box-shadow: 0 0 0 1px var(--acc-blue);
+  }
+
+  .mod-card.green:hover {
+    border-color: var(--acc-green);
+    box-shadow: 0 0 0 1px var(--acc-green);
+  }
+
+  .mod-card.amber:hover {
+    border-color: var(--acc-amber);
+    box-shadow: 0 0 0 1px var(--acc-amber);
+  }
+
+  .mod-card.red:hover {
+    border-color: var(--acc-red);
+    box-shadow: 0 0 0 1px var(--acc-red);
+  }
+
+  .mod-card.purple:hover {
+    border-color: var(--acc-purple);
+    box-shadow: 0 0 0 1px var(--acc-purple);
+  }
+
+  .mod-card.teal:hover {
+    border-color: var(--acc-teal);
+    box-shadow: 0 0 0 1px var(--acc-teal);
+  }
+
+  .mod-card.hidden {
+    display: none;
+  }
+
+  .icon-wrap {
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: transform .25s;
+    font-size: 26px;
+  }
+
+  .blue .icon-wrap {
+    background: var(--bg-blue);
+    color: var(--acc-blue);
+  }
+
+  .green .icon-wrap {
+    background: var(--bg-green);
+    color: var(--acc-green);
+  }
+
+  .amber .icon-wrap {
+    background: var(--bg-amber);
+    color: var(--acc-amber);
+  }
+
+  .red .icon-wrap {
+    background: var(--bg-red);
+    color: var(--acc-red);
+  }
+
+  .purple .icon-wrap {
+    background: var(--bg-purple);
+    color: var(--acc-purple);
+  }
+
+  .teal .icon-wrap {
+    background: var(--bg-teal);
+    color: var(--acc-teal);
+  }
+
+  .mod-card:hover .icon-wrap {
+    transform: scale(1.08);
+  }
+
+  .mod-name {
+    font-size: .94rem;
+    font-weight: 700;
+    color: var(--heading);
+    margin-bottom: 3px;
+  }
+
+  .mod-meta {
+    font-size: .74rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .mod-badge {
+    display: inline-block;
+    font-size: .66rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .07);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .mod-badge.new {
+    background: rgba(56, 189, 248, .12);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, .25);
+  }
+
+  /* new tag blink */
+  @keyframes blink-border {
+
+    0%,
+    100% {
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, .2)
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
+    50% {
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, .6)
+    }
+  }
+
+  .mod-card.is-new {
+    animation: blink-border 2.2s ease-in-out 3;
+  }
+
+  /* announcement panel */
+  .announce-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+
+  .announce-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .announce-title {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .announce-toggle {
+    font-size: .72rem;
+    color: #38bdf8;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #38bdf8;
+  }
+
+  .ann-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ann-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 12px;
+    background: rgba(255, 255, 255, .04);
+    border-radius: 10px;
+    border-left: 3px solid transparent;
+    font-size: .78rem;
+  }
+
+  .ann-item.urgent {
+    border-left-color: #f87171;
+  }
+
+  .ann-item.info {
+    border-left-color: #38bdf8;
+  }
+
+  .ann-item.success {
+    border-left-color: #34d399;
+  }
+
+  .ann-item.warn {
+    border-left-color: var(--acc-amber);
+  }
+
+  .ann-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .urgent .ann-dot {
+    background: #b0ea0e;
+  }
+
+  .info .ann-dot {
+    background: #38bdf8;
+  }
+
+  .success .ann-dot {
+    background: #34d399;
+  }
+
+  .warn .ann-dot {
+    background: #FBBF24;
+  }
+
+  .ann-text {
+    flex: 1;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .ann-tag {
+    font-size: .63rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    padding: 1px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .urgent .ann-tag {
+    background: rgba(248, 113, 113, .15);
+    color: #f87171;
+  }
+
+  .info .ann-tag {
+    background: rgba(56, 189, 248, .12);
+    color: #38bdf8;
+  }
+
+  .success .ann-tag {
+    background: rgba(52, 211, 153, .12);
+    color: #34d399;
+  }
+
+  .warn .ann-tag {
+    background: rgba(251, 191, 36, .12);
+    color: #FBBF24;
+  }
+
+  /* ticker */
+  .ticker-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    overflow: hidden;
+  }
+
+  .ticker-label {
+    font-size: .68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: 5px;
+  }
+
+  .ticker-track {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: slide 28s linear infinite;
+    font-size: .78rem;
+    color: var(--text);
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(100%)
     }
 
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #0f172a;
-      min-height: 100vh;
-      color: var(--text);
-      padding: 40px 16px 60px;
+    to {
+      transform: translateX(-100%)
     }
+  }
 
-    /* ── SHELL ── */
-    .shell {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+  /* empty state */
+  .empty-state {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--muted);
+    font-size: .85rem;
+  }
 
-    /* ── TOP BAR ── */
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .topbar h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--heading);
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    .topbar h1 span {
-      color: #38bdf8;
-    }
-
-    .clock-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: .8rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 6px 14px;
-      color: var(--muted);
-    }
-
-    .clock-pill strong {
-      color: var(--text);
-    }
-
-    .dateline {
-      font-size: .82rem;
-      color: var(--muted);
-      margin-bottom: 22px;
-    }
-
-    /* ── BACK BAR ── */
-    .back-bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .82rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 16px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color .2s, border-color .2s;
-      margin-bottom: 26px;
-    }
-
-    .back-bar:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    /* ── STATS ROW ── */
+  @media(max-width:580px) {
     .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 26px;
+      grid-template-columns: 1fr 1fr
     }
 
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 18px;
-    }
-
-    .stat-label {
-      font-size: .75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 6px;
-    }
-
-    .stat-val {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--heading);
-      line-height: 1;
-    }
-
-    .stat-val.sm {
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    /* ── GRID ── */
-    .module-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 30px;
-    }
-
-    /* ── MODULE CARD ── */
-    .mod-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 28px 22px 22px;
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
+    .topbar {
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform .25s, border-color .25s, box-shadow .25s;
-      position: relative;
-      overflow: hidden;
+      align-items: flex-start
     }
+  }
+</style>
 
-    .mod-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity .3s;
-    }
+<div class="shell">
+  <div class="topbar">
+    <h1>L4 <span>Module</span> Dashboard</h1>
+    <div class="clock-pill">&#128336; <strong id="clk">--:--:--</strong>
+    </div>
+  </div>
+  <p class="dateline" id="dateline">Loading date…</p>
 
-    .mod-card:hover {
-      transform: translateY(-6px);
-      color: var(--heading);
-    }
+  <a href="../" class="back-bar">&#8592; Parent directory</a>
 
-    .mod-card.blue {
-      --c: var(--accent-blue);
-      --cb: var(--bg-blue);
-    }
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Modules</div>
+      <div class="stat-val" id="stat-mods">6</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Active now</div>
+      <div class="stat-val" id="active">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Announcements</div>
+      <div class="stat-val" id="stat-ann">8</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Last updated</div>
+      <div class="stat-val sm" id="updated">—</div>
+    </div>
+  </div>
 
-    .mod-card.green {
-      --c: var(--accent-green);
-      --cb: var(--bg-green);
-    }
-
-    .mod-card.amber {
-      --c: var(--accent-amber);
-      --cb: var(--bg-amber);
-    }
-
-    .mod-card.red {
-      --c: var(--accent-red);
-      --cb: var(--bg-red);
-    }
-
-    .mod-card:hover {
-      border-color: var(--c);
-      box-shadow: 0 0 0 1px var(--c);
-    }
-
-    .icon-wrap {
-      width: 62px;
-      height: 62px;
-      border-radius: 16px;
-      background: var(--cb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-      transition: transform .25s;
-    }
-
-    .mod-card:hover .icon-wrap {
-      transform: scale(1.08);
-    }
-
-    .icon-wrap i {
-      font-size: 28px;
-      color: var(--c);
-    }
-
-    .mod-name {
-      font-size: .98rem;
-      font-weight: 700;
-      color: var(--heading);
-      margin-bottom: 4px;
-    }
-
-    .mod-meta {
-      font-size: .78rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .mod-badge {
-      display: inline-block;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    /* ── TICKER ── */
-    .ticker-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      overflow: hidden;
-    }
-
-    .ticker-label {
-      font-size: .72rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .ticker-track {
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .ticker-inner {
-      display: inline-block;
-      animation: slide 24s linear infinite;
-      font-size: .82rem;
-      color: var(--text);
-    }
-
-    @keyframes slide {
-      from {
-        transform: translateX(100%);
-      }
-
-      to {
-        transform: translateX(-100%);
-      }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 576px) {
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .stats-row {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="shell">
-
-    <!-- TOP BAR -->
-    <div class="topbar">
-      <h1>L4 <span>Module</span> Dashboard</h1>
-      <div class="clock-pill">
-        <i class="bi bi-clock"></i>
-        <strong id="clk">--:--:--</strong>
+  <!-- ANNOUNCEMENTS PANEL -->
+  <div class="announce-wrap">
+    <div class="announce-head">
+      <div class="announce-title">&#128227; Announcements</div>
+      <button class="announce-toggle" onclick="toggleAnn()">Show less ▲</button>
+    </div>
+    <div class="ann-list" id="ann-list">
+      <div class="ann-item warning">
+        <div class="ann-dot"></div>
+        <div class="ann-text" style="background-color: #b0ea0e; color: #0f172a;">U'RE HAVING THE FTP & WEB ASSESSMENT BY TOMORROW, MAKE SURE TO PREPARE</div>
+        <div class="ann-tag">INFO</div>
       </div>
     </div>
-    <p class="dateline" id="dateline">Loading date…</p>
+  </div>
 
-    <!-- BACK LINK -->
-    <a href="../" class="back-bar">
-      <i class="bi bi-arrow-left-circle-fill"></i> Parent directory
+  <!-- SEARCH + FILTER -->
+  <div class="search-wrap">
+    <span class="si">&#128269;</span>
+    <input type="text" id="search" placeholder="Search modules…" oninput="filterCards()">
+  </div>
+  <div class="filter-row">
+    <button class="fpill active" data-filter="all" onclick="setFilter(this,'all')">All</button>
+    <button class="fpill" data-filter="Module" onclick="setFilter(this,'Module')">Modules</button>
+    <button class="fpill" data-filter="Activity" onclick="setFilter(this,'Activity')">Activities</button>
+    <button class="fpill" data-filter="Assessment" onclick="setFilter(this,'Assessment')">Assessments</button>
+  </div>
+
+  <div class="sec-label">&#9707; Resources &amp; Modules</div>
+
+  <div class="module-grid" id="module-grid">
+
+    <a href="CCMCS401/" class="mod-card blue" data-type="Module" data-name="ccmcs401 core computing">
+      <div class="icon-wrap">&#128196;</div>
+      <div class="mod-name">CCMCS401</div>
+      <div class="mod-meta">Core computing module</div>
+      <div class="badge-row"><span class="mod-badge">Module</span></div>
     </a>
 
-    <!-- STATS -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label"><i class="bi bi-grid-3x3-gap me-1"></i>Modules</div>
-        <div class="stat-val">4</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label"><i class="bi bi-person-fill me-1"></i>Active now</div>
-        <div class="stat-val" id="active">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label"><i class="bi bi-calendar-check me-1"></i>Last updated</div>
-        <div class="stat-val sm" id="updated">—</div>
-      </div>
-    </div>
+    <a href="NITWA401/" class="mod-card green" data-type="Module" data-name="nitwa401 network infrastructure">
+      <div class="icon-wrap">&#128301;</div>
+      <div class="mod-name">NITWA401</div>
+      <div class="mod-meta">Network infrastructure</div>
+      <div class="badge-row"><span class="mod-badge">Module</span></div>
+    </a>
 
-    <!-- MODULE CARDS -->
-    <div class="module-grid">
+    <a href="dhcp-group-tasks.html" class="mod-card amber" data-type="Activity"
+      data-name="dhcp group tasks interactive presentation">
+      <div class="icon-wrap">&#128225;</div>
+      <div class="mod-name">DHCP Group Tasks</div>
+      <div class="mod-meta">Interactive presentation cards</div>
+      <div class="badge-row"><span class="mod-badge">Activity</span></div>
+    </a>
 
-      <a href="CCMCS401/" class="mod-card blue">
-        <div class="icon-wrap"><i class="bi bi-layout-text-sidebar-reverse"></i></div>
-        <div class="mod-name">CCMCS401</div>
-        <div class="mod-meta">Core computing module</div>
-        <span class="mod-badge">Module</span>
-      </a>
+    <a href="web_server_assessment.html" class="mod-card red" data-type="Assessment"
+      data-name="web server assessment evaluation">
+      <div class="icon-wrap">&#128187;</div>
+      <div class="mod-name">Web Server Assessment</div>
+      <div class="mod-meta">Comprehensive evaluation</div>
+      <div class="badge-row"><span class="mod-badge">Assessment</span></div>
+    </a>
 
-      <a href="NITWA401/" class="mod-card green">
-        <div class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></div>
-        <div class="mod-name">NITWA401</div>
-        <div class="mod-meta">Network infrastructure</div>
-        <span class="mod-badge">Module</span>
-      </a>
+    <a href="FTP-WEB-ASSESSMENT.HTML" class="mod-card red is-new" data-type="Assessment"
+      data-name="ftp web assessment portal">
+      <div class="icon-wrap">&#9888;&#65039;</div>
+      <div class="mod-name">FTP &amp; Web Assessment</div>
+      <div class="mod-meta">Important: Read-only portal</div>
+      <div class="badge-row"><span class="mod-badge">Assessment</span><span class="mod-badge new">New</span></div>
+    </a>
 
-      <a href="dhcp-group-tasks.html" class="mod-card amber">
-        <div class="icon-wrap"><i class="bi bi-hdd-network-fill"></i></div>
-        <div class="mod-name">DHCP Group Tasks</div>
-        <div class="mod-meta">Interactive presentation cards</div>
-        <span class="mod-badge">Activity</span>
-      </a>
-
-      <a href="web_server_assessment.html" class="mod-card red">
-        <div class="icon-wrap"><i class="bi bi-server"></i></div>
-        <div class="mod-name">Web Server Assessment</div>
-        <div class="mod-meta">Comprehensive evaluation</div>
-        <span class="mod-badge">Assessment</span>
-      </a>
-
-    </div>
-
-    <!-- ANNOUNCEMENTS TICKER -->
-    <div class="ticker-wrap">
-      <div class="ticker-label"><i class="bi bi-megaphone-fill"></i> Announcements</div>
-      <div class="ticker-track">
-        <span class="ticker-inner" id="ticker">Loading announcements…</span>
-      </div>
-    </div>
+    <a href="#" class="mod-card purple is-new" data-type="Module" data-name="l4 resources study materials extra">
+      <div class="icon-wrap">&#128218;</div>
+      <div class="mod-name">Study Resources</div>
+      <div class="mod-meta">Supplementary materials</div>
+      <div class="badge-row"><span class="mod-badge">Module</span><span class="mod-badge new">New</span></div>
+    </a>
 
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const msgs = [
-      'CCMCS401 lab submission due Friday',
-      'NITWA401 packet tracer task now available',
-      'DHCP group task presentations scheduled for Week 8',
-      'Web Server Assessment feedback released — check your module page',
-      'Reminder: upload all practicals before end of term',
-      'New study resources added to CCMCS401',
-      'Office hours: Tue & Thu 14:00–16:00',
-      'Module review sessions start next Monday'
-    ];
+  <div class="empty-state" id="empty" style="display:none">No modules match your search.</div>
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-label">&#128227; Live feed</div>
+    <div class="ticker-track">
+      <span class="ticker-inner" id="ticker">Loading…</span>
+    </div>
+  </div>
+</div>
 
-    function tick() {
-      const now = new Date();
-      document.getElementById('clk').textContent =
-        pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
-      document.getElementById('dateline').textContent =
-        now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      document.getElementById('updated').textContent =
-        now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-    tick();
-    setInterval(tick, 1000);
+<script>
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    const n = new Date();
+    document.getElementById('clk').textContent = pad(n.getHours()) + ':' + pad(n.getMinutes()) + ':' + pad(n.getSeconds());
+    document.getElementById('dateline').textContent = n.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('updated').textContent = n.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  tick(); setInterval(tick, 1000);
 
-    function refreshActive() {
-      document.getElementById('active').textContent = Math.floor(Math.random() * 5) + 1;
-    }
-    refreshActive();
-    setInterval(refreshActive, 9000);
+  function refreshActive() { document.getElementById('active').textContent = Math.floor(Math.random() * 5) + 1; }
+  refreshActive(); setInterval(refreshActive, 9000);
 
-    function rotateTicker() {
-      const pick = [...msgs].sort(() => .5 - Math.random()).slice(0, 5);
-      document.getElementById('ticker').textContent = pick.join('   •   ');
-    }
-    rotateTicker();
-    setInterval(rotateTicker, 24000);
-  </script>
+  const msgs = [
+    'CCMCS401 lab submission due Friday — upload now!',
+    'NITWA401 packet tracer task now available',
+    'DHCP group task presentations: Week 8',
+    'Web Server Assessment feedback released — check module page',
+    'FTP & Web Assessment portal is LIVE',
+    'Reminder: upload all practicals before end of term',
+    'New study resources added to CCMCS401',
+    'Office hours: Tue & Thu 14:00–16:00',
+    'Module review sessions start next Monday',
+    'Study Resources section updated with new materials'
+  ];
+  function rotateTicker() {
+    const pick = [...msgs].sort(() => .5 - Math.random()).slice(0, 6);
+    document.getElementById('ticker').textContent = pick.join('   •   ');
+  }
+  rotateTicker(); setInterval(rotateTicker, 28000);
 
-</body>
+  let activeFilter = 'all';
+  function setFilter(el, f) {
+    document.querySelectorAll('.fpill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    activeFilter = f;
+    filterCards();
+  }
+  function filterCards() {
+    const q = document.getElementById('search').value.toLowerCase();
+    let visible = 0;
+    document.querySelectorAll('.mod-card').forEach(c => {
+      const nameMatch = c.dataset.name.includes(q);
+      const typeMatch = activeFilter === 'all' || c.dataset.type === activeFilter;
+      const show = nameMatch && typeMatch;
+      c.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    document.getElementById('empty').style.display = visible ? 'none' : 'block';
+    document.getElementById('stat-mods').textContent = visible;
+  }
 
-</html>
+  let annOpen = true;
+  function toggleAnn() {
+    annOpen = !annOpen;
+    document.getElementById('ann-list').style.display = annOpen ? 'flex' : 'none';
+    document.querySelector('.announce-toggle').textContent = annOpen ? 'Show less ▲' : 'Show all ▼';
+  }
+</script>
