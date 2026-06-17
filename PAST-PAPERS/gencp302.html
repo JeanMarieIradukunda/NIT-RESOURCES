@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIT-RESOURCES PORTAL | C Programming Fundamentals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .portal-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            border-bottom: 5px solid #0284c7;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            background-color: #0f172a;
+            color: white;
+            padding: 0.75rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .question-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .question-number {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 1.1rem;
+        }
+        .marks-badge {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+        }
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        pre {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            border-left: 4px solid #3b82f6;
+        }
+        .answer-zone {
+            background-color: #f0fdf4;
+            border: 1px dashed #22c55e;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none; /* Controlled via JS Toggle */
+        }
+        .answer-label {
+            color: #166534;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+        .table-custom {
+            border: 1px solid #e2e8f0;
+        }
+        .table-custom th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 600;
+        }
+        .sticky-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .btn-portal {
+            background-color: #10b981;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+        }
+        .btn-portal:hover {
+            background-color: #059669;
+            color: white;
+        }
+        .option-item {
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.25rem;
+        }
+        .correct-option {
+            background-color: #dcfce7;
+            border-left: 3px solid #22c55e;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="portal-header text-center">
+        <div class="container">
+            <span class="badge bg-warning text-dark mb-2 fw-bold tracking-wider">NIT-RESOURCES PORTAL</span>
+            <h1 class="fw-bold tracking-tight">Level 3 GENCP302-C Programming Fundamentals</h1>
+            <p class="lead mb-0 opacity-90">Official Digital Question Paper & Evaluation Scheme</p>
+        </div>
+    </header>
+
+    <div class="container mb-5">
+        
+        <h2 class="section-title">SECTION A: Attempt all questions (55 marks)</h2>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">01. Multiple Choice Questions</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            
+            <div class="mb-4">
+                <p class="fw-medium">I. Which type of programming language follows a sequence of statements to achieve a desired output?</p>
+                <div class="option-item">A. Functional programming language</div>
+                <div class="option-item">B. Object-oriented programming language</div>
+                <div class="option-item correct-option">C. Procedural programming language</div>
+                <div class="option-item">D. Logic programming language</div>
+            </div>
+
+            <div class="mb-4">
+                <p class="fw-medium">II. Which of the following is an example of an Object-Oriented Programming (OOP) language?</p>
+                <div class="option-item">A. Prolog</div>
+                <div class="option-item correct-option">B. Python</div>
+                <div class="option-item">C. BASIC</div>
+                <div class="option-item">D. Datalog</div>
+            </div>
+
+            <div class="mb-2">
+                <p class="fw-medium">III. Which type of programming language expresses facts and rules to instruct a computer on how to make decisions?</p>
+                <div class="option-item">A. Scripting language</div>
+                <div class="option-item">B. Functional language</div>
+                <div class="option-item">C. Procedural language</div>
+                <div class="option-item correct-option">D. Logic programming language</div>
+            </div>
+
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> C &nbsp;|&nbsp; <strong>II:</strong> B &nbsp;|&nbsp; <strong>III:</strong> D
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">02. Column Matching</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Match each programming language type in Column A with its description in Column B.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>Column A (Type)</th>
+                            <th>Column B (Description)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Procedural</strong></td>
+                            <td>a. Uses mathematical functions; does not focus on execution of statements.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Functional</strong></td>
+                            <td>b. Automates repetitive tasks or supports processes in larger applications.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Scripting</strong></td>
+                            <td>c. Follows a sequence of statements or commands to achieve a desired output.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>1</strong> = c &nbsp;|&nbsp; <strong>2</strong> = a &nbsp;|&nbsp; <strong>3</strong> = b
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">03. True or False (IDE)</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Write T (True) or F (False) for each statement about the IDE.</p>
+            <ul class="list-group list-group-flush mb-2">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    I. An IDE is made up of three main components: a source code editor, a build automation tool, and a debugger.
+                    <span class="badge bg-success">T</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    II. The debugger in an IDE is used to compile source code into machine language.
+                    <span class="badge bg-danger">F</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    III. Cloud based IDEs allow programmers to access their code from anywhere.
+                    <span class="badge bg-success">T</span>
+                </li>
+            </ul>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> T &nbsp;|&nbsp; <strong>II:</strong> F (A compiler translates source code; a debugger is used for testing/finding errors) &nbsp;|&nbsp; <strong>III:</strong> T
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">04. Format Specifiers Matching</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Match each C data type in Column A with its correct format specifier in Column B.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>Column A (Data Type)</th>
+                            <th>Column B (Format Specifier)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1. int</strong></td><td>a. %f</td></tr>
+                        <tr><td><strong>2. char</strong></td><td>b. %c</td></tr>
+                        <tr><td><strong>3. float</strong></td><td>c. %lf</td></tr>
+                        <tr><td><strong>4. double</strong></td><td>d. %d</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>1</strong> = d (%d) &nbsp;|&nbsp; <strong>2</strong> = b (%c) &nbsp;|&nbsp; <strong>3</strong> = a (%f) &nbsp;|&nbsp; <strong>4</strong> = c (%lf)
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">05. Sentence Completion</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Complete each sentence with the correct word or phrase stated below:</p>
+            <div class="mb-3 text-muted">
+                <span class="badge bg-secondary me-2">Digital camera</span>
+                <span class="badge bg-secondary me-2">Preprocessor Command</span>
+                <span class="badge bg-secondary me-2">Comment</span>
+                <span class="badge bg-secondary text-wrap">main() function</span>
+            </div>
+            <ol class="list-group list-group-numbered list-group-flush">
+                <li class="list-group-item">I. The <span class="text-primary fw-bold">Preprocessor Command</span> is a preprocessor directive that includes a library file before compilation (e.g., #include &lt;stdio.h&gt;).</li>
+                <li class="list-group-item">II. The <span class="text-primary fw-bold">main() function</span> is the entry point of every C program where execution begins.</li>
+                <li class="list-group-item">III. Text placed between /* and */ in a C program is called a <span class="text-primary fw-bold">Comment</span> and is ignored by the compiler.</li>
+            </ol>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> Preprocessor Command &nbsp;|&nbsp; <strong>II:</strong> main() function &nbsp;|&nbsp; <strong>III:</strong> Comment
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">06. Environment Setup (YES / NO)</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Write YES or NO for each statement about setting up a C programming environment.</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    I. Is a Text Editor (e.g., Notepad, vim) one of the two main tools needed to set up a C programming environment?
+                    <span class="badge bg-success">YES</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    II. Can a C program run directly without being compiled by a compiler?
+                    <span class="badge bg-danger">NO</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    III. Is GCC (GNU C/C++ Compiler) an example of a commonly used and freely available C compiler?
+                    <span class="badge bg-success">YES</span>
+                </li>
+            </ul>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> YES &nbsp;|&nbsp; <strong>II:</strong> NO (C is a compiled language; source code must be converted to machine code) &nbsp;|&nbsp; <strong>III:</strong> YES
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">07. C Operators Selection</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <div class="mb-3">
+                <p class="fw-medium mb-1">I. Which operator checks if two operands are EQUAL to each other in C?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: B. ==</div>
+            </div>
+            <div class="mb-3">
+                <p class="fw-medium mb-1">II. Which of the following is the Logical AND operator in C?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: C. &amp;&amp;</div>
+            </div>
+            <div>
+                <p class="fw-medium mb-1">III. Which operator increases the value of a variable by 1 (e.g., a++ or ++a)?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: D. Increment Operator (Unary Arithmetic)</div>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> B (==) &nbsp;|&nbsp; <strong>II:</strong> C (&&) &nbsp;|&nbsp; <strong>III:</strong> D (Increment Operator)
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">08. Variables & Constants (T / F)</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Identify whether each of the following statements about variables and constants in C is True (T) or False (F)</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    I. A variable in C is a named memory location whose value CAN be changed during program execution.
+                    <span class="badge bg-success">T</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    II. Once a value is assigned to a constant in C, it CAN be changed at any point during program execution.
+                    <span class="badge bg-danger">F</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    III. The keyword #define can be used to declare a symbolic constant in C (e.g., #define PI 3.14159).
+                    <span class="badge bg-success">T</span>
+                </li>
+            </ul>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> T &nbsp;|&nbsp; <strong>II:</strong> F (Constants are immutable once defined) &nbsp;|&nbsp; <strong>III:</strong> T
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">09. For Loop Elements</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Complete each sentence about the for loop in C using the correct term from the following list:</p>
+            <div class="mb-2 text-muted text-center"><strong>a. Condition &nbsp;|&nbsp; b. Communication &nbsp;|&nbsp; c. Initialization &nbsp;|&nbsp; d. Increment</strong></div>
+            <ol class="list-group list-group-numbered list-group-flush">
+                <li class="list-group-item">I. The <span class="text-primary fw-bold">Initialization</span> step of a for loop sets the loop control variable to a starting value and executes only once at the beginning.</li>
+                <li class="list-group-item">II. The <span class="text-primary fw-bold">Condition</span> expression is checked before each iteration; if it is false, the loop stops.</li>
+                <li class="list-group-item">III. The <span class="text-primary fw-bold">Increment</span> step modifies the loop control variable (e.g., i++) after each iteration.</li>
+            </ol>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> c. Initialization &nbsp;|&nbsp; <strong>II:</strong> a. Condition &nbsp;|&nbsp; <strong>III:</strong> d. Increment
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">10. Loop Features Matching</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Match each loop feature in Column A with the correct loop type in Column B.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>Column A (Feature)</th>
+                            <th>Column B (Loop Type)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1. Condition checked BEFORE the loop body executes.</strong></td><td>a. do...while loop</td></tr>
+                        <tr><td><strong>2. Loop body ALWAYS executes at least once.</strong></td><td>b. while loop</td></tr>
+                        <tr><td><strong>3. Requires a semicolon at the end of its condition.</strong></td><td>c. do...while loop</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>1</strong> = b (while loop) &nbsp;|&nbsp; <strong>2</strong> = a / c (do...while loop) &nbsp;|&nbsp; <strong>3</strong> = a / c (do...while loop, i.e., <code>while(cond);</a></code>)
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">11. Program Errors Selection</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <div class="mb-3">
+                <p class="fw-medium mb-1">I. A programmer writes <code>int a = 10</code> without a semicolon. What type of error is this?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: C. Syntax error – detected at compile time</div>
+            </div>
+            <div class="mb-3">
+                <p class="fw-medium mb-1">II. A program crashes when it is divided by zero (x / 0). The program was compiled successfully. What type of error is this?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: D. Run-time error</div>
+            </div>
+            <div>
+                <p class="fw-medium mb-1">III. A function returns the PRODUCT instead of the SUM. The program compiles and runs but gives wrong output. What type of error is this?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: C. Logical error</div>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> C &nbsp;|&nbsp; <strong>II:</strong> D &nbsp;|&nbsp; <strong>III:</strong> C
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">12. Algorithms (T / F)</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Write T (True) or F (False) for each statement about algorithms.</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    I. An algorithm is a step-by-step procedure or set of instructions for solving a problem and forms the foundation for writing a program.
+                    <span class="badge bg-success">T</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    II. Algorithms can only solve simple problems and are not useful when working with large amounts of data.
+                    <span class="badge bg-danger">F</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    III. One advantage of algorithms is that they produce consistent results without being influenced by personal biases or emotions.
+                    <span class="badge bg-success">T</span>
+                </li>
+            </ul>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> T &nbsp;|&nbsp; <strong>II:</strong> F &nbsp;|&nbsp; <strong>III:</strong> T
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">13. Code Logic Analysis</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <div class="mb-4">
+                <p class="fw-medium mb-1">I. A programmer writes the following C code. What is the CORRECT output?</p>
+                <pre class="mb-2">int a = 15, b = 4;
+printf("%d", a / b);</pre>
+                <div class="ps-2 fw-semibold text-success">Answer: B. 3</div>
+                <small class="text-muted d-block ps-2">(Integer division discards decimal fractions)</small>
+            </div>
+
+            <div class="mb-4">
+                <p class="fw-medium mb-1">II. Which of the following C code fragments CORRECTLY swaps the values of two integer variables 'x' and 'y' using a temporary variable?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: B. int temp; temp = x; x = y; y = temp;</div>
+            </div>
+
+            <div>
+                <p class="fw-medium mb-1">III. A programmer wants a C program that prints all EVEN numbers from 2 to 10 inclusive. Which loop CORRECTLY implements this?</p>
+                <div class="ps-2 fw-semibold text-success">Answer: C. Both A and B above are correct</div>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> B &nbsp;|&nbsp; <strong>II:</strong> B &nbsp;|&nbsp; <strong>III:</strong> C
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">14. Language Vocabulary Completion</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Complete each sentence by using the following words:</p>
+            <div class="mb-3 text-muted text-center"><strong>Void &nbsp;|&nbsp; Variable &nbsp;|&nbsp; Array &nbsp;|&nbsp; Loop &nbsp;|&nbsp; Scanf()</strong></div>
+            <ol class="list-group list-group-numbered list-group-flush">
+                <li class="list-group-item">I. To read an integer value entered by the user from the keyboard in C, the programmer uses the function <span class="text-primary fw-bold">scanf()</span> with the format specifier %d and must prefix the variable name with the address-of operator (&amp;).</li>
+                <li class="list-group-item">II. In C, an <span class="text-primary fw-bold">Array</span> is a collection of elements of the SAME data type stored in consecutive memory locations; its elements are accessed using an index (subscript) that starts at zero.</li>
+                <li class="list-group-item">III. A C function that performs a task but does NOT return any value to the calling program must be declared with the return type <span class="text-primary fw-bold">void</span>.</li>
+            </ol>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> scanf() &nbsp;|&nbsp; <strong>II:</strong> Array &nbsp;|&nbsp; <strong>III:</strong> void
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">15. General Logic Rules (YES / NO)</span>
+                <span class="marks-badge">3 Marks</span>
+            </div>
+            <p class="fw-medium">Read the following sentences carefully and answer each item with YES or NO.</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    I. Must a programmer include the &lt;math.h&gt; header file in a C program in order to use standard mathematical functions such as sqrt() (square root) and pow() (power)?
+                    <span class="badge bg-success">YES</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    II. Is it possible to write and successfully compile a valid C program that does NOT contain a main() function?
+                    <span class="badge bg-danger">NO</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    III. If a programmer defines a constant using #define PI 3.14159 in a C program, can the value of PI be changed later in the program using an assignment statement such as PI = 3.14;?
+                    <span class="badge bg-danger">NO</span>
+                </li>
+            </ul>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I:</strong> YES &nbsp;|&nbsp; <strong>II:</strong> NO (main is strictly mandated as execution entry) &nbsp;|&nbsp; <strong>III:</strong> NO (Macros cannot be re-assigned targets)
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">16. Operator Definitions Matching</span>
+                <span class="marks-badge">5 Marks</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Column A</th>
+                            <th>Column B – Meaning / Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>I. ==</strong></td><td><span class="badge bg-primary me-2">Mapped to C</span> Equality / comparison operator: checks whether two values are EQUAL (returns 1 if equal, 0 if not).</td></tr>
+                        <tr><td><strong>II. &amp;&amp;</strong></td><td><span class="badge bg-primary me-2">Mapped to A</span> Logical AND: evaluates to TRUE (1) only if BOTH conditions on either side are TRUE.</td></tr>
+                        <tr><td><strong>III. %</strong></td><td><span class="badge bg-primary me-2">Mapped to B</span> Modulus operator: returns the REMAINDER after dividing the left operand by the right operand.</td></tr>
+                        <tr><td><strong>IV. ++</strong></td><td><span class="badge bg-primary me-2">Mapped to D</span> Increment operator: increases the value of a variable by 1.</td></tr>
+                        <tr><td><strong>V. !=</strong></td><td><span class="badge bg-primary me-2">Mapped to E</span> Not-equal operator: checks whether two values are NOT EQUAL (returns 1 if not equal, 0 if equal).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I</strong> = C &nbsp;|&nbsp; <strong>II</strong> = A &nbsp;|&nbsp; <strong>III</strong> = B &nbsp;|&nbsp; <strong>IV</strong> = D &nbsp;|&nbsp; <strong>V</strong> = E
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">17. Keywords & Control Structures Matching</span>
+                <span class="marks-badge">5 Marks</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Column A – Keyword</th>
+                            <th>Column B – Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>I. if</strong></td><td><span class="badge bg-dark me-2">Mapped to C</span> Executes a block of code ONLY IF a specified Boolean condition evaluates to TRUE; does not include an automatic repeat.</td></tr>
+                        <tr><td><strong>II. while</strong></td><td><span class="badge bg-dark me-2">Mapped to E</span> Repeatedly executes a block of code while a condition remains TRUE; condition is checked BEFORE each iteration ( may execute zero times).</td></tr>
+                        <tr><td><strong>III. do-while</strong></td><td><span class="badge bg-dark me-2">Mapped to A</span> Executes a block of code AT LEAST ONCE, then repeats while a condition is TRUE; condition checked AFTER the loop body.</td></tr>
+                        <tr><td><strong>IV. for</strong></td><td><span class="badge bg-dark me-2">Mapped to D</span> A loop that repeats code a set number of times using three parts: initialization, condition check, and increment/decrement.</td></tr>
+                        <tr><td><strong>V. switch</strong></td><td><span class="badge bg-dark me-2">Mapped to B</span> Selects and executes ONE of several code blocks based on the value of a variable or expression (case-based selection).</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="answer-zone">
+                <div class="answer-label">Official Answer Key</div>
+                <strong>I</strong> = C &nbsp;|&nbsp; <strong>II</strong> = E &nbsp;|&nbsp; <strong>III</strong> = A &nbsp;|&nbsp; <strong>IV</strong> = D &nbsp;|&nbsp; <strong>V</strong> = B
+            </div>
+        </div>
+
+
+        <h2 class="section-title">Section B: Attempt any three (3) questions (30 marks)</h2>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">18. Code Execution Analysis</span>
+                <span class="marks-badge">10 Marks</span>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+int main() {
+    int i;
+    for (i = 1; i <= 5; i++) {
+        if (i == 3) continue;
+        printf("%d\n", i);
+    }
+    return 0;
+}</pre>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Output of this program:</strong><br><code class="text-dark bg-light p-1 rounded d-inline-block mt-1">1<br>2<br>4<br>5</code></p>
+                <p><strong>(b) Role of the continue statement:</strong><br>The <code>continue</code> statement forces the program to skip the remainder of the current loop body iteration when <code>i == 3</code> and proceed immediately directly to the loop updating expression structure (<code>i++</code>).</p>
+                <p><strong>(c) Replacement with break:</strong><br>If replaced with <code>break</code>, the loop terminates completely execution instantly once <code>i</code> equals 3. The output would change to:<br><code class="text-dark bg-light p-1 rounded d-inline-block mt-1">1<br>2</code></p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">19. Functions Structural Trace</span>
+                <span class="marks-badge">10 Marks</span>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+int add(int x, int y) {
+    return x + y;
+}
+int main() {
+    int a = 10, b = 5;
+    printf("Sum = %d", add(a, b));
+    return 0;
+}</pre>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Structural analysis of the parts:</strong>
+                    <ul class="small">
+                        <li><code>#include &lt;stdio.h&gt;</code>: Standard preprocessor directive importing basic entry/exit declaration capabilities.</li>
+                        <li><code>int add(int x, int y)</code>: User-defined functional definition named 'add', taking two integer variables as parameters and passing back an int type evaluation scalar.</li>
+                        <li><code>int main()</code>: Primary operating lifecycle root execution container where execution contexts are bound.</li>
+                        <li><code>add(a, b)</code>: Programmatic function execution invoking and passing current values of variables a and b dynamically.</li>
+                    </ul>
+                </p>
+                <p><strong>(b) Exact output:</strong><br><code class="text-dark bg-light p-1 rounded">Sum = 15</code></p>
+                <p><strong>(c) Function type:</strong><br>It is a <strong>User-defined function with arguments and a return value</strong>. Justification: It accepts parameters <code>(int x, int y)</code> and yields evaluated results back using the explicit <code>return</code> keyword statement syntax.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">20. Code Debugging & Correction</span>
+                <span class="marks-badge">10 Marks</span>
+            </div>
+            <p class="text-danger fw-medium">Defective Code Snippet Given:</p>
+            <pre>#include &lt;stdio.h&gt;
+void main(),{
+    int a=10, b=20
+    if a &gt; b printf("Max=%d", a)
+    else printf("Max=%d", b);
+}</pre>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>a) Identification of errors:</strong>
+                    <ol class="small">
+                        <li>Comma placed erroneously after main argument declarations: <code>void main(),{</code></li>
+                        <li>Missing closing statement semicolon delimiter tracking behind <code>b=20</code> declaration lines.</li>
+                        <li>The structural conditional clause expression missing parentheses parameters wrapper block constraints: <code>if a &gt; b</code></li>
+                        <li>Missing trailing instruction structural termination punctuation block delimiter marking complete for true branch statement tracking before else syntax: <code>printf("Max=%d", a)</code></li>
+                        <li><code>void main()</code> should ideally return <code>int</code> according to ANSI standard parameters targets.</li>
+                    </ol>
+                </p>
+                <p><strong>b) Corrected program implementation:</strong></p>
+                <pre class="bg-dark text-success">#include &lt;stdio.h&gt;
+int main() {
+    int a = 10, b = 20;
+    if (a &gt; b) {
+        printf("Max=%d", a);
+    } else {
+        printf("Max=%d", b);
+    }
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">21. Decision-Making Architectures</span>
+                <span class="marks-badge">10 Marks</span>
+            </div>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Definition:</strong> A <code>switch</code> statement is a multi-way branch selection optimization control syntax that evaluates expression parameters to match integer or character literal constant parameters values to select code branches directly using an internally optimized branch map table lookup layout design mechanism.</p>
+                <p><strong>(b) Key structural difference:</strong> A <code>switch</code> architecture evaluates uniquely scalar targets strictly comparing them with specific fixed identity constant case statements directly, whereas an <code>if-else if</code> framework can evaluate compound, fluid relational equations alongside multifaceted logical expressions containing ranges and varying operand configurations.</p>
+                <p><strong>(c) Evaluation mapping allocation:</strong>
+                    <ul>
+                        <li><strong>Case 1 (Comparing fixed values 1, 2, 3):</strong> <code>switch</code> architecture is optimal here because it processes specific literal constants efficiently and provides cleaner layout visibility.</li>
+                        <li><strong>Case 2 (Checking continuous dynamic ranges like 0–49, 50–79):</strong> <code>if-else if</code> design architecture is structural and essential here because standard standard switch patterns do not support relational range expressions (e.g., <code>score &gt;= 50 &amp;&amp; score &lt;= 79</code>).</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+
+        <h2 class="section-title">Section C: Attempt only one (1) question (15 marks)</h2>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">22. Data Structures & Scale Adaptation</span>
+                <span class="marks-badge">15 Marks</span>
+            </div>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Definition of an array:</strong> An array is a fixed-size, contiguous sequential memory storage structure holding data values matching the same type definition, grouped under a single shared identifier, and accessed through distinct relative offset indices.</p>
+                <p><strong>(b) Core difference:</strong> An array tracks all of its elements under a single variable name reference structure using a clean zero-based index system (e.g., <code>marks[i]</code>), while individual tracking variables mandate completely unique names for every independent scalar value, which rapidly becomes hard to manage at scale.</p>
+                <p><strong>(c) Evaluation & Justification for Brian:</strong> Utilizing <strong>arrays</strong> is the only appropriate strategy for Brian's scaling workspace. If student enrollments expand to 50 or 100 students, writing out separate discrete variable paths manually becomes unsustainable and impossible to loop over dynamically. Using an array allows the program to iterate over, summarize, and evaluate student marks dynamically with simple loops.</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">23. Logic Generation: Prime Number Check</span>
+                <span class="marks-badge">15 Marks</span>
+            </div>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Step-by-Step Logic Algorithm:</strong>
+                    <ol class="small">
+                        <li>START program processing.</li>
+                        <li>Read target integer parameter value <code>N</code>.</li>
+                        <li>If <code>N</code> is less than or equal to 1, mark it as NOT PRIME and jump directly to Step 7.</li>
+                        <li>Initialize iterative validation variable counter tracker <code>i = 2</code>.</li>
+                        <li>While <code>i * i &lt;= N</code>, check if <code>N % i == 0</code>. If it is, mark it as NOT PRIME and jump to Step 7. Otherwise, increment <code>i</code> by 1.</li>
+                        <li>If no factor is found through the loop range termination limit, evaluate target as PRIME.</li>
+                        <li>Output result status answer message.</li>
+                        <li>STOP sequence execution.</li>
+                    </ol>
+                </p>
+                <p><strong>(b) Full structural program:</strong></p>
+                <pre>#include &lt;stdio.h&gt;
+int main() {
+    int n, i, isPrime = 1;
+    printf("Enter a positive integer: ");
+    scanf("%d", &n);
+    
+    if (n <= 1) {
+        isPrime = 0;
+    } else {
+        for (i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                isPrime = 0;
+                break;
+            }
+        }
+    }
+    
+    if (isPrime == 1)
+        printf("%d is a PRIME number.\n", n);
+    else
+        printf("%d is NOT a PRIME number.\n", n);
+        
+    return 0;
+}</pre>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="question-number">24. Data Representation Architecture</span>
+                <span class="marks-badge">15 Marks</span>
+            </div>
+            <div class="answer-zone d-block" style="background-color: #fafafa; border-color: #cbd5e1;">
+                <div class="text-secondary fw-bold small mb-2">EVALUATION SHEET RESPONSES:</div>
+                <p><strong>(a) Complete dynamic declaration program:</strong></p>
+                <pre>#include &lt;stdio.h&gt;
+int main() {
+    char name[] = "Jean Marie";
+    int age = 19;
+    float averageMarks = 84.5;
+    
+    printf("Student Name: %s\n", name);
+    printf("Student Age: %d years\n", age);
+    printf("Average Marks: %.2f\n", averageMarks);
+    
+    return 0;
+}</pre>
+                <p><strong>(b) Data type mappings list:</strong>
+                    <ul class="small">
+                        <li>Student's Name: Character string array (<code>char[]</code>)</li>
+                        <li>Student's Age: Integer data type (<code>int</code>)</li>
+                        <li>Average Marks: Floating-point precision data type (<code>float</code>)</li>
+                    </ul>
+                </p>
+                <p><strong>(c) Rationale for split structural type architectures:</strong> Computer systems allocate resources based on data characteristics to maximize precision and processing efficiency:
+                    <ul class="small">
+                        <li>Strings handle sequence patterns needed for alphabetic names but don't work with arithmetic.</li>
+                        <li>Integers efficiently track whole numerical counts (like years of age) without decimal overhead.</li>
+                        <li>Floating-point types provide the fractional precision needed to accurately track fractional and decimal performance scores.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="sticky-controls">
+        <button class="btn btn-portal px-4 py-2 rounded-pill shadow" onclick="toggleAnswers()">
+            👁 Toggle Portal Answer Scheme View
+        </button>
+    </div>
+
+    <script>
+        function toggleAnswers() {
+            var zones = document.getElementsByClassName('answer-zone');
+            for (var i = 0; i < zones.length; i++) {
+                if (zones[i].style.display === 'block') {
+                    zones[i].style.display = 'none';
+                } else {
+                    zones[i].style.display = 'block';
+                }
+            }
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+```
