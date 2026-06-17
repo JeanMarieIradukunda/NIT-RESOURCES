@@ -6,114 +6,214 @@
 
 <title>Academic Resources Portal – Term 1 Exams</title>
 
-<link rel="icon" type="image/png"
-      href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
+:root {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --border-color: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    /* Category Colors */
+    --clr-folder: #38bdf8;
+    --clr-prog: #4ade80;
+    --clr-net: #c084fc;
+    --clr-sec: #f87171;
+    --clr-os: #fb923c;
+}
+
 body {
     font-family: "Segoe UI", Roboto, system-ui, sans-serif;
-    background: #f4f6f9;
-    padding: 40px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 30px 15px;
+    min-height: 100vh;
 }
 
-/* Container */
+/* Main Container Card */
 .portal-card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 40px;
-    max-width: 1200px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 1100px;
     margin: auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Header */
+/* Header Section */
 .portal-header {
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 25px;
     padding-bottom: 20px;
 }
 
-/* Back button */
+.portal-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 5px;
+}
+
+.text-muted-custom {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Back Link Button */
 .back-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-weight: 600;
-    color: #1e40af;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
     text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.2s ease;
     margin-bottom: 25px;
 }
 
-.back-link i {
-    font-size: 1.3rem;
-}
-
 .back-link:hover {
-    text-decoration: underline;
+    color: var(--text-main);
+    background: rgba(255,255,255,0.07);
+    border-color: #475569;
 }
 
-/* Controls */
+/* Search Controls and Filters */
 .controls {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    align-items: center;
 }
 
-.controls input {
-    max-width: 300px;
+.search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 260px;
 }
 
-/* Grid */
+.search-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.controls .form-control {
+    background-color: #0f172a;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding-left: 38px;
+    font-size: 0.9rem;
+    height: 38px;
+}
+
+.controls .form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+/* Filter Tag Buttons */
+.filter-btn {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: #334155;
+    color: var(--text-main);
+    border-color: #64748b;
+}
+
+/* Grid Layout */
 .resource-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
 }
 
-/* Cards */
+/* Resource List Row Styling */
 .resource-card {
-    background: #f9fafb;
-    border-radius: 12px;
-    padding: 22px;
-    text-align: center;
-    border: 1px solid #e5e7eb;
-    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #131c2e;
+    border-radius: 10px;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
-    color: #111827;
-}
-
-.resource-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    color: var(--text-main);
 }
 
 .resource-card i {
-    font-size: 44px;
-    margin-bottom: 10px;
+    font-size: 1.25rem; /* Small icon upgrade */
+    flex-shrink: 0;
 }
 
-/* Titles */
 .resource-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.badge-custom {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
     font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
-/* Category colors */
-.folder i { color:#1e40af; }
-.programming i { color:#166534; }
-.networking i { color:#6b21a8; }
-.security i { color:#991b1b; }
-.os i { color:#9a3412; }
+/* Hover Accent Colors per Category */
+.folder:hover { border-color: var(--clr-folder); box-shadow: 0 0 12px rgba(56, 189, 248, 0.15); }
+.programming:hover { border-color: var(--clr-prog); box-shadow: 0 0 12px rgba(74, 222, 128, 0.15); }
+.networking:hover { border-color: var(--clr-net); box-shadow: 0 0 12px rgba(192, 132, 252, 0.15); }
+.security:hover { border-color: var(--clr-sec); box-shadow: 0 0 12px rgba(248, 113, 113, 0.15); }
+.os:hover { border-color: var(--clr-os); box-shadow: 0 0 12px rgba(251, 146, 60, 0.15); }
 
-/* Responsive */
-@media (max-width: 992px) {
-    .resource-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 576px) {
+/* Static Icon & Badge colors mapping */
+.folder i { color: var(--clr-folder); }
+.folder .badge-custom { background: rgba(56, 189, 248, 0.15); color: var(--clr-folder); }
+
+.programming i { color: var(--clr-prog); }
+.programming .badge-custom { background: rgba(74, 222, 128, 0.15); color: var(--clr-prog); }
+
+.networking i { color: var(--clr-net); }
+.networking .badge-custom { background: rgba(192, 132, 252, 0.15); color: var(--clr-net); }
+
+.security i { color: var(--clr-sec); }
+.security .badge-custom { background: rgba(248, 113, 113, 0.15); color: var(--clr-sec); }
+
+.os i { color: var(--clr-os); }
+.os .badge-custom { background: rgba(251, 146, 60, 0.15); color: var(--clr-os); }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
     .resource-grid { grid-template-columns: 1fr; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .search-wrapper { width: 100%; }
 }
 </style>
 </head>
@@ -124,95 +224,96 @@ body {
 
     <div class="portal-header">
         <h1>Academic Resources Portal</h1>
-        <p class="text-muted">Term 1 Examination Materials & Answer Guides</p>
+        <div class="text-muted-custom">Termly Examination Materials & Answer Guides</div>
     </div>
 
-    <!-- Back / Parent Directory -->
-    <a href="../" class="back-link">
-        <i class="bi bi-arrow-left-circle-fill"></i>
-        Go to Parent Directory
-    </a>
+    <div>
+        <a href="../" class="back-link">
+            <i class="bi bi-arrow-left"></i> Parent Directory
+        </a>
+    </div>
 
-    <!-- Search & Filters -->
     <div class="controls">
-        <input type="text" id="searchInput" class="form-control" placeholder="Search resources...">
-
-        <button class="btn btn-outline-primary btn-sm filter-btn" data-filter="all">All</button>
-        <button class="btn btn-outline-primary btn-sm filter-btn" data-filter="folder">Folders</button>
-        <button class="btn btn-outline-success btn-sm filter-btn" data-filter="programming">Programming</button>
-        <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="networking">Networking</button>
-        <button class="btn btn-outline-danger btn-sm filter-btn" data-filter="security">Security</button>
-        <button class="btn btn-outline-warning btn-sm filter-btn" data-filter="os">Operating Systems</button>
+        <div class="search-wrapper">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" class="form-control" placeholder="Search resources...">
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="folder">Folders</button>
+            <button class="filter-btn" data-filter="programming">Programming</button>
+            <button class="filter-btn" data-filter="networking">Networking</button>
+            <button class="filter-btn" data-filter="security">Security</button>
+            <button class="filter-btn" data-filter="os">Operating Systems</button>
+        </div>
     </div>
 
-    <!-- Resources -->
     <div class="resource-grid" id="resourceGrid">
 
         <a href="imgs/" class="resource-card folder" data-category="folder">
             <i class="bi bi-folder-fill"></i>
             <div class="resource-title">Images</div>
-            <span class="badge bg-primary">Folder</span>
+            <span class="badge-custom">Folder</span>
         </a>
 
         <a href="QUESTION PAPAERS/" class="resource-card folder" data-category="folder">
             <i class="bi bi-folder-fill"></i>
             <div class="resource-title">Question Papers</div>
-            <span class="badge bg-primary">Folder</span>
+            <span class="badge-custom">Folder</span>
         </a>
 
         <a href="c-programming_exam_answers.html" class="resource-card programming" data-category="programming">
             <i class="bi bi-file-earmark-code-fill"></i>
             <div class="resource-title">C Programming – Exam Answers</div>
-            <span class="badge bg-success">Programming</span>
+            <span class="badge-custom">Programming</span>
         </a>
 
         <a href="python_exam_answers.html" class="resource-card programming" data-category="programming">
             <i class="bi bi-file-earmark-code-fill"></i>
             <div class="resource-title">Python – Exam Answers</div>
-            <span class="badge bg-success">Programming</span>
+            <span class="badge-custom">Programming</span>
         </a>
+        
         <a href="python_secondTerm.html" class="resource-card programming" data-category="programming">
             <i class="bi bi-file-earmark-code-fill"></i>
             <div class="resource-title">Python – Exam Answers 2nd Term</div>
-            <span class="badge bg-success">Programming</span>
+            <span class="badge-custom">Programming</span>
         </a>
 
         <a href="cctv_exam_answers.html" class="resource-card security" data-category="security">
             <i class="bi bi-shield-lock-fill"></i>
             <div class="resource-title">CCTV – Exam Answers</div>
-            <span class="badge bg-danger">Security</span>
+            <span class="badge-custom">Security</span>
         </a>
 
         <a href="linux_server_exam_answers.html" class="resource-card os" data-category="os">
             <i class="bi bi-terminal-fill"></i>
             <div class="resource-title">Linux Server – Exam Answers</div>
-            <span class="badge bg-warning text-dark">Operating System</span>
+            <span class="badge-custom">OS</span>
         </a>
 
         <a href="windows_server_exam_answers.html" class="resource-card os" data-category="os">
             <i class="bi bi-windows"></i>
             <div class="resource-title">Windows Server – Exam Answers</div>
-            <span class="badge bg-warning text-dark">Operating System</span>
+            <span class="badge-custom">OS</span>
         </a>
 
         <a href="wan_mk_guide_solutions.html" class="resource-card networking" data-category="networking">
             <i class="bi bi-diagram-3-fill"></i>
             <div class="resource-title">WAN MK Guide – Solutions</div>
-            <span class="badge bg-secondary">Networking</span>
+            <span class="badge-custom">Networking</span>
         </a>
 
-        <!-- 2026 windows server NESA Exam Link -->
         <a href="nitwa401_2026.html" class="resource-card os" data-category="os">
             <i class="bi bi-windows"></i>
             <div class="resource-title">2026 Windows Server NESA Exam</div>
-            <span class="badge bg-warning text-dark">Operating System</span>
+            <span class="badge-custom">OS</span>
         </a>
 
-        <!-- C PROGRAMMING  -->
         <a href="gencp302.html" class="resource-card programming" data-category="programming">
             <i class="bi bi-code-slash"></i>
-            <div class="resource-title">C Programming Fundamentals</div>
-            <span class="badge bg-info">Programming</span>
+            <div class="resource-title">NESA 2025-2026 C PROGRAMMING</div>
+            <span class="badge-custom">Programming</span>
         </a>
 
     </div>
@@ -223,20 +324,26 @@ const searchInput = document.getElementById("searchInput");
 const cards = document.querySelectorAll(".resource-card");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
+// Live search configuration
 searchInput.addEventListener("keyup", () => {
     const value = searchInput.value.toLowerCase();
     cards.forEach(card => {
-        card.style.display = card.textContent.toLowerCase().includes(value) ? "block" : "none";
+        const matchesSearch = card.textContent.toLowerCase().includes(value);
+        card.style.setProperty('display', matchesSearch ? 'flex' : 'none', 'important');
     });
 });
 
+// Category filtering mechanism
 filterButtons.forEach(btn => {
     btn.addEventListener("click", () => {
+        // Switch active buttons UI style
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
         const filter = btn.dataset.filter;
         cards.forEach(card => {
-            card.style.display =
-                filter === "all" || card.dataset.category === filter
-                ? "block" : "none";
+            const matchesFilter = (filter === "all" || card.dataset.category === filter);
+            card.style.setProperty('display', matchesFilter ? 'flex' : 'none', 'important');
         });
     });
 });
