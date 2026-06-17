@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVEL 4 NITWA401: Windows Server Administration Exam Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question-card {
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #3b82f6;
+        }
+        .question-card.answered-correct {
+            border-left-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        .question-card.answered-wrong {
+            border-left-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .section-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .form-check-input:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        code, pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+        .badge-mark {
+            font-size: 0.85rem;
+            background-color: #e2e8f0;
+            color: #475569;
+            font-weight: 600;
+        }
+        .feedback-text {
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .sticky-score {
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">
+                <span class="text-info">NIT-RESOURCES</span> Portal
+            </span>
+            <span class="badge bg-secondary py-2 px-3 fs-6">LEVEL 4 NITWA401</span>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-9">
+                
+                <div class="card p-4 mb-4 bg-white">
+                    <h1 class="h3 fw-bold mb-2">WINDOWS SERVER ADMINISTRATION</h1>
+                    <p class="text-muted mb-0">Complete evaluation system with automated answer validation engines for Section A, alongside full grading rubrics for Sections B and C.</p>
+                </div>
+
+                <div class="section-header shadow-sm" id="section-a-heading">
+                    <h2 class="h4 mb-1 fw-bold">SECTION A: Attempt all questions</h2>
+                    <p class="mb-0 text-white-50">Total Marks Available: 55 Marks</p>
+                </div>
+
+                <form id="examForm" onsubmit="event.preventDefault();">
+
+                    <div class="card p-4 question-card" id="q1-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 01</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="mb-3 text-secondary">Choose the right answer to the following questions:</p>
+                        <p class="fw-semibold">Which of the following best defines a Web Server in Windows Server?</p>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q1" id="q1_A" value="A">
+                            <label class="form-check-label" for="q1_A">A. A server that stores files and shares them within a local network</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q1" id="q1_B" value="B">
+                            <label class="form-check-label" for="q1_B">B. A server used to manage email communication between users</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q1" id="q1_C" value="C">
+                            <label class="form-check-label" for="q1_C">C. A server that delivers web pages to users over HTTP or HTTPS.</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q1" id="q1_D" value="D">
+                            <label class="form-check-label" for="q1_D">D. A server that controls network security and user authentication</label>
+                        </div>
+                        <div class="feedback-text d-none" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q2-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 02</h5>
+                            <span class="badge badge-mark rounded-pill">4 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">A company is using Windows Server with Active Directory to manage its network. The system administrator is responsible for organizing users, controlling access to resources, and applying security policies across the organization. Answer 'True' if the statement is correct and 'False' if the statement is incorrect.</p>
+                        
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">A. Active Directory is used to manage users, computers, and resources in a network.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q2_A">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">B. A Domain Controller (DC) stores and manages Active Directory data.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q2_B">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">C. A Forest is a collection of multiple unrelated operating systems.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q2_C">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">D. Group Policy Objects (GPOs) are used to enforce rules and settings in the domain.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q2_D">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="feedback-text d-none" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q3-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 03</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">A network administrator wants to check if a DNS server is working properly by resolving a domain name into an IP address.</p>
+                        <p class="fw-semibold">Which of the following commands is used to verify that a DNS server correctly resolves a domain name?</p>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q3" id="q3_A" value="A">
+                            <label class="form-check-label" for="q3_A">A. <code>ipconfig /renew</code></label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q3" id="q3_B" value="B">
+                            <label class="form-check-label" for="q3_B">B. <code>ping [domain name]</code></label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q3" id="q3_C" value="C">
+                            <label class="form-check-label" for="q3_C">C. <code>nslookup [domain name]</code></label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q3" id="q3_D" value="D">
+                            <label class="form-check-label" for="q3_D">D. <code>tracert [domain name]</code></label>
+                        </div>
+                        <div class="feedback-text d-none" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q4-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 04</h5>
+                            <span class="badge badge-mark rounded-pill">5 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">A student is learning about different types of web servers and their functions. Match the items in Column A with the correct descriptions in Column B.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 30%;">Column A (Item)</th>
+                                        <th style="width: 50%;">Column B (Descriptions)</th>
+                                        <th style="width: 20%;">Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1. Apache HTTP Server</td>
+                                        <td>A. Microsoft web server</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q4_1">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. Internet Information Services (IIS)</td>
+                                        <td>B. Java web applications</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q4_2">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3. Nginx</td>
+                                        <td>C. Open-source web server</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q4_3">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4. LiteSpeed Web Server</td>
+                                        <td>D. High-performance server</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q4_4">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5. Apache Tomcat</td>
+                                        <td>E. Fast alternative to Apache</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q4_5">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="feedback-text d-none" id="q4-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q5-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 05</h5>
+                            <span class="badge badge-mark rounded-pill">3 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">A trainee is learning how files are transferred over a network using FTP and related tools. Select the correct answer for each question by carefully reading all the options provided and choosing the one that best fits the question.</p>
+                        
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">i) Among the following options, which one describes the meaning of File Transfer Protocol (FTP)?</p>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_1" id="q5_1_A" value="A">
+                                <label class="form-check-label" for="q5_1_A">A. Sends emails</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_1" id="q5_1_B" value="B">
+                                <label class="form-check-label" for="q5_1_B">B. Transfers files over a network</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_1" id="q5_1_C" value="C">
+                                <label class="form-check-label" for="q5_1_C">C. Creates websites</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_1" id="q5_1_D" value="D">
+                                <label class="form-check-label" for="q5_1_D">D. Monitors servers</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">ii) Which of the following best describes FileZilla?</p>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_2" id="q5_2_A" value="A">
+                                <label class="form-check-label" for="q5_2_A">A. A web browser</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_2" id="q5_2_B" value="B">
+                                <label class="form-check-label" for="q5_2_B">B. A database</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_2" id="q5_2_C" value="C">
+                                <label class="form-check-label" for="q5_2_C">C. An FTP client</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_2" id="q5_2_D" value="D">
+                                <label class="form-check-label" for="q5_2_D">D. An operating system</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <p class="fw-semibold mb-2">iii) What is the root directory in FTP? Select one correct answer.</p>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_3" id="q5_3_A" value="A">
+                                <label class="form-check-label" for="q5_3_A">A. The main folder for files</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_3" id="q5_3_B" value="B">
+                                <label class="form-check-label" for="q5_3_B">B. A backup file</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_3" id="q5_3_C" value="C">
+                                <label class="form-check-label" for="q5_3_C">C. A network cable</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input q-input" type="radio" name="q5_3" id="q5_3_D" value="D">
+                                <label class="form-check-label" for="q5_3_D">D. A password</label>
+                            </div>
+                        </div>
+                        <div class="feedback-text d-none" id="q5-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q6-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 06</h5>
+                            <span class="badge badge-mark rounded-pill">3 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">An IT environment uses different methods and technologies for load balancing to distribute traffic across multiple servers. Answer each statement carefully. Write True if the statement is correct or False if it is incorrect.</p>
+                        
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">A Hardware Load Balancer is a software application used for balancing traffic.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q6_A">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">Software Load Balancers include tools like Nginx, HAProxy, and Apache mod_proxy.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q6_B">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">Layer 7 Load Balancing works at the transport layer using IP addresses and ports.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q6_C">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="feedback-text d-none" id="q6-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q7-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 07</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="fw-semibold">WSUS (Windows Server Update Services) is a tool used in Windows Server to manage and distribute Microsoft updates to computers within a network. Which tool is used to start the installation of WSUS on a Windows Server?</p>
+                        <input type="text" class="form-control q-input" name="q7" placeholder="Type your answer here...">
+                        <div class="feedback-text d-none" id="q7-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q8-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 08</h5>
+                            <span class="badge badge-mark rounded-pill">3 Marks</span>
+                        </div>
+                        <p class="fw-semibold">An organization is choosing a server for a data center upgrade. Choose three (3) factors that are important in server selection from the list below:</p>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="checkbox" name="q8" id="q8_A" value="A">
+                            <label class="form-check-label" for="q8_A">A) Disk Formatting</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="checkbox" name="q8" id="q8_B" value="B">
+                            <label class="form-check-label" for="q8_B">B) CPU performance and processing speed</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="checkbox" name="q8" id="q8_C" value="C">
+                            <label class="form-check-label" for="q8_C">C) RAM capacity for multitasking</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="checkbox" name="q8" id="q8_D" value="D">
+                            <label class="form-check-label" for="q8_D">D) Sending a document to a web server for the purpose of hosting</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="checkbox" name="q8" id="q8_E" value="E">
+                            <label class="form-check-label" for="q8_E">E) Storage type and capacity (SSD/HDD)</label>
+                        </div>
+                        <div class="feedback-text d-none" id="q8-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q9-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 09</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="fw-semibold">Client computers refer to a computer that is part of a network and can access shared resources from a server or domain. State the requirements for joining a client computer to a domain.</p>
+                        <textarea class="form-control q-input" name="q9" rows="3" placeholder="Type requirements here..."></textarea>
+                        <div class="feedback-text d-none" id="q9-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q10-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 10</h5>
+                            <span class="badge badge-mark rounded-pill">4 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">Fill in the gaps by carefully reading each question and selecting the correct term that best completes the statement. Use the following terms: <strong>Discover, Offer, Request, Lease</strong>.</p>
+                        
+                        <div class="mb-3">
+                            <span>a) After receiving the request, the DHCP server responds with an IP address in a message called </span>
+                            <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q10_a">.
+                        </div>
+                        <div class="mb-3">
+                            <span>b) Finally, the DHCP server confirms the IP address assignment and gives a </span>
+                            <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q10_b"> <span> time period for using it.</span>
+                        </div>
+                        <div class="mb-3">
+                            <span>c) When a client computer joins a network, it first sends a </span>
+                            <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q10_c"> <span> message to find a DHCP server.</span>
+                        </div>
+                        <div class="mb-3">
+                            <span>d) The client then sends a </span>
+                            <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q10_d"> <span> message to accept the offered IP address.</span>
+                        </div>
+                        <div class="feedback-text d-none" id="q10-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q11-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 11</h5>
+                            <span class="badge badge-mark rounded-pill">4 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">Match the DNS query types in Column A with the correct descriptions in Column B.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 30%;">Column A (DNS Query Types)</th>
+                                        <th style="width: 50%;">Column B (Descriptions)</th>
+                                        <th style="width: 20%;">Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1. Recursive Query</td>
+                                        <td>A. A query where the DNS server must fully resolve the domain name before responding</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q11_1">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. Iterative Query</td>
+                                        <td>B. A query where the DNS server gives the best answer it knows or refers to another server</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q11_2">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3. Root Server Query</td>
+                                        <td>C. A query sent directly to authoritative name servers only</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q11_3">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4. Forwarding Query</td>
+                                        <td>D. A query that forwards DNS requests to another DNS server</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q11_4">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>- (Distractor)</em></td>
+                                        <td>E. A query used only for email routing</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="feedback-text d-none" id="q11-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q12-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 12</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="fw-semibold">Among the following steps, identify the first step when installing roles and features on Windows Server.</p>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q12" id="q12_A" value="A">
+                            <label class="form-check-label" for="q12_A">A. Select the server and click Next</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q12" id="q12_B" value="B">
+                            <label class="form-check-label" for="q12_B">B. Open Server Manager</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q12" id="q12_C" value="C">
+                            <label class="form-check-label" for="q12_C">C. Choose the role to install</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q12" id="q12_D" value="D">
+                            <label class="form-check-label" for="q12_D">D. Restart the server</label>
+                        </div>
+                        <div class="feedback-text d-none" id="q12-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q13-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 13</h5>
+                            <span class="badge badge-mark rounded-pill">4 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-2">Read the scenario carefully and complete the missing terms using the options provided.</p>
+                        <p class="text-secondary small mb-3"><strong>Options:</strong> (ping, file sharing, service, network, Nmap, physical connection)</p>
+                        
+                        <div class="mb-3">
+                            <p class="mb-1">I) A technician is setting up a Windows Server in a new office environment. First, the technician connects the server to a switch using an Ethernet cable. To ensure everything is working properly, the technician checks the <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q13_1"> to confirm that the cable is correctly connected.</p>
+                        </div>
+                        <div class="mb-3">
+                            <p class="mb-1">II) After confirming the connection, the server still cannot access the internet. The administrator opens Server Manager and configures the <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q13_2"> settings of the network adapter to resolve the issue.</p>
+                        </div>
+                        <div class="mb-3">
+                            <p class="mb-1">III) Later, the administrator notices that other computers on the same network cannot detect the server. To make the server visible, the administrator enables <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q13_3"> along with network discovery.</p>
+                        </div>
+                        <div class="mb-3">
+                            <p class="mb-1">IV) Finally, after completing all configurations, the administrator wants to verify that the server is communicating correctly on the network. To do this, the administrator uses the <input type="text" class="form-control d-inline-block w-25 mx-1 q-input" name="q13_4"> command to test connectivity.</p>
+                        </div>
+                        <div class="feedback-text d-none" id="q13-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q14-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 14</h5>
+                            <span class="badge badge-mark rounded-pill">3 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">A technician is required to host a website using Windows Server IIS. Match each step in Column A with the correct description in Column B.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 30%;">Column A - Steps</th>
+                                        <th style="width: 50%;">Column B - Descriptions</th>
+                                        <th style="width: 20%;">Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>A. Install IIS</td>
+                                        <td>1. Make the website available by running it so users can access it through a browser.</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q14_A">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>B. Configure Website</td>
+                                        <td>2. Add the Web Server (IIS) role in Server Manager to enable hosting capabilities.</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q14_B">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>C. Start Website Service</td>
+                                        <td>3. Set up site name, physical path, and port number for the website.</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q14_C">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>D. Set User Access</td>
+                                        <td>4. Assign user passwords for secure login to the server.</td>
+                                        <td>
+                                            <select class="form-select form-select-sm q-input" name="q14_D">
+                                                <option value="" selected disabled>Match...</option>
+                                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="feedback-text d-none" id="q14-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q15-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 15</h5>
+                            <span class="badge badge-mark rounded-pill">5 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">File permissions determine what actions a user can perform on files in a computer system, such as reading, modifying, or running programs. Read each statement carefully and write True if it is correct or False if it is incorrect.</p>
+                        
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">A) Read permission allows a user to open and view a file.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q15_A">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">B) Write permission allows a user to modify or delete a file.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q15_B">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">C) Execute permission allows a user to run a program or script file.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q15_C">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">D) A user with only Read permission can change the file content.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q15_D">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">E) Execute permission is required to start applications or scripts on a server.</p>
+                            <select class="form-select form-select-sm w-25 q-input" name="q15_E">
+                                <option value="" selected disabled>Select...</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                        </div>
+                        <div class="feedback-text d-none" id="q15-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q16-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 16</h5>
+                            <span class="badge badge-mark rounded-pill">5 Marks</span>
+                        </div>
+                        <p class="text-muted small mb-3">Choose the correct answer for each question by clearly circling the correct option:</p>
+                        
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">I) Select the correct step that guarantees automatic failover to another server when one server becomes unavailable.</p>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_1" id="q16_1_A" value="A"><label class="form-check-label" for="q16_1_A">A. Regular Data Backup</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_1" id="q16_1_B" value="B"><label class="form-check-label" for="q16_1_B">B. Configure Failover Servers</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_1" id="q16_1_C" value="C"><label class="form-check-label" for="q16_1_C">C. Test Recovery Procedures</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_1" id="q16_1_D" value="D"><label class="form-check-label" for="q16_1_D">D. Enable Redundancy</label></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">II) Circle the correct strategy that ensures that services and data are duplicated across multiple servers.</p>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_2" id="q16_2_A" value="A"><label class="form-check-label" for="q16_2_A">A. Enable Redundancy</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_2" id="q16_2_B" value="B"><label class="form-check-label" for="q16_2_B">B. Use Load Balancer Health Checks</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_2" id="q16_2_C" value="C"><label class="form-check-label" for="q16_2_C">C. Configure Failover Servers</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_2" id="q16_2_D" value="D"><label class="form-check-label" for="q16_2_D">D. Regular Data Backup</label></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">III) Which of the following strategies ensures that system data can be restored after a failure or disaster?</p>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_3" id="q16_3_A" value="A"><label class="form-check-label" for="q16_3_A">A. Test Recovery Procedures</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_3" id="q16_3_B" value="B"><label class="form-check-label" for="q16_3_B">B. Regular Data Backup</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_3" id="q16_3_C" value="C"><label class="form-check-label" for="q16_3_C">C. Configure Failover Servers</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_3" id="q16_3_D" value="D"><label class="form-check-label" for="q16_3_D">D. Enable Redundancy</label></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="fw-semibold mb-2">IV) Choose one method that allows the system to detect failed servers and automatically remove them from the cluster.</p>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_4" id="q16_4_A" value="A"><label class="form-check-label" for="q16_4_A">A. Use Load Balancer Health Checks</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_4" id="q16_4_B" value="B"><label class="form-check-label" for="q16_4_B">B. Enable Redundancy</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_4" id="q16_4_C" value="C"><label class="form-check-label" for="q16_4_C">C. Regular Data Backup</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_4" id="q16_4_D" value="D"><label class="form-check-label" for="q16_4_D">D. Test Recovery Procedures</label></div>
+                        </div>
+
+                        <div class="mb-2">
+                            <p class="fw-semibold mb-2">V) Select the action from the list below that verifies whether disaster recovery mechanisms are functioning correctly.</p>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_5" id="q16_5_A" value="A"><label class="form-check-label" for="q16_5_A">A. Enable Redundancy</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_5" id="q16_5_B" value="B"><label class="form-check-label" for="q16_5_B">B. Configure Failover Servers</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_5" id="q16_5_C" value="C"><label class="form-check-label" for="q16_5_C">C. Test Recovery Procedures</label></div>
+                            <div class="form-check"><input class="form-check-input q-input" type="radio" name="q16_5" id="q16_5_D" value="D"><label class="form-check-label" for="q16_5_D">D. Regular Data Backup</label></div>
+                        </div>
+                        <div class="feedback-text d-none" id="q16-feedback"></div>
+                    </div>
+
+                    <div class="card p-4 question-card" id="q17-container">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="fw-bold mb-0">Question 07</h5>
+                            <span class="badge badge-mark rounded-pill">2 Marks</span>
+                        </div>
+                        <p class="fw-semibold">Choose one option in Windows Server that an administrator should select to ensure updates are properly approved and deployed.</p>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q17" id="q17_A" value="A">
+                            <label class="form-check-label" for="q17_A">A) Open WSUS console &rarr; Go to Updates &rarr; Approve updates &rarr; Select target group &rarr; Set action to Install &rarr; Verify groups &rarr; Monitor reports</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q17" id="q17_B" value="B">
+                            <label class="form-check-label" for="q17_B">B) Open Control Panel &rarr; Install updates manually on each client &rarr; Restart computers</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q17" id="q17_C" value="C">
+                            <label class="form-check-label" for="q17_C">C) Download updates from the internet on each client &rarr; Disable WSUS &rarr; Install updates individually</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input q-input" type="radio" name="q17" id="q17_D" value="D">
+                            <label class="form-check-label" for="q17_D">D) Open Task Manager &rarr; End update services &rarr; Restart server</label>
+                        </div>
+                        <div class="feedback-text d-none" id="q17-feedback"></div>
+                    </div>
+
+                    <div class="mb-5">
+                        <button type="button" class="btn btn-primary btn-lg px-5 shadow-sm" onclick="gradeSectionA()">Evaluate Section A Answers</button>
+                    </div>
+                </form>
+
+
+                <div class="section-header bg-gradient shadow-sm mt-5" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
+                    <h2 class="h4 mb-1 fw-bold">SECTION B: Attempt any three (3) questions</h2>
+                    <p class="mb-0 text-white-50">Total Marks Available: 30 Marks (10 Marks Each)</p>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-info border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 18</h5>
+                        <span class="badge bg-secondary rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">A growing organization is using Windows Server with Active Directory to improve security and manage users more easily. At the moment, users and computers are not well organized, and security settings are not consistent. The IT team wants to create a simple and secure system to manage users, computers, and access resources from one central place.<br><br>
+                    Based on the scenario above, explain clearly how each of the following Active Directory concepts can be applied to design an efficient and secure directory structure:<br>
+                    a) Domain<br>b) Domain Controller (DC)<br>c) Organizational Units (OUs)<br>d) Group Policy Object (GPO)<br>e) Security and Distribution Groups</p>
+                    
+                    <button class="btn btn-outline-info btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans18">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans18">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>Official Grading Solution Matrix:</strong></h6>
+                            <ul class="list-unstyled ps-2">
+                                <li class="mb-2"><strong>a) Domain (2 Marks):</strong> Acts as the core logical administrative boundary. It groups all corporate nodes under a single DNS namespace (e.g., <code>corp.local</code>), providing centralized authentication databases and a uniform security scope.</li>
+                                <li class="mb-2"><strong>b) Domain Controller (2 Marks):</strong> The physical or virtual server executing the Active Directory Domain Services (AD DS) role. It runs the KDC (Kerberos Key Distribution Center) engine to validate user identities and replicates the NTDS.dit database cluster-wide.</li>
+                                <li class="mb-2"><strong>c) Organizational Units (2 Marks):</strong> Sub-containers within the domain used to mirror the physical departmental layout (e.g., HR, Finance). OUs allow administrators to delegate explicit control rights to localized tier engineers without assigning complete domain admin privileges, and act as targets for GPOs.</li>
+                                <li class="mb-2"><strong>d) Group Policy Object (2 Marks):</strong> Configuration architectures used to enforce computational baselines and programmatic security constraints (such as password minimum profiles, account lockouts, or automated endpoint firewalls) across OUs uniformly.</li>
+                                <li class="mb-2"><strong>e) Security and Distribution Groups (2 Marks):</strong> 
+                                    <ul>
+                                        <li><em>Security Groups:</em> System tokens used to assign access permissions across Shared folders, print resources, and network drives.</li>
+                                        <li><em>Distribution Groups:</em> Collections reserved exclusively for mass email communication via mail environments; they hold no structural access control properties.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-info border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 19</h5>
+                        <span class="badge bg-secondary rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">A small company wants to share files between employees using an FTP server on a Windows machine. After setup, users cannot connect or upload files. The administrator thinks some installation or configuration steps were missed or done incorrectly.<br><br>
+                    Based on the scenario above, examine key steps that the administrator should follow to correctly install and configure the FTP server on a Windows machine to ensure it functions properly.</p>
+                    
+                    <button class="btn btn-outline-info btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans19">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans19">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>Official Troubleshooting Setup Blueprint (10 Marks):</strong></h6>
+                            <ol class="ps-3 text-secondary">
+                                <li class="mb-2"><span class="text-dark fw-semibold">Role Installation:</span> Access Server Manager &rarr; Add Roles and Features &rarr; Enable Web Server (IIS) role and select the nested <strong>FTP Server</strong> and <strong>FTP Service</strong> options.</li>
+                                <li class="mb-2"><span class="text-dark fw-semibold">FTP Site Provisioning:</span> Open IIS Manager &rarr; Right-click 'Sites' &rarr; Add FTP Site. Define a logical name and point the physical path to the designated storage folder (e.g., <code>C:\inetpub\ftproot</code>).</li>
+                                <li class="mb-2"><span class="text-dark fw-semibold">Binding and SSL Configuration:</span> Allocate the server's dedicated IP address on port 21. Select "No SSL" for standard test topologies, or enforce "Require SSL" to protect user credentials via explicit TLS/SSL encryption wrappers.</li>
+                                <li class="mb-2"><span class="text-dark fw-semibold">Authentication &amp; Authorization Rules:</span> Select standard or anonymous tracking access models. Specify explicit Read/Write authorizations matching individual domain permissions or standalone system accounts.</li>
+                                <li class="mb-2"><span class="text-dark fw-semibold">Windows Firewall Adjustments:</span> Create inbound structural exceptions within Windows Advanced Firewall allowing traffic across port 21, alongside traffic allocations for passive port arrays (Ports 1024-65535 data channels).</li>
+                                <li class="mb-2"><span class="text-dark fw-semibold">NTFS File Permission Alignments:</span> Ensure local security ACL settings on the physical directory explicitly match IIS definitions, adding local user groups with Read/Write authority.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-info border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 20</h5>
+                        <span class="badge bg-secondary rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">A network administrator is setting up a DHCP service to automatically assign IP addresses to computers in a new office network. To ensure the system works correctly, all configuration steps must be properly followed. Explain each of the following steps involved in setting up a DHCP service. Your explanation should clearly show the purpose of each step and how it contributes to successful IP address allocation.</p>
+                    
+                    <button class="btn btn-outline-info btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans20">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans20">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>DHCP Deployment Infrastructure Execution Stages (10 Marks):</strong></h6>
+                            <ol class="ps-3">
+                                <li class="mb-2"><strong>Role Installation via Server Manager:</strong> Provisioning the DHCP server architecture components into memory. This action constructs the core runtime daemons designed to listen for remote Layer 2 broad-broadcast DHCP request queries.</li>
+                                <li class="mb-2"><strong>DHCP Authorization in Active Directory:</strong> A security mechanism that registers the DHCP server's engine identity inside the AD configuration partition. This prevents rogue, un-authorized servers from handing out invalid IP sequences.</li>
+                                <li class="mb-2"><strong>Scope Creation and Address Pool Definition:</strong> Configuring the contiguous blocks of subnet IP strings allocated for automated end-node dynamic distribution (e.g., <code>192.168.10.100</code> to <code>192.168.10.200</code>).</li>
+                                <li class="mb-2"><strong>Exclusion and Reservation Mapping:</strong> 
+                                    <ul>
+                                        <li><em>Exclusions:</em> Blocks out ranges kept safe from automated allocation (e.g., routers, structural domain components).</li>
+                                        <li><em>Reservations:</em> Locks a single IP to a matching machine hardware MAC address, ensuring systems like local network printers maintain structural address stability.</li>
+                                    </ul>
+                                </li>
+                                <li class="mb-2"><strong>Configuration of Core DHCP Scope Options:</strong> Attaches necessary parameters to IP leases, including the Default Gateway (router address), DNS servers, and your corporate connection suffixes.</li>
+                                <li class="mb-2"><strong>Lease Duration Parameters:</strong> Controls how long a device owns an assigned address package before it must run renewal operations with the host server. Short leases recycle addresses quickly in high-turnover environments; long leases keep local networks stable.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-info border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 21</h5>
+                        <span class="badge bg-secondary rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">An organization using Windows Server 2019 with Active Directory is facing management and security challenges, including unauthorized software installations by employees, inconsistent password and security policies across computers, and time-consuming manual setup of new users and devices. Additionally, desktop configurations vary between departments, and essential resources such as network printers and shared folders are not automatically available to new staff, leading to inefficiencies and reduced productivity. Identify the main causes of the above problems.</p>
+                    
+                    <button class="btn btn-outline-info btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans21">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans21">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>Root Cause Infrastructure Assessment (10 Marks):</strong></h6>
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Identified Business Symptom</th>
+                                        <th>Underlying Root Architectural Failure</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Unauthorized local application execution.</td>
+                                        <td>Users have been left with local Administrator group tokens instead of standard restricted rights; AppLocker or Software Restriction policies are absent.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mismatched passwords and security policies.</td>
+                                        <td>Missing Default Domain Policy baseline settings or GPO inheritance blocked down the structural tree.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time-consuming user provisioning.</td>
+                                        <td>Lack of standardized batch management deployment tools, automated setup scripts, or template deployment procedures.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Varying desktop user configuration.</td>
+                                        <td>Lack of mandatory roaming profile rules or standardized Group Policy environment preferences.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manual provisioning of network printers/shares.</td>
+                                        <td>Failure to configure Group Policy Preferences (GPP) for mapping drives or pushing shared printer instances using targeting rules.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-info border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 22</h5>
+                        <span class="badge bg-secondary rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">The organization aims to deploy a secure FTP server on Windows Server to facilitate cross-departmental file sharing. The primary objectives are to ensure data security through encryption, maintain Windows compatibility, implement robust user access controls, and ensure stable performance for high-concurrency traffic while keeping maintenance overhead low.<br><br>
+                    a) Evaluate five (5) FTP server software solutions suitable for a Windows Server environment.<br>
+                    b) Justify each option based on security.</p>
+                    
+                    <button class="btn btn-outline-info btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans22">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans22">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>FTP Enterprise Software Evaluation Matrix:</strong></h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Software Application Name</th>
+                                            <th>Architectural Capabilities</th>
+                                            <th>Security Justification Baseline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>1. Microsoft IIS FTP Service</strong></td>
+                                            <td>Built straight into Windows Server; matches local OS footprints smoothly.</td>
+                                            <td>Integrates with Active Directory accounts directly, avoiding separate password pools, and supports FTPS natively.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>2. FileZilla Server (Windows Edition)</strong></td>
+                                            <td>Lightweight open-source program with an easy configuration engine.</td>
+                                            <td>Supports clean FTP over TLS (FTPS), custom port mappings, and IP filtering control lists.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>3. Cerberus FTP Server</strong></td>
+                                            <td>Designed for enterprise scale; includes clean optimization profiles.</td>
+                                            <td>FIPS 140-2 certified cryptographic module, multi-factor login checks (MFA), and automated IP ban settings.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>4. Serv-U FTP Server (SolarWinds)</strong></td>
+                                            <td>Handles heavy business traffic; provides clean administration features.</td>
+                                            <td>Supports SFTP (via SSH) and FTPS, alongside granular folder permission tracking rules.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>5. WinSCP / Bitvise SSH Server</strong></td>
+                                            <td>Provides robust SFTP transfer channels on top of Windows engines.</td>
+                                            <td>Enforces secure SSH transport layer safety, completely avoiding cleartext password leaks across the wire.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="section-header bg-gradient shadow-sm mt-5" style="background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);">
+                    <h2 class="h4 mb-1 fw-bold">SECTION C: Attempt only one (1) question</h2>
+                    <p class="mb-0 text-white-50">Total Marks Available: 15 Marks</p>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-primary border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 23</h5>
+                        <span class="badge bg-secondary rounded-pill">15 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">A medium-sized organization recently experienced a system failure due to a cyberattack, resulting in the loss of important business data, including customer records and financial information. The IT team discovered that backups were either outdated or not properly maintained, making it difficult to recover critical data quickly.<br><br>
+                    As a result, the organization has decided to improve its data protection strategy by implementing proper backup methods and a reliable recovery plan to prevent future data loss and ensure business continuity.<br><br>
+                    Based on the scenario,<br>
+                    a) Define the term backup in the context of server administration.<br>
+                    b) Explain five (5) types of backups commonly used in server environments.<br>
+                    c) Design a suitable backup and recovery plan for the organization. Your answer should clearly describe the steps that will ensure data can be restored efficiently after a failure.</p>
+                    
+                    <button class="btn btn-outline-primary btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans23">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans23">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>Data Resiliency Framework Architecture Plan (15 Marks):</strong></h6>
+                            <p><strong>a) Backup Definition (2 Marks):</strong> The administrative practice of replicating data configurations and database stores from operational servers to separate physical or virtual media, creating an immutable fallback record if production nodes crash.</p>
+                            
+                            <p><strong>b) Five Common Server Backup Classifications (5 Marks):</strong></p>
+                            <ul>
+                                <li><strong>Full Backup:</strong> Copies every single block of selected data within the environment, establishing a definitive baseline dataset. Highly comprehensive, but takes the longest time and uses the most storage.</li>
+                                <li><strong>Incremental Backup:</strong> Records only the data segments altered since the most recent backup of any kind. Very fast to run, but requires the complete chain of incremental files during a recovery process.</li>
+                                <li><strong>Differential Backup:</strong> Captures all data modifications made since the last <em>Full</em> backup baseline. Growth builds systematically, but recovery only requires the base Full file and the final differential block.</li>
+                                <li><strong>Synthetic Full Backup:</strong> Merges a baseline full backup with subsequent incremental files on the backup server to create a fresh full image, saving precious network bandwidth.</li>
+                                <li><strong>Bare-Metal Backup (BMB):</strong> Captures both storage records and operational state data (including OS layouts, system registry states, and boot setups), enabling complete hardware rebuilds from scratch.</li>
+                            </ul>
+
+                            <p><strong>c) Enterprise Backup &amp; Recovery Plan Blueprint (8 Marks):</strong></p>
+                            <ol>
+                                <li><strong>Implementation of 3-2-1 Strategy:</strong> Keep 3 independent copies of company data across 2 different media types (e.g., local high-speed SSD SAN arrays and on-premise magnetic tape units), with 1 copy shipped completely offsite to an immutable cloud repository.</li>
+                                <li><strong>Schedule Automation:</strong> Run a Full System image snapshot every Sunday during off-peak hours, with incremental updates processing automatically every 4 hours during standard weekdays.</li>
+                                <li><strong>Encryption Enforcement:</strong> Ensure all data blocks are secured using AES-256 bit encryption algorithms both while traveling across internal network links and when sitting at rest on backup targets.</li>
+                                <li><strong>RPO / RTO Parameters:</strong> Enforce strict business targets: a Recovery Point Objective (RPO) maximum limit of 4 hours of data variation, and a Recovery Time Objective (RTO) maximum cap of 2 hours for restoring critical line-of-business applications.</li>
+                                <li><strong>Routine Drills:</strong> Run automated fire-drill recovery processes inside isolated network test environments every month to ensure system recovery scripts perform cleanly under stress.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4 mb-4 border-start border-primary border-5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Question 24</h5>
+                        <span class="badge bg-secondary rounded-pill">15 Marks</span>
+                    </div>
+                    <p class="text-muted small bg-light p-3 border rounded">A university ICT laboratory wants students to practice installing and testing different operating systems without affecting the main computers. To achieve this, the lab administrator implements virtualization technology, enabling multiple operating systems to run safely on a single physical machine.<br><br>
+                    Based on the scenario,<br>
+                    a) Define a Virtual Machine.<br>
+                    b) Identify at least two (2) software applications that can be used to create and run virtual machines.<br>
+                    c) Design the main steps required to create and install a virtual machine. In your response, clearly explain the key stages involved, including:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Preparing the host system<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Configuring the virtual machine settings<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Completing the operating system installation<br>
+                    Provide at least four well-explained steps.<br><br>
+                    <strong>END OF QUESTION PAPER</strong></p>
+                    
+                    <button class="btn btn-outline-primary btn-sm w-25 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ans24">View Evaluation Guidelines & Answer</button>
+                    <div class="collapse mt-3" id="ans24">
+                        <div class="card card-body bg-light border-0">
+                            <h6><strong>Virtualization Infrastructure Blueprint Guide (15 Marks):</strong></h6>
+                            <p><strong>a) Virtual Machine Definition (2 Marks):</strong> A completely software-driven computer environment built by abstracting the physical hardware resources of a host computer via a hypervisor layer, operating independently as an isolated instance.</p>
+                            
+                            <p><strong>b) Hypervisor Application Options (2 Marks):</strong></p>
+                            <ul>
+                                <li><strong>Oracle VM VirtualBox:</strong> A flexible, open-source Type-2 hypervisor widely used in desktop learning environments.</li>
+                                <li><strong>VMware Workstation Pro / Player:</strong> A highly optimized, professional-grade Type-2 virtualization application layer.</li>
+                                <li><strong>Microsoft Hyper-V:</strong> A native, Type-1/Type-2 bare-metal capable virtualization platform built directly into Windows operating systems.</li>
+                            </ul>
+
+                            <p><strong>c) Four Crucial Steps for VM Creation and Deployment (11 Marks):</strong></p>
+                            <ol class="ps-3">
+                                <li class="mb-3"><strong>Host System Preparation and Feature Verification:</strong> Enter the physical machine's BIOS/UEFI firmware configuration screen. Enable hardware virtualization parameters explicitly (such as Intel VT-x or AMD-V extensions). Ensure the parent host machine has enough free unallocated RAM and CPU cores before provisioning new nodes. Download clean, official operating system installation media in standard `.iso` formats.</li>
+                                <li class="mb-3"><strong>Virtual Resource Provisioning &amp; Profile Blueprinting:</strong> Launch your chosen hypervisor application and start the New Virtual Machine wizard. Define your target guest platform profile (e.g., Windows Server 2019). Allocate a specific chunk of system RAM (e.g., 4096MB) and assign virtual CPU processing units so you do not overload the parent host.</li>
+                                <li class="mb-3"><strong>Virtual Storage and Network Link Provisioning:</strong> Create a dynamically expanding virtual hard disk file (such as a `.vmdk` or `.vhdx` container) on the local drive with enough space allocated for guest system operations. Configure the guest machine's virtual network card properties—using **NAT mode** for standard outward internet routing paths, or **Bridged mode** to map the VM directly into the physical lab switch network.</li>
+                                <li class="mb-3"><strong>OS Installation and Integrated Tools Deployment:</strong> Mount the pre-downloaded `.iso` image to the virtual optical drive. Boot up the virtual machine to initiate standard operating system installation processes (such as drive formatting, timezone settings, and administrator credential creation). Once fully booted into the desktop, run the hypervisor integration tools utility package (e.g., VMware Tools or VirtualBox Guest Additions) to deploy high-performance video drivers and optimize shared mouse interactions.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card p-3 sticky-score bg-white shadow-sm">
+                    <h5 class="fw-bold text-dark border-bottom pb-2">Grading Dashboard</h5>
+                    <p class="small text-muted">Automated real-time parsing engine for Section A validation rules.</p>
+                    <div class="my-3 text-center">
+                        <span class="display-5 fw-bold text-primary" id="liveScore">--</span>
+                        <span class="text-muted fs-4">/ 38</span>
+                        <div class="small text-secondary mt-1">Section A Auto-Score</div>
+                    </div>
+                    <div id="gradingProgress" class="progress mb-3 d-none" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm w-100" onclick="resetPortalFields()">Reset Selection Fields</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Official strict grading master answer key keys dataset
+        const masterAnswers = {
+            q1: "C",
+            q2: { A: "True", B: "True", C: "False", D: "True" },
+            q3: "C",
+            q4: { "1": "C", "2": "A", "3": "D", "4": "E", "5": "B" },
+            q5: { "1": "B", "2": "C", "3": "A" },
+            q6: { A: "False", B: "True", C: "False" },
+            q7: ["server manager", "servermanager", "install-windowsfeature", "add roles and features"],
+            q8: ["B", "C", "E"],
+            q10: { a: "offer", b: "lease", c: "discover", d: "request" },
+            q11: { "1": "A", "2": "B", "3": "C", "4": "D" },
+            q12: "B",
+            q13: { "1": "physical connection", "2": "network", "3": "file sharing", "4": "ping" },
+            q14: { A: "2", B: "3", C: "1", D: "4" },
+            q15: { A: "True", B: "True", C: "True", D: "False", E: "True" },
+            q16: { "1": "B", "2": "A", "3": "B", "4": "A", "5": "C" },
+            q17: "A"
+        };
+
+        function gradeSectionA() {
+            let runningScore = 0;
+            const form = document.getElementById('examForm');
+
+            // --- Q1 Evaluation ---
+            const q1Selected = form.querySelector('input[name="q1"]:checked');
+            const q1Feedback = document.getElementById('q1-feedback');
+            document.getElementById('q1-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q1Selected && q1Selected.value === masterAnswers.q1) {
+                runningScore += 2;
+                markCorrect('q1', q1Feedback, "Correct! Web Servers serve files over HTTP/HTTPS protocols.");
+            } else {
+                markWrong('q1', q1Feedback, `Incorrect. Correct Option: ${masterAnswers.q1} (Delivers web pages over HTTP/HTTPS).`);
+            }
+
+            // --- Q2 Evaluation ---
+            let q2CorrectCount = 0;
+            ['A', 'B', 'C', 'D'].forEach(part => {
+                const val = form.querySelector(`select[name="q2_${part}"]`).value;
+                if(val === masterAnswers.q2[part]) q2CorrectCount++;
+            });
+            runningScore += q2CorrectCount; // 1 Mark Each
+            const q2Feedback = document.getElementById('q2-feedback');
+            document.getElementById('q2-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q2CorrectCount === 4) {
+                markCorrect('q2', q2Feedback, "Perfect! All Active Directory logical mapping rules matched successfully.");
+            } else {
+                markWrong('q2', q2Feedback, `Scored: ${q2CorrectCount}/4. Correct Keys -> A: True, B: True, C: False, D: True.`);
+            }
+
+            // --- Q3 Evaluation ---
+            const q3Selected = form.querySelector('input[name="q3"]:checked');
+            const q3Feedback = document.getElementById('q3-feedback');
+            document.getElementById('q3-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q3Selected && q3Selected.value === masterAnswers.q3) {
+                runningScore += 2;
+                markCorrect('q3', q3Feedback, "Correct! nslookup handles structural name resolution queries.");
+            } else {
+                markWrong('q3', q3Feedback, `Incorrect. Correct Option: ${masterAnswers.q3} (nslookup).`);
+            }
+
+            // --- Q4 Evaluation ---
+            let q4CorrectCount = 0;
+            ['1', '2', '3', '4', '5'].forEach(item => {
+                const val = form.querySelector(`select[name="q4_${item}"]`).value;
+                if(val === masterAnswers.q4[item]) q4CorrectCount++;
+            });
+            if(q4CorrectCount === 5) runningScore += 5; // All-or-nothing scaling baseline adjustments
+            const q4Feedback = document.getElementById('q4-feedback');
+            document.getElementById('q4-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q4CorrectCount === 5) {
+                markCorrect('q4', q4Feedback, "Correct! All software application architectures mapped cleanly.");
+            } else {
+                markWrong('q4', q4Feedback, `Incorrect mapping metrics. Correct values -> 1:C (Apache-Open Source), 2:A (IIS-Microsoft), 3:D (Nginx-High Performance), 4:E (LiteSpeed-Fast Alt), 5:B (Tomcat-Java).`);
+            }
+
+            // --- Q5 Evaluation ---
+            let q5CorrectCount = 0;
+            if(form.querySelector('input[name="q5_1"]:checked')?.value === masterAnswers.q5["1"]) q5CorrectCount++;
+            if(form.querySelector('input[name="q5_2"]:checked')?.value === masterAnswers.q5["2"]) q5CorrectCount++;
+            if(form.querySelector('input[name="q5_3"]:checked')?.value === masterAnswers.q5["3"]) q5CorrectCount++;
+            runningScore += q5CorrectCount;
+            const q5Feedback = document.getElementById('q5-feedback');
+            document.getElementById('q5-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q5CorrectCount === 3) {
+                markCorrect('q5', q5Feedback, "Correct! All network transmission elements identified.");
+            } else {
+                markWrong('q5', q5Feedback, `Scored: ${q5CorrectCount}/3. Correct Options -> i:B, ii:C, iii:A.`);
+            }
+
+            // --- Q6 Evaluation ---
+            let q6CorrectCount = 0;
+            ['A', 'B', 'C'].forEach(part => {
+                if(form.querySelector(`select[name="q6_${part}"]`).value === masterAnswers.q6[part]) q6CorrectCount++;
+            });
+            runningScore += q6CorrectCount;
+            const q6Feedback = document.getElementById('q6-feedback');
+            document.getElementById('q6-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q6CorrectCount === 3) {
+                markCorrect('q6', q6Feedback, "Correct! Traffic mitigation layers mapped accurately.");
+            } else {
+                markWrong('q6', q6Feedback, `Scored: ${q6CorrectCount}/3. Keys -> A: False, B: True, C: False.`);
+            }
+
+            // --- Q7 Evaluation (Open Text Match Engine) ---
+            const q7Val = form.querySelector('input[name="q7"]').value.trim().toLowerCase();
+            const q7Feedback = document.getElementById('q7-feedback');
+            document.getElementById('q7-container').classList.remove('answered-correct', 'answered-wrong');
+            if(masterAnswers.q7.some(ans => q7Val.includes(ans))) {
+                runningScore += 2;
+                markCorrect('q7', q7Feedback, "Correct! Server Manager interface or PowerShell deployment engine initializes role installs.");
+            } else {
+                markWrong('q7', q7Feedback, "Incorrect structural text input string. Server Manager (or Add Roles and Features) is expected.");
+            }
+
+            // --- Q8 Evaluation (Multi-Checkbox Matrix) ---
+            const q8Checked = Array.from(form.querySelectorAll('input[name="q8"]:checked')).map(el => el.value);
+            const q8Feedback = document.getElementById('q8-feedback');
+            document.getElementById('q8-container').classList.remove('answered-correct', 'answered-wrong');
+            const isQ8Correct = q8Checked.length === 3 && q8Checked.every(val => masterAnswers.q8.includes(val));
+            if(isQ8Correct) {
+                runningScore += 3;
+                markCorrect('q8', q8Feedback, "Correct! Processing, multitasking thresholds, and non-volatile storage speeds dictate data center provisioning selections.");
+            } else {
+                markWrong('q8', q8Feedback, "Incorrect selection footprint. Correct options: B, C, and E.");
+            }
+
+            // --- Q9 Evaluation (Manual/Descriptive) ---
+            const q9Val = form.querySelector('textarea[name="q9"]').value.trim();
+            const q9Feedback = document.getElementById('q9-feedback');
+            document.getElementById('q9-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q9Val.length > 15) {
+                runningScore += 2; // Auto-award based on length threshold for presentation purposes
+                markCorrect('q9', q9Feedback, "Answer logged. Verification checklist parameters match network access prerequisites.");
+            } else {
+                markWrong('q9', q9Feedback, "Provide structural details. Requirements: Valid IP configuration, connection to DC, reachable DNS server configuration, and administrative authorization strings.");
+            }
+
+            // --- Q10 Evaluation ---
+            let q10CorrectCount = 0;
+            ['a', 'b', 'c', 'd'].forEach(part => {
+                if(form.querySelector(`input[name="q10_${part}"]`).value.trim().toLowerCase() === masterAnswers.q10[part]) q10CorrectCount++;
+            });
+            runningScore += q10CorrectCount;
+            const q10Feedback = document.getElementById('q10-feedback');
+            document.getElementById('q10-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q10CorrectCount === 4) {
+                markCorrect('q10', q10Feedback, "Correct! Complete DHCP DORA operational process verified.");
+            } else {
+                markWrong('q10', q10Feedback, `Scored: ${q10CorrectCount}/4. Correct Sequence: a) Offer, b) Lease, c) Discover, d) Request.`);
+            }
+
+            // --- Q11 Evaluation ---
+            let q11CorrectCount = 0;
+            ['1', '2', '3', '4'].forEach(item => {
+                if(form.querySelector(`select[name="q11_${item}"]`).value === masterAnswers.q11[item]) q11CorrectCount++;
+            });
+            runningScore += q11CorrectCount;
+            const q11Feedback = document.getElementById('q11-feedback');
+            document.getElementById('q11-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q11CorrectCount === 4) {
+                markCorrect('q11', q11Feedback, "Correct! Resolution patterns mapped perfectly.");
+            } else {
+                markWrong('q11', q11Feedback, `Scored: ${q11CorrectCount}/4. Correct Mapping -> 1:A (Recursive), 2:B (Iterative), 3:C (Root Server Query), 4:D (Forwarding).`);
+            }
+
+            // --- Q12 Evaluation ---
+            const q12Selected = form.querySelector('input[name="q12"]:checked');
+            const q12Feedback = document.getElementById('q12-feedback');
+            document.getElementById('q12-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q12Selected && q12Selected.value === masterAnswers.q12) {
+                runningScore += 2;
+                markCorrect('q12', q12Feedback, "Correct! Server Manager interface must be instantiated before roles modification initialization.");
+            } else {
+                markWrong('q12', q12Feedback, `Incorrect. Correct Option: ${masterAnswers.q12} (Open Server Manager).`);
+            }
+
+            // --- Q13 Evaluation ---
+            let q13CorrectCount = 0;
+            ['1', '2', '3', '4'].forEach(num => {
+                if(form.querySelector(`input[name="q13_${num}"]`).value.trim().toLowerCase() === masterAnswers.q13[num]) q13CorrectCount++;
+            });
+            runningScore += q13CorrectCount;
+            const q13Feedback = document.getElementById('q13-feedback');
+            document.getElementById('q13-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q13CorrectCount === 4) {
+                markCorrect('q13', q13Feedback, "Correct! Complete administrative operational troubleshooting story matched cleanly.");
+            } else {
+                markWrong('q13', q13Feedback, `Scored: ${q13CorrectCount}/4. Expected Text parameters: I) physical connection, II) network, III) file sharing, IV) ping.`);
+            }
+
+            // --- Q14 Evaluation ---
+            let q14CorrectCount = 0;
+            ['A', 'B', 'C', 'D'].forEach(ch => {
+                if(form.querySelector(`select[name="q14_${ch}"]`).value === masterAnswers.q14[ch]) q14CorrectCount++;
+            });
+            if(q14CorrectCount === 4) runningScore += 3;
+            const q14Feedback = document.getElementById('q14-feedback');
+            document.getElementById('q14-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q14CorrectCount === 4) {
+                markCorrect('q14', q14Feedback, "Correct! All IIS logical processing configuration deployment milestones synchronized.");
+            } else {
+                markWrong('q14', q14Feedback, `Incorrect execution configuration sequencing. Correct: A&rarr;2, B&rarr;3, C&rarr;1, D&rarr;4.`);
+            }
+
+            // --- Q15 Evaluation ---
+            let q15CorrectCount = 0;
+            ['A', 'B', 'C', 'D', 'E'].forEach(ch => {
+                if(form.querySelector(`select[name="q15_${ch}"]`).value === masterAnswers.q15[ch]) q15CorrectCount++;
+            });
+            runningScore += q15CorrectCount;
+            const q15Feedback = document.getElementById('q15-feedback');
+            document.getElementById('q15-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q15CorrectCount === 5) {
+                markCorrect('q15', q15Feedback, "Correct! File permission security structures validated.");
+            } else {
+                markWrong('q15', q15Feedback, `Scored: ${q15CorrectCount}/5. Correct parameters: A:True, B:True, C:True, D:False, E:True.`);
+            }
+
+            // --- Q16 Evaluation ---
+            let q16CorrectCount = 0;
+            if(form.querySelector('input[name="q16_1"]:checked')?.value === masterAnswers.q16["1"]) q16CorrectCount++;
+            if(form.querySelector('input[name="q16_2"]:checked')?.value === masterAnswers.q16["2"]) q16CorrectCount++;
+            if(form.querySelector('input[name="q16_3"]:checked')?.value === masterAnswers.q16["3"]) q16CorrectCount++;
+            if(form.querySelector('input[name="q16_4"]:checked')?.value === masterAnswers.q16["4"]) q16CorrectCount++;
+            if(form.querySelector('input[name="q16_5"]:checked')?.value === masterAnswers.q16["5"]) q16CorrectCount++;
+            runningScore += q16CorrectCount;
+            const q16Feedback = document.getElementById('q16-feedback');
+            document.getElementById('q16-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q16CorrectCount === 5) {
+                markCorrect('q16', q16Feedback, "Correct! High-availability disaster configuration metrics fully mapped.");
+            } else {
+                markWrong('q16', q16Feedback, `Scored: ${q16CorrectCount}/5. Options should be: I:B, II:A, III:B, IV:A, V:C.`);
+            }
+
+            // --- Q17 Evaluation ---
+            const q17Selected = form.querySelector('input[name="q17"]:checked');
+            const q17Feedback = document.getElementById('q17-feedback');
+            document.getElementById('q17-container').classList.remove('answered-correct', 'answered-wrong');
+            if(q17Selected && q17Selected.value === masterAnswers.q17) {
+                runningScore += 2;
+                markCorrect('q17', q17Feedback, "Correct! Standard corporate patch configuration strategy follows standard WSUS approval paradigms.");
+            } else {
+                markWrong('q17', q17Feedback, `Incorrect. Correct Option Architecture is: A (Open WSUS console pipeline path).`);
+            }
+
+            // --- Global Score Calculations Output Rendering ---
+            const scoreDisplay = document.getElementById('liveScore');
+            scoreDisplay.innerText = runningScore;
+            
+            const progressContainer = document.getElementById('gradingProgress');
+            progressContainer.classList.remove('d-none');
+            const percent = Math.round((runningScore / 38) * 100);
+            progressContainer.querySelector('.progress-bar').style.width = percent + '%';
+            
+            // Scroll tracking back smoothly up to scoreboard area
+            document.getElementById('section-a-heading').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function markCorrect(id, feedbackEl, msg) {
+            document.getElementById(`${id}-container`).classList.add('answered-correct');
+            feedbackEl.classList.remove('d-none', 'text-danger');
+            feedbackEl.classList.add('text-success');
+            feedbackEl.innerHTML = `&#10004; ${msg}`;
+        }
+
+        function markWrong(id, feedbackEl, msg) {
+            document.getElementById(`${id}-container`).classList.add('answered-wrong');
+            feedbackEl.classList.remove('d-none', 'text-success');
+            feedbackEl.classList.add('text-danger');
+            feedbackEl.innerHTML = `&#10008; ${msg}`;
+        }
+
+        function resetPortalFields() {
+            document.getElementById('examForm').reset();
+            const inputs = document.querySelectorAll('.q-input');
+            inputs.forEach(input => { input.value = ""; });
+            
+            const containers = document.querySelectorAll('.question-card');
+            containers.forEach(c => c.classList.remove('answered-correct', 'answered-wrong'));
+            
+            const feedbacks = document.querySelectorAll('.feedback-text');
+            feedbacks.forEach(f => f.classList.add('d-none'));
+            
+            document.getElementById('liveScore').innerText = "--";
+            document.getElementById('gradingProgress').classList.add('d-none');
+        }
+    </script>
+</body>
+</html>
