@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUESTION PAPERS</title>
@@ -18,6 +17,7 @@
             --accent-linux: #fb923c;
             --accent-windows: #4ade80;
             --accent-python: #c084fc;
+            --accent-default: #38bdf8;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -116,14 +116,21 @@
         .file-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 4px; }
         .file-meta { font-size: 0.8rem; color: var(--text-muted); }
         .arrow-icon { font-size: 1.1rem; color: var(--text-muted); opacity: 0; transform: translateX(-6px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .file-card:hover { border-color: rgba(255, 255, 255, 0.15); transform: translateY(-5px); background: rgba(255, 255, 255, 0.02); }
+        
+        /* Combined hover states cleanly */
+        .file-card:hover { 
+            border-color: rgba(255, 255, 255, 0.15); 
+            transform: translateY(-5px); 
+            background: rgba(255, 255, 255, 0.02); 
+            color: var(--text-main); 
+        }
         .file-card:hover .file-icon-wrapper { background: var(--local-accent); color: #0f172a; transform: scale(1.05); }
         .file-card:hover .arrow-icon { opacity: 1; color: var(--local-accent); transform: translateX(0); }
+        
         @media (max-width: 1100px) { .file-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .file-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 576px) { .file-grid { grid-template-columns: 1fr; } .top-nav { flex-direction: column; align-items: flex-start; gap: 16px; } .back-link { width: 100%; justify-content: center; } }
     </style>
-
 </head>
 <body>
     <div class="portal-wrapper">
@@ -136,8 +143,35 @@
                 <i class="bi bi-arrow-left"></i> Parent Directory
             </a>
         </div>
+        
         <div class="file-grid">
-            
+            <a href="gencp302.html" class="file-card linux-theme">
+                <div class="file-icon-wrapper">
+                    <i class="bi bi-ubuntu"></i>
+                </div>
+                <div class="file-info">
+                    <div>
+                        <div class="file-title">C PROGRAMMING</div>
+                        </div>
+                    <div class="arrow-icon">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <a href="nitwa401_2026.html" class="file-card windows-theme">
+                <div class="file-icon-wrapper">
+                    <i class="bi bi-windows"></i>
+                </div>
+                <div class="file-info">
+                    <div>
+                        <div class="file-title">WINDOWS SERVER</div>
+                        </div>
+                    <div class="arrow-icon">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </body>
