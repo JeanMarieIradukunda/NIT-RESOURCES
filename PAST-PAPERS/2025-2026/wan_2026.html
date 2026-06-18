@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAN Advanced Examination Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --bs-body-font-family: 'Inter', sans-serif;
+            --primary-color: #2b4c7e;
+            --secondary-color: #4a90e2;
+            --accent-success: #2ecc71;
+            --bg-light: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --transition-smooth: all 0.25s ease-in-out;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: #334155;
+            padding-bottom: 60px;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), #1e293b);
+            color: white;
+            padding: 3rem 0;
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            border: none;
+            background: white;
+            color: #64748b;
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .exam-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+            border-left: 5px solid var(--secondary-color);
+            overflow: hidden;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .exam-card.section-a { border-left-color: #3b82f6; }
+        .exam-card.section-b { border-left-color: #f59e0b; }
+        .exam-card.section-c { border-left-color: #10b981; }
+
+        .badge-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+        }
+
+        .question-title {
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
+        .answer-pane {
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            border: 1px dashed #cbd5e1;
+            display: none;
+        }
+
+        .reveal-btn {
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .progress-sticky {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .matching-grid input {
+            max-width: 70px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-diagram-3-fill me-2 text-info"></i>WAN EXAM HUB</a>
+            <span class="navbar-text d-none d-sm-inline-block">Academic Review Engine v2.0</span>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-center text-md-start">
+                    <span class="badge bg-info text-dark mb-2 fw-semibold">Interactive Study Guide</span>
+                    <h1 class="display-5 fw-bold">Wide Area Networks Complete Examination</h1>
+                    <p class="lead opacity-75 mb-0">Review comprehensive questions across Section A (Short Form), Section B (Long Form), and Section C (Network Architecture & Design).</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end mt-4 mt-md-0">
+                    <button class="btn btn-outline-light btn-lg" onclick="window.print()">
+                        <i class="bi bi-printer me-2"></i>Print Exam Sheet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row g-4">
+            
+            <div class="col-lg-3">
+                <div class="progress-sticky">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-3">
+                        <h5 class="fw-bold mb-3 text-secondary" style="font-size: 0.9rem; letter-spacing: 0.5px; text-transform: uppercase;">Structure Filters</h5>
+                        <div class="d-grid gap-2">
+                            <button class="filter-btn active text-start" data-filter="all">
+                                <i class="bi bi-collection me-2"></i> All Questions (<span id="count-all">24</span>)
+                            </button>
+                            <button class="filter-btn text-start" data-filter="section-a">
+                                <i class="bi bi-lightning-charge me-2 text-primary"></i> Section A: Short (<span id="count-a">17</span>)
+                            </button>
+                            <button class="filter-btn text-start" data-filter="section-b">
+                                <i class="bi bi-journal-text me-2 text-warning"></i> Section B: Long (<span id="count-b">5</span>)
+                            </button>
+                            <button class="filter-btn text-start" data-filter="section-c">
+                                <i class="bi bi-cpu me-2 text-success"></i> Section C: Design (<span id="count-c">2</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <h5 class="fw-bold mb-2 text-secondary" style="font-size: 0.9rem; letter-spacing: 0.5px; text-transform: uppercase;">Study Progress</h5>
+                        <p class="small text-muted mb-3">Track your answer disclosures below.</p>
+                        <div class="progress mb-2" style="height: 10px; border-radius: 10px;">
+                            <div id="study-progress" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small fw-medium">
+                            <span>Revealed: <span id="reveal-count">0</span>/24</span>
+                            <span id="percent-count">0%</span>
+                        </div>
+                        <hr>
+                        <button class="btn btn-sm btn-outline-danger w-100 rounded-3" onclick="resetMetrics()">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div id="questions-container">
+                    
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 01 • Acronyms</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Expand Acronyms (Set 1)</h5>
+                            <p class="text-secondary">Expand each of the following acronyms by writing their complete and correct full meanings.</p>
+                            <div class="ps-3 border-start border-2 my-3 text-muted">
+                                <div><strong>A.</strong> WAN</div>
+                                <div><strong>B.</strong> LAN</div>
+                                <div><strong>C.</strong> MAN</div>
+                                <div><strong>D.</strong> VLAN</div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Show Correct Expansion
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <ul class="mb-0 list-unstyled ps-2">
+                                    <li><strong>A. WAN:</strong> Wide Area Network</li>
+                                    <li><strong>B. LAN:</strong> Local Area Network</li>
+                                    <li><strong>C. MAN:</strong> Metropolitan Area Network</li>
+                                    <li><strong>D. VLAN:</strong> Virtual Local Area Network</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 02 • Acronyms</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Expand Acronyms (Set 2)</h5>
+                            <p class="text-secondary">Write the full forms of the following acronyms by expanding each abbreviation into its complete meaning.</p>
+                            <div class="ps-3 border-start border-2 my-3 text-muted">
+                                <div><strong>A.</strong> VPN</div>
+                                <div><strong>B.</strong> MPLS</div>
+                                <div><strong>C.</strong> ISDN</div>
+                                <div><strong>D.</strong> FM</div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Show Correct Expansion
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <ul class="mb-0 list-unstyled ps-2">
+                                    <li><strong>A. VPN:</strong> Virtual Private Network</li>
+                                    <li><strong>B. MPLS:</strong> Multiprotocol Label Switching</li>
+                                    <li><strong>C. ISDN:</strong> Integrated Services Digital Network</li>
+                                    <li><strong>D. FM:</strong> Frequency Modulation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 03 • Concepts</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">VLAN Purpose</h5>
+                            <p class="text-secondary">What is the main purpose of a VLAN in a network?</p>
+                            <div class="form-check mb-2 text-muted">
+                                <input class="form-check-input" type="radio" disabled>
+                                <label class="form-check-input-label">A. To boost physical cable range bandwidth speeds</label>
+                            </div>
+                            <div class="form-check mb-2 text-muted text-dark fw-medium">
+                                <input class="form-check-input" type="radio" checked disabled>
+                                <label class="form-check-input-label text-primary">B. To logically divide a network into smaller segments</label>
+                            </div>
+                            <div class="form-check mb-2 text-muted">
+                                <input class="form-check-input" type="radio" disabled>
+                                <label class="form-check-input-label">C. To completely eliminate the requirement of physical switching nodes</label>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn mt-2" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Verify Choice
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0 font-monospace">B. To logically divide a network into smaller segments</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 04 • Hardware</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">VLAN Device</h5>
+                            <p class="text-secondary">Which device is primarily used to create VLANs?</p>
+                            <div class="ps-3 border-start border-2 my-2 text-muted mb-3">
+                                A. Hub &nbsp;&nbsp;|&nbsp;&nbsp; B. Router &nbsp;&nbsp;|&nbsp;&nbsp; <strong>C. Switch</strong> &nbsp;&nbsp;|&nbsp;&nbsp; D. Access Point
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Show Correct Unit
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0"><strong>C. Switch</strong> (Layer 2 configuration handles frame tags mapping to functional VLAN IDs).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 05 • Addressing</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">CIDR Notation</h5>
+                            <p class="text-secondary">A network administrator is designing an IP addressing scheme and uses CIDR notation such as /24. What does "/24" represent?</p>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Reveal Bit Meaning
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0"><strong>D. Network Bits</strong> (Indicates that the first 24 bits of the routing reference mask address are masked for network identification).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 06 • Security</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Network Attacks (DDoS)</h5>
+                            <p class="text-secondary">Sending excessive traffic to a network to slow it down or make it unavailable for users is known as massive traffic coming from many sources. What is this called?</p>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Reveal Vector Name
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0"><strong>B. DDoS attack</strong> (Distributed Denial of Service)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 07 • Security</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Network Attacks (Brute Force)</h5>
+                            <p class="text-secondary">A hacker tries many different password combinations repeatedly until the correct password is found and gains access to a system. What is this type of attack called?</p>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Reveal Attack Matrix
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0"><strong>C. Brute force attack</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 08 • Field Work</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Site Visits</h5>
+                            <div class="mb-3 text-secondary">
+                                <p class="mb-1"><strong>I.</strong> During a site visit, taking notes and photographs helps to:</p>
+                                <div class="ps-3 text-muted mb-2">Selected Choice: <strong>C. Show progress of the site</strong></div>
+                                <p class="mb-1"><strong>II.</strong> Who usually conducts a site visit?</p>
+                                <div class="ps-3 text-muted">Selected Choice: <strong>B. Network technician</strong></div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Confirm Roles
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answers:</h6>
+                                <p class="mb-1"><strong>I:</strong> C. Show progress of the site</p>
+                                <p class="mb-0"><strong>II:</strong> B. Network technician</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 09 • Fill-in-the-blanks</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">VLAN Benefits & Routing</h5>
+                            <p class="text-secondary">Fill in each blank with the correct option provided: <span class="text-muted font-monospace">(repeater, isolating, ignoring, connecting, router, broadcast, unicast)</span></p>
+                            <div class="p-3 bg-light rounded-3 mb-3 border-start border-3 text-muted">
+                                <p class="mb-2"><strong>a.</strong> A VLAN can improve network security by <span class="text-primary border-bottom border-primary border-2 fw-semibold px-1">___________</span> certain devices or departments from the rest of the network.</p>
+                                <p class="mb-0"><strong>b.</strong> Devices not on the same VLAN can communicate directly, but communication between different VLANs requires a <span class="text-primary border-bottom border-primary border-2 fw-semibold px-1">___________</span> or Layer 3 switch.</p>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Fill Gaps
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Completed Statements:</h6>
+                                <p class="mb-1"><strong>a.</strong> ...by <span class="badge bg-success">isolating</span> certain devices...</p>
+                                <p class="mb-0"><strong>b.</strong> ...requires a <span class="badge bg-success">router</span> or Layer 3 switch.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 10 • VLAN Operation</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">VLAN Traffic & Propagation</h5>
+                            <div class="mb-3 text-secondary">
+                                <p class="mb-1"><strong>I.</strong> One key benefit of VLANs is controlling ________ traffic within a network.</p>
+                                <p class="mb-3"><strong>II.</strong> ________ helps reduce administrative work by allowing VLAN configurations to be ________ across all switches in the same domain.</p>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Show Selected Terms
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Answers:</h6>
+                                <p class="mb-1"><strong>I:</strong> B. broadcast</p>
+                                <p class="mb-0"><strong>II:</strong> B. propagated (via protocols like VTP)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 11 • Protocols</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">DHCP Parameters (True or False)</h5>
+                            <p class="text-secondary">Determine the truth value of the parameters regarding dynamic configuration.</p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle bg-white">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Statement Clause</th>
+                                            <th class="text-center" style="width: 120px;">Assessment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="small text-muted">A. If a DHCP server is not configured with a valid IP address pool, it can still assign addresses to clients without any issues.</td>
+                                            <td class="text-center"><span class="badge bg-danger">False</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">B. A correctly configured DHCP server can automatically assign IP addresses and reduce manual network configuration tasks.</td>
+                                            <td class="text-center"><span class="badge bg-success">True</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">C. Configuring a DHCP server includes defining parameters such as default gateway and DNS server for client devices.</td>
+                                            <td class="text-center"><span class="badge bg-success">True</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">D. Once a DHCP server is configured, client devices must still be manually assigned IP addresses to connect to the network.</td>
+                                            <td class="text-center"><span class="badge bg-danger">False</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Verify All True/False
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Logical Verification Matrix:</h6>
+                                <p class="mb-0 small">A: <strong>False</strong> (Pool deployment is mandatory) | B: <strong>True</strong> | C: <strong>True</strong> (Options 3 & 6) | D: <strong>False</strong> (Hosts rely on dynamic DHCP discovery handshake)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 12 • Maintenance</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Device Replacement & Repair (True or False)</h5>
+                            <div class="ps-3 border-start border-3 text-muted mb-3">
+                                <p class="mb-2"><strong>A.</strong> Replacing a damaged device does not require reconfiguration if the new device is of the same model. <br><span class="fw-semibold text-danger">Answer: False</span></p>
+                                <p class="mb-0"><strong>B.</strong> Repairing a network device may involve checking cables, power supply, and hardware components. <br><span class="fw-semibold text-success">Answer: True</span></p>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Confirm Core Logic
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Explanation:</h6>
+                                <p class="mb-0 small">Clause A is explicitly <strong>False</strong> because new identical hardware containers maintain empty volatile memory/configurations upon initial factory unboxing. They must ingest backup setups.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 13 • Topologies</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Network Topologies</h5>
+                            <p class="text-secondary">You are designing a network for a school and decide to connect all devices to a central switch. This network layout belongs to which topology?</p>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Reveal Structural Form
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Correct Answer:</h6>
+                                <p class="mb-0 fw-bold">Star topology</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 14 • Trunking</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">VTP Operations (True or False)</h5>
+                            <div class="row small text-muted g-2 mb-3">
+                                <div class="col-12 border-bottom pb-1"><strong>A.</strong> Trunk link missing validation propagation: <span class="text-danger fw-bold">False</span></div>
+                                <div class="col-12 border-bottom pb-1"><strong>B.</strong> Server-to-Client operational domain dynamic mapping sync: <span class="text-success fw-bold">True</span></div>
+                                <div class="col-12 border-bottom pb-1"><strong>C.</strong> Reduction of manual database configuration error index: <span class="text-success fw-bold">True</span></div>
+                                <div class="col-12"><strong>D.</strong> Operates contextually over Layer 2 framing interfaces: <span class="text-success fw-bold">True</span></div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Confirm VTP Matrix
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>VTP Rules Checklist:</h6>
+                                <p class="mb-0 text-muted small">Without establishing structural 802.1Q trunking, VTP advertisements are discarded across switch segments, validating why statement A is false.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 15 • Dynamic Routing</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">RIP Troubleshooting (Matching Matrix)</h5>
+                            <p class="text-secondary small">Match each Dynamic RIP Routing Scenario with its corresponding action vector.</p>
+                            
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-sm table-hover align-middle custom-table">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th style="width: 50%;">Scenario (Column A)</th>
+                                            <th style="width: 10%; text-align: center;">Match</th>
+                                            <th style="width: 40%;">Action/Command (Column B)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-wrap small text-muted">1. Configure a router to start sending RIP updates using RIPv1</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="C" readonly></td>
+                                            <td class="text-wrap small"><strong>C.</strong> Use network command under RIP configuration</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-wrap small text-muted">2. Check if RIP routes are being learned correctly on the router</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="D" readonly></td>
+                                            <td class="text-wrap small"><strong>D.</strong> Use show ip route</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-wrap small text-muted">3. Resolve an issue where networks are not being advertised in RIP</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="A" readonly></td>
+                                            <td class="text-wrap small"><strong>A.</strong> Check network statements and interface status</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-wrap small text-muted">4. Automatically summarize networks at classful boundaries</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="E" readonly></td>
+                                            <td class="text-wrap small"><strong>E.</strong> Default behavior of RIPv1 [auto summarization]</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-wrap small text-muted">5. Confirm that RIP is running and view routing updates</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="B" readonly></td>
+                                            <td class="text-wrap small"><strong>B.</strong> Use debug ip rip</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn mt-2" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Verify Matches
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>RIP Mapping Matrix Resolved:</h6>
+                                <p class="mb-0 font-monospace small">1→C | 2→D | 3→A | 4→E | 5→B</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 16 • Infrastructure Hardware</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">Hardware Tools (Matching)</h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-sm table-hover align-middle custom-table">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th style="width: 45%;">Tool Component (Column A)</th>
+                                            <th style="width: 10%; text-align: center;">Match</th>
+                                            <th style="width: 45%;">Functional Infrastructure Scope (Column B)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="small text-muted">1. Crimping tool</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="C" readonly></td>
+                                            <td class="text-wrap small"><strong>C.</strong> Used to attach RJ-45 connectors to network cables</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">2. Cable tester</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="A" readonly></td>
+                                            <td class="text-wrap small"><strong>A.</strong> Used to test cable continuity and faults</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">3. Console cable</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="B" readonly></td>
+                                            <td class="text-wrap small"><strong>B.</strong> Used to connect a computer to a router for configuration</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">4. Router</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="D" readonly></td>
+                                            <td class="text-wrap small"><strong>D.</strong> Used to forward data between different networks (WAN)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="small text-muted">5. Switch</td>
+                                            <td class="text-center"><input type="text" class="form-control form-control-sm d-inline-block text-center border-primary fw-bold" style="width: 45px;" value="E" readonly></td>
+                                            <td class="text-wrap small"><strong>E.</strong> Used to connect multiple devices within a LAN</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn mt-2" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Verify Tools Mapping
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Verified Association:</h6>
+                                <p class="mb-0 small">1→C, 2→A, 3→B, 4→D, 5→E</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-a" data-section="section-a">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-primary-subtle text-primary badge-category">Question 17 • Systems Administration</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-title mb-3">User Management Tasks (Algorithmic Ordering)</h5>
+                            <p class="text-secondary small">Arrange user provisioning execution procedures into their proper order (1-5).</p>
+                            <div class="row g-2 align-items-center text-muted small">
+                                <div class="col-sm-2 text-md-center"><span class="badge bg-dark px-3 py-2">Step 1</span></div>
+                                <div class="col-sm-10 p-2 bg-light rounded border-start border-primary border-2"><strong>C.</strong> Identify user requirements and access needs</div>
+                                
+                                <div class="col-sm-2 text-md-center"><span class="badge bg-dark px-3 py-2">Step 2</span></div>
+                                <div class="col-sm-10 p-2 bg-light rounded border-start border-primary border-2"><strong>D.</strong> Create user roles in the system</div>
+                                
+                                <div class="col-sm-2 text-md-center"><span class="badge bg-dark px-3 py-2">Step 3</span></div>
+                                <div class="col-sm-10 p-2 bg-light rounded border-start border-primary border-2"><strong>A.</strong> Assign appropriate permissions to each role</div>
+                                
+                                <div class="col-sm-2 text-md-center"><span class="badge bg-dark px-3 py-2">Step 4</span></div>
+                                <div class="col-sm-10 p-2 bg-light rounded border-start border-primary border-2"><strong>E.</strong> Assign users to the created roles</div>
+                                
+                                <div class="col-sm-2 text-md-center"><span class="badge bg-dark px-3 py-2">Step 5</span></div>
+                                <div class="col-sm-10 p-2 bg-light rounded border-start border-primary border-2"><strong>B.</strong> Test access levels to ensure correct functionality</div>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm reveal-btn mt-3" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Verify Order
+                            </button>
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Sequence Verified:</h6>
+                                <p class="mb-0 font-monospace small">1→C, 2→D, 3→A, 4→E, 5→B</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card exam-card section-b" data-section="section-b">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-warning-invert badge-category text-dark">Question 18 • Routing Protocols</span>
+                                <span class="text-muted small fw-medium">Section B</span>
+                            </div>
+                            <h5 class="question-title mb-3">OSPF Routing Protocol Implementation Architectural Analysis</h5>
+                            <p class="text-secondary small">Deconstruct structural convergence execution, topological design mappings, and implementation requirements across multi-area autonomous zones.</p>
+                            
+                            <button class="btn btn-outline-warning btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Analyze OSPF Solution Specifications
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-clipboard-data-fill text-warning me-2"></i>Engineered Answer Specifications:</h6>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary small">A) Network Interconnection Structure</h6>
+                                    <p class="small text-muted ps-2">Connect Router 1 to Router 2 via a point-to-point link (e.g., Crossover or Serial connection). Connect each router down link via an Ethernet connection to its respective localized infrastructure broadcast Switch. Distribute the four client desktop host hardware profiles symmetrically (2 endpoints processing frames directly inside Switch 1; 2 endpoints mapping profiles to Switch 2).</p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary small">B) IP Addressing Distribution Scheme</h6>
+                                    <p class="small text-muted ps-2">Divide the routing layout into three clean broadcast domain subnets: Subnet A (LAN 1), Subnet B (LAN 2), and Subnet C (Point-to-Point Inter-Router transit link). Map the respective localized system gateway interface IP address bindings on the router to act as the downstream default gateway configurations processing traffic from the local endpoints.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-primary small">C) OSPF Operation and Configuration Requirement</h6>
+                                    <p class="small text-muted ps-2 mb-2">Initialize routing definitions by calling <code>router ospf [process-id]</code> globally. Bind native physical link networks matching exact binary inverted wildcard sub-masks to activate inside the backbone zone using the statement <code>network [network-id] [wildcard-mask] area 0</code>.</p>
+                                    <p class="small text-muted ps-2 mb-0"><strong>Operational Convergence:</strong> Neighbors discover each other dynamically via bidirectional Multicast Hello packets tracking parameter values, declare adjacency, swap Link-State Advertisements (LSAs), build unified topological maps within the Link State Database (LSDB), and execute Dijkstra's Shortest Path First (SPF) tree algorithm to populate the active IP routing table.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-b" data-section="section-b">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark badge-category">Question 19 • Loop Prevention</span>
+                                <span class="text-muted small fw-medium">Section B</span>
+                            </div>
+                            <h5 class="question-title mb-3">Spanning Tree Protocol (STP) State Operations</h5>
+                            <p class="text-secondary small">Investigate convergence states and structural loop mitigation metrics within high-availability redundant LAN designs.</p>
+                            
+                            <button class="btn btn-outline-warning btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Analyze STP Mechanics
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-shield-lock-fill text-warning me-2"></i>STP Engineering Breakdown:</h6>
+                                <div class="mb-3">
+                                    <h6 class="fw-bold text-primary small">A) Impact of Listening and Learning Stages</h6>
+                                    <p class="small text-muted ps-2 mb-1"><strong>Listening Stage (15 Seconds):</strong> The physical switch interface drops incoming host payload traffic entirely while evaluating structural Bridge Protocol Data Units (BPDUs) to locate alternative redundant tracking paths and root switch mappings. This prevents frame loops from forming while the topology settles.</p>
+                                    <p class="small text-muted ps-2 mb-0"><strong>Learning Stage (15 Seconds):</strong> The switch continues to discard host payload traffic but scans the source addresses of incoming frames to populate its MAC address table. Together, these stages introduce a 30-second convergence delay before transitioning an interface from blocked to active forwarding mode.</p>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-primary small">B) Impact of STP Timers on Network Stability</h6>
+                                    <ul class="small text-muted ps-3 mb-0">
+                                        <li><strong>Hello Time (2s):</strong> Dictates the interval at which the Root Bridge broadcasts configuration BPDUs to maintain topology state.</li>
+                                        <li><strong>Max Age (20s):</strong> The duration a switch stores neighbor BPDU parameters before declaring them invalid if communications fail.</li>
+                                        <li><strong>Forward Delay (15s):</strong> The operational timer tracking execution steps for both the Listening and Learning phases individually.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-b" data-section="section-b">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark badge-category">Question 20 • VLSM Subnetting</span>
+                                <span class="text-muted small fw-medium">Section B</span>
+                            </div>
+                            <h5 class="question-title mb-3">Subnetting Calculation Analysis (/26 Block)</h5>
+                            <p class="text-secondary">Perform binary bounding calculations for the assigned Class C block: <span class="badge bg-dark font-monospace">192.168.10.0/26</span></p>
+                            
+                            <button class="btn btn-outline-warning btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Calculate Addressing Metrics
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-calculator-fill text-warning me-2"></i>Mathematical Resolving Result:</h6>
+                                <div class="row font-monospace text-muted small g-2 ps-2">
+                                    <div class="col-sm-4"><strong>A. Usable Host Spaces:</strong> <span class="text-success fw-bold">62 hosts</span> (2^6 - 2)</div>
+                                    <div class="col-sm-4"><strong>B. Network Base Address:</strong> 192.168.10.0</div>
+                                    <div class="col-sm-4"><strong>C. Broadcast Address:</strong> 192.168.10.63</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-b" data-section="section-b">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark badge-category">Question 21 • Classful Subnetting</span>
+                                <span class="text-muted small fw-medium">Section B</span>
+                            </div>
+                            <h5 class="question-title mb-3">Classful IP Addressing Calculation</h5>
+                            <p class="text-secondary">For the Class C network <span class="badge bg-dark font-monospace">192.168.1.0</span> running default subnet masking parameters <span class="text-primary fw-medium">/24</span>:</p>
+                            
+                            <button class="btn btn-outline-warning btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Calculate Boundary Scope
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-calculator-fill text-warning me-2"></i>Boundaries:</h6>
+                                <ul class="list-unstyled font-monospace text-muted small mb-0 ps-2">
+                                    <li><strong>A. Network Identity Reference Location:</strong> 192.168.1.0</li>
+                                    <li><strong>B. Broadcast Destination Target Mapping:</strong> 192.168.1.255</li>
+                                    <li><strong>C. Range of Usable Host Allocation Endpoints:</strong> 192.168.1.1 to 192.168.1.254</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-b" data-section="section-b">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark badge-category">Question 22 • Diagnostic Validation</span>
+                                <span class="text-muted small fw-medium">Section B</span>
+                            </div>
+                            <h5 class="question-title mb-3">VLAN Verification Protocols</h5>
+                            <p class="text-secondary small">Examine database parsing strategies and confirmation logic using modern Command Line Interface (CLI) tools.</p>
+                            
+                            <button class="btn btn-outline-warning btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Review Diagnostics Manual
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-terminal-fill text-warning me-2"></i>Verification Synthesis Matrix:</h6>
+                                <div class="small text-muted ps-1">
+                                    <p class="mb-2"><strong>A) Importance:</strong> Ensures traffic isolates correctly within logical groups, bounds broadcast domains, and prevents frame leaking across functional departments.</p>
+                                    <p class="mb-2"><strong>B) Utility of Commands:</strong> <code>show vlan brief</code> displays the operational status of VLANs and active port assignments. <code>show interface trunk</code> identifies active inter-switch trunk pathways and confirmed tagging protocol maps (e.g., 802.1Q).</p>
+                                    <p class="mb-2"><strong>C) Operation Confirmation:</strong> Successful ICMP pings between hosts in the same VLAN, combined with blocked pings across different VLANs (without a Layer 3 router), confirms proper isolation.</p>
+                                    <p class="mb-0"><strong>D) Consequences of Failure:</strong> Exposes the network to security vulnerabilities and broadcast storms that can degrade overall bandwidth performance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card exam-card section-c" data-section="section-c">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success-subtle text-success badge-category">Question 23 • Infrastructure Systems Design</span>
+                                <span class="text-muted small fw-medium">Section C</span>
+                            </div>
+                            <h5 class="question-title mb-3">Network Monitoring and Management Tool Specification</h5>
+                            <p class="text-secondary small">Design a highly available enterprise-level network monitoring system capable of tracking performance anomalies in real time.</p>
+                            
+                            <button class="btn btn-outline-success btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Review System Specifications Blueprint
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-cpu-fill text-success me-2"></i>System Design Blueprint:</h6>
+                                <div class="row g-3 small text-muted">
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">A) Core Information Displayed</span>
+                                        Provides real-time visibility into the device inventory, dynamically mapped network topologies, and bandwidth consumption across active links.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">B) Performance Metric Engine</span>
+                                        Dashboards track latency spikes, interface packet error rates, and historic performance baselines using SNMP and telemetry data streams.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">C) Device Status Tracking</span>
+                                        Uses color-coded statuses (Green = Online, Yellow = Degradation Warning, Red = Interface/Node Failure) alongside active system service process tracking.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">D) Automated Alerts Engine</span>
+                                        Triggers automated notifications via SMS, email, or webhook channels when user-defined thresholds are crossed.
+                                    </div>
+                                    <div class="col-md-12 border-top pt-2">
+                                        <span class="fw-bold text-dark d-block">E) Advanced Feature Optimization</span>
+                                        Integrates machine learning models for anomaly detection to spot unusual traffic spikes, alongside automated scripts that self-heal known service disruptions.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card section-c" data-section="section-c">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success-subtle text-success badge-category">Question 24 • Security Engineering</span>
+                                <span class="text-muted small fw-medium">Section C</span>
+                            </div>
+                            <h5 class="question-title mb-3">Cisco Access Control List (ACL) Security Policy Architecture</h5>
+                            <p class="text-secondary small">Design an Extended ACL configuration strategy to isolate human resources and sales traffic while maintaining critical service access.</p>
+                            
+                            <button class="btn btn-outline-success btn-sm reveal-btn" onclick="toggleAnswer(this)">
+                                <i class="bi bi-eye me-1"></i> Review ACL Command Matrix
+                            </button>
+                            
+                            <div class="answer-pane p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-terminal-split text-success me-2"></i>Cisco IOS Implementation Codebase:</h6>
+                                
+                                <p class="small text-muted mb-2"><strong>A) Traffic Plan Strategy:</strong> Apply Extended ACL configurations inbound on the local Layer 3 interface gateways. This filters unauthorized frames immediately before they consume routing backplane bandwidth.</p>
+                                
+                                <div class="code-block mb-3">
+<span class="text-warning">! --- B) ACL Configuration Design ---</span>
+<span class="text-info">! Sales Inbound Policy Security Mapping Matrix</span>
+ip access-list extended SALES_INBOUND
+ permit ip 192.168.2.0 0.0.0.255 192.168.3.0 0.0.0.255
+ deny   ip 192.168.2.0 0.0.0.255 192.168.1.0 0.0.0.255
+ permit ip any any
+exit
+
+<span class="text-info">! Human Resources Inbound Policy Security Mapping Matrix</span>
+ip access-list extended HR_INBOUND
+ permit ip 192.168.1.0 0.0.0.255 192.168.3.0 0.0.0.255
+ deny   ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+ permit ip any any
+exit
+
+<span class="text-warning">! --- C) Interface Deployment Matrix Mapping ---</span>
+interface GigabitEthernet0/0
+ description Downstream Sales Department Gateway Interface
+ ip address 192.168.2.1 255.255.255.0
+ <span class="text-white">ip access-group SALES_INBOUND in</span>
+exit
+
+interface GigabitEthernet0/1
+ description Downstream Human Resources Gateway Interface
+ ip address 192.168.1.1 255.255.255.0
+ <span class="text-white">ip access-group HR_INBOUND in</span>
+exit
+                                </div>
+                                <p class="small text-muted mb-0"><strong>Note:</strong> The final <code>permit ip any any</code> rule overrides the default implicit deny at the end of Cisco ACLs, keeping remaining network pathways accessible.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Set containing unique IDs of questions revealed by the student during this session
+        let revealedQuestions = new Set();
+        const totalQuestions = 24;
+
+        // Initialize Application Context
+        document.addEventListener('DOMContentLoaded', () => {
+            initFilterEngine();
+            calculateInitialCounts();
+        });
+
+        // Setup Filtering Controls Logic
+        function initFilterEngine() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.exam-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Toggle active visual state indicators
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const targetFilter = button.getAttribute('data-filter');
+
+                    // Filter DOM nodes based on target section metadata attributes
+                    cards.forEach(card => {
+                        if (targetFilter === 'all' || card.getAttribute('data-section') === targetFilter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Toggles visibility of answer panes and manages tracking metrics
+        function toggleAnswer(buttonEl) {
+            const cardEl = buttonEl.closest('.exam-card');
+            const answerPane = cardEl.querySelector('.answer-pane');
+            const isHidden = window.getComputedStyle(answerPane).display === 'none';
+            
+            // Get a unique identifier for this question based on its title text
+            const qTitle = cardEl.querySelector('.question-title').innerText;
+
+            if (isHidden) {
+                answerPane.style.display = 'block';
+                buttonEl.innerHTML = '<i class="bi bi-eye-slash me-1"></i> Hide Answer Manual';
+                buttonEl.classList.replace('btn-outline-primary', 'btn-secondary');
+                buttonEl.classList.replace('btn-outline-warning', 'btn-secondary');
+                buttonEl.classList.replace('btn-outline-success', 'btn-secondary');
+                
+                // Log view state instance data
+                revealedQuestions.add(qTitle);
+            } else {
+                answerPane.style.display = 'none';
+                
+                // Restore section-specific button styling
+                if (cardEl.classList.contains('section-a')) {
+                    buttonEl.innerHTML = '<i class="bi bi-eye me-1"></i> Verify Choice';
+                    buttonEl.classList.replace('btn-secondary', 'btn-outline-primary');
+                } else if (cardEl.classList.contains('section-b')) {
+                    buttonEl.innerHTML = '<i class="bi bi-eye me-1"></i> Analyze Solution';
+                    buttonEl.classList.replace('btn-secondary', 'btn-outline-warning');
+                } else {
+                    buttonEl.innerHTML = '<i class="bi bi-eye me-1"></i> Review Command Matrix';
+                    buttonEl.classList.replace('btn-secondary', 'btn-outline-success');
+                }
+            }
+            
+            updateProgressMetrics();
+        }
+
+        // Updates progress bar and metrics
+        function updateProgressMetrics() {
+            const count = revealedQuestions.size;
+            const percentage = Math.round((count / totalQuestions) * 100);
+
+            document.getElementById('reveal-count').innerText = count;
+            document.getElementById('percent-count').innerText = `${percentage}%`;
+            
+            const progressBar = document.getElementById('study-progress');
+            progressBar.style.width = `${percentage}%`;
+            progressBar.setAttribute('aria-valuenow', percentage);
+        }
+
+        // Resets the state of all questions and progress metrics
+        function resetMetrics() {
+            revealedQuestions.clear();
+            updateProgressMetrics();
+            
+            // Collapse all open answer panes across sections
+            document.querySelectorAll('.answer-pane').forEach(pane => pane.style.display = 'none');
+            
+            // Restore original button layouts
+            document.querySelectorAll('.reveal-btn').forEach(btn => {
+                const card = btn.closest('.exam-card');
+                if (card.classList.contains('section-a')) {
+                    btn.className = "btn btn-outline-primary btn-sm reveal-btn";
+                    btn.innerHTML = '<i class="bi bi-eye me-1"></i> Reveal Answer';
+                } else if (card.classList.contains('section-b')) {
+                    btn.className = "btn btn-outline-warning btn-sm reveal-btn";
+                    btn.innerHTML = '<i class="bi bi-eye me-1"></i> Analyze Solution';
+                } else {
+                    btn.className = "btn btn-outline-success btn-sm reveal-btn";
+                    btn.innerHTML = '<i class="bi bi-eye me-1"></i> Review Command Matrix';
+                }
+            });
+        }
+
+        // Generates structural counter tokens dynamically on application initialization
+        function calculateInitialCounts() {
+            document.getElementById('count-all').innerText = document.querySelectorAll('.exam-card').length;
+            document.getElementById('count-a').innerText = document.querySelectorAll('.exam-card.section-a').length;
+            document.getElementById('count-b').innerText = document.querySelectorAll('.exam-card.section-b').length;
+            document.getElementById('count-c').innerText = document.querySelectorAll('.exam-card.section-c').length;
+        }
+    </script>
+</body>
+</html>

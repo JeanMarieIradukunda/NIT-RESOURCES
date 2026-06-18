@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Computing & Infrastructure Systems Examination</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --bs-body-font-family: 'Inter', sans-serif;
+            --primary-cloud: #0284c7;
+            --secondary-cloud: #bae6fd;
+            --dark-surface: #0f172a;
+            --bg-canvas: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --transition-smooth: all 0.2s ease-in-out;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            color: #334155;
+            padding-bottom: 80px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #0369a1, #0f172a);
+            color: white;
+            padding: 3.5rem 0;
+            border-radius: 0 0 24px 24px;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .filter-pill {
+            border: none;
+            background: white;
+            color: #64748b;
+            font-weight: 500;
+            padding: 0.6rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition-smooth);
+        }
+
+        .filter-pill.active, .filter-pill:hover {
+            background: var(--primary-cloud);
+            color: white;
+        }
+
+        .exam-card {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+            border-left: 5px solid #cbd5e1;
+            overflow: hidden;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .exam-card.sec-obj { border-left-color: #38bdf8; }
+        .exam-card.sec-essay { border-left-color: #f59e0b; }
+        .exam-card.sec-ext { border-left-color: #10b981; }
+
+        .question-header {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.15rem;
+        }
+
+        .answer-container {
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .reveal-action-btn {
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 24px;
+            z-index: 100;
+        }
+
+        .terminal-block {
+            background: var(--dark-surface);
+            color: #38bdf8;
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border: 1px solid #334155;
+        }
+
+        .dora-diagram {
+            background: #ffffff;
+            font-family: monospace;
+            white-space: pre;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-cloud-check-fill text-info me-2"></i>INFRASTRUCTURE & CLOUD HUB
+            </a>
+            <span class="navbar-text d-none d-md-inline text-muted">
+                System Administration & Engineering Portal
+            </span>
+        </div>
+    </nav>
+
+    <header class="hero-banner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9 text-center text-md-start">
+                    <span class="badge bg-info text-dark fw-bold mb-2">Verified Complete Solutions</span>
+                    <h1 class="display-6 fw-bold">Cloud Computing & Network Administration Solutions</h1>
+                    <p class="lead opacity-75 mb-0">Interactive review suite containing production-grade verification matrices, directory topologies, and diagnostic configurations.</p>
+                </div>
+                <div class="col-md-3 text-center text-md-end mt-4 mt-md-0">
+                    <button class="btn btn-light fw-semibold rounded-3 shadow-sm" onclick="window.print()">
+                        <i class="bi bi-printer-fill me-2"></i>Export Blueprint
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row g-4">
+            
+            <div class="col-lg-3">
+                <div class="sidebar-sticky">
+                    
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-3">
+                        <h6 class="fw-bold text-secondary text-uppercase mb-3" style="font-size: 0.8rem; letter-spacing: 0.5px;">Navigation Filter Matrix</h6>
+                        <div class="d-grid gap-2">
+                            <button class="filter-pill active text-start" data-filter="all">
+                                <i class="bi bi-grid-fill me-2 text-secondary"></i>All Modules (<span id="total-cnt">17</span>)
+                            </button>
+                            <button class="filter-pill text-start" data-filter="sec-obj">
+                                <i class="bi bi-check2-circle me-2 text-info"></i>Section A: Objectives (<span id="obj-cnt">11</span>)
+                            </button>
+                            <button class="filter-pill text-start" data-filter="sec-essay">
+                                <i class="bi bi-file-earmark-text me-2 text-warning"></i>Section B: Short Essays (<span id="essay-cnt">5</span>)
+                            </button>
+                            <button class="filter-pill text-start" data-filter="sec-ext">
+                                <i class="bi bi-diagram-3 me-2 text-success"></i>Section C: Extended (<span id="ext-cnt">1</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <h6 class="fw-bold text-secondary text-uppercase mb-2" style="font-size: 0.8rem; letter-spacing: 0.5px;">Analytical Verification Status</h6>
+                        <div class="progress mb-2" style="height: 8px; border-radius: 4px;">
+                            <div id="metric-progress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between small fw-medium text-muted mb-3">
+                            <span>Evaluated: <span id="metric-count">0</span>/17</span>
+                            <span id="metric-percent">0%</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger w-100 rounded-3" onclick="resetDashboardProgress()">
+                            <i class="bi bi-arrow-clockwise me-1"></i>Reset Verification State
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div id="exam-population-anchor">
+                    
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 01 • Dynamic Addressing</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">DHCP System Operations (True or False)</h5>
+                            <p class="text-secondary small">State whether the following architectural statements regarding DHCP are True (T) or False (F):</p>
+                            
+                            <div class="ps-3 border-start border-3 border-light text-muted small mb-3">
+                                <div class="mb-1">a) DHCP is a network protocol that automatically assigns IP addresses to devices on a network.</div>
+                                <div class="mb-1">b) A DHCP scope is a range of IP addresses that a DHCP server can assign to clients.</div>
+                                <div class="mb-1">c) A DHCP lease is a permanent assignment of an IP address to a client.</div>
+                                <div class="mb-1">d) A DHCP server dynamically manages IP address distribution, reducing the risk of IP address conflicts.</div>
+                                <div class="mb-0">e) Manual IP address configuration is required on client devices when using DHCP.</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-shield-check me-1"></i>Check Truth Values
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-patch-check-fill me-2"></i>Verified Engineering Mapping:</h6>
+                                <div class="row g-2 text-muted small font-monospace">
+                                    <div class="col-md-4"><strong>a) <span class="text-success">True</span></strong> (Automates allocation)</div>
+                                    <div class="col-md-4"><strong>b) <span class="text-success">True</span></strong> (Defines pool block)</div>
+                                    <div class="col-md-4"><strong>c) <span class="text-danger">False</span></strong> (Leases are temporary)</div>
+                                    <div class="col-md-4"><strong>d) <span class="text-success">True</span></strong> (Tracks state maps)</div>
+                                    <div class="col-md-4"><strong>e) <span class="text-danger">False</span></strong> (Eliminates manual task)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 02 • Core Architecture</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">DHCP Benefits & Scopes</h5>
+                            
+                            <div class="mb-3 small">
+                                <p class="text-dark fw-medium mb-1">Part A: Which of the following is an advantage of using DHCP?</p>
+                                <div class="text-muted ps-2 mb-2">iii) It automates IP address assignment, reducing administrative overhead.</div>
+                                
+                                <p class="text-dark fw-medium mb-1">Part B: What is the purpose of an exclusion range in a DHCP scope?</p>
+                                <div class="text-muted ps-2">i) To reserve specific IP addresses for devices with static IP configurations.</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-eye me-1"></i>Verify Rationale
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-check-circle-fill me-2"></i>Analysis Validation:</h6>
+                                <p class="small text-muted mb-1"><strong>Part A: Option iii.</strong> Automation of parameters lowers misconfiguration error indexing across devices.</p>
+                                <p class="small text-muted mb-0"><strong>Part B: Option i.</strong> Prevents the address allocator engine from issuing addresses used by routers, servers, or printers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 04 • Application Layer</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-2">Web Server Primary Function</h5>
+                            <p class="text-secondary small">What is the primary function of a web server?</p>
+                            <div class="text-muted small ps-2 mb-3">Selected Choice: <strong>b) Serve web pages to clients.</strong></div>
+                            
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-eye me-1"></i>Check Architecture Logic
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-1"><i class="bi bi-check2 me-1"></i>Correct Choice: b</h6>
+                                <p class="small text-muted mb-0">Processes HTTP/HTTPS transactions to deliver unstructured or compiled layout bundles to client user-agents.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 05 • Protocol Internals</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">FTP (File Transfer Protocol) Parameters Matrix</h5>
+                            
+                            <div class="row g-2 text-muted small ps-2 mb-3">
+                                <div class="col-12">i. What does FTP stand for?</div>
+                                <div class="col-12">ii. Which port number is used by default for the control connection?</div>
+                                <div class="col-12">iii. Which protocol is commonly used to enhance FTP security?</div>
+                                <div class="col-12">iv. What is a widely used FTP server application?</div>
+                                <div class="col-12">v. Which mode uses separate connections for control and data transfer?</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-list-check me-1"></i>Expose Protocol Specifications
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-file-earmark-arrow-up-fill me-2"></i>Technical Reference Data:</h6>
+                                <ul class="list-unstyled small text-muted mb-0 ps-1">
+                                    <li><strong>i.</strong> File Transfer Protocol</li>
+                                    <li><strong>ii.</strong> Port 21 (Data channel relies on Port 20 in Active mode)</li>
+                                    <li><strong>iii.</strong> FTPS (FTP over SSL/TLS) or SFTP (SSH File Transfer Protocol)</li>
+                                    <li><strong>iv.</strong> FileZilla Server, vsftpd, or ProFTPD</li>
+                                    <li><strong>v.</strong> Both Active and Passive modes process queries through disconnected control and data pathways.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 06 • Directory Identity</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">Active Directory Domain Operations</h5>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered align-middle bg-white small text-muted mb-3">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Target Identifier Challenge</th>
+                                            <th>Configured Verified Solution Choice</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>i. Service required to deploy Active Directory:</td>
+                                            <td><span class="text-primary fw-medium">b) DNS</span> (Used for locator SRV records)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ii. How Active Directory organizes network resources:</td>
+                                            <td><span class="text-primary fw-medium">b) Hierarchical structure</span> (Domains, OUs, Trees, Forests)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>iii. Role of a Domain Controller (DC):</td>
+                                            <td><span class="text-primary fw-medium">a) Stores account profiles & handles authentication</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>iv. NOT a component of Active Directory:</td>
+                                            <td><span class="text-danger fw-medium">c) Subnet Mask</span> (Standard transport Layer 3 interface attribute)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-diagram-3-fill me-1"></i>Verify Logic
+                            </button>
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-1"><i class="bi bi-shield-check me-2"></i>Active Directory Foundations:</h6>
+                                <p class="small text-muted mb-0">Active Directory requires DNS to find system services, and maps assets logically within hierarchical administrative containers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 07 • System Scalability</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">Load Balancing Systems (True or False)</h5>
+                            
+                            <div class="row g-2 small text-muted ps-2 mb-3">
+                                <div class="col-12">a) Load balancing optimizes resource utilization, maximizes throughput, and minimizes response time. [ ]</div>
+                                <div class="col-12">b) A Layer 7 load balancer operates at the Transport Layer of the OSI model. [ ]</div>
+                                <div class="col-12">c) Round-robin is a common load balancing algorithm that distributes requests sequentially. [ ]</div>
+                                <div class="col-12">d) Load balancing can only be implemented using dedicated hardware appliances. [ ]</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-toggles me-1"></i>Check Metrics
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-hdd-network-fill me-2"></i>Load Balancer Engineering Analysis:</h6>
+                                <p class="small text-muted mb-1"><strong>a) True:</strong> Prevents any single server from becoming a bottleneck.</p>
+                                <p class="small text-muted mb-1"><strong>b) False:</strong> Layer 7 operates at the <em>Application Layer</em>; Layer 4 handles Transport operations.</p>
+                                <p class="small text-muted mb-1"><strong>c) True:</strong> Sequentially rotates requests across a pool of healthy targets.</p>
+                                <p class="small text-muted mb-0"><strong>d) False:</strong> Readily deployed as software solutions, such as HAProxy, Nginx, or cloud-native instances.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 08 • Systems Administration</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">Server Maintenance Fill-in-the-Blanks</h5>
+                            
+                            <div class="bg-light rounded-3 p-3 text-muted small mb-3 border-start border-3 border-info">
+                                <div class="mb-2">a) Regular system <span class="text-primary border-bottom border-1 border-primary px-2 fw-bold">___________</span> are crucial for data protection and disaster recovery.</div>
+                                <div class="mb-2">b) Deploying changes to a <span class="text-primary border-bottom border-1 border-primary px-2 fw-bold">___________</span> environment before production minimizes risks.</div>
+                                <div class="mb-2">c) Using tools like <span class="text-primary border-bottom border-1 border-primary px-2 fw-bold">___________</span> helps monitor server performance metrics.</div>
+                                <div class="mb-2">d) Keeping software updated is essential for maintaining server <span class="text-primary border-bottom border-1 border-primary px-2 fw-bold">___________</span>.</div>
+                                <div class="mb-0">e) Cleaning up old log files helps prevent disk space <span class="text-primary border-bottom border-1 border-primary px-2 fw-bold">___________</span> issues.</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-pencil-square me-1"></i>Fill Gaps
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-input-cursor-text me-2"></i>Completed Terminology:</h6>
+                                <div class="row g-2 font-monospace text-muted small">
+                                    <div class="col-md-4"><strong>a)</strong> backups</div>
+                                    <div class="col-md-4"><strong>b)</strong> staging / test</div>
+                                    <div class="col-md-4"><strong>c)</strong> top / htop</div>
+                                    <div class="col-md-4"><strong>d)</strong> security / authentication</div>
+                                    <div class="col-md-4"><strong>e)</strong> deletion / allocation constraints</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Questions 09 & 10 • Linux Core Systems</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-2">Linux Permissions and Directory Commands</h5>
+                            <p class="text-secondary small mb-3">Identify the core shell utilities used to manage permissions and view file hierarchies.</p>
+                            
+                            <div class="row g-3 small mb-3">
+                                <div class="col-md-6 border-end">
+                                    <span class="fw-medium text-dark d-block mb-1">Q9: File Permissions Modifier Command</span>
+                                    <code class="text-dark bg-light px-2 py-1 rounded">chmod</code>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="fw-medium text-dark d-block mb-1">Q10: Purpose of <code class="text-danger">ls -a</code> Utility</span>
+                                    <span class="text-muted">Option a) To display all files, including hidden files and directories.</span>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-terminal me-1"></i>Review Shell Environment Details
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-terminal-fill me-2"></i>System Shell Mechanics:</h6>
+                                <p class="small text-muted mb-0"><code>chmod</code> modifies access control bits. Adding the <code>-a</code> flag to <code>ls</code> instructs the system tool to list directory entries starting with a period (.), which are hidden by default.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Questions 11 & 13 • Service Control</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">Linux systemctl Service Management Matching Matrix</h5>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover align-middle bg-white small mb-3">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Target Executable Instruction</th>
+                                            <th class="text-center" style="width: 100px;">Mapping</th>
+                                            <th>Functional System Behavior Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>systemctl start apache2</code></td>
+                                            <td class="text-center"><span class="badge bg-primary">d</span></td>
+                                            <td>Start a service immediately.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>systemctl stop sshd</code></td>
+                                            <td class="text-center"><span class="badge bg-primary">c</span></td>
+                                            <td>Stop an active service.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>systemctl enable nginx</code></td>
+                                            <td class="text-center"><span class="badge bg-primary">b</span></td>
+                                            <td>Enable a service to start automatically at system boot.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>systemctl status mysql</code></td>
+                                            <td class="text-center"><span class="badge bg-primary">a</span></td>
+                                            <td>Check the status of a service.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-arrow-left-right me-1"></i>Verify Systemd Association
+                            </button>
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-1"><i class="bi bi-check-all me-1"></i>Verified Mappings:</h6>
+                                <p class="font-monospace small text-muted mb-0">1 &rightarrow; d | 2 &rightarrow; c | 3 &rightarrow; b | 4 &rightarrow; a</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 12 • Security Permissions</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">File Permissions Bounding Order (Descending)</h5>
+                            <p class="text-secondary small">Arrange Linux notation structures from highest privilege availability down to absolute denial states.</p>
+                            
+                            <div class="d-flex flex-wrap gap-2 text-muted small font-monospace bg-light p-2 rounded mb-3">
+                                <span>a) -wx</span> | <span>b) rwx</span> | <span>c) ---</span> | <span>d) --x</span> | <span>e) r-x</span> | <span>f) rw-</span>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-sort-numeric-down me-1"></i>Compute Permutation Sequence
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-2"><i class="bi bi-calculator me-2"></i>Octal Translation Sequence: <span class="text-dark font-monospace">b, f, e, a, d, c</span></h6>
+                                <div class="row g-2 font-monospace text-muted small">
+                                    <div class="col-md-4"><strong>b) rwx:</strong> Octal 7 (Full Access)</div>
+                                    <div class="col-md-4"><strong>f) rw-:</strong> Octal 6 (Read/Write)</div>
+                                    <div class="col-md-4"><strong>e) r-x:</strong> Octal 5 (Read/Execute)</div>
+                                    <div class="col-md-4"><strong>a) -wx:</strong> Octal 3 (Write/Execute)</div>
+                                    <div class="col-md-4"><strong>d) --x:</strong> Octal 1 (Execute Only)</div>
+                                    <div class="col-md-4"><strong>c) ---:</strong> Octal 0 (No Access)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-obj" data-section="sec-obj">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-info-subtle text-info-dark px-2 py-1 rounded">Question 14 • Architecture Paradigms</span>
+                                <span class="text-muted small fw-medium">Section A</span>
+                            </div>
+                            <h5 class="question-header mb-3">Cloud Deployment Models Structural Matching</h5>
+                            
+                            <div class="row g-2 small text-muted ps-1 mb-3">
+                                <div class="col-12 border-bottom pb-1"><strong>1. Public Cloud &rightarrow; c)</strong> Cloud infrastructure services are made available to the general public or a large industry group over the internet.</div>
+                                <div class="col-12 border-bottom pb-1"><strong>2. Private Cloud &rightarrow; a)</strong> Cloud infrastructure is operated solely for a single organization, whether managed internally or by a third party.</div>
+                                <div class="col-12 border-bottom pb-1"><strong>3. Hybrid Cloud &rightarrow; b)</strong> A composition of two or more distinct cloud infrastructures bound together by standardized technology.</div>
+                                <div class="col-12"><strong>4. Multicloud &rightarrow; d)</strong> Cloud infrastructure is shared by several organizations... *(Matched here via structural process of elimination on the exam form).*</div>
+                            </div>
+
+                            <button class="btn btn-outline-info text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-cloud-check me-1"></i>Verify Cloud Models
+                            </button>
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-success mb-1"><i class="bi bi-shield-check me-2"></i>Deployment Logic:</h6>
+                                <p class="small text-muted mb-0">Tenant location, physical hosting boundaries, and access controls determine the appropriate cloud model deployment categorization.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card exam-card sec-essay" data-section="sec-essay">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark px-2 py-1 rounded">Question 15 • Protocol Sequences</span>
+                                <span class="text-muted small text-warning-invert fw-bold">Section B • 10 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-2">The DHCP DORA Process & Transaction Sequence</h5>
+                            <p class="text-secondary small">Draw a clear sequence diagram illustrating the DHCP DORA process and describe each architectural phase.</p>
+                            
+                            <button class="btn btn-outline-warning text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-bezier2 me-1"></i>Generate DORA Protocol Stack Diagram
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-shuffle text-primary me-2"></i>DHCP Message Transaction Sequence:</h6>
+                                
+                                <div class="dora-diagram font-monospace mb-3">
+  Client Endpoint Container                        DHCP Server Instance
+         |                                                 |
+         | ----- 1. DHCPDISCOVER (Broadcast Link) --------&gt; |
+         | &lt;---- 2. DHCPOFFER (Unicast/Broadcast Offer) -- |
+         | ----- 3. DHCPREQUEST (Broadcast Selection) ----&gt; |
+         | &lt;---- 4. DHCPACK (Finalized Lease Confirmation) |
+         |                                                 |</div>
+
+                                <div class="row g-3 small text-muted">
+                                    <div class="col-md-6">
+                                        <strong>1. DHCPDISCOVER:</strong> A new or unconfigured client broadcasts an unaddressed frame to locate available DHCP servers on its local segment.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>2. DHCPOFFER:</strong> Servers intercepting the broadcast locate an unallocated address within their scope and offer it to the client, along with lease times, options, and masks.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>3. DHCPREQUEST:</strong> The client broadcasts its choice to use that specific server's IP address. This tells all other servers to release their reserved offers back into their pools.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>4. DHCPACK:</strong> The selected server commits the binding to its active lease database and sends a confirmation packet with parameters back to the client.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-essay" data-section="sec-essay">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark px-2 py-1 rounded">Question 16 • Directory Verification</span>
+                                <span class="text-muted small text-warning-invert fw-bold">Section B • 10 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-2">Verifying Domain Reachability</h5>
+                            <p class="text-secondary small">Explain why verifying domain reachability from a client computer is an essential step before attempting a domain join. What problems arise if this is skipped?</p>
+                            
+                            <button class="btn btn-outline-warning text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-exclamation-triangle me-1"></i>Analyze Risks
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2">Architectural Importance Matrix:</h6>
+                                <p class="small text-muted mb-3">Verifying domain reachability ensures that underlying networking layers, routing tables, and DNS components can query and locate domain controller services. Without this verification, domain join workflows will fail because the client cannot find the required SRV records.</p>
+                                
+                                <h6 class="fw-bold text-danger mb-2">Potential Failures If Skipped:</h6>
+                                <ul class="small text-muted ps-3 mb-0">
+                                    <li class="mb-1"><strong>Authentication Failures:</strong> User machines cannot validate credentials against active kerberos directory listings.</li>
+                                    <li class="mb-1"><strong>Group Policy Objects (GPO) Isolation:</strong> Workstations cannot retrieve security rules, system scripts, or corporate deployment policies.</li>
+                                    <li class="mb-1"><strong>Secure Channel Disruption:</strong> Mismatched machine account password sync windows can break the secure channel trust relationship completely.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-essay" data-section="sec-essay">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark px-2 py-1 rounded">Question 17 • Active Directory Join</span>
+                                <span class="text-muted small text-warning-invert fw-bold">Section B • 10 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-2">Steps to Join a Client Computer to a Domain</h5>
+                            <p class="text-secondary small">Outline the core procedural workflow required to join a local computer container to an Active Directory domain.</p>
+                            
+                            <button class="btn btn-outline-warning text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-node-plus me-1"></i>Expose Workflow Steps
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2">Standard Active Directory Provisioning Process:</h6>
+                                <ol class="small text-muted ps-3 mb-0">
+                                    <li class="mb-2"><strong>IP and Name Resolution Alignment:</strong> Configure the client network adapter's primary DNS field to point directly to the domain controller's DNS server interface to enable proper domain SRV record lookups.</li>
+                                    <li class="mb-2"><strong>Initiating Join Command:</strong> Access system properties, select corporate naming attributes, change the group assignment from standard Workgroup to Domain, and input the targeted FQDN (e.g., <code>enterprise.local</code>).</li>
+                                    <li class="mb-2"><strong>Authentication Challenge:</strong> Provide administrative credentials or a delegated user profile authorized to add computer accounts to the domain tree.</li>
+                                    <li class="mb-2"><strong>Object Provisioning & SID Exchange:</strong> Active Directory builds a new Computer Object instance, changes its Security Identifier (SID), and shares a unique machine account password with the endpoint.</li>
+                                    <li class="mb-0"><strong>Host Reboot Execution:</strong> Restart the operating system to apply new security group objects and enable users to log in using domain credentials.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-essay" data-section="sec-essay">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark px-2 py-1 rounded">Question 18 • Cloud Provisioning</span>
+                                <span class="text-muted small text-warning-invert fw-bold">Section B • 10 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-2">Cloud Service Model Evaluation Strategy</h5>
+                            <p class="text-secondary small">Evaluate the cloud service model appropriate for a business that wants to eliminate physical hardware management while retaining complete control over operating systems, databases, and applications.</p>
+                            
+                            <button class="btn btn-outline-warning text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-cloud-snow me-1"></i>Evaluate Cloud Models
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2">Recommended Model Deployment: <span class="text-primary font-monospace">Infrastructure as a Service (IaaS)</span></h6>
+                                <p class="small text-muted mb-2"><strong>Justification and Bounding Strategy:</strong></p>
+                                <ul class="small text-muted ps-3 mb-0">
+                                    <li class="mb-2"><strong>Elimination of Physical Constraints:</strong> The upstream cloud provider abstracts and handles all physical operations, power delivery systems, hardware refreshes, and underlying hypervisor management layers.</li>
+                                    <li><strong>Control Maintenance:</strong> Unlike PaaS or SaaS models, IaaS gives corporate sysadmins root and administrative control over virtual compute instances. The business manages operating system patches, custom database layouts, and network firewall policies.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card exam-card sec-essay" data-section="sec-essay">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning-subtle text-dark px-2 py-1 rounded">Question 19 • Infrastructure Sourcing</span>
+                                <span class="text-muted small text-warning-invert fw-bold">Section B • 10 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-2">Selecting Cloud Providers for a Secondary School</h5>
+                            <p class="text-secondary small">Discuss four critical factors a secondary school administration should evaluate when selecting a cloud provider for hosting learning management systems and sensitive student records.</p>
+                            
+                            <button class="btn btn-outline-warning text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-building-gear me-1"></i>Expose Sourcing Constraints
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-building-fill-check me-2"></i>Procurement Assessment Matrix:</h6>
+                                <div class="row g-3 small text-muted">
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">1. Cost-Effectiveness & Educational Licensing</span>
+                                        Schools must optimize budgets. Choosing vendors with dedicated educational license matrices (e.g., Google Workspace for Education, Microsoft 365 Academic tiering) helps reduce software license costs.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">2. Data Security & Regulatory Privacy Frameworks</span>
+                                        Schools handle sensitive student records. Platforms must adhere to regional data residency laws and child privacy protection acts to protect student data from unauthorized exposure.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">3. High Availability SLAs</span>
+                                        Remote learning portals, class assignments, and operational databases require high availability. A strict Service Level Agreement ensures that cloud service outages won't disrupt the school's schedule.
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="fw-bold text-dark d-block">4. Identity Lifecycle Management & Ease of Access</span>
+                                        The service must provide simple integration options like Single Sign-On (SSO) and automated lifecycle workflows to easily handle the regular onboarding and offboarding of rotating student batches.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card exam-card sec-ext" data-section="sec-ext">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-success-subtle text-success px-2 py-1 rounded">Question 21 • Enterprise Engineering Implementation</span>
+                                <span class="text-muted small text-success fw-bold">Section C • 15 Marks</span>
+                            </div>
+                            <h5 class="question-header mb-3">Active Directory Domain Services (ADDS) Deployment Architecture Blueprint</h5>
+                            <p class="text-secondary small">Detail the precise installation procedure using Windows Server Manager to add the ADDS role, along with the corresponding post-installation configuration steps required to promote the server to an operational Domain Controller.</p>
+                            
+                            <button class="btn btn-outline-success text-dark btn-sm reveal-action-btn" onclick="evaluateAnswerPane(this)">
+                                <i class="bi bi-terminal-split me-1"></i>Compile Enterprise Deployment Playbook
+                            </button>
+                            
+                            <div class="answer-container p-3 mt-3">
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-check-square-fill text-success me-2"></i>Part A: ADDS Installation Procedure (Server Manager Interface Pathway)</h6>
+                                <ul class="small text-muted ps-3 mb-3">
+                                    <li class="mb-1"><strong>Prerequisites Verification Phase:</strong> Assign a static IP address to the system interface, verify local administrator credentials, and set an appropriate computer name.</li>
+                                    <li class="mb-1">Navigate to <strong>Server Manager</strong>, open the management drop-down menu on the dashboard, and select <strong>Add Roles and Features</strong>.</li>
+                                    <li class="mb-1">Set installation type parameters to <strong>Role-based or feature-based installation</strong>, then pick the targeted server container from the active pool list.</li>
+                                    <li class="mb-1">Locate the Server Roles checklist and check the box next to <strong>Active Directory Domain Services</strong>. Accept the automated popup prompt to add dependent management tools and snap-in components.</li>
+                                    <li class="mb-0">Progress through the subsequent Features and Information windows using the default settings, check the box to authorize automatic restarts if necessary, and click <strong>Install</strong> to initialize role installation.</li>
+                                </ul>
+
+                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-diagram-3-fill text-success me-2"></i>Part B: Domain Controller Promotion & Post-Installation Plan</h6>
+                                <p class="small text-muted ps-1 mb-2"><strong>Promotion Lifecycle Steps:</strong></p>
+                                <ol class="small text-muted ps-3 mb-3">
+                                    <li class="mb-1">Click the alerting notification flag in Server Manager and select <strong>Promote this server to a domain controller</strong>.</li>
+                                    <li class="mb-1">In Deployment Configuration settings, choose the option to <strong>Add a new forest</strong> and input the root domain name (e.g., <code>school.internal</code> or <code>hq.local</code>).</li>
+                                    <li class="mb-1">Leave forest and domain functional levels at default values, ensure the <strong>Domain Name System (DNS) server</strong> box is checked, and create a strong Directory Services Restore Mode (DSRM) password.</li>
+                                    <li class="mb-0">Verify NetBIOS naming matches, accept default directory path mappings for the Database, Log files, and SYSVOL file structures, pass the final requirements validation scan, and click <strong>Install</strong>.</li>
+                                </ol>
+                                
+                                <p class="small text-muted ps-1 mb-2"><strong>Post-Installation Configurations:</strong></p>
+                                <div class="terminal-block">
+<span class="text-warning"># Verify Active Directory local DNS configuration and forward lookup records</span>
+Get-DnsServerZone -Name "school.internal"
+
+<span class="text-warning"># Verify domain controller functionality and health diagnostics matrix</span>
+dcdiag /v /test:Connectivity
+
+<span class="text-warning"># Recommended production post-install setup tasks:</span>
+- Verify that directory locator SRV pointer files (_msdcs) have been created in DNS.
+- Set up custom DNS upstream forwarders to route external internet queries safely.
+- Build out the Organizational Unit (OU) structure to separate Staff, Students, and Compute endpoints.
+- Establish an initial Group Policy Object (GPO) base to enforce standard password complexity rules.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Track the unique titles of questions that users reveal during the session
+        let recordedRevealedTitlesSet = new Set();
+        const totalEvaluatedModulesCount = 17;
+
+        // Run when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSectionFilterActionHandlers();
+            computeMetricBadgeTrackingTokens();
+        });
+
+        // Set up the section filter buttons
+        function initializeSectionFilterActionHandlers() {
+            const filterOptionButtons = document.querySelectorAll('.filter-pill');
+            const questionCardNodes = document.querySelectorAll('.exam-card');
+
+            filterOptionButtons.forEach(btnElement => {
+                btnElement.addEventListener('click', () => {
+                    // Update active visual state
+                    filterOptionButtons.forEach(pill => pill.classList.remove('active'));
+                    btnElement.classList.add('active');
+
+                    const targetedSectionKey = btnElement.getAttribute('data-filter');
+
+                    // Filter cards based on data-section attribute
+                    questionCardNodes.forEach(cardNode => {
+                        if (targetedSectionKey === 'all' || cardNode.getAttribute('data-section') === targetedSectionKey) {
+                            cardNode.style.display = 'block';
+                        } else {
+                            cardNode.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Toggles the visibility of answer containers and updates metrics
+        function evaluateAnswerPane(triggeringButtonElement) {
+            const contextualCardContainer = triggeringButtonElement.closest('.exam-card');
+            const targetAnswerContainerPane = contextualCardContainer.querySelector('.answer-container');
+            const isTargetElementCurrentlyHidden = window.getComputedStyle(targetAnswerContainerPane).display === 'none';
+            
+            const underlyingQuestionUniqueTextKey = contextualCardContainer.querySelector('.question-header').innerText;
+
+            if (isTargetElementCurrentlyHidden) {
+                targetAnswerContainerPane.style.display = 'block';
+                triggeringButtonElement.innerHTML = '<i class="bi bi-eye-slash-fill me-1"></i>Hide Solutions Manual';
+                triggeringButtonElement.className = "btn btn-secondary btn-sm reveal-action-btn";
+                
+                recordedRevealedTitlesSet.add(underlyingQuestionUniqueTextKey);
+            } else {
+                targetAnswerContainerPane.style.display = 'none';
+                
+                // Restore button styles based on section
+                if (contextualCardContainer.classList.contains('sec-obj')) {
+                    triggeringButtonElement.innerHTML = '<i class="bi bi-eye me-1"></i>Verify Logic Choice';
+                    triggeringButtonElement.className = "btn btn-outline-info text-dark btn-sm reveal-action-btn";
+                } else if (contextualCardContainer.classList.contains('sec-essay')) {
+                    triggeringButtonElement.innerHTML = '<i class="bi bi-file-earmark-text me-1"></i>Evaluate Answer Specifications';
+                    triggeringButtonElement.className = "btn btn-outline-warning text-dark btn-sm reveal-action-btn";
+                } else {
+                    triggeringButtonElement.innerHTML = '<i class="bi bi-terminal-split me-1"></i>Compile Enterprise Deployment Playbook';
+                    triggeringButtonElement.className = "btn btn-outline-success text-dark btn-sm reveal-action-btn";
+                }
+            }
+            
+            renderUpdatedMetricDisplays();
+        }
+
+        // Updates progress bars and completion percentages
+        function renderUpdatedMetricDisplays() {
+            const currentSetCountSize = recordedRevealedTitlesSet.size;
+            const updatedCalculatedPercentageMetric = Math.round((currentSetCountSize / totalEvaluatedModulesCount) * 100);
+
+            document.getElementById('metric-count').innerText = currentSetCountSize;
+            document.getElementById('metric-percent').innerText = `${updatedCalculatedPercentageMetric}%`;
+            
+            const targetProgressTrackerNodeEl = document.getElementById('metric-progress');
+            targetProgressTrackerNodeEl.style.width = `${updatedCalculatedPercentageMetric}%`;
+        }
+
+        // Resets the state of all questions and progress metrics
+        function resetDashboardProgress() {
+            recordedRevealedTitlesSet.clear();
+            renderUpdatedMetricDisplays();
+            
+            // Collapse all open answer containers
+            document.querySelectorAll('.answer-container').forEach(paneNode => paneNode.style.display = 'none');
+            
+            // Reset buttons to their default styles
+            document.querySelectorAll('.reveal-action-btn').forEach(btn => {
+                const parentExamCard = btn.closest('.exam-card');
+                if (parentExamCard.classList.contains('sec-obj')) {
+                    btn.className = "btn btn-outline-info text-dark btn-sm reveal-action-btn";
+                    btn.innerHTML = '<i class="bi bi-eye me-1"></i>Verify Logic Choice';
+                } else if (parentExamCard.classList.contains('sec-essay')) {
+                    btn.className = "btn btn-outline-warning text-dark btn-sm reveal-action-btn";
+                    btn.innerHTML = '<i class="bi bi-file-earmark-text me-1"></i>Evaluate Answer Specifications';
+                } else {
+                    btn.className = "btn btn-outline-success text-dark btn-sm reveal-action-btn";
+                    btn.innerHTML = '<i class="bi bi-terminal-split me-1"></i>Compile Enterprise Deployment Playbook';
+                }
+            });
+        }
+
+        // Calculates count metadata tokens dynamically on load
+        function computeMetricBadgeTrackingTokens() {
+            document.getElementById('total-cnt').innerText = document.querySelectorAll('.exam-card').length;
+            document.getElementById('obj-cnt').innerText = document.querySelectorAll('.exam-card.sec-obj').length;
+            document.getElementById('essay-cnt').innerText = document.querySelectorAll('.exam-card.sec-essay').length;
+            document.getElementById('ext-cnt').innerText = document.querySelectorAll('.exam-card.sec-ext').length;
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
             --accent-python: #c084fc;
             --accent-default: #38bdf8;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-gradient);
@@ -29,6 +31,7 @@
             justify-content: center;
             padding: 40px 20px;
         }
+
         .portal-wrapper {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -40,6 +43,7 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
+
         .top-nav {
             display: flex;
             justify-content: space-between;
@@ -48,6 +52,7 @@
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 25px;
         }
+
         .portal-header h1 {
             font-size: 2.2rem;
             font-weight: 800;
@@ -57,7 +62,13 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 6px;
         }
-        .text-subtitle { color: var(--text-muted); font-size: 1rem; font-weight: 400; }
+
+        .text-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -72,13 +83,20 @@
             background: rgba(255, 255, 255, 0.03);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .back-link:hover {
             color: var(--text-main);
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
             transform: translateX(-3px);
         }
-        .file-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
         .file-card {
             display: flex;
             flex-direction: column;
@@ -95,10 +113,23 @@
             position: relative;
             overflow: hidden;
         }
-        .file-card { --local-accent: var(--accent-default); }
-        .file-card.linux-theme { --local-accent: var(--accent-linux); }
-        .file-card.windows-theme { --local-accent: var(--accent-windows); }
-        .file-card.python-theme { --local-accent: var(--accent-python); }
+
+        .file-card {
+            --local-accent: var(--accent-default);
+        }
+
+        .file-card.linux-theme {
+            --local-accent: var(--accent-linux);
+        }
+
+        .file-card.windows-theme {
+            --local-accent: var(--accent-windows);
+        }
+
+        .file-card.python-theme {
+            --local-accent: var(--accent-python);
+        }
+
         .file-icon-wrapper {
             display: flex;
             align-items: center;
@@ -112,26 +143,87 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .file-info { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; }
-        .file-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 4px; }
-        .file-meta { font-size: 0.8rem; color: var(--text-muted); }
-        .arrow-icon { font-size: 1.1rem; color: var(--text-muted); opacity: 0; transform: translateX(-6px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        /* Combined hover states cleanly */
-        .file-card:hover { 
-            border-color: rgba(255, 255, 255, 0.15); 
-            transform: translateY(-5px); 
-            background: rgba(255, 255, 255, 0.02); 
-            color: var(--text-main); 
+
+        .file-info {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 20px;
         }
-        .file-card:hover .file-icon-wrapper { background: var(--local-accent); color: #0f172a; transform: scale(1.05); }
-        .file-card:hover .arrow-icon { opacity: 1; color: var(--local-accent); transform: translateX(0); }
-        
-        @media (max-width: 1100px) { .file-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .file-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 576px) { .file-grid { grid-template-columns: 1fr; } .top-nav { flex-direction: column; align-items: flex-start; gap: 16px; } .back-link { width: 100%; justify-content: center; } }
+
+        .file-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        .file-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .arrow-icon {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Combined hover states cleanly */
+        .file-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        .file-card:hover .file-icon-wrapper {
+            background: var(--local-accent);
+            color: #0f172a;
+            transform: scale(1.05);
+        }
+
+        .file-card:hover .arrow-icon {
+            opacity: 1;
+            color: var(--local-accent);
+            transform: translateX(0);
+        }
+
+        @media (max-width: 1100px) {
+            .file-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .file-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .back-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="portal-wrapper">
         <div class="top-nav">
@@ -143,7 +235,7 @@
                 <i class="bi bi-arrow-left"></i> Parent Directory
             </a>
         </div>
-        
+
         <div class="file-grid">
             <a href="gencp302.html" class="file-card linux-theme">
                 <div class="file-icon-wrapper">
@@ -152,7 +244,7 @@
                 <div class="file-info">
                     <div>
                         <div class="file-title">C PROGRAMMING</div>
-                        </div>
+                    </div>
                     <div class="arrow-icon">
                         <i class="bi bi-arrow-right"></i>
                     </div>
@@ -166,13 +258,45 @@
                 <div class="file-info">
                     <div>
                         <div class="file-title">WINDOWS SERVER</div>
-                        </div>
+                    </div>
                     <div class="arrow-icon">
                         <i class="bi bi-arrow-right"></i>
                     </div>
                 </div>
             </a>
+
+            <!-- WAN(WIDE AREA NETWORK) EXAM LINK -->
+            <a href="nitwa402_2026.html" class="file-card python-theme">
+                <div class="file-icon-wrapper">
+                    <i class="bi bi-globe"></i>
+                </div>
+                <div class="file-info">
+                    <div>
+                        <div class="file-title">WAN(WIDE AREA NETWORK)</div>
+                    </div>
+                    <div class="arrow-icon">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- CLOUD COMPUTING EXAM LINK -->
+            <a href="cloud_computing_2026.html" class="file-card cloud-theme">
+                <div class="file-icon-wrapper">
+                    <i class="bi bi-cloud"></i>
+                </div>
+                <div class="file-info">
+                    <div>
+                        <div class="file-title">CLOUD COMPUTING</div>
+                    </div>
+                    <div class="arrow-icon">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
         </div>
     </div>
 </body>
+
 </html>
