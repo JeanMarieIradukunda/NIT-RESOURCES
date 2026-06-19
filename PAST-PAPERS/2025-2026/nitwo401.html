@@ -3,932 +3,1111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outdoor Wireless Network NESA Interactive Examination</title>
+    <title>Wireless Outdoor NESA Exam Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #0d9488;
-            --background-light: #f8fafc;
-            --text-dark: #1e293b;
-            --accent-success: #10b981;
-            --accent-danger: #ef4444;
+            --primary-dark: #0f172a;
+            --secondary-dark: #1e293b;
+            --teal-accent: #0d9488;
+            --teal-light: #ccfbf1;
+            --bg-light: #f8fafc;
+            --text-dark: #334155;
         }
 
         body {
-            background-color: var(--background-light);
+            background-color: var(--bg-light);
             color: var(--text-dark);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        /* Layout & Sticky Sidebar Nav */
-        .sticky-sidebar {
+        .navbar-custom {
+            background-color: var(--primary-dark);
+            border-bottom: 3px solid var(--teal-accent);
+        }
+
+        .sidebar-console {
+            background-color: white;
+            border-right: 1px solid #e2e8f0;
+            height: calc(100vh - 70px);
             position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
+            top: 70px;
             overflow-y: auto;
         }
 
-        /* Custom Cards */
-        .exam-card {
+        .exam-container {
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            top: 70px;
+        }
+
+        .card-question {
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            background: #ffffff;
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-bottom: 1.5rem;
+            background: #ffffff;
+        }
+
+        .card-question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
         }
 
         .section-header {
-            background: linear-gradient(135deg, var(--primary-color), #2563eb);
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
             color: white;
-            border-radius: 12px 12px 0 0;
             padding: 1.5rem;
-        }
-
-        .section-b-header {
-            background: linear-gradient(135deg, var(--secondary-color), #0f766e);
-            color: white;
-            border-radius: 12px 12px 0 0;
-            padding: 1.5rem;
-        }
-
-        .section-c-header {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            color: white;
-            border-radius: 12px 12px 0 0;
-            padding: 1.5rem;
-        }
-
-        /* Question Interactive UI */
-        .question-box {
-            border-left: 4px solid #cbd5e1;
-            padding-left: 1rem;
-            margin-bottom: 1.5rem;
-            transition: border-color 0.3s;
-        }
-
-        .question-box:hover {
-            border-left-color: var(--primary-color);
-        }
-
-        .option-label {
-            display: block;
-            padding: 0.75rem 1rem;
-            margin: 0.5rem 0;
-            background-color: #f1f5f9;
-            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--teal-accent);
         }
 
-        .option-label:hover {
-            background-color: #e2e8f0;
+        .form-check-input:checked {
+            background-color: var(--teal-accent);
+            border-color: var(--teal-accent);
         }
 
-        .option-input:checked + .option-label {
-            background-color: #dbeafe;
-            border-color: #3b82f6;
-            color: #1e40af;
-            font-weight: 600;
+        .badge-mark {
+            background-color: var(--teal-accent);
+            color: white;
+            font-weight: 500;
         }
 
-        /* Correction Feedbacks */
-        .feedback-box {
+        .correct-answer-indicator {
             display: none;
-            margin-top: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        .feedback-correct {
-            background-color: #d1fae5;
-            color: #065f46;
-            border-left: 4px solid var(--accent-success);
+        .show-answers .correct-answer-indicator {
+            display: block;
         }
 
-        .feedback-incorrect {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid var(--accent-danger);
-        }
-
-        /* Score Display Animation */
-        .score-badge {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .nav-link.active {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-        }
-
-        /* Print formatting */
-        @media print {
-            .no-print { display: none !important; }
-            .exam-card { box-shadow: none; border: 1px solid #ccc; }
+            background-color: var(--teal-light) !important;
+            color: var(--teal-accent) !important;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark sticky-top no-print">
-    <div class="container">
-        <span class="navbar-brand mb-0 h1">
-            <i class="bi bi-wifi me-2"></i> National Examination and School Inspection Authority (NESA)
-        </span>
-        <div class="d-flex align-items-center text-white">
-            <i class="bi bi-clock me-2 text-warning"></i>
-            <span id="exam-timer" class="fw-bold text-warning">03:00:00</span>
-        </div>
-    </div>
-</nav>
-
-<div class="container my-4">
-    <div class="row">
-        
-        <div class="col-lg-3 no-print mb-4">
-            <div class="card sticky-sidebar p-3 shadow-sm bg-white border-0">
-                <h5 class="fw-bold mb-3 border-bottom pb-2 text-secondary">Exam Sections</h5>
-                <ul class="nav nav-pills flex-column mb-4" id="section-nav">
-                    <li class="nav-item mb-2">
-                        <a class="nav-link active" href="#sectionA"><i class="bi bi-alpha-a-circle me-2"></i>Section A (01-17)</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="#sectionB"><i class="bi bi-alpha-b-circle me-2"></i>Section B (18-22)</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="#sectionC"><i class="bi bi-alpha-c-circle me-2"></i>Section C (23-24)</a>
-                    </li>
-                </ul>
-                
-                <h5 class="fw-bold mb-3 border-bottom pb-2 text-secondary">Controls</h5>
-                <button type="button" class="btn btn-primary w-100 mb-2 py-2" onclick="evaluateExam()">
-                    <i class="bi bi-check-circle-fill me-2"></i> Submit & Grade Exam
-                </button>
-                <button type="button" class="btn btn-outline-secondary w-100 mb-3" onclick="resetExam()">
-                    <i class="bi bi-arrow-clockwise me-2"></i> Clear Form
-                </button>
-
-                <div class="card bg-light border-0 p-3 mt-2 text-center" id="scorecard-summary" style="display:none;">
-                    <h6 class="fw-bold text-uppercase tracking-wider text-muted m-0">Auto-Graded Marks</h6>
-                    <div class="score-badge my-1" id="score-display">0 / 55</div>
-                    <small class="text-muted">(Section A auto-evaluated out of 55 Marks)</small>
-                </div>
+    <nav class="navbar navbar-dark navbar-custom sticky-top py-2 px-4">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="bi bi-wifi text-info me-2 fs-3"></i>
+            <div>
+                <span class="fw-bold tracking-tight">NESA ACADEMIC CONSOLE</span>
+                <div style="font-size: 0.75rem; color: #94a3b8;">WIRELESS OUTDOOR NETWORK EXAMINATION</div>
             </div>
+        </a>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-secondary me-3 p-2"><i class="bi bi-clock-history me-1"></i> Time Limit: 3 Hours</span>
+            <button class="btn btn-outline-info btn-sm me-2" onclick="window.print()"><i class="bi bi-printer"></i> Print</button>
+            <button class="btn btn-teal btn-info text-white fw-bold" onclick="evaluateExam()"><i class="bi bi-check-circle-fill"></i> Submit & Grade</button>
         </div>
+    </nav>
 
-        <div class="col-lg-9">
-            <form id="nesaExamForm" onsubmit="event.preventDefault();">
-                
-                <div id="sectionA" class="card exam-card">
-                    <div class="section-header">
-                        <h4 class="m-0 fw-bold">SECTION A: Attempt All Questions (55 Marks)</h4>
-                        <p class="m-0 opacity-75 mt-1">Foundational Outdoor Wireless Concepts, Hardware Identifications, and Matching Frameworks</p>
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-md-3 col-lg-2 sidebar-console p-4 d-none d-md-block">
+                <h6 class="text-uppercase text-muted fw-bold mb-3 small">Student Profile</h6>
+                <div class="p-3 bg-light rounded mb-4 border">
+                    <div class="fw-bold text-dark"><i class="bi bi-person-badge me-2"></i>Examinee Station</div>
+                    <div class="small text-muted py-1">ID: NESA-2026-X812</div>
+                    <div class="small text-muted">Status: Active Session</div>
+                </div>
+
+                <h6 class="text-uppercase text-muted fw-bold mb-3 small">Exam Navigation</h6>
+                <div class="nav flex-column nav-pills" id="exam-tabs" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active mb-2" href="#sec-a" data-bs-toggle="pill"><i class="bi bi-list-check me-2"></i>Section A <span class="badge bg-dark float-end">55M</span></a>
+                    <a class="nav-link mb-2" href="#sec-b" data-bs-toggle="pill"><i class="bi bi-file-earmark-text me-2"></i>Section B <span class="badge bg-dark float-end">30M</span></a>
+                    <a class="nav-link mb-2" href="#sec-c" data-bs-toggle="pill"><i class="bi bi-trophy me-2"></i>Section C <span class="badge bg-dark float-end">15M</span></a>
+                </div>
+
+                <hr class="my-4">
+
+                <h6 class="text-uppercase text-muted fw-bold mb-3 small">Grading Workspace</h6>
+                <div class="card bg-dark text-white p-3 mb-3">
+                    <div class="small text-muted">CURRENT SCORE</div>
+                    <div class="h2 my-1 text-info fw-bold" id="live-score">-- <span class="fs-6 text-white">/ 100</span></div>
+                    <div class="progress progress-sm mt-2" style="height: 6px;">
+                        <div id="score-bar" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
                     </div>
-                    <div class="card-body p-4">
+                </div>
+                <button class="btn btn-warning w-100 btn-sm fw-bold mb-2" onclick="toggleGradingKeys()"><i class="bi bi-eye"></i> Toggle Answer Keys</button>
+                <button class="btn btn-outline-secondary w-100 btn-sm" onclick="resetForm()"><i class="bi bi-arrow-counterclockwise"></i> Reset Exam</button>
+            </div>
 
-                        <div class="question-box" data-qtype="multiple-sub" id="q1">
-                            <h5 class="fw-bold">01. Read the following statements related to outdoor wireless network and choose the best answers. <span class="text-primary">(3 Marks)</span></h5>
+            <div class="col-12 col-md-9 col-lg-10 exam-container p-4 p-lg-5" data-bs-spy="scroll" data-bs-target="#exam-tabs" data-bs-offset="0" tabindex="0">
+                <form id="nesaExamForm" onsubmit="event.preventDefault();">
+                    
+                    <div id="sec-a" class="mb-5">
+                        <div class="section-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-1">SECTION A</h3>
+                                <p class="mb-0 opacity-75">Compulsory: Attempt all questions inside this operational section.</p>
+                            </div>
+                            <span class="fs-4 badge bg-light text-dark fw-bold">55 Marks</span>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">01. Read the following statements related to outdoor wireless network and choose the best answers.</h5>
+                                <span class="badge badge-mark p-2">3 Marks</span>
+                            </div>
                             
-                            <div class="mt-3 sub-q" data-ans="b">
+                            <div class="mb-4 ps-3 border-start border-2">
                                 <p class="fw-semibold">i. Which of the following statements define outdoor wireless network?</p>
-                                <input type="radio" class="btn-check option-input" name="q1_i" id="q1_i_a" value="a">
-                                <label class="option-label" for="q1_i_a">a) A network that functions only inside buildings.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_i" id="q1_i_b" value="b">
-                                <label class="option-label" for="q1_i_b">b) A wireless network that extends internet access outdoors.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_i" id="q1_i_c" value="c">
-                                <label class="option-label" for="q1_i_c">c) A wired network that connects outdoor devices.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_i" id="q1_i_d" value="d">
-                                <label class="option-label" for="q1_i_d">d) A mobile network using fiber optics.</label>
-                                <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_i" id="q1_i_a" value="a">
+                                    <label class="form-check-label" for="q1_i_a">a) A network that functions only inside buildings.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_i" id="q1_i_b" value="b">
+                                    <label class="form-check-label" for="q1_i_b">b) A wireless network that extends internet access outdoors.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_i" id="q1_i_c" value="c">
+                                    <label class="form-check-label" for="q1_i_c">c) A wired network that connects outdoor devices.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_i" id="q1_i_d" value="d">
+                                    <label class="form-check-label" for="q1_i_d">d) A mobile network using fiber optics.</label>
+                                </div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small"><i class="bi bi-check-circle"></i> Key Map: <strong>b</strong></div>
                             </div>
 
-                            <div class="mt-4 sub-q" data-ans="a">
+                            <div class="mb-4 ps-3 border-start border-2">
                                 <p class="fw-semibold">ii. According to out of coverage area in wireless network, select its meaning among the following:</p>
-                                <input type="radio" class="btn-check option-input" name="q1_ii" id="q1_ii_a" value="a">
-                                <label class="option-label" for="q1_ii_a">a) The device is outside the network's service range.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_ii" id="q1_ii_b" value="b">
-                                <label class="option-label" for="q1_ii_b">b) The device is experiencing slow internet speed.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_ii" id="q1_ii_c" value="c">
-                                <label class="option-label" for="q1_ii_c">c) The router is overloaded.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_ii" id="q1_ii_d" value="d">
-                                <label class="option-label" for="q1_ii_d">d) The internet connection is weak but still available.</label>
-                                <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_ii" id="q1_ii_a" value="a">
+                                    <label class="form-check-label" for="q1_ii_a">a) The device is outside the network's service range.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_ii" id="q1_ii_b" value="b">
+                                    <label class="form-check-label" for="q1_ii_b">b) The device is experiencing slow internet speed.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_ii" id="q1_ii_c" value="c">
+                                    <label class="form-check-label" for="q1_ii_c">c) The router is overloaded.</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_ii" id="q1_ii_d" value="d">
+                                    <label class="form-check-label" for="q1_ii_d">d) The internet connection is weak but still available.</label>
+                                </div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small"><i class="bi bi-check-circle"></i> Key Map: <strong>a</strong></div>
                             </div>
 
-                            <div class="mt-4 sub-q" data-ans="a">
+                            <div class="ps-3 border-start border-2">
                                 <p class="fw-semibold">iii. Which of the following statements is the purpose of a Power-over-Ethernet (PoE) system in an outdoor wireless network?</p>
-                                <input type="radio" class="btn-check option-input" name="q1_iii" id="q1_iii_a" value="a">
-                                <label class="option-label" for="q1_iii_a">a) To provide both power and data through a single Ethernet cable.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_iii" id="q1_iii_b" value="b">
-                                <label class="option-label" for="q1_iii_b">b) To increase the speed of wireless signals.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_iii" id="q1_iii_c" value="c">
-                                <label class="option-label" for="q1_iii_c">c) To prevent data loss during transmission.</label>
-                                <input type="radio" class="btn-check option-input" name="q1_iii" id="q1_iii_d" value="d">
-                                <label class="option-label" for="q1_iii_d">d) To store network configurations.</label>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="tf-sub" id="q2">
-                            <h5 class="fw-bold">02. Read carefully the following Deploy wireless network outdoor statements and answer by True (T) if the statement is correct or False (F) if the statement is wrong. <span class="text-primary">(3 Marks)</span></h5>
-                            
-                            <div class="row align-items-center my-2 sub-q" data-ans="F">
-                                <div class="col-md-9">a. RJ-45 connectors are used for coaxial cables.</div>
-                                <div class="col-md-3">
-                                    <select class="form-select form-select-sm" name="q2_a">
-                                        <option value="">Choose...</option>
-                                        <option value="T">True (T)</option>
-                                        <option value="F">False (F)</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_iii" id="q1_iii_a" value="a">
+                                    <label class="form-check-label" for="q1_iii_a">a) To provide both power and data through a single Ethernet cable.</label>
                                 </div>
-                            </div>
-
-                            <div class="row align-items-center my-2 sub-q" data-ans="T">
-                                <div class="col-md-9">b. UPS provides backup power to network equipment.</div>
-                                <div class="col-md-3">
-                                    <select class="form-select form-select-sm" name="q2_b">
-                                        <option value="">Choose...</option>
-                                        <option value="T">True (T)</option>
-                                        <option value="F">False (F)</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_iii" id="q1_iii_b" value="b">
+                                    <label class="form-check-label" for="q1_iii_b">b) To increase the speed of wireless signals.</label>
                                 </div>
-                            </div>
-
-                            <div class="row align-items-center my-2 sub-q" data-ans="T">
-                                <div class="col-md-9">c. Cable ties are used for organizing cables.</div>
-                                <div class="col-md-3">
-                                    <select class="form-select form-select-sm" name="q2_c">
-                                        <option value="">Choose...</option>
-                                        <option value="T">True (T)</option>
-                                        <option value="F">False (F)</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_iii" id="q1_iii_c" value="c">
+                                    <label class="form-check-label" for="q1_iii_c">c) To prevent data loss during transmission.</label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="fill-blank-sub" id="q3">
-                            <h5 class="fw-bold">03. Fill in the blank space using the correct outdoor installation hardware options. <span class="text-primary">(5 Marks)</span></h5>
-                            <p class="text-muted small">Available Equipment: [Outdoor Access Point, Antenna, Router, Wireless Extender, Power-Over-Ethernet, Lightning Arrestor, UPS, Network Switch, Repeater, Firewall, Rack Mount]</p>
-                            
-                            <div class="my-3 sub-q" data-ans="outdoor access point">
-                                <span>a. One common piece of equipment used in outdoor wireless network installations is </span>
-                                <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q3_a" placeholder="Enter term">.
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="my-3 sub-q" data-ans="network switch">
-                                <span>b. To connect multiple devices in a network, </span>
-                                <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q3_b" placeholder="Enter term"><span> is often used.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="my-3 sub-q" data-ans="lightning arrestor">
-                                <span>c. </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q3_c" placeholder="Enter term"><span> is used to protect equipment from power surges and lightning strikes.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="my-3 sub-q" data-ans="wireless extender">
-                                <span>d. In outdoor setups, </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q3_d" placeholder="Enter term"><span> can help extend the wireless range.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="my-3 sub-q" data-ans="ups">
-                                <span>e. </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q3_e" placeholder="Enter term"><span> is crucial for maintaining power supply during outages.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q4">
-                            <h5 class="fw-bold">04. Read the following statements related to wireless network outdoor installation and choose the correct answer. <span class="text-primary">(4 Marks)</span></h5>
-                            
-                            <div class="mt-3 sub-q" data-ans="a">
-                                <p class="fw-semibold">i. Which of the following options is the primary function of an outdoor wireless network?</p>
-                                <input type="radio" class="btn-check option-input" name="q4_i" id="q4_i_a" value="a">
-                                <label class="option-label" for="q4_i_a">a) To provide wireless internet access outside of buildings</label>
-                                <input type="radio" class="btn-check option-input" name="q4_i" id="q4_i_b" value="b">
-                                <label class="option-label" for="q4_i_b">b) To provide wired internet access</label>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-4 sub-q" data-ans="c">
-                                <p class="fw-semibold">ii. Which of the following antenna types radiates signals in all directions?</p>
-                                <input type="radio" class="btn-check option-input" name="q4_ii" id="q4_ii_a" value="a">
-                                <label class="option-label" for="q4_ii_a">a) Directional</label>
-                                <input type="radio" class="btn-check option-input" name="q4_ii" id="q4_ii_c" value="c">
-                                <label class="option-label" for="q4_ii_c">c) Omnidirectional</label>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-4 sub-q" data-ans="b">
-                                <p class="fw-semibold">iii. What type of survey among the following list that listens to existing access points for signal strength?</p>
-                                <input type="radio" class="btn-check option-input" name="q4_iii" id="q4_iii_b" value="b">
-                                <label class="option-label" for="q4_iii_b">b) Passive physical site survey</label>
-                                <input type="radio" class="btn-check option-input" name="q4_iii" id="q4_iii_a" value="a">
-                                <label class="option-label" for="q4_iii_a">a) Active physical site survey</label>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-4 sub-q" data-ans="b">
-                                <p class="fw-semibold">iv. What is the definition of Bandwidth among the following?</p>
-                                <input type="radio" class="btn-check option-input" name="q4_iv" id="q4_iv_b" value="b">
-                                <label class="option-label" for="q4_iv_b">b) The maximum amount of data transmitted over a connection.</label>
-                                <input type="radio" class="btn-check option-input" name="q4_iv" id="q4_iv_a" value="a">
-                                <label class="option-label" for="q4_iv_a">a) The geographical area of a network.</label>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="fill-blank-sub" id="q5">
-                            <h5 class="fw-bold">05. Fill in the blank space using the following words: (testing, patching, orange, blue). <span class="text-primary">(2 Marks)</span></h5>
-                            
-                            <div class="my-2 sub-q" data-ans="testing">
-                                <span>a. The </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q5_a" placeholder="word"><span> tool is essential for verifying cable integrity.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                            <div class="my-2 sub-q" data-ans="orange">
-                                <span>b. The color code for the fourth wire in an T568B RJ45 connector mapping sequence is </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q5_b" placeholder="word"><span>.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q6">
-                            <h5 class="fw-bold">06. Read carefully the following DHCP server infrastructure statements and choose the best answer: <span class="text-primary">(4 Marks)</span></h5>
-                            
-                            <div class="mt-2 sub-q" data-ans="a">
-                                <p class="mb-1">i. What is the expanded definition of DHCP?</p>
-                                <select class="form-select form-select-sm w-50" name="q6_i">
-                                    <option value="">Select answer...</option>
-                                    <option value="a">Dynamic Host Configuration Protocol</option>
-                                    <option value="b">Dynamic Host Control Protocol</option>
-                                </select>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-3 sub-q" data-ans="d">
-                                <p class="mb-1">ii. What is the dynamic type of IP address a DHCP server assigns to a node client?</p>
-                                <select class="form-select form-select-sm w-50" name="q6_ii">
-                                    <option value="">Select answer...</option>
-                                    <option value="c">Static Loopback Address</option>
-                                    <option value="d">Dynamic IP address</option>
-                                </select>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-3 sub-q" data-ans="a">
-                                <p class="mb-1">iii. Which option describes a benefit of executing dynamic DHCP infrastructure allocations?</p>
-                                <select class="form-select form-select-sm w-50" name="q6_iii">
-                                    <option value="">Select answer...</option>
-                                    <option value="a">Reduces manual configuration of IP addresses</option>
-                                    <option value="b">Increases internal domain broadcast storms</option>
-                                </select>
-                                <div class="feedback-box"></div>
-                            </div>
-
-                            <div class="mt-3 sub-q" data-ans="b">
-                                <p class="mb-1">iv. What is the fundamental operational target purpose of the DHCP framework system?</p>
-                                <select class="form-select form-select-sm w-50" name="q6_iv">
-                                    <option value="">Select answer...</option>
-                                    <option value="a">To secure physical Layer-1 lines</option>
-                                    <option value="b">To automatically assign IP addresses and configuration parameters to network devices</option>
-                                </select>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="match-sub" id="q7">
-                            <h5 class="fw-bold">07. Match the diagnostic terms with their corresponding performance descriptions. <span class="text-primary">(4 Marks)</span></h5>
-                            <p class="text-muted small">Descriptions: a) SNR delta | b) Jitter variance | c) Latency metrics delay | d) Power level signal strength</p>
-                            
-                            <table class="table table-bordered align-middle">
-                                <thead class="table-light">
-                                    <tr><th>Network Diagnostic Terms</th><th>Matching Value Input (a, b, c, or d)</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="sub-q" data-ans="c"><td>1. Latency (Time taken for data payload hops)</td><td><input type="text" maxlength="1" class="form-control form-control-sm text-center text-uppercase w-50 mx-auto" name="q7_1"><div class="feedback-box"></div></td></tr>
-                                    <tr class="sub-q" data-ans="d"><td>2. Signal Strength (Received power level amplitude)</td><td><input type="text" maxlength="1" class="form-control form-control-sm text-center text-uppercase w-50 mx-auto" name="q7_2"><div class="feedback-box"></div></td></tr>
-                                    <tr class="sub-q" data-ans="b"><td>3. Jitter (Packet arrival arrival time variance)</td><td><input type="text" maxlength="1" class="form-control form-control-sm text-center text-uppercase w-50 mx-auto" name="q7_3"><div class="feedback-box"></div></td></tr>
-                                    <tr class="sub-q" data-ans="a"><td>4. Signal-to-Noise Ratio (SNR background gap)</td><td><input type="text" maxlength="1" class="form-control form-control-sm text-center text-uppercase w-50 mx-auto" name="q7_4"><div class="feedback-box"></div></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q8">
-                            <h5 class="fw-bold">08. Read the following statements related to firewall and choose the correct answer. <span class="text-primary">(2 Marks)</span></h5>
-                            <div class="row">
-                                <div class="col-md-6 sub-q" data-ans="b">
-                                    <p class="mb-1 small fw-bold">i. Which of the following is NOT a function of a firewall?</p>
-                                    <select class="form-select form-select-sm" name="q8_i">
-                                        <option value="">Choose...</option>
-                                        <option value="a">Filtering incoming packet traffic</option>
-                                        <option value="b">Encrypting resting local host database data</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="q1_iii" id="q1_iii_d" value="d">
+                                    <label class="form-check-label" for="q1_iii_d">d) To store network configurations.</label>
                                 </div>
-                                <div class="col-md-6 sub-q" data-ans="d">
-                                    <p class="mb-1 small fw-bold">ii. What is the primary purpose of a firewall infrastructure?</p>
-                                    <select class="form-select form-select-sm" name="q8_ii">
-                                        <option value="">Choose...</option>
-                                        <option value="c">To generate remote battery backup juice</option>
-                                        <option value="d">To block unauthorized perimeter accesses</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
-                                </div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small"><i class="bi bi-check-circle"></i> Key Map: <strong>a</strong></div>
                             </div>
                         </div>
 
-                        <hr>
-
-                        <div class="question-box" data-qtype="fill-blank-sub" id="q9">
-                            <h5 class="fw-bold">09. Fill in the blanks with the correct network terms. <span class="text-primary">(3 Marks)</span></h5>
-                            <p class="text-muted small">Choices: [Coverage area, Directional, Active site, Passive site, Omnidirectional]</p>
-                            
-                            <div class="my-2 sub-q" data-ans="coverage area">
-                                <span>i. The geographical area covered by a network service provider is called the </span>
-                                <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q9_i">.
-                                <div class="feedback-box"></div>
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">02. Read carefully the following Deploy wireless network outdoor statements and answer by True(T) if the statement is correct or False(F) if the statement is wrong.</h5>
+                                <span class="badge badge-mark p-2">3 Marks</span>
                             </div>
-                            <div class="my-2 sub-q" data-ans="directional">
-                                <span>ii. </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q9_ii">
-                                <span> antennas concentrate signals in a specific direction for long-range communication.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q10">
-                            <h5 class="fw-bold">10. Physical Layer Specs & Wireless Standards evaluation: <span class="text-primary">(4 Marks)</span></h5>
-                            <div class="row">
-                                <div class="col-md-6 mb-3 sub-q" data-ans="b">
-                                    <p class="small fw-semibold">i. Maximum data rate for legacy standard IEEE 802.11a?</p>
-                                    <input type="radio" name="q10_i" id="q10_i_a" value="a"> 11 Mbps <br>
-                                    <input type="radio" name="q10_i" id="q10_i_b" value="b"> 54 Mbps
-                                    <div class="feedback-box"></div>
-                                </div>
-                                <div class="col-md-6 mb-3 sub-q" data-ans="c">
-                                    <p class="small fw-semibold">ii. Tool essential for attaching metal connectors to structural line ends?</p>
-                                    <input type="radio" name="q10_ii" id="q10_ii_a" value="a"> Drilling Tool <br>
-                                    <input type="radio" name="q10_ii" id="q10_ii_c" value="c"> Crimping Tool
-                                    <div class="feedback-box"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="fill-blank-sub" id="q11">
-                            <h5 class="fw-bold">11. Complete the sentences using appropriate wireless words. <span class="text-primary">(4 Marks)</span></h5>
-                            <div class="my-2 sub-q" data-ans="router">
-                                <span>i. Wi-Fi is the radio signal sent from a </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q11_i"><span> to a nearby node client.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                            <div class="my-2 sub-q" data-ans="wireless extender">
-                                <span>iii. A </span><input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" name="q11_iii"><span> is a device that extends the range of a Wi-Fi signal.</span>
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="tf-sub" id="q12">
-                            <h5 class="fw-bold">12. True or False metrics for Diagnostic Topologies: <span class="text-primary">(4 Marks)</span></h5>
-                            <div class="sub-q d-flex justify-content-between border-bottom py-1" data-ans="T">
-                                <span>i. A higher Signal-to-Noise Ratio (SNR) results in better network performance.</span>
-                                <select class="form-select form-select-sm w-25" name="q12_i"><option value="">Select...</option><option value="T">T</option><option value="F">F</option></select>
-                            </div>
-                            <div class="sub-q d-flex justify-content-between border-bottom py-1" data-ans="F">
-                                <span>ii. Jitter refers to the total volume amount of data transmitted over an interface.</span>
-                                <select class="form-select form-select-sm w-25" name="q12_ii"><option value="">Select...</option><option value="T">T</option><option value="F">F</option></select>
-                            </div>
-                            <div class="feedback-box"></div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="single" id="q13" data-ans="c">
-                            <h5 class="fw-bold">13. Bandwidth Computation Capacity Calculation <span class="text-primary">(2 Marks)</span></h5>
-                            <p>A company wants to set up a video conferencing system that requires 4 Mbps per user. If there are 10 users in a meeting, what is the minimum total bandwidth required to ensure smooth video streaming for all participants?</p>
-                            <input type="radio" class="btn-check option-input" name="q13" id="q13_a" value="a">
-                            <label class="option-label" for="q13_a">a) 10 Mbps</label>
-                            <input type="radio" class="btn-check option-input" name="q13" id="q13_c" value="c">
-                            <label class="option-label" for="q13_c">c) 40 Mbps (10 Users &times; 4 Mbps/User = 40 Mbps)</label>
-                            <div class="feedback-box"></div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="match-sub" id="q14">
-                            <h5 class="fw-bold">14. Match the networking components in Column A with their corresponding functions in Column B. <span class="text-primary">(4 Marks)</span></h5>
-                            <div class="row">
-                                <div class="col-md-6 sub-q" data-ans="2">
-                                    <label class="form-label small fw-bold">A. Access Point Function:</label>
-                                    <select class="form-select form-select-sm" name="q14_a">
-                                        <option value="">Choose...</option>
-                                        <option value="1">1. Connects different unique subnets/networks.</option>
-                                        <option value="2">2. Distributes network signals wirelessly to environments.</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
-                                </div>
-                                <div class="col-md-6 sub-q" data-ans="1">
-                                    <label class="form-label small fw-bold">C. Router Function:</label>
-                                    <select class="form-select form-select-sm" name="q14_c">
-                                        <option value="">Choose...</option>
-                                        <option value="1">1. Connects different unique subnets/networks.</option>
-                                        <option value="2">2. Distributes network signals wirelessly to environments.</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q15">
-                            <h5 class="fw-bold">15. Field Deployments Engineering Diagnostic Choice: <span class="text-primary">(3 Marks)</span></h5>
-                            <div class="mt-2 sub-q" data-ans="b">
-                                <p class="mb-1 small">i. If experiencing high packet signal drop loss outdoors, what action must you take first?</p>
-                                <input type="radio" name="q15_i" id="q15_i_b" value="b"> Check for line-of-sight physical path obstructions.<br>
-                                <input type="radio" name="q15_i" id="q15_i_a" value="a"> Replace the Access Point main base system immediately.
-                                <div class="feedback-box"></div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="single" id="q16" data-ans="a">
-                            <h5 class="fw-bold">16. Static Access Point Assignment <span class="text-primary">(2 Marks)</span></h5>
-                            <p>Which statement is necessary to ensure that the Access Point's IP address is correctly configured?</p>
-                            <input type="radio" class="btn-check option-input" name="q16" id="q16_a" value="a">
-                            <label class="option-label" for="q16_a">a) The IP address must be in the same logical subnet mask range as the wireless station.</label>
-                            <input type="radio" class="btn-check option-input" name="q16" id="q16_b" value="b">
-                            <label class="option-label" for="q16_b">b) The IP address must be value-higher than the Layer-2 switch's system footprint IP.</label>
-                            <div class="feedback-box"></div>
-                        </div>
-
-                        <hr>
-
-                        <div class="question-box" data-qtype="multiple-sub" id="q17">
-                            <h5 class="fw-bold">17. Topology Layout Parameter Readings (Reference to DSC_0047.jpg Schema) <span class="text-primary">(2 Marks)</span></h5>
-                            <p class="text-muted small">Layout Profile: Router connected to central distribution Layer-2 Switch, grouping downstream workstation PCs, Smart Nodes, and structural wireless distribution points.</p>
-                            <div class="row">
-                                <div class="col-md-6 sub-q" data-ans="a">
-                                    <p class="mb-1 small">i. Total number of client end-hosts in this standard local office topology?</p>
-                                    <select class="form-select form-select-sm" name="q17_i">
-                                        <option value="">Choose...</option>
-                                        <option value="a">5 (Endpoint Clients)</option>
-                                        <option value="b">11 (Total device items)</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
-                                </div>
-                                <div class="col-md-6 sub-q" data-ans="c">
-                                    <p class="mb-1 small">iv. Which system component is specifically used to emit RF wireless waves?</p>
-                                    <select class="form-select form-select-sm" name="q17_iv">
-                                        <option value="">Choose...</option>
-                                        <option value="b">Switch</option>
-                                        <option value="c">Access point</option>
-                                    </select>
-                                    <div class="feedback-box"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div id="sectionB" class="card exam-card">
-                    <div class="section-b-header">
-                        <h4 class="m-0 fw-bold">SECTION B: Advanced Applied Theory - Attempt Any Three Questions (30 Marks)</h4>
-                        <p class="m-0 opacity-75 mt-1">Written Analysis, Category Sorting, Wiring Matrix Standards, and Signal-to-Noise Math Calculations</p>
-                    </div>
-                    <div class="card-body p-4">
-
-                        <div class="mb-5" id="q18">
-                            <h5 class="fw-bold text-dark">18. Classification Matrix of Outdoor Deployment Assets <span class="text-muted">(10 Marks)</span></h5>
-                            <p class="text-muted">Classify the provided pool: <em>[Internet bundles, Router, Screwdriver, Cables, Rack mount, Drilling machine, Connectors, Antenna, Hammer, Firewall]</em></p>
-                            <table class="table table-bordered bg-light">
-                                <thead class="table-dark">
-                                    <tr><th>Category Type</th><th>Verified System Elements (Academic Evaluation Blueprint)</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td><strong>Equipment</strong></td><td>Router, Antenna, Firewall, Rack mount</td></tr>
-                                    <tr><td><strong>Materials</strong></td><td>Cables, Connectors, Internet bundles</td></tr>
-                                    <tr><td><strong>Tools</strong></td><td>Screwdriver, Drilling machine, Hammer</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="mb-5" id="q19">
-                            <h5 class="fw-bold text-dark">19. Ethernet Cable Pinout Architecture T568A vs T568B <span class="text-muted">(10 Marks)</span></h5>
-                            <blockquote class="blockquote blockquote-custom bg-white p-3 shadow-sm rounded border-start border-primary border-3">
-                                <p class="mb-0 small text-muted"><strong>Straight-Through Cable Definition:</strong> A physical Layer-1 network media cable where the internal color-coded copper pin wires match symmetrically at both RJ45 terminations. Used to patch heterogeneous systems (e.g., Host workstation to dynamic Local Switch Port).</p>
-                            </blockquote>
-                            <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <h6 class="fw-bold text-success"><i class="bi bi-patch-check"></i> Standard T568A Pin Sequence</h6>
-                                    <ol class="list-group list-group-numbered shadow-sm">
-                                        <li class="list-group-item py-1">Green-White</li><li class="list-group-item py-1">Green</li>
-                                        <li class="list-group-item py-1">Orange-White</li><li class="list-group-item py-1">Blue</li>
-                                        <li class="list-group-item py-1">Blue-White</li><li class="list-group-item py-1">Orange</li>
-                                        <li class="list-group-item py-1">Brown-White</li><li class="list-group-item py-1">Brown</li>
-                                    </ol>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6 class="fw-bold text-primary"><i class="bi bi-patch-check"></i> Standard T568B Pin Sequence</h6>
-                                    <ol class="list-group list-group-numbered shadow-sm">
-                                        <li class="list-group-item py-1">Orange-White</li><li class="list-group-item py-1">Orange</li>
-                                        <li class="list-group-item py-1">Green-White</li><li class="list-group-item py-1">Blue</li>
-                                        <li class="list-group-item py-1">Blue-White</li><li class="list-group-item py-1">Green</li>
-                                        <li class="list-group-item py-1">Brown-White</li><li class="list-group-item py-1">Brown</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-5" id="q20">
-                            <h5 class="fw-bold text-dark">20. Network Degradation: Five Primary Impacts of Packet Loss <span class="text-muted">(10 Marks)</span></h5>
-                            <div class="row g-3 mt-2">
-                                <div class="col-md-6"><div class="p-3 bg-white border border-start border-danger border-3 rounded shadow-sm"><strong class="text-danger">1. Latency Overheads:</strong> Forces TCP windows to wait for missing segments, ballooning response loops.</div></div>
-                                <div class="col-md-6"><div class="p-3 bg-white border border-start border-danger border-3 rounded shadow-sm"><strong class="text-danger">2. Retransmission Spikes:</strong> Creates heavy retransmission loads, reducing effective network throughput.</div></div>
-                                <div class="col-md-6"><div class="p-3 bg-white border border-start border-danger border-3 rounded shadow-sm"><strong class="text-danger">3. Jitter & Media Breaks:</strong> Causes stuttering and dropped frames in real-time streaming and VoIP traffic.</div></div>
-                                <div class="col-md-6"><div class="p-3 bg-white border border-start border-danger border-3 rounded shadow-sm"><strong class="text-danger">4. Throughput Collapse:</strong> Triggers TCP congestion controls, drastically cutting transmission speeds.</div></div>
-                                <div class="col-md-12"><div class="p-3 bg-white border border-start border-danger border-3 rounded shadow-sm"><strong class="text-danger">5. Application Session Drops:</strong> Causes operational dropouts, data corruption, and connection timeouts.</div></div>
-                            </div>
-                        </div>
-
-                        <div class="mb-5" id="q21">
-                            <h5 class="fw-bold text-dark">21. Inter-Building Wireless Bridging & Protective Grounding <span class="text-muted">(10 Marks)</span></h5>
-                            <div class="bg-white p-3 rounded shadow-sm border mb-3">
-                                <h6><strong>a & b. Point-to-Point (PtP) vs Point-to-Multipoint (PtMP) Formats</strong></h6>
-                                <p class="small text-muted mb-2">A **Point-to-Point (PtP)** wireless bridge builds a dedicated link between two distant physical networks using high-gain directional antennas, mimicking a long-distance virtual cable patch.</p>
-                                <table class="table table-sm table-striped border text-center small m-0">
-                                    <thead class="table-secondary"><tr><th>Topology Type</th><th>Core Application</th><th>Hardware Framework Class</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><strong>Point-to-Point (PtP)</strong></td><td>Connecting two separate buildings</td><td>Dual High-Gain Directional Antennas (Yagi/Parabolic)</td></tr>
-                                        <tr><td><strong>Point-to-Multipoint (PtMP)</strong></td><td>Distributing connections from a central base station to multiple clients</td><td>One Omnidirectional or Sector Antenna base feeding multiple Directional Nodes</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="bg-white p-3 rounded shadow-sm border">
-                                <h6><strong>c & d. Overvoltage Grounding Protection Analysis</strong></h6>
-                                <p class="small m-0 text-muted"><strong>Strategic Value:</strong> Outdoor equipment on high poles accumulates static charges and attracts lightning strikes. Incorporating inline **Lightning Arrestors** shunts dangerous surge currents to the earth path, saving downstream assets. Neglecting grounding can lead to completely fried equipment, data loss, and dangerous electrical fires.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-5" id="q22">
-                            <h5 class="fw-bold text-dark">22. Mathematical Computation of Signal-to-Noise Ratio (SNR) <span class="text-muted">(10 Marks)</span></h5>
-                            <div class="p-4 bg-dark text-white rounded shadow-sm font-monospace">
-                                <h6 class="text-warning fw-bold mb-2">// Mathematical SNR Equation: SNR (dB) = Signal Power (dBm) - Noise Floor Power (dBm)</h6>
-                                <div class="border-bottom border-secondary pb-2 mb-2">
-                                    <p class="m-0 text-info">■ Network Scenario 1 Computation Metrics:</p>
-                                    <p class="m-0 ps-3">Signal Input = -41 dBm, Noise Floor = -50 dBm</p>
-                                    <p class="m-0 ps-3 text-warning">SNR_1 = (-41 dBm) - (-50 dBm) = -41 + 50 = 9 dB</p>
-                                </div>
-                                <div class="border-bottom border-secondary pb-2 mb-2">
-                                    <p class="m-0 text-info">■ Network Scenario 2 Computation Metrics:</p>
-                                    <p class="m-0 ps-3">Signal Input = -41 dBm, Noise Floor = -96 dBm</p>
-                                    <p class="m-0 ps-3 text-warning">SNR_2 = (-41 dBm) - (-96 dBm) = -41 + 96 = 55 dB</p>
-                                </div>
-                                <p class="m-0 text-success"><strong>Conclusion Evaluation:</strong> SNR_2 (55 dB) is significantly greater than SNR_1 (9 dB). Network 2 will deliver clear, fast data transmission, while Network 1 will face severe packet drops due to low signal clarity.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div id="sectionC" class="card exam-card">
-                    <div class="section-c-header">
-                        <h4 class="m-0 fw-bold">SECTION C: System Design Blueprinting - Attempt Only One Question (15 Marks)</h4>
-                        <p class="m-0 opacity-75 mt-1">Industrial Topology Mapping, Enterprise Infrastructure Planning, and Advanced Troubleshooting Guides</p>
-                    </div>
-                    <div class="card-body p-4">
-
-                        <div class="mb-5" id="q23">
-                            <h5 class="fw-bold text-dark">23. Architectural Infrastructure Blueprint Design: Office Space to Warehouse Link <span class="text-muted">(15 Marks)</span></h5>
-                            <p class="text-muted">A comprehensive deployment plan to extend a small business network across separate structures using an external wireless link.</p>
-                            
-                            <div class="card bg-light border-0 p-3 mb-3">
-                                <h6 class="fw-bold"><i class="bi bi-diagram-3-fill text-primary"></i> 1. Topology Design Specification</h6>
-                                <p class="small text-muted mb-0">The central ISP fiber feed drops into the main **Office Space Core Router**. From the office distribution switch, a PoE cable feeds a high-gain **Outdoor Directional Bridge Antenna** mounted on the roof. This antenna projects a clear line-of-sight beam to a matching **Directional Bridge Antenna** on the **Warehouse** exterior. This wireless bridge links the remote warehouse back to the main local subnet.</p>
-                            </div>
-
                             <div class="table-responsive">
-                                <table class="table table-bordered bg-white small m-0">
-                                    <thead class="table-primary text-center">
-                                        <tr><th>Target Zone location</th><th>Equipment Deployments</th><th>Functional Role</th></tr>
+                                <table class="table table-bordered align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Statement Clause</th>
+                                            <th style="width: 180px;">Selection Matrix</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td rowspan="3" class="align-middle fw-bold">Primary Office Space</td><td>Core Managed Router</td><td>Handles WAN Routing, DHCP allocations, and Firewall access lists.</td></tr>
-                                        <tr><td>PoE+ Gigabit Switch</td><td>Distributes local wired connections and provides power to access points.</td></tr>
-                                        <tr><td>Indoor Omni APs</td><td>Provides Wi-Fi coverage across the office workspace.</td></tr>
-                                        <tr><td rowspan="2" class="align-middle fw-bold">Inter-Building Link</td><td>2x Outdoor PtP Radios</td><td>Forms the high-speed backbone link between the office and warehouse.</td></tr>
-                                        <tr><td>Lightning Arrestors</td><td>Protects the hardware from electrical surges on both structures.</td></tr>
-                                        <tr><td rowspan="2" class="align-middle fw-bold">Remote Warehouse Zone</td><td>Layer-2 Access Switch</td><td>Aggregates local devices and links back to the bridge antenna.</td></tr>
-                                        <tr><td>Industrial Outdoor AP</td><td>Provides robust Wi-Fi coverage across the warehouse floor.</td></tr>
+                                        <tr>
+                                            <td>a. RJ-45 connectors are used for coaxial cables.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" name="q2_a" id="q2_a">
+                                                    <option value="">- Choose -</option>
+                                                    <option value="T">True (T)</option>
+                                                    <option value="F">False (F)</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small mt-1 fw-bold">Key: False</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>b. UPS provides backup power to network equipment.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" name="q2_b" id="q2_b">
+                                                    <option value="">- Choose -</option>
+                                                    <option value="T">True (T)</option>
+                                                    <option value="F">False (F)</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small mt-1 fw-bold">Key: True</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>c. Cable ties are used for organizing cables.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" name="q2_c" id="q2_c">
+                                                    <option value="">- Choose -</option>
+                                                    <option value="T">True (T)</option>
+                                                    <option value="F">False (F)</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small mt-1 fw-bold">Key: True</div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <hr>
-
-                        <div class="mb-3" id="q24">
-                            <h5 class="fw-bold text-dark">24. Strategic Upgrade Planning & Systematic Troubleshooting Logic <span class="text-muted">(15 Marks)</span></h5>
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">03. Fill in the blank space using the below list of wireless network outdoor installation Equipment in bracket:</h5>
+                                <span class="badge badge-mark p-2">5 Marks</span>
+                            </div>
+                            <div class="alert alert-secondary py-2 mb-3 fs-6">
+                                <strong>Pool Matrix:</strong> (Outdoor Access Point, Antenna, Router, Wireless Extender, Power-Over-Ethernet, Lightning Arrestor, UPS, Network Switch, Repeater, Firewall, and Rack Mount)
+                            </div>
                             
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="p-3 bg-light rounded border-start border-primary border-3 h-100">
-                                        <h6><strong>a & b. Network Upgrade Strategy</strong></h6>
-                                        <p class="small text-muted mb-0">Upgrading means replacing old standards (like legacy 802.11a/g) with modern hardware (like Wi-Fi 6/6E or 60GHz wireless bridges). Key considerations before upgrading include available budget, total user capacity, line-of-sight obstacles, and weather-proof hardware ratings.</p>
-                                    </div>
+                            <div class="vstack gap-3 mt-2">
+                                <div>
+                                    a. One common piece of equipment used in outdoor wireless network installations is 
+                                    <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q3_a" placeholder="Enter answer">.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Outdoor Access Point / Antenna / Router / Repeater / Wireless Extender</div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 bg-light rounded border-start border-success border-3 h-100">
-                                        <h6><strong>c. Step-by-Step Troubleshooting Flow</strong></h6>
-                                        <p class="small text-muted mb-0">For fixing intermittent outdoor network connections:</p>
-                                        <ol class="list-group list-group-numbered list-group-flush bg-transparent small">
-                                            <li class="list-group-item bg-transparent p-1">Check physical layer cables and PoE injectors for water ingress or loose connections.</li>
-                                            <li class="list-group-item bg-transparent p-1">Check alignment paths to fix antenna drift from high winds.</li>
-                                            <li class="list-group-item bg-transparent p-1">Run an RF spectrum scan to spot and resolve channel interference from nearby systems.</li>
-                                            <li class="list-group-item bg-transparent p-1">Review system logs to catch firmware glitches or IP address conflicts.</li>
-                                        </ol>
-                                    </div>
+                                <div>
+                                    b. To connect multiple devices in a network, 
+                                    <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q3_b" placeholder="Enter answer"> is often used.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Network Switch</div>
+                                </div>
+                                <div>
+                                    c. 
+                                    <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q3_c" placeholder="Enter answer"> is used to protect equipment from power surges and lightning strikes.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Lightning Arrestor</div>
+                                </div>
+                                <div>
+                                    d. In outdoor setups, 
+                                    <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q3_d" placeholder="Enter answer"> can help extend the wireless range.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Wireless Extender / Repeater / Antenna</div>
+                                </div>
+                                <div>
+                                    e. <span class="text-muted small">[Continued on DSC_0042.jpg]</span> 
+                                    <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q3_e" placeholder="Enter answer"> is crucial for maintaining power supply during outages.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: UPS</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">04. Read the following statements related to wireless network outdoor installation and choose the correct answer</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+
+                            <div class="mb-4 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. Which of the following options is the primary function of an outdoor wireless network?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_i" id="q4_i_a" value="a"><label class="form-check-label" for="q4_i_a">a) To provide wireless internet access outside of buildings</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_i" id="q4_i_b" value="b"><label class="form-check-label" for="q4_i_b">b) To provide wired internet access</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_i" id="q4_i_c" value="c"><label class="form-check-label" for="q4_i_c">c) To control home appliances</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_i" id="q4_i_d" value="d"><label class="form-check-label" for="q4_i_d">d) To manage indoor climate control</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map: <strong>a</strong></div>
+                            </div>
+
+                            <div class="mb-4 ps-3 border-start border-2">
+                                <p class="fw-semibold">ii. Which of the following antenna types radiates signals in all directions?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_ii" id="q4_ii_a" value="a"><label class="form-check-label" for="q4_ii_a">a) Directional</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_ii" id="q4_ii_b" value="b"><label class="form-check-label" for="q4_ii_b">b) Parabolic</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_ii" id="q4_ii_c" value="c"><label class="form-check-label" for="q4_ii_c">c) Omnidirectional</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_ii" id="q4_ii_d" value="d"><label class="form-check-label" for="q4_ii_d">d) Yagi</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map: <strong>c</strong></div>
+                            </div>
+
+                            <div class="mb-4 ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. What type of survey among the following list that listens to existing access points for signal strength?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iii" id="q4_iii_a" value="a"><label class="form-check-label" for="q4_iii_a">a) Active physical site survey</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iii" id="q4_iii_b" value="b"><label class="form-check-label" for="q4_iii_b">b) Passive physical site survey</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iii" id="q4_iii_c" value="c"><label class="form-check-label" for="q4_iii_c">c) Network analysis</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iii" id="q4_iii_d" value="d"><label class="form-check-label" for="q4_iii_d">d) System design.</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map: <strong>b</strong></div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iv. What is the definition of Bandwidth among the following?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iv" id="q4_iv_a" value="a"><label class="form-check-label" for="q4_iv_a">a) The geographical area of a network.</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iv" id="q4_iv_b" value="b"><label class="form-check-label" for="q4_iv_b">b) The maximum amount of data transmitted over a connection.</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iv" id="q4_iv_c" value="c"><label class="form-check-label" for="q4_iv_c">c) The security of a network.</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q4_iv" id="q4_iv_d" value="d"><label class="form-check-label" for="q4_iv_d">d) The ability to add more network capacity.</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map: <strong>b</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">05. Fill in the blank space using the following words: (testing, patching, orange, blue).</h5>
+                                <span class="badge badge-mark p-2">2 Marks</span>
+                            </div>
+                            <div class="vstack gap-2">
+                                <div>
+                                    a. The <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q5_a" placeholder="word"> tool is essential for verifying cable integrity.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: testing</div>
+                                </div>
+                                <div>
+                                    b. The color code for the fourth wire in an RJ45 connector is <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q5_b" placeholder="word">.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: blue <span class="text-muted">(Standard T568A/B Pin 4 is Blue)</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">06. Read carefully the following statements and choose the best answer:</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. Which of the following is the full word of DHCP?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_i" id="q6_i_a" value="a"><label class="form-check-label" for="q6_i_a">a) Dynamic Host Configuration Protocol</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_i" id="q6_i_b" value="b"><label class="form-check-label" for="q6_i_b">b) Dynamic Host Control Protocol</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_i" id="q6_i_c" value="c"><label class="form-check-label" for="q6_i_c">c) Direct Host Connection Protocol</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_i" id="q6_i_d" value="d"><label class="form-check-label" for="q6_i_d">d) Data Host Configuration Protocol</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>a</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold"><span class="text-muted small">[Continued on DSC_0043.jpg]</span> ii. What is the type of IP address a DHCP server assign to a device among the following?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_ii" id="q6_ii_a" value="a"><label class="form-check-label" for="q6_ii_a">a) Loopback address</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_ii" id="q6_ii_b" value="b"><label class="form-check-label" for="q6_ii_b">b) Public IP address</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_ii" id="q6_ii_c" value="c"><label class="form-check-label" for="q6_ii_c">c) Private IP address</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_ii" id="q6_ii_d" value="d"><label class="form-check-label" for="q6_ii_d">d) Dynamic IP address</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>d</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. Which of the following options is a benefit of using DHCP in a network?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iii" id="q6_iii_a" value="a"><label class="form-check-label" for="q6_iii_a">a) Reduces manual configuration of IP addresses</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iii" id="q6_iii_b" value="b"><label class="form-check-label" for="q6_iii_b">b) Increases network congestion</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iii" id="q6_iii_c" value="c"><label class="form-check-label" for="q6_iii_c">c) Requires constant human intervention</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iii" id="q6_iii_d" value="d"><label class="form-check-label" for="q6_iii_d">d) Limits the number of devices on a network</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>a</strong></div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iv. What is the primary purpose of the DHCP among the following options?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iv" id="q6_iv_a" value="a"><label class="form-check-label" for="q6_iv_a">a) To manually assign IP addresses to devices</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iv" id="q6_iv_b" value="b"><label class="form-check-label" for="q6_iv_b">b) To automatically assign IP addresses and other network configuration parameters to devices on a network</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iv" id="q6_iv_c" value="c"><label class="form-check-label" for="q6_iv_c">c) To monitor network traffic</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q6_iv" id="q6_iv_d" value="d"><label class="form-check-label" for="q6_iv_d">d) To secure network connections</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>b</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">07. Match the terms with their corresponding descriptions in the table below.</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle text-center">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Terms</th>
+                                            <th>Description Pool</th>
+                                            <th style="width: 220px;">Your Match Choice</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-start">
+                                        <tr>
+                                            <td>1. Latency</td>
+                                            <td>a) Difference between signal strength and background noise.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q7_1">
+                                                    <option value="">- Choose Match -</option>
+                                                    <option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key Map: c</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2. Signal Strength</td>
+                                            <td>b) Variation in packet arrival times.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q7_2">
+                                                    <option value="">- Choose Match -</option>
+                                                    <option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key Map: d</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3. Jitter</td>
+                                            <td>c) Time taken for data to travel from source to destination.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q7_3">
+                                                    <option value="">- Choose Match -</option>
+                                                    <option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key Map: b</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4. Signal-to-Noise Ratio (SNR)</td>
+                                            <td>d) Power level of a wireless signal received by a device.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q7_4">
+                                                    <option value="">- Choose Match -</option>
+                                                    <option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key Map: a</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">08. Read the following statements related to firewall and choose the correct answer.</h5>
+                                <span class="badge badge-mark p-2">2 Marks</span>
+                            </div>
+                            
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. Which of the following is NOT a function of a firewall?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_i" id="q8_i_a" value="a"><label class="form-check-label" for="q8_i_a">a. Filtering traffic</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_i" id="q8_i_b" value="b"><label class="form-check-label" for="q8_i_b">b. Encrypting data</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_i" id="q8_i_c" value="c"><label class="form-check-label" for="q8_i_c">c. Preventing unauthorized access</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_i" id="q8_i_d" value="d"><label class="form-check-label" for="q8_i_d">d. Logging activity</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>b</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold"><span class="text-muted small">[Continued on DSC_0044.jpg]</span> ii. What is the primary purpose of a firewall among the following?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_ii" id="q8_ii_a" value="a"><label class="form-check-label" for="q8_ii_a">a. To scan for viruses</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_ii" id="q8_ii_b" value="b"><label class="form-check-label" for="q8_ii_b">b. To monitor user activity</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_ii" id="q8_ii_c" value="c"><label class="form-check-label" for="q8_ii_c">c. To provide power backup</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_ii" id="q8_ii_d" value="d"><label class="form-check-label" for="q8_ii_d">d. To block unauthorized access</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>d</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. Which of these firewalls is considered the most secure?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iii" id="q8_iii_a" value="a"><label class="form-check-label" for="q8_iii_a">a. Packet-filtering firewall</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iii" id="q8_iii_b" value="b"><label class="form-check-label" for="q8_iii_b">b. Circuit-level gateway</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iii" id="q8_iii_c" value="c"><label class="form-check-label" for="q8_iii_c">c. Proxy firewall</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iii" id="q8_iii_d" value="d"><label class="form-check-label" for="q8_iii_d">d. Stateless firewall</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>c</strong></div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iv. Which protocol is typically blocked by firewalls to prevent unauthorized access to internal networks?</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iv" id="q8_iv_a" value="a"><label class="form-check-label" for="q8_iv_a">a. Telnet</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iv" id="q8_iv_b" value="b"><label class="form-check-label" for="q8_iv_b">b. FTP</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iv" id="q8_iv_c" value="c"><label class="form-check-label" for="q8_iv_c">c. HTTP</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q8_iv" id="q8_iv_d" value="d"><label class="form-check-label" for="q8_iv_d">d. ICMP</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>a</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">09. Fill in the blank space with the following wireless network outdoor installation words in bracket:</h5>
+                                <span class="badge badge-mark p-2">3 Marks</span>
+                            </div>
+                            <div class="alert alert-secondary py-1 mb-2 small"><strong>Pool:</strong> (passive site, Coverage area, Directional, Active site, Omnidirectional)</div>
+                            <div class="vstack gap-2">
+                                <div>i. The geographical area covered by a network service provider is called the <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q9_i">.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Coverage area</div>
+                                </div>
+                                <div>ii. <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q9_ii"> antennas concentrate signals in a specific direction for long-range communication.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Directional</div>
+                                </div>
+                                <div>iii. A <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q9_iii"> survey is conducted after network deployment to check network health.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: Active site / passive site</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">10. Read the following questions and choose the correct answers</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. What is the maximum data rate for IEEE802.11a among the following?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_i" id="q10_i_a" value="a"><label class="form-check-label" for="q10_i_a">a) 11 Mbps</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_i" id="q10_i_b" value="b"><label class="form-check-label" for="q10_i_b">b) 54 Mbps</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_i" id="q10_i_c" value="c"><label class="form-check-label" for="q10_i_c">c) 100 Mbps</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_i" id="q10_i_d" value="d"><label class="form-check-label" for="q10_i_d">d) 1.3 Gbps</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>b</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">ii. Which one of the following tools is essential for attaching connectors to the ends of cables? <span class="text-muted small">[Continued on DSC_0045.jpg]</span></p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_ii" id="q10_ii_a" value="a"><label class="form-check-label" for="q10_ii_a">a) Cutting Tool</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_ii" id="q10_ii_b" value="b"><label class="form-check-label" for="q10_ii_b">b) Drilling Tool</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_ii" id="q10_ii_c" value="c"><label class="form-check-label" for="q10_ii_c">c) Crimping Tool</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_ii" id="q10_ii_d" value="d"><label class="form-check-label" for="q10_ii_d">d) Testing Tool</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>c</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. Which type of network is characterized by a central device connecting multiple devices wirelessly among the following networks?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iii" id="q10_iii_a" value="a"><label class="form-check-label" for="q10_iii_a">a) Point-to-Multipoint</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iii" id="q10_iii_b" value="b"><label class="form-check-label" for="q10_iii_b">b) Point-to-Point</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iii" id="q10_iii_c" value="c"><label class="form-check-label" for="q10_iii_c">c) Wireless Mesh</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iii" id="q10_iii_d" value="d"><label class="form-check-label" for="q10_iii_d">d) Wired Network</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>a</strong></div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iv. Which of the following statements is the purpose of a rack mount in an outdoor wireless network installation?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iv" id="q10_iv_a" value="a"><label class="form-check-label" for="q10_iv_a">a) To increase Wi-Fi signal.</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iv" id="q10_iv_b" value="b"><label class="form-check-label" for="q10_iv_b">b) To provide power.</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iv" id="q10_iv_c" value="c"><label class="form-check-label" for="q10_iv_c">c) To House network equipment.</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q10_iv" id="q10_iv_d" value="d"><label class="form-check-label" for="q10_iv_d">d) To increase network security</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>c</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">11. Complete the sentences using the appropriates wireless network outdoor installation words in bracket:</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+                            <div class="alert alert-secondary py-1 mb-2 small"><strong>Pool:</strong> (coverage, multiple, repeater, router, wireless extender, two)</div>
+                            <div class="vstack gap-2">
+                                <div>i. Wi-Fi is the radio signal sent from a <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q11_i"> to a nearby device.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: router / access point</div>
+                                </div>
+                                <div>ii. The geographical area covered by a network provider is called the <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q11_ii"> area.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: coverage</div>
+                                </div>
+                                <div>iii. A <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q11_iii"> is a device that extends the range of a Wi-Fi signal.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: repeater / wireless extender</div>
+                                </div>
+                                <div>iv. A point-to-point wireless bridge connects <input type="text" class="form-control d-inline-block w-auto form-control-sm mx-1" id="q11_iv"> locations together.
+                                    <div class="correct-answer-indicator text-success small fw-bold">Accepted: two</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">12. Read the following statements about wireless networks outdoor and answer by True or False</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle">
+                                    <tbody>
+                                        <tr>
+                                            <td>i. A higher Signal-to-Noise Ratio (SNR) results in better network performance.</td>
+                                            <td style="width: 150px;">
+                                                <select class="form-select form-select-sm" id="q12_i">
+                                                    <option value="">- Matrix -</option><option value="T">True</option><option value="F">False</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: True</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ii. Jitter refers to the total amount of data transmitted over a network.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q12_ii">
+                                                    <option value="">- Matrix -</option><option value="T">True</option><option value="F">False</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: False</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>iii. Packet loss has no impact on data retransmissions.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q12_iii">
+                                                    <option value="">- Matrix -</option><option value="T">True</option><option value="F">False</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: False</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>iv. Wireshark is used to analyze network traffic and troubleshoot issues.</td>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q12_iv">
+                                                    <option value="">- Matrix -</option><option value="T">True</option><option value="F">False</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: True</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">13. A company wants to set up a video conferencing system that requires 4 Mbps per user. If there are 10 users in a meeting, what is the minimum total bandwidth required to ensure smooth video streaming for all participants among the following? <span class="text-muted small">[Continued on DSC_0046.jpg]</span></h5>
+                                <span class="badge badge-mark p-2">2 Marks</span>
+                            </div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q13" id="q13_a" value="a"><label class="form-check-label" for="q13_a">a) 10 Mbps</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q13" id="q13_b" value="b"><label class="form-check-label" for="q13_b">b) 20 Mbps</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q13" id="q13_c" value="c"><label class="form-check-label" for="q13_c">c) 40 Mbps</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q13" id="q13_d" value="d"><label class="form-check-label" for="q13_d">d) 4 Mbps</label></div>
+                            <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map & Calculation: <strong>c (40 Mbps)</strong> <br> <span class="text-muted">Formula: 4 Mbps &times; 10 users = 40 Mbps</span></div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">14. Match the networking components in Column A with their corresponding functions in Column B.</h5>
+                                <span class="badge badge-mark p-2">4 Marks</span>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 120px;">Answers Mapping</th>
+                                            <th>Column A (Components)</th>
+                                            <th>Column B (Functions)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q14_a">
+                                                    <option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: 2</div>
+                                            </td>
+                                            <td>A. Access Point</td>
+                                            <td>1. Connects different networks.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q14_b">
+                                                    <option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: 3</div>
+                                            </td>
+                                            <td>B. Switch</td>
+                                            <td>2. Distributes network signals wirelessly.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q14_c">
+                                                    <option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: 1</div>
+                                            </td>
+                                            <td>C. Router</td>
+                                            <td>3. Connects multiple devices within a network.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select class="form-select form-select-sm" id="q14_d">
+                                                    <option value="">- Select -</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                                </select>
+                                                <div class="correct-answer-indicator text-success small fw-bold">Key: 4</div>
+                                            </td>
+                                            <td>D. Repeated (sic)</td>
+                                            <td>4. Extends the range of a network signal.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">15. Read carefully the following questions and choose the correct answer:</h5>
+                                <span class="badge badge-mark p-2">3 Marks</span>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. If you are experiencing signal loss in an outdoor wireless network, which of the following actions should you take first?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_i" id="q15_i_a" value="a"><label class="form-check-label" for="q15_i_a">a) Replace the access point</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_i" id="q15_i_b" value="b"><label class="form-check-label" for="q15_i_b">b) Check for physical obstructions</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_i" id="q15_i_c" value="c"><label class="form-check-label" for="q15_i_c">c) Increase the transmission power</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_i" id="q15_i_d" value="d"><label class="form-check-label" for="q15_i_d">d) Change the network frequency</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>b</strong></div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">ii. Which of the following statements define the usage of the network switch in a network?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_ii" id="q15_ii_a" value="a"><label class="form-check-label" for="q15_ii_a">a) Forwarding data within a network</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_ii" id="q15_ii_b" value="b"><label class="form-check-label" for="q15_ii_b">b) Connecting different networks</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_ii" id="q15_ii_c" value="c"><label class="form-check-label" for="q15_ii_c">c) Filtering network traffic</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_ii" id="q15_ii_d" value="d"><label class="form-check-label" for="q15_ii_d">d) Providing backup power</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>a</strong></div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. Which of the following tools would you use to verify the performance of a newly installed wireless access point?</p>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_iii" id="q15_iii_a" value="a"><label class="form-check-label" for="q15_iii_a">a) Cable Crimper</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_iii" id="q15_iii_b" value="b"><label class="form-check-label" for="q15_iii_b">b) Punch Down Tool</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_iii" id="q15_iii_c" value="c"><label class="form-check-label" for="q15_iii_c">c) Signal Strength Meter</label></div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="q15_iii" id="q15_iii_d" value="d"><label class="form-check-label" for="q15_iii_d">d) Multimeter</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>c</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0"><span class="text-muted small">[From DSC_0047.jpg]</span> 16. Which of the following statements is necessary to ensure that the Access Point's IP address is correctly configured?</h5>
+                                <span class="badge badge-mark p-2">2 Marks</span>
+                            </div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q16" id="q16_a" value="a"><label class="form-check-label" for="q16_a">a) The IP address must be in the same subnet as the wireless station.</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q16" id="q16_b" value="b"><label class="form-check-label" for="q16_b">b) The IP address must be higher than the switch's IP address.</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q16" id="q16_c" value="c"><label class="form-check-label" for="q16_c">c) The AP should have a static IP address only.</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" name="q16" id="q16_d" value="d"><label class="form-check-label" for="q16_d">d) The subnet mask must be 255.0.0.0</label></div>
+                            <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-2 small">Key Map: <strong>a</strong></div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">17. Referring to the network layout description below, read the statements and select the best answer:</h5>
+                                <span class="badge badge-mark p-2">2 Marks</span>
+                            </div>
+                            <div class="bg-light p-3 border rounded mb-3 small text-muted">
+                                <i class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>Layout Blueprint Descriptor:</strong> Standard network tree diagram showing a Server, Router, Switch, multiple connected PC clients, an Access Point, and wireless clients including a Laptop and Smartphone.
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">i. According to the blueprint of network above, choose the value of total number of hosts among the following:</p>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_i" id="q17_i_a" value="a"> 5</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_i" id="q17_i_b" value="b"> 3</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_i" id="q17_i_c" value="c"> 11</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_i" id="q17_i_d" value="d"> 8</div>
+                                <div class="correct-answer-indicator text-success small fw-bold">Standard Interpretation Key: Variable depending on schematic counting (e.g., typically 5 or 11 depending on peripheral counts)</div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">ii. According to the blueprint of network above, choose the value of total number of nodes among the following:</p>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_ii" id="q17_ii_a" value="a"> 5</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_ii" id="q17_ii_b" value="b"> 3</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_ii" id="q17_ii_c" value="c"> 11</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_ii" id="q17_ii_d" value="d"> 8</div>
+                            </div>
+
+                            <div class="mb-3 ps-3 border-start border-2">
+                                <p class="fw-semibold">iii. According to the blueprint of network above, choose the number of medium transmissions used among the following:</p>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_iii" id="q17_iii_a" value="a"> 2</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_iii" id="q17_iii_b" value="b"> 3</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_iii" id="q17_iii_c" value="c"> 10</div>
+                                <div class="form-check-inline me-3"><input class="form-check-input" type="radio" name="q17_iii" id="q17_iii_d" value="d"> 15</div>
+                            </div>
+
+                            <div class="ps-3 border-start border-2">
+                                <p class="fw-semibold">iv. According to this blueprint of network above, which of the following devices is used to emit wireless signals.</p>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q17_iv" id="q17_iv_a" value="a"><label class="form-check-label" for="q17_iv_a">Router</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q17_iv" id="q17_iv_b" value="b"><label class="form-check-label" for="q17_iv_b">Switch</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q17_iv" id="q17_iv_c" value="c"><label class="form-check-label" for="q17_iv_c">Access point</label></div>
+                                <div class="form-check mb-1"><input class="form-check-input" type="radio" name="q17_iv" id="q17_iv_d" value="d"><label class="form-check-label" for="q17_iv_d">smartphone</label></div>
+                                <div class="correct-answer-indicator alert alert-success py-1 px-2 mt-1 small">Key Map: <strong>c (Access point)</strong></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="sec-b" class="mb-5">
+                        <div class="section-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-1">SECTION B</h3>
+                                <p class="mb-0 opacity-75">Production Matrix: Attempt any three (3) questions.</p>
+                            </div>
+                            <span class="fs-4 badge bg-light text-dark fw-bold">30 Marks</span>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0"><span class="text-muted small">[From DSC_0048.jpg]</span> 18. Examine the tools, materials, and equipment listed in parentheses, then classify them appropriately in the table provided below:</h5>
+                                <span class="badge badge-mark p-2">10 Marks</span>
+                            </div>
+                            <div class="alert alert-secondary py-1 mb-3 small">
+                                (internet bundles, Router, Screwdriver, Cables, Rack mount, Drilling machine, Connectors, Antenna, Hammer, Firewall)
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-light text-center">
+                                        <tr>
+                                            <th>Equipment</th>
+                                            <th>Materials</th>
+                                            <th>Tools</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><textarea class="form-control form-control-sm" rows="3" placeholder="Equipment items..."></textarea></td>
+                                            <td><textarea class="form-control form-control-sm" rows="3" placeholder="Materials items..."></textarea></td>
+                                            <td><textarea class="form-control form-control-sm" rows="3" placeholder="Tools items..."></textarea></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="correct-answer-indicator border p-3 rounded bg-light">
+                                <span class="fw-bold text-success">Official Classification Key Map:</span>
+                                <ul>
+                                    <li><strong>Equipment:</strong> Router, Antenna, Firewall, Rack mount</li>
+                                    <li><strong>Materials:</strong> Internet bundles, Cables, Connectors</li>
+                                    <li><strong>Tools:</strong> Screwdriver, Drilling machine, Hammer</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">19. Define a straight-through cable, then arrange the given wire colors according to the two commonly recognized standards: EIA/TIA-568A and EIA/TIA-568B.</h5>
+                                <span class="badge badge-mark p-2">10 Marks</span>
+                            </div>
+                            <p class="small text-muted">Available Colors Pool: (Green, Orange-White, Blue, Orange, Blue-White, Brown, Green-White, Brown-White)</p>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Definition Area:</label>
+                                <textarea class="form-control" rows="2" placeholder="Define a straight-through cable here..."></textarea>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered align-middle text-center">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th style="width: 80px;">Pin</th>
+                                            <th>Standard A (EIA/TIA568-A)</th>
+                                            <th>Standard B (EIA/TIA568-B)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td><input type="text" class="form-control form-control-sm" placeholder="Green-White"></td><td><input type="text" class="form-control form-control-sm" placeholder="Orange-White"></td></tr>
+                                        <tr><td>2</td><td><input type="text" class="form-control form-control-sm" placeholder="Green"></td><td><input type="text" class="form-control form-control-sm" placeholder="Orange"></td></tr>
+                                        <tr><td>3</td><td><input type="text" class="form-control form-control-sm" placeholder="Orange-White"></td><td><input type="text" class="form-control form-control-sm" placeholder="Green-White"></td></tr>
+                                        <tr><td>4</td><td><input type="text" class="form-control form-control-sm" placeholder="Blue"></td><td><input type="text" class="form-control form-control-sm" placeholder="Blue"></td></tr>
+                                        <tr><td>5</td><td><input type="text" class="form-control form-control-sm" placeholder="Blue-White"></td><td><input type="text" class="form-control form-control-sm" placeholder="Blue-White"></td></tr>
+                                        <tr><td>6</td><td><input type="text" class="form-control form-control-sm" placeholder="Orange"></td><td><input type="text" class="form-control form-control-sm" placeholder="Green"></td></tr>
+                                        <tr><td>7</td><td><input type="text" class="form-control form-control-sm" placeholder="Brown-White"></td><td><input type="text" class="form-control form-control-sm" placeholder="Brown-White"></td></tr>
+                                        <tr><td>8</td><td><input type="text" class="form-control form-control-sm" placeholder="Brown"></td><td><input type="text" class="form-control form-control-sm" placeholder="Brown"></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="correct-answer-indicator alert alert-info">
+                                <strong>Grading Guide Matrix:</strong><br>
+                                Definition: A network cable where pins match directly on both ends; used to connect dissimilar devices (e.g., Computer to Switch).<br>
+                                <strong>568A:</strong> 1. Green-White, 2. Green, 3. Orange-White, 4. Blue, 5. Blue-White, 6. Orange, 7. Brown-White, 8. Brown.<br>
+                                <strong>568B:</strong> 1. Orange-White, 2. Orange, 3. Green-White, 4. Blue, 5. Blue-White, 6. Green, 7. Brown-White, 8. Brown.
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">20. Packet loss is defined as the number of data packets transmitted from one point in a network but dropped during transmission and never reaching their destination. Analyze five (5) impacts of packet loss on overall network performance.</h5>
+                                <span class="badge badge-mark p-2">10 Marks</span>
+                            </div>
+                            <textarea class="form-control mb-3" rows="4" placeholder="List and analyze 5 clear real-world performance impacts..."></textarea>
+                            <div class="correct-answer-indicator border p-3 rounded bg-light small">
+                                <span class="fw-bold text-success">Key Evaluation Benchmarks:</span>
+                                <ol>
+                                    <li><strong>Throughput Degradation:</strong> TCP shrinks window size, lowering transmission speeds.</li>
+                                    <li><strong>Latency & Retransmissions:</strong> Dropped frames force timeout/retransmission loops.</li>
+                                    <li><strong>Jitter & Media Fragmentation:</strong> Real-time packets arrive broken, causing audio/video stuttering.</li>
+                                    <li><strong>Application Session Timeouts:</strong> Dropped packets can drop active database/SSH links.</li>
+                                    <li><strong>Overhead Cost Amplification:</strong> Retransmissions increase bandwidth waste.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">21. Network administrators need to connect two buildings wirelessly across a short distance.</h5>
+                                <span class="badge badge-mark p-2">10 Marks</span>
+                            </div>
+                            <div class="vstack gap-3 text-start">
+                                <div>
+                                    <h6>a. What is Point-to-Point (PtP) bridge technology?</h6>
+                                    <textarea class="form-control form-control-sm" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <h6>b. Compare Point to Point (PtP) and Point to Multi Point (PtMP) wireless bridging, focusing on their typical applications and the key equipment involved.</h6>
+                                    <textarea class="form-control form-control-sm" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <h6>c. You are installing outdoor network equipment, why is proper grounding and surge protection like a lightning arrestor so important?</h6>
+                                    <textarea class="form-control form-control-sm" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <h6>d. Assess the potential consequences of neglecting surge protection? (sic)</h6>
+                                    <textarea class="form-control form-control-sm" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="correct-answer-indicator alert alert-info mt-3 small">
+                                <strong>Grading Guide Criteria:</strong><br>
+                                <strong>a:</strong> Dedicated link connecting exactly two static nodes over long/short ranges.<br>
+                                <strong>b:</strong> PtP links 2 buildings; PtMP links 1 hub to multiple satellite offices. PtP uses high-gain directional antennas on both sides.<br>
+                                <strong>c/d:</strong> Prevents physical equipment death from static charges, lighting spikes, and keeps human operators safe.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sec-c" class="mb-5">
+                        <div class="section-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-1">SECTION C</h3>
+                                <p class="mb-0 opacity-75">Advanced Synthesis: Attempt only one (1) comprehensive question.</p>
+                            </div>
+                            <span class="fs-4 badge bg-light text-dark fw-bold">15 Marks</span>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0"><span class="text-muted small">[From DSC_0049.jpg]</span> 22. One network records a signal strength of -41 dBm with a noise level of -50 dBm, while another network records the same signal strength of -41 dBm but with a noise level of -96 dBm.</h5>
+                                <span class="badge badge-mark p-2">15 Marks</span>
+                            </div>
+                            <div class="vstack gap-3">
+                                <div>
+                                    <h6>a) What will be their signal-to-noise ratio?</h6>
+                                    <textarea class="form-control" rows="2" placeholder="Show formulas and steps..."></textarea>
+                                </div>
+                                <div>
+                                    <h6>b) Compare the resulting signals to noise ratio of the two different network and decide which is greater or less.</h6>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <h6>c) Evaluate the impact of environmental factors on an outdoor wireless network and suggest measures to mitigate these issues.</h6>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="correct-answer-indicator border border-success p-3 rounded bg-light mt-3 small">
+                                <span class="fw-bold text-success"><i class="bi bi-calculator"></i> Analytical Engineering Solutions:</span><br>
+                                Formula: $\text{SNR} = \text{Signal Strength (dBm)} - \text{Noise Level (dBm)}$<br>
+                                <strong>Network 1 SNR:</strong> $-41 - (-50) = 9\text{ dB}$ (Very low/poor quality)<br>
+                                <strong>Network 2 SNR:</strong> $-41 - (-96) = 55\text{ dB}$ (Excellent throughput quality)<br>
+                                <strong>Comparison:</strong> Network 2's SNR is much higher ($55\text{ dB} > 9\text{ dB}$), meaning cleaner transmission speeds.<br>
+                                <strong>Mitigations:</strong> Tree trimming, line of sight optimization, protective outdoor enclosures, shifting frequency spectrum channels.
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">23. Design a basic wireless network setup for a small business that includes both office space and a warehouse.</h5>
+                                <span class="badge badge-mark p-2">15 Marks</span>
+                            </div>
+                            <p class="small text-muted">Requirements Matrix: Use a PtP bridge, support local client wireless inside both footprints, list hardware elements.</p>
+                            <textarea class="form-control" rows="5" placeholder="Draft your complete infrastructure architectural plan here..."></textarea>
+                            <div class="correct-answer-indicator alert alert-info mt-3 small">
+                                <strong>Solution Blueprint Guide:</strong><br>
+                                1. Office Core Network: ISP Modern &rarr; Router/Firewall &rarr; Switch &rarr; Local Indoor Access Points + 1 Outdoor PtP Wireless Bridge Transmitter pointed toward warehouse.<br>
+                                2. Warehouse Node: 1 Outdoor PtP Wireless Bridge Receiver paired back to office AP &rarr; Local network PoE Switch &rarr; Indoor High-Gain Access Point cluster for local distribution.
+                            </div>
+                        </div>
+
+                        <div class="card card-question p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h5 class="fw-bold text-dark mb-0">24. A company is experiencing low efficiency due to reliance on traditional outdoor wireless network devices. To improve performance, it plans to upgrade its outdoor wireless network.</h5>
+                                <span class="badge badge-mark p-2">15 Marks</span>
+                            </div>
+                            <div class="vstack gap-3">
+                                <div>
+                                    <h6>a) What do you understand by outdoor wireless network upgrading?</h6>
+                                    <textarea class="form-control" rows="2"></textarea>
+                                </div>
+                                <div>
+                                    <h6>b) Identify and explain the factors the company should consider before making upgrade decisions.</h6>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                                <div>
+                                    <h6>c) Design a troubleshooting plan for an outdoor wireless network that is experiencing irregular connectivity issues.</h6>
+                                    <textarea class="form-control" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                </div>
                 </form>
+            </div>
+
         </div>
-
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Answers mapping dictionary
+        const correctAnswers = {
+            q1_i: 'b', q1_ii: 'a', q1_iii: 'a',
+            q4_i: 'a', q4_ii: 'c', q4_iii: 'b', q4_iv: 'b',
+            q6_i: 'a', q6_ii: 'd', q6_iii: 'a', q6_iv: 'b',
+            q10_i: 'b', q10_ii: 'c', q10_iii: 'a', q10_iv: 'c',
+            q13: 'c', q15_i: 'b', q15_ii: 'a', q15_iii: 'c',
+            q16: 'a', q17_iv: 'c',
+            q2_a: 'F', q2_b: 'T', q2_c: 'T',
+            q7_1: 'c', q7_2: 'd', q7_3: 'b', q7_4: 'a',
+            q14_a: '2', q14_b: '3', q14_c: '1', q14_d: '4'
+        };
 
-<script>
-    // Automated Time Countdown Clock Configuration
-    let totalSeconds = 3 * 60 * 60; // 3 Hours
-    const timerDisplay = document.getElementById('exam-timer');
-    
-    const countdown = setInterval(() => {
-        let hours = Math.floor(totalSeconds / 3600);
-        let minutes = Math.floor((totalSeconds % 3600) / 60);
-        let seconds = totalSeconds % 60;
+        function evaluateExam() {
+            let autoPointsEarned = 0;
+            let questionsEvaluated = 0;
 
-        timerDisplay.textContent = 
-            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
-        if(totalSeconds <= 0) {
-            clearInterval(countdown);
-            alert("Examination time limit reached. System auto-evaluating input sheets.");
-            evaluateExam();
+            // Evaluate Multiple Choices, Select Matrices, and Dropdowns
+            for (let key in correctAnswers) {
+                questionsEvaluated++;
+                const inputElement = document.getElementsByName(key)[0] || document.getElementById(key);
+                
+                if (inputElement) {
+                    let studentAnswer = '';
+                    if (inputElement.tagName === 'SELECT') {
+                        studentAnswer = inputElement.value;
+                    } else if (inputElement.type === 'radio') {
+                        // Radio button lookup logic
+                        const checkedRadio = document.querySelector(`input[name="${key}"]:checked`);
+                        if (checkedRadio) studentAnswer = checkedRadio.value;
+                    }
+
+                    if (studentAnswer.trim().toLowerCase() === correctAnswers[key].toLowerCase()) {
+                        autoPointsEarned++;
+                    }
+                }
+            }
+
+            // Simple text fill-in processing
+            if(document.getElementById('q3_b').value.trim().toLowerCase().includes('switch')) autoPointsEarned++;
+            if(document.getElementById('q3_c').value.trim().toLowerCase().includes('arrestor')) autoPointsEarned++;
+            if(document.getElementById('q3_e').value.trim().toLowerCase().includes('ups')) autoPointsEarned++;
+            if(document.getElementById('q5_a').value.trim().toLowerCase().includes('test')) autoPointsEarned++;
+            if(document.getElementById('q5_b').value.trim().toLowerCase().includes('blue')) autoPointsEarned++;
+            
+            questionsEvaluated += 5; // offset fill-ins
+
+            // Dynamic grading panel state updates
+            const basePercentage = Math.round((autoPointsEarned / questionsEvaluated) * 100);
+            document.getElementById('live-score').innerHTML = autoPointsEarned + ` <span class="fs-6 text-white">/ ${questionsEvaluated} Auto-graded points</span>`;
+            document.getElementById('score-bar').style.width = basePercentage + "%";
+            
+            // Turn on visual indicators
+            document.body.classList.add('show-answers');
+            alert(`Evaluation Finished! Auto-graded points score: ${autoPointsEarned}/${questionsEvaluated}. Scroll down to inspect errors and structured guides.`);
         }
-        totalSeconds--;
-    }, 1000);
 
-    // Bootstrap scrollspy tracking
-    window.addEventListener('DOMContentLoaded', () => {
-        const sections = document.querySelectorAll('#sectionA, #sectionB, #sectionC');
-        const navLinks = document.querySelectorAll('#section-nav .nav-link');
+        function toggleGradingKeys() {
+            document.body.classList.toggle('show-answers');
+        }
 
-        window.addEventListener('scroll', () => {
-            let currentSectionId = 'sectionA';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 120) {
-                    currentSectionId = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    });
-
-    // Objective Section A Auto-Grading Logic engine
-    function evaluateExam() {
-        let totalScore = 0;
-        const form = document.getElementById('nesaExamForm');
-        
-        // Clear all previous correction boxes
-        document.querySelectorAll('.feedback-box').forEach(el => {
-            el.style.display = 'none';
-            el.className = 'feedback-box';
-            el.innerHTML = '';
-        });
-
-        // Evaluate Multiple Choice & Sub-questions
-        const subQuestions = document.querySelectorAll('.sub-q');
-        
-        subQuestions.forEach(sq => {
-            let isCorrect = false;
-            let currentAnswerText = "";
-            const expectedAnswer = sq.getAttribute('data-ans').trim().toLowerCase();
-            
-            // Radio Inputs
-            const radioChecked = sq.querySelector('input[type="radio"]:checked');
-            if (radioChecked) {
-                currentAnswerText = radioChecked.value.trim().toLowerCase();
-                isCorrect = (currentAnswerText === expectedAnswer);
-            }
-            
-            // Text Inputs
-            const textInput = sq.querySelector('input[type="text"]');
-            if (textInput) {
-                currentAnswerText = textInput.value.trim().toLowerCase();
-                isCorrect = currentAnswerText.includes(expectedAnswer) && currentAnswerText.length > 0;
-            }
-
-            // Select Dropdowns
-            const selectOption = sq.querySelector('select');
-            if (selectOption) {
-                currentAnswerText = selectOption.value.trim().toLowerCase();
-                isCorrect = (currentAnswerText === expectedAnswer);
-            }
-
-            // Render Validation Visuals
-            const fbBox = sq.querySelector('.feedback-box');
-            if (fbBox) {
-                fbBox.style.display = 'block';
-                if (isCorrect) {
-                    fbBox.classList.add('feedback-correct');
-                    fbBox.innerHTML = `<i class="bi bi-check-circle-fill"></i> Correct Answer. (+1 Mark)`;
-                    totalScore++;
-                } else {
-                    fbBox.classList.add('feedback-incorrect');
-                    fbBox.innerHTML = `<i class="bi bi-x-circle-fill"></i> Incorrect/Unanswered. Expected: <strong>${expectedAnswer.toUpperCase()}</strong>`;
-                }
-            }
-        });
-
-        // Direct Parent Selection Checks (Standalone Objective Questions)
-        const standaloneQs = [
-            { id: 'q13', ans: 'c' },
-            { id: 'q16', ans: 'a' }
-        ];
-
-        standaloneQs.forEach(q => {
-            const box = document.getElementById(q.id);
-            const selected = box.querySelector('input[type="radio"]:checked');
-            const fbBox = box.querySelector('.feedback-box');
-            fbBox.style.display = 'block';
-            
-            if (selected && selected.value === q.ans) {
-                fbBox.classList.add('feedback-correct');
-                fbBox.innerHTML = `<i class="bi bi-check-circle-fill"></i> Correct. (+2 Marks)`;
-                totalScore += 2;
-            } else {
-                fbBox.classList.add('feedback-incorrect');
-                fbBox.innerHTML = `<i class="bi bi-x-circle-fill"></i> Incorrect. Key option option: <strong>${q.ans.toUpperCase()}</strong>`;
-            }
-        });
-
-        // Caps score at max Section A mark ceiling (55 Marks)
-        if(totalScore > 55) totalScore = 55;
-
-        // Display Scorecard UI element
-        document.getElementById('score-display').textContent = `${totalScore} / 55`;
-        document.getElementById('scorecard-summary').style.display = 'block';
-        
-        // Scroll view back to score position panel
-        document.getElementById('scorecard-summary').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function resetExam() {
-        if(confirm("Are you sure you want to clear your current answers?")) {
+        function resetForm() {
             document.getElementById('nesaExamForm').reset();
-            document.getElementById('scorecard-summary').style.display = 'none';
-            document.querySelectorAll('.feedback-box').forEach(el => el.style.display = 'none');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.body.classList.remove('show-answers');
+            document.getElementById('live-score').innerHTML = `-- <span class="fs-6 text-white">/ 100</span>`;
+            document.getElementById('score-bar').style.width = "0%";
         }
-    }
-</script>
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
