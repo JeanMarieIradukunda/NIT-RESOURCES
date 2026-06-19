@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireless Network Indoor NESA Exam Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .exam-header-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: #1e3a8a;
+            font-weight: 700;
+            border-left: 5px solid #2563eb;
+            padding-left: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+        .badge-marks {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .answer-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            border-radius: 4px;
+            display: none;
+        }
+        .answer-box.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .option-container {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .option-container:hover {
+            background-color: #f8fafc;
+        }
+        .option-container input {
+            margin-right: 12px;
+        }
+        .sidebar-sticky {
+            position: sticky;
+            top: 24px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .answer-box { display: block !important; border-color: #000; }
+            body { background-color: white; }
+            .question-card { page-break-inside: avoid; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark no-print">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="bi bi-router-fill me-2 fs-3 text-warning"></i>
+            <div>
+                <span class="fw-bold d-block lh-1">NESA EXAM PORTAL</span>
+                <small class="text-white-50 fs-7" style="font-size: 0.75rem;">Indoor Wireless Networks</small>
+            </div>
+        </a>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-light btn-sm" onclick="window.print()">
+                <i class="bi bi-printer me-1"></i> Print / Save PDF
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-lg-9">
+            
+            <div class="exam-header-card p-4 mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <span class="badge bg-danger mb-2">National Examination</span>
+                        <h1 class="h3 fw-bold mb-1 text-dark">Wireless Network Indoor Examination</h1>
+                        <p class="text-muted mb-0">Complete 24-Question Syllabus Assessment &amp; Interactive Study Guide</p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0 no-print">
+                        <div class="bg-light p-3 rounded text-center border">
+                            <span class="small text-muted d-block mb-1">Interactive Toolkit</span>
+                            <div class="d-grid gap-2">
+                                <button id="toggleAllAnswersBtn" class="btn btn-primary btn-sm" onclick="toggleAllAnswers()">
+                                    <i class="bi bi-eye-fill me-1"></i> Reveal All Answers
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="resetQuizState()">
+                                    <i class="bi bi-arrow-clockwise"></i> Reset Selection
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h2 class="section-title">Section A: Core Concepts &amp; Objective Evaluation</h2>
+                
+                <div class="question-card p-4 mb-4" id="q1">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 01</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A technician identifies the correct WLAN standard to solve a network setup problem and ensure proper connectivity. Read carefully the given questions and provide answers:</p>
+                    
+                    <div class="mb-4 ps-2 border-start border-3 border-light">
+                        <p class="mb-2 fw-semibold">I. Which of the following IEEE standards defines wireless local area networks (WLAN)?</p>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_1" value="A">A. 802.3</div>
+                        <div class="option-container corrected-option" onclick="selectOption(this)" data-correct="true"><input type="radio" name="q1_1" value="B">B. 802.11</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_1" value="C">C. 802.15.1</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_1" value="D">D. 802.16</div>
+                    </div>
+
+                    <div class="mb-4 ps-2 border-start border-3 border-light">
+                        <p class="mb-2 fw-semibold">II. Which of the following device acts as a bridge between a home network and an Internet Service Provider (ISP)?</p>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_2" value="A">A. Access Point</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_2" value="B">B. Wireless Controller</div>
+                        <div class="option-container" onclick="selectOption(this)" data-correct="true"><input type="radio" name="q1_2" value="C">C. Modem</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_2" value="D">D. Antenna</div>
+                    </div>
+
+                    <div class="mb-3 ps-2 border-start border-3 border-light">
+                        <p class="mb-2 fw-semibold">III. Which of the following options represents the typical signal range of a Wireless Personal-Area Network (WPAN)?</p>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_3" value="A">A. 100 meters</div>
+                        <div class="option-container" onclick="selectOption(this)" data-correct="true"><input type="radio" name="q1_3" value="B">B. Up to 10 meters</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_3" value="C">C. 50 kilometers</div>
+                        <div class="option-container" onclick="selectOption(this)"><input type="radio" name="q1_3" value="D">D. Several kilometers</div>
+                    </div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium" onclick="toggleAnswer('ans1')">Toggle Solutions</button>
+                    <div class="answer-box p-3 mt-3" id="ans1">
+                        <span class="badge bg-success mb-2">Verified Answer Key</span>
+                        <ul class="mb-0 px-3">
+                            <li><strong>I: B</strong> (IEEE 802.11 is the global standard baseline architecture for Wi-Fi implementation).</li>
+                            <li><strong>II: C</strong> (The Modulator-Demodulator/Modem translates digital network signals into ISP infrastructure frequencies).</li>
+                            <li><strong>III: B</strong> (WPAN environments like Bluetooth are restricted to low-energy personal spatial footprints, typically under 10 meters).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q2">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 02</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">5 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">You are configuring a wireless network in a computer lab. Complete the sentences below using the terms given in brackets: <span class="text-primary fw-bold">(Wireless Router, DHCP, SSIDs, Access Point (AP), Data signals)</span>.</p>
+                    
+                    <div class="space-y-3">
+                        <p><strong>A.</strong> A wireless NIC converts <span class="px-2 border-bottom border-primary text-primary fw-bold">Data signals</span> into radio signals for transmission.</p>
+                        <p><strong>B.</strong> Wireless NICs scan for available wireless networks, which are identified by their <span class="px-2 border-bottom border-primary text-primary fw-bold">SSIDs</span>.</p>
+                        <p><strong>C.</strong> An <span class="px-2 border-bottom border-primary text-primary fw-bold">Access Point (AP)</span> extends the wired network's range and provides connectivity for wireless clients.</p>
+                        <p><strong>D.</strong> A <span class="px-2 border-bottom border-primary text-primary fw-bold">Wireless Router</span> connects to a modem and distributes the internet to multiple devices.</p>
+                        <p><strong>E.</strong> Wireless routers use <span class="px-2 border-bottom border-primary text-primary fw-bold">DHCP</span> to automatically assign IP addresses to devices on the network.</p>
+                    </div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium mt-3" onclick="toggleAnswer('ans2')">Toggle Verification</button>
+                    <div class="answer-box p-3 mt-3" id="ans2">
+                        <span class="badge bg-success mb-2">Answer Sequence Matrix</span>
+                        <p class="mb-0">A: Data signals | B: SSIDs | C: Access Point (AP) | D: Wireless Router | E: DHCP</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q3">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 03</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Which of the following options describe the primary characteristics of an active site survey? <strong>Select TWO correct answers.</strong></p>
+                    
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> A. It relies solely on floor plans and building materials.</div>
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> B. It involves listening to Wi-Fi traffic without connecting.</div>
+                    <div class="option-container" onclick="selectOption(this)" data-correct="true"><input type="checkbox"> C. It requires a device to connect to the Wi-Fi network.</div>
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> D. It is performed remotely without visiting the location.</div>
+                    <div class="option-container" onclick="selectOption(this)" data-correct="true"><input type="checkbox"> E. It measures actual network performance.</div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium mt-3" onclick="toggleAnswer('ans3')">Toggle Solutions</button>
+                    <div class="answer-box p-3 mt-3" id="ans3">
+                        <span class="badge bg-success mb-2">Correct Selections</span>
+                        <p class="mb-0"><strong>C and E:</strong> Active site surveys require active client authentication to the transceiver to trace practical throughput metrics, jitter, packet transfer constraints, and physical latency behaviors.</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 04</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A technician evaluates Wi-Fi performance using active, passive, and predictive surveys while explaining each method. Determine whether each statement is <strong>True</strong> or <strong>False</strong>.</p>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Evaluation Statement</th>
+                                    <th style="width: 180px;">Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A. In an active survey, a mobile device is connected to an access point to measure throughput and packet loss.</td>
+                                    <td><span class="badge bg-success">TRUE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>B. A predictive survey requires a technician to walk through the building with a mobile device.</td>
+                                    <td><span class="badge bg-danger">FALSE</span></td>
+                                </tr>
+                                <tr>
+                                    <td>C. A passive survey involves a technician listening for all available access points and interference.</td>
+                                    <td><span class="badge bg-success">TRUE</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium" onclick="toggleAnswer('ans4')">Toggle Comprehensive Rationale</button>
+                    <div class="answer-box p-3 mt-3" id="ans4">
+                        <p class="mb-0">Statement B is <strong>False</strong> because predictive surveys use specialized computer-aided simulation modeling software mapping structural RF attenuation properties without physical on-site measurement walks.</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q5">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 05</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A teacher is introducing basic wireless networking concepts and asks students to complete sentences using key terms like: <span class="text-primary fw-bold">router, wireless, wireless signals</span>.</p>
+                    
+                    <div class="space-y-2">
+                        <p>A. A wireless network uses <span class="text-primary border-bottom border-primary px-2 fw-bold">wireless signals</span> instead of cables to connect devices.</p>
+                        <p>B. Devices in a wireless network often connect through a <span class="text-primary border-bottom border-primary px-2 fw-bold">router</span> or access point.</p>
+                        <p>C. Wi-Fi, Bluetooth, and RF are examples of <span class="text-primary border-bottom border-primary px-2 fw-bold">wireless</span> communication technologies.</p>
+                    </div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium mt-2" onclick="toggleAnswer('ans5')">Toggle Answer</button>
+                    <div class="answer-box p-3 mt-3" id="ans5">
+                        <p class="mb-0 fw-semibold text-success">Matrix: A: wireless signals | B: router | C: wireless</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q6">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 06</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">5 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Match the networking items in Column A with their correct descriptions in Column B.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-dark">Column A</h6>
+                            <ol class="small text-muted space-y-1">
+                                <li>Tool used to remove insulation from network cables.</li>
+                                <li>Device used to test cable continuity and faults.</li>
+                                <li>Hardware used to attach connectors to Ethernet cables.</li>
+                                <li>Devices like laptops and phones that connect to Wi-Fi.</li>
+                                <li>A system used to identify wires using colors.</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-dark">Column B</h6>
+                            <ul class="list-unstyled small text-muted">
+                                <li>A. Crimping Tool</li>
+                                <li>B. Cable Color Coding</li>
+                                <li>C. Switch</li>
+                                <li>D. Cable Stripper</li>
+                                <li>E. Hosts / End Devices</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 p-3 bg-light rounded">
+                        <h6 class="fw-bold mb-2">Answers Mapping:</h6>
+                        <div class="row g-2">
+                            <div class="col"><span class="badge bg-dark w-100 py-2">1 &rarr; D</span></div>
+                            <div class="col"><span class="badge bg-dark w-100 py-2">2 &rarr; E</span></div>
+                            <div class="col"><span class="badge bg-dark w-100 py-2">3 &rarr; A</span></div>
+                            <div class="col"><span class="badge bg-dark w-100 py-2">4 &rarr; C (or Host)</span></div>
+                            <div class="col"><span class="badge bg-dark w-100 py-2">5 &rarr; B</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q7">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 07</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A technician installing a wireless repeater explains correct placement, configuration via a web browser, and common default IP addresses to a trainee. State whether the following statements are <strong>True</strong> or <strong>False</strong>:</p>
+                    
+                    <ul>
+                        <li class="mb-2">A. The best location for a wireless repeater is in a "dead zone" where there is no signal at all. <span class="badge bg-danger ms-2">FALSE</span></li>
+                        <li class="mb-2">B. To configure a repeater, you usually need to access its configuration page via a web browser. <span class="badge bg-success ms-2">TRUE</span></li>
+                        <li class="mb-2">C. 192.168.0.1 and 192.168.1.1 are common default IP addresses used to access networking devices. <span class="badge bg-success ms-2">TRUE</span></li>
+                    </ul>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium" onclick="toggleAnswer('ans7')">Toggle Logic</button>
+                    <div class="answer-box p-3 mt-3" id="ans7">
+                        <p class="mb-0"><strong>Rationale for A:</strong> A wireless repeater requires placement where it can capture a strong signal from the main source router (~50% footprint) to extend it efficiently. Placing it in a absolute dead zone means it has no signal to boost.</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q8">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 08</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">4 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Match each device in Column A with its correct function in Column B.</p>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle table-bordered small">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Hardware (A)</th>
+                                    <th>Role Options (B)</th>
+                                    <th>Correct Target mapping</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Wireless Controller</td>
+                                    <td>A. Connects two physically separated wired network segments.</td>
+                                    <td><strong>1 &rarr; C</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Wireless Bridge</td>
+                                    <td>B. Amplifies and retransmits a signal to extend its range.</td>
+                                    <td><strong>2 &rarr; A</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Wireless NIC</td>
+                                    <td>C. Centralizes and manages the configuration of multiple APs.</td>
+                                    <td><strong>3 &rarr; D</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Wireless Repeater</td>
+                                    <td>D. Converts digital data into radio waves.</td>
+                                    <td><strong>4 &rarr; B</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q9">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 09</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p class="fw-semibold mb-1">I. Difference between a LAN and a WLAN?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">C. LAN uses physical copper/fiber cables while WLAN uses radio waves.</div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="fw-semibold mb-1">II. Purpose of an Access Point?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">B. Extend and provide wireless connectivity footprint to clients.</div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="fw-semibold mb-1">III. Function of a wireless repeater?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">C. Receives, amplifies, and re-broadcasts existing wireless signals.</div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q10">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 10</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">5 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Match different antenna types and wireless configurations in Column A with their operational characteristics in Column B.</p>
+                    
+                    <div class="p-3 bg-light rounded text-dark fs-7">
+                        <div class="mb-1"><strong>1. Omnidirectional Antenna:</strong> &rarr; E (Best for providing 360-degree coverage in an office)</div>
+                        <div class="mb-1"><strong>2. 5 GHz Band:</strong> &rarr; D (Offers higher data speeds but has a shorter range than 2.4 GHz)</div>
+                        <div class="mb-1"><strong>3. Infrastructure Mode:</strong> &rarr; A (Uses a central access point to manage all communication)</div>
+                        <div class="mb-1"><strong>4. Directional Antenna:</strong> &rarr; C (Best for point-to-point links between two specific buildings)</div>
+                        <div class="mb-0"><strong>5. Ad-hoc Mode:</strong> &rarr; B (A peer-to-peer setup where devices talk directly to each other)</div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q11">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 11</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">2 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A network trainer assesses learners' knowledge of WPA2 security by asking them to select correct statements about its encryption and vulnerabilities. <strong>(Select all that apply)</strong></p>
+                    
+                    <div class="option-container" data-correct="true" onclick="selectOption(this)"><input type="checkbox"> A. WPA2 is based on the use of AES (Advanced Encryption Standard).</div>
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> B. WPA2 is the most secure Wi-Fi security protocol available.</div>
+                    <div class="option-container" data-correct="true" onclick="selectOption(this)"><input type="checkbox"> C. WPA2 is still vulnerable to certain attacks, like KRACK (Key Reinstallation Attack).</div>
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> D. WPA2 supports both WPA and WEP encryption standards.</div>
+
+                    <button class="btn btn-sm btn-light no-print text-primary fw-medium mt-2" onclick="toggleAnswer('ans11')">Toggle Verdict</button>
+                    <div class="answer-box p-3 mt-3" id="ans11">
+                        <p class="mb-0"><strong>Correct Choices: A and C.</strong> WPA3 has surpassed WPA2 as the most secure standard. Choice D is technically inaccurate as WEP is completely deprecated and independent.</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q12">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 12</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Complete the sentences below using key terms such as <span class="text-primary fw-bold">IP address, cables and connectors, and proactive maintenance</span>.</p>
+                    
+                    <p>A. Preventive maintenance is described as a <span class="border-bottom border-primary text-primary fw-bold px-2">proactive maintenance</span> approach because its primary intent is to stop equipment failures before they actually happen.</p>
+                    <p>B. To access a router's internal settings, a user must use a web browser to navigate to the device's <span class="border-bottom border-primary text-primary fw-bold px-2">IP address</span>.</p>
+                    <p>C. Regular inspection of <span class="border-bottom border-primary text-primary fw-bold px-2">cables and connectors</span> is categorized as maintenance because physical damage to these components can lead to signal degradation.</p>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q13">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 13</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">2 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A small office needs a wireless network for general internet access and file sharing. They prioritize ease of setup and reasonable speed. Which standard would be MOST appropriate? <strong>(Select all that apply)</strong></p>
+                    
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> A) 802.11ax</div>
+                    <div class="option-container" data-correct="true" onclick="selectOption(this)"><input type="checkbox"> B) 802.11n</div>
+                    <div class="option-container" data-correct="true" onclick="selectOption(this)"><input type="checkbox"> C) 802.11ac</div>
+                    <div class="option-container" onclick="selectOption(this)"><input type="checkbox"> D) 802.15.1</div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q14">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 14</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">4 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">Match wireless design elements with their correct roles in a network blueprint.</p>
+                    <div class="bg-light p-3 rounded">
+                        <p class="mb-1"><strong>A. Access Point Placement</strong> &rarr; 3. Ensures wireless signals reach all necessary areas.</p>
+                        <p class="mb-1"><strong>B. Wi-Fi Channel Selection</strong> &rarr; 2. Defines encryption methods and authentication profiles.</p>
+                        <p class="mb-0"><strong>C. Bandwidth Allocation</strong> &rarr; 1. Assigns proper data capacity to different applications.</p>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q15">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 15</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">2 Marks</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p class="fw-medium mb-1">I. You are configuring a DHCP server on a router. The gateway IP address is 192.168.1.1, and the first 50 IP addresses are reserved for static devices. Select the correct starting address for the DHCP pool.</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">C. 192.168.1.51</div>
+                    </div>
+                    <div>
+                        <p class="fw-medium mb-1">II. If a technician uses T568B color coding for one end of an Ethernet cable, what should be done on the other end to ensure a standard straight-through connection?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">B. Use T568B</div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q16">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 16</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">3 Marks</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p class="fw-semibold mb-1">I. Indoors signal strength inhibitor?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">C) Physical obstacles such as walls and furniture</div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="fw-semibold mb-1">II. Essential for multiple users wireless access point indoor?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">C) Access Point</div>
+                    </div>
+                    <div>
+                        <p class="fw-semibold mb-1">III. Why is site surveying important?</p>
+                        <div class="option-container" data-correct="true" onclick="selectOption(this)">B) To identify interference sources and optimal AP placement</div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q17">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 17</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">2 Marks</span>
+                    </div>
+                    <p class="fw-semibold text-dark">Briefly explain the procedures and best practices involved in maintaining an indoor wireless network, including how to ensure reliability, security, and performance over time.</p>
+                    
+                    <button class="btn btn-sm btn-outline-primary no-print" onclick="toggleAnswer('ans17')">View Detailed Production Procedure</button>
+                    <div class="answer-box p-3 mt-3" id="ans17">
+                        <h6 class="fw-bold text-dark">Best Practice Maintenance Matrix:</h6>
+                        <ul class="small mb-0">
+                            <li><strong>Security Maintenance:</strong> Regular scheduled firmware updates, rotation of security protocols (WPA3), and disabling WPS.</li>
+                            <li><strong>Performance Audits:</strong> Conducting ongoing channel analysis to mitigate co-channel and adjacent-channel interference.</li>
+                            <li><strong>Physical Care:</strong> Checking physical ports, structured cable termination points, and making sure hardware is adequately cooled.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h2 class="section-title">Section B: Intermediate Engineering Analytical Scenarios</h2>
+                <div class="alert alert-info py-2 no-print"><i class="bi bi-info-circle-fill me-2"></i>Attempt any three questions in this section for traditional testing. All solutions provided below.</div>
+
+                <div class="question-card p-4 mb-4" id="q18">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 18</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">What are the main differences between access points and wireless routers in terms of functionality, Routing, Connection, Management and Security?</p>
+                    
+                    <button class="btn btn-sm btn-primary no-print" onclick="toggleAnswer('ans18')">View Functional Comparison Table</button>
+                    <div class="answer-box p-3 mt-3" id="ans18">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm small bg-white">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Metric Parameter</th>
+                                        <th>Wireless Access Point (AP)</th>
+                                        <th>Wireless Router</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Core Functionality</strong></td>
+                                        <td>Extends an existing wired Ethernet architecture into an RF wireless medium.</td>
+                                        <td>Establishes, maintains, and manages local logical IP networks.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Routing Capabilities</strong></td>
+                                        <td>Operates primarily at Data Link Layer 2. No inter-subnet routing.</td>
+                                        <td>Operates at Network Layer 3. Manages traffic pathways between LAN and WAN interfaces.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Connection Topology</strong></td>
+                                        <td>Requires an upstream physical router/switch backplane interface to operate.</td>
+                                        <td>Connects directly to external ISP modems or fiber terminations.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Management Framework</strong></td>
+                                        <td>Often centralized via corporate software controller clusters or hardware units.</td>
+                                        <td>Individually managed through localized embedded GUI/web configuration panels.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Embedded Security</strong></td>
+                                        <td>Handles pass-through client encryption schemes (e.g., WPA3-Enterprise).</td>
+                                        <td>Features complex integrated SPI Firewalls, NAT, Port Forwarding, and Access Control Lists (ACLs).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q19">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 19</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A modern smart hospital uses different wireless technologies to improve its operations. Patients wear sensors that continuously monitor and send health data to doctors in real time. Staff also use Bluetooth devices for nearby communication and Wi-Fi for internet access across the hospital...</p>
+                    
+                    <button class="btn btn-sm btn-primary no-print" onclick="toggleAnswer('ans19')">Open Healthcare Technology Breakdown</button>
+                    <div class="answer-box p-3 mt-3" id="ans19">
+                        <div class="space-y-3 small text-dark">
+                            <p><strong>A. Bluetooth vs. Wi-Fi:</strong> Bluetooth operates inside a WPAN footprint (&lt;10m range) optimize for low-power point-to-point hardware syncs. Wi-Fi scales across full enterprise WLAN metrics (&gt;50-100m zones) providing substantial bandwidth backplanes for concurrent database systems access.</p>
+                            <p><strong>B. Patient Monitoring Suitability:</strong> Medical telemetry thrives on real-time continuous vital tracking. Wireless systems allow patients to move around freely while tracking metrics via low-latency networks. This gives staff immediate warning alerts if a patient's vitals drop dangerously, without keeping them tied to a bed.</p>
+                            <p><strong>C. City vs. National Networks:</strong> City-wide systems (MAN/WiMAX/localized mesh nodes) focus on municipal coverage using compact pole-mounted repeaters. Nationwide telecom backplanes (4G/5G/LTE architectures) utilize large-scale tower cell sites, multi-tier core switching networks, and complex licensed frequency spectra to support country-wide roaming.</p>
+                            <p><strong>D. Wireless Connection Mechanics:</strong> Transmitting nodes convert logical application data bits into high-frequency RF oscillating currents using internal modulators. These currents are broadcast through an antenna as electromagnetic waves. Receiving antennas then pick up these waves and decode them back into binary code via a wireless NIC.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q20">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 20</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A company in Kigali is facing several issues with its wireless network. A former employee still knows the Wi-Fi password, creating a security risk for unauthorized access. At the same time, the organization is using outdated operating systems, old router firmware, and a wireless monitoring system that cannot properly detect faults or support new devices...</p>
+                    
+                    <button class="btn btn-sm btn-primary no-print" onclick="toggleAnswer('ans20')">Review Architectural Remediation Analysis</button>
+                    <div class="answer-box p-3 mt-3" id="ans20">
+                        <div class="small space-y-2">
+                            <p><strong>A. Access Credentials and Preventive Maintenance:</strong> Regularly changing network passwords removes stale permissions, stops former employees from logging in, and protects the system from brute-force password tracking. This proactive security approach is essential to keep the network closed to unauthorized devices.</p>
+                            <p><strong>B. Software vs. Firmware Updates:</strong> Software patches update the host operating applications running on local user devices. Firmware updates rewrite the base microcode on the network router hardware. This improves low-level signal processing, patches system vulnerabilities, and adds support for newer connection standards.</p>
+                            <p><strong>C. Modern Monitoring Software Advantages:</strong> Updating to modern SNMPv3 network monitoring software gives the IT team real-time visibility into the network. It tracks live metrics, identifies signal loss points, and alerts technicians to configuration bugs or system overloads before they crash the entire network.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q21">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 21</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">An enterprise installation requires assessing default credentials risks, evaluating WPA2 versus WPA3 protocol enhancements, managing SSID visibility, analyzing faulty DHCP impacts, and validating baseline firmware steps.</p>
+                    
+                    <button class="btn btn-sm btn-primary no-print" onclick="toggleAnswer('ans21')">View Security Engineering Audit</button>
+                    <div class="answer-box p-3 mt-3" id="ans21">
+                        <div class="small">
+                            <p><strong>A. Default Credentials:</strong> Keeping factory settings (like admin/admin) leaves the network open to easy takeover. Anyone can look up these defaults online, log into the console, and change system settings or intercept user data traffic.</p>
+                            <p><strong>B. WPA2 vs WPA3:</strong> WPA2 relies on a 4-way handshake that is vulnerable to offline dictionary attacks and tools like KRACK. WPA3 replaces this with Simultaneous Authentication of Equals (SAE). This provides forward secrecy, meaning it protects past traffic even if the network password is leaked, and blocks offline password-guessing tools.</p>
+                            <p><strong>C. SSID Broadcast Control:</strong> Turning off SSID broadcasting stops the router from announcing its name to nearby devices. While this hides the network from casual users, it does not stop hackers who can easily capture the network name using packet analyzers like Wireshark during device connections.</p>
+                            <p><strong>D. DHCP Fault Impact:</strong> A broken DHCP configuration can cause IP address conflicts or lock out users by failing to assign them network addresses. This cuts off communication between devices, stops internet access, and can take down network access across the entire office.</p>
+                            <p><strong>E. Pre-deployment Firmware Validation:</strong> Updating firmware before installing devices fixes known software bugs, closes security holes discovered after production, and ensures the new hardware works reliably with the rest of the company's network setup.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q22">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 22</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">10 Marks</span>
+                    </div>
+                    <p class="fw-medium text-dark">A large university campus with multiple buildings is planning to install a wireless network to support thousands of students and staff. Decide between using a star topology or a mesh topology to ensure reliable coverage across classrooms, libraries, and outdoor areas. Justify your answer.</p>
+                    
+                    <button class="btn btn-sm btn-primary no-print" onclick="toggleAnswer('ans22')">View Campus Topology Verdict</button>
+                    <div class="answer-box p-3 mt-3" id="ans22">
+                        <h6><strong>Recommended Solution: Hybrid Wireless Mesh Topology with Extended Star Core Base</strong></h6>
+                        <p class="small text-muted mb-0">
+                            <strong>Justification Matrix:</strong> For a university campus spanning extensive acreage and multiple physical masonry boundaries, a <strong>Wireless Mesh Architecture</strong> combined with individual building <strong>Star topology clusters</strong> provides maximum resilience. Mesh topologies offer <em>self-healing routing mechanisms</em>: if one outdoor intermediate node fails, alternative path nodes dynamic reroute traffic. This reduces expensive trench work for physical fiber runs across large outdoor common spaces while maintaining a seamless network connection for students moving across campus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h2 class="section-title">Section C: Advanced Systems Deployment Workflow &amp; Strategy</h2>
+                <div class="alert alert-info py-2 no-print"><i class="bi bi-info-circle-fill me-2"></i>Compulsory comprehensive engineering scenario solutions.</div>
+
+                <div class="question-card p-4 mb-4" id="q23">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 23</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">15 Marks</span>
+                    </div>
+                    <p class="fw-bold text-dark">Propose a complete wireless deployment workflow showing all key stages from planning to maintenance, and explain the main activities carried out in each stage.</p>
+                    
+                    <button class="btn btn-sm btn-dark no-print" onclick="toggleAnswer('ans23')">Reveal Complete 5-Stage Deployment Blueprint</button>
+                    <div class="answer-box p-4 mt-3" id="ans23">
+                        <div class="row border-bottom pb-3 mb-3">
+                            <div class="col-md-3 fw-bold text-primary">Stage 1: Assessment &amp; Planning</div>
+                            <div class="col-md-9 small">Gather business requirements, identify user density spikes, analyze floor plans, and choose suitable RF spectrum parameters (2.4GHz, 5GHz, or 6GHz bands).</div>
+                        </div>
+                        <div class="row border-bottom pb-3 mb-3">
+                            <div class="col-md-3 fw-bold text-primary">Stage 2: RF Site Surveying</div>
+                            <div class="col-md-9 small">Run predictive software simulation models followed by on-site physical walk-throughs using spectrum analyzers. This identifies signal attenuators like concrete, brick walls, and elevator shafts, ensuring optimal placement for your access points.</div>
+                        </div>
+                        <div class="row border-bottom pb-3 mb-3">
+                            <div class="col-md-3 fw-bold text-primary">Stage 3: Installation &amp; Hardware Deployment</div>
+                            <div class="col-md-9 small">Mount the access points securely and run structured Cat6A Ethernet cables back to PoE+ network switches. Make sure all hardware is installed safely and complies with fire codes.</div>
+                        </div>
+                        <div class="row border-bottom pb-3 mb-3">
+                            <div class="col-md-3 fw-bold text-primary">Stage 4: Logical Configuration &amp; Security</div>
+                            <div class="col-md-9 small">Configure independent VLAN paths for staff and guests, set up corporate 802.1X enterprise authentication, customize DHCP scopes, and optimize channel widths to prevent interference.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 fw-bold text-primary">Stage 5: Validation, Documentation &amp; Maintenance</div>
+                            <div class="col-md-9 small">Test network performance by running active packet loss and throughput checks. Save the final topology designs and channel layouts, and schedule automated off-peak updates for router and AP firmware.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card p-4 mb-4" id="q24">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="fw-bold text-secondary mb-0">Question 24</h5>
+                        <span class="badge badge-marks px-2 py-1.5 rounded-pill">15 Marks</span>
+                    </div>
+                    <p class="fw-bold text-dark">Construct a troubleshooting plan for weak Wi-Fi signals in a secondary school environment experiencing frequent disconnections.</p>
+                    
+                    <button class="btn btn-sm btn-dark no-print" onclick="toggleAnswer('ans24')">Generate Phase-Structured Troubleshooting Protocol</button>
+                    <div class="answer-box p-4 mt-3" id="ans24">
+                        <h5 class="h6 fw-bold text-danger mb-3"><i class="bi bi-shield-lock-fill me-2"></i>Official Technical Support Checklist Structure:</h5>
+                        
+                        <div class="mb-3">
+                            <h6><strong>Phase I: Information Gathering &amp; Baseline Metrics</strong></h6>
+                            <p class="small text-muted">Interview affected users in the library/classrooms. Use an RF analyzer app to check Received Signal Strength Indicators (RSSI). A reading below -75 dBm explains why devices are experiencing dropped connections.</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6><strong>Phase II: Diagnostic Isolation Procedures</strong></h6>
+                            <p class="small text-muted">Check the network console to see if too many devices are crowding a single access point. Run channel spectrum scans to check for interference from electronics like microwaves or nearby outside networks.</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6><strong>Phase III: Remediation Execution Steps</strong></h6>
+                            <p class="small text-muted">Adjust access point positions to clear physical obstacles. Turn down transmission power on overlapping units to fix sticky-client issues, and switch devices to clean, non-overlapping channels (like 1, 6, or 11 on the 2.4 GHz band).</p>
+                        </div>
+
+                        <div class="mb-0">
+                            <h6><strong>Phase IV: Validation &amp; Verification Signing</strong></h6>
+                            <p class="small text-muted">Run continuous ping tests to check for data loss, confirm devices can connect smoothly throughout classrooms, and monitor the update logs over the next week to ensure the fixes hold.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 no-print">
+            <div class="sidebar-sticky">
+                <div class="card shadow-sm border-0 bg-dark text-white p-3 mb-3">
+                    <h5 class="fw-bold h6 mb-3 text-warning"><i class="bi bi-lightning-charge-fill"></i> System Metrics Panel</h5>
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span>Total Questions:</span>
+                        <span class="fw-bold">24 Questions</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 small">
+                        <span>Total Exam Marks:</span>
+                        <span class="fw-bold">100 Marks</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 small">
+                        <span>Syllabus Compliance:</span>
+                        <span class="text-success fw-bold">NESA Indoor Standard</span>
+                    </div>
+                    <hr class="bg-secondary">
+                    <div class="text-center">
+                        <small class="text-white-50 d-block mb-2">Designed for optimal mobile/desktop classroom learning environments.</small>
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm p-3 bg-white">
+                    <h6 class="fw-bold text-dark mb-2">Navigation Shortcuts</h6>
+                    <div class="d-grid gap-1">
+                        <a href="#q1" class="btn btn-sm btn-light text-start text-dark">Question 1-10 (Objective)</a>
+                        <a href="#q11" class="btn btn-sm btn-light text-start text-dark">Question 11-17 (Intermediate)</a>
+                        <a href="#q18" class="btn btn-sm btn-light text-start text-dark">Question 18-22 (Section B Scenarios)</a>
+                        <a href="#q23" class="btn btn-sm btn-light text-start text-dark">Question 23-24 (Section C Workflow)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-white border-top py-3 mt-5 text-center text-muted small no-print">
+    <div class="container">
+        &copy; 2026 NESA Exam Prep Portal &bull; Interactive Wireless Indoor Network Curriculum Framework.
+    </div>
+</footer>
+
+<script>
+    // Toggle single answer box view state
+    function toggleAnswer(id) {
+        const targetBox = document.getElementById(id);
+        if(targetBox) {
+            targetBox.classList.toggle('visible');
+        }
+    }
+
+    // Toggle global answer display matrices
+    function toggleAllAnswers() {
+        const allBoxes = document.querySelectorAll('.answer-box');
+        const mainBtn = document.getElementById('toggleAllAnswersBtn');
+        let anyHidden = false;
+
+        // Check current global display states
+        allBoxes.forEach(box => {
+            if(!box.classList.contains('visible')) {
+                anyHidden = true;
+            }
+        });
+
+        allBoxes.forEach(box => {
+            if(anyHidden) {
+                box.classList.add('visible');
+            } else {
+                box.classList.remove('visible');
+            }
+        });
+
+        // Update Button interface display state dynamically
+        if(anyHidden) {
+            mainBtn.innerHTML = `<i class="bi bi-eye-slash-fill me-1"></i> Hide All Solutions`;
+            mainBtn.classList.replace('btn-primary', 'btn-danger');
+        } else {
+            mainBtn.innerHTML = `<i class="bi bi-eye-fill me-1"></i> Reveal All Answers`;
+            mainBtn.classList.replace('btn-danger', 'btn-primary');
+        }
+    }
+
+    // Interactive Option Selection mechanic behaviors
+    function selectOption(element) {
+        const radioInput = element.querySelector('input[type="radio"]');
+        const checkInput = element.querySelector('input[type="checkbox"]');
+        
+        if (radioInput) {
+            // Uncheck brothers inside the question block scope
+            const brotherElements = element.parentElement.querySelectorAll('.option-container');
+            brotherElements.forEach(el => {
+                el.style.backgroundColor = '';
+                el.style.borderColor = '#e2e8f0';
+            });
+            radioInput.checked = true;
+            
+            // Highlight current selection item dynamic feedback
+            if(element.hasAttribute('data-correct')) {
+                element.style.backgroundColor = '#ecfdf5';
+                element.style.borderColor = '#10b981';
+            } else {
+                element.style.backgroundColor = '#fef2f2';
+                element.style.borderColor = '#ef4444';
+            }
+        }
+        
+        if(checkInput) {
+            checkInput.checked = !checkInput.checked;
+            if(checkInput.checked) {
+                element.style.backgroundColor = '#eff6ff';
+                element.style.borderColor = '#3b82f6';
+            } else {
+                element.style.backgroundColor = '';
+                element.style.borderColor = '#e2e8f0';
+            }
+        }
+    }
+
+    // Clear all chosen elements back to baseline exam state
+    function resetQuizState() {
+        const allInputs = document.querySelectorAll('input');
+        allInputs.forEach(i => i.checked = false);
+        
+        const containers = document.querySelectorAll('.option-container');
+        containers.forEach(c => {
+            c.style.backgroundColor = '';
+            c.style.borderColor = '#e2e8f0';
+        });
+
+        const allBoxes = document.querySelectorAll('.answer-box');
+        allBoxes.forEach(box => box.classList.remove('visible'));
+
+        const mainBtn = document.getElementById('toggleAllAnswersBtn');
+        mainBtn.innerHTML = `<i class="bi bi-eye-fill me-1"></i> Reveal All Answers`;
+        mainBtn.classList.replace('btn-danger', 'btn-primary');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
